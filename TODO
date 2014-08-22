@@ -1,0 +1,16 @@
+Task:       ProgressiveNumber.Status.Developers
+Status:     O=Open|P=InProgress|C=Closed
+Developers: A=Marco|B=Cristiano|C=Simone
+
+LastNumber: 0
+
+        OPEN TASK
+        ---------
+
+
+        IN PROGRESS TASK
+        ----------------
+
+
+        CLOSED TASK
+        -----------

@@ -1,0 +1,11 @@
+2014-08-21 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Implementato il riconoscimento del dipendente selezionato sulla tabella.
+
+2014-08-11 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Implementata la ricerca con paramentri all'interno del database.
+
+2014-08-10 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Implementata la funzione AddEmployee all'interno del wrapper per il DB.
