@@ -212,20 +212,12 @@ void MainWindow::openEmployeeDialog()
     }
     else if (sender() == ui->viewEmployeeButton)
     {
-        m_employeeController->openViewEmployeeDialog();
+        m_employeeController->openViewEmployeeDialog(m_employeeSelected);
     }
     else if (sender() == ui->editEmployeeButton)
     {
-        m_employeeController->openEditEmployeeDialog();
+        m_employeeController->openEditEmployeeDialog(m_employeeSelected);
     }
-}
-
-void MainWindow::clickedEmployeesTable(QModelIndex& index)
-{
-    QStandardItem * item = m_employeeModel->itemFromIndex(index);
-    int itemRow = item->row();
-    qDebug() << item;
-    qDebug() << itemRow;
 }
 
 void MainWindow::selectionChangedEmployeesTable(const QItemSelection & sel,

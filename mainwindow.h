@@ -53,7 +53,6 @@ private slots:
     void openActivityDialog ();
     void openEmployeeDialog ();
 
-    void clickedEmployeesTable(QModelIndex& index);
     void selectionChangedEmployeesTable(const QItemSelection & sel, const QItemSelection & des);
     void updateEmployeesTable(QStringList searchParams);
 

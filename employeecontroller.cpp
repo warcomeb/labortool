@@ -60,17 +60,39 @@ void EmployeeController::openAddEmployeeDialog ()
     }
 }
 
-void EmployeeController::openViewEmployeeDialog ()
+void EmployeeController::openViewEmployeeDialog (int employeeId)
 {
-    m_employeeDialog->setOpenType(EmployeeDialog::DialogType_View);
-    m_employeeDialog->exec();
+    qDebug() << "EmployeeController::openViewEmployeeDialog()";
 
-    /* TODO */
+    Employee * employee = new Employee;
+    if (!m_databaseWrapper->getEmployee(employeeId,employee))
+    {
+        QMessageBox::warning(0, tr("View Employee Error"),
+                             tr("The employee can not be displayed!\n Database Error!"));
+        return;
+    }
+
+    m_employeeDialog->setOpenType(EmployeeDialog::DialogType_View);
+    m_employeeDialog->setSelectedEmployee(employee);
+
+    m_employeeDialog->exec();
 }
 
-void EmployeeController::openEditEmployeeDialog ()
+void EmployeeController::openEditEmployeeDialog (int employeeId)
 {
+    qDebug() << "EmployeeController::openEditEmployeeDialog()";
+
+    Employee * employee = new Employee;
+    if (!m_databaseWrapper->getEmployee(employeeId,employee))
+    {
+        QMessageBox::warning(0, tr("Edit Employee Error"),
+                             tr("The employee can not be displayed!\n Database Error!"));
+        return;
+    }
+
     m_employeeDialog->setOpenType(EmployeeDialog::DialogType_Edit);
+    m_employeeDialog->setSelectedEmployee(employee);
+
     m_employeeDialog->exec();
 
 

@@ -37,7 +37,7 @@ public:
 
     bool addEmployee(Employee* employee);
     bool updateEmployee (Employee* employee);
-    bool getEmployee (uint id, Employee* employee);
+    bool getEmployee (int id, Employee* employee);
 
 //    QVector< QVector<QString> > getActiveEmployees();
     QVector< QVector< QString > > searchEmployees(QStringList searchParams);

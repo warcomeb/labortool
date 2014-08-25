@@ -77,12 +77,15 @@ void EmployeeDialog::fillCombobox ()
 
 void EmployeeDialog::setOpenType (EmployeeDialog::DialogType type)
 {
+    qDebug() << "EmployeeDialog::setOpenType()";
+
     m_openType = type;
     setupEmployeeField();
 }
 
 void EmployeeDialog::setSelectedEmployee (Employee * employee)
 {
+    qDebug() << "EmployeeDialog::setSelectedEmployee()";
     m_employee = employee;
     if (m_openType != EmployeeDialog::DialogType_Add)
         fillEmployeeField();
@@ -90,6 +93,8 @@ void EmployeeDialog::setSelectedEmployee (Employee * employee)
 
 void EmployeeDialog::setupEmployeeField ()
 {
+    qDebug() << "EmployeeDialog::setupEmployeeField()";
+
     switch (m_openType)
     {
     case DialogType_Add:
@@ -107,6 +112,7 @@ void EmployeeDialog::setupEmployeeField ()
         ui->passwordText->setText("");
         ui->passwordText->setEnabled(true);
 
+        ui->sysroleCombobox->setEnabled(true);
         ui->roleCombobox->setEnabled(true);
         ui->companyCombobox->setEnabled(true);
         ui->activeCombobox->setEnabled(true);
@@ -124,6 +130,7 @@ void EmployeeDialog::setupEmployeeField ()
         /* TODO: La password è modificabile solo dall'utente se è loggato!! */
         ui->passwordText->setEnabled(true);
 
+        ui->sysroleCombobox->setEnabled(true);
         ui->roleCombobox->setEnabled(true);
         ui->companyCombobox->setEnabled(true);
         ui->activeCombobox->setEnabled(true);
@@ -139,6 +146,7 @@ void EmployeeDialog::setupEmployeeField ()
 
         ui->passwordText->setEnabled(false);
 
+        ui->sysroleCombobox->setEnabled(false);
         ui->roleCombobox->setEnabled(false);
         ui->companyCombobox->setEnabled(false);
         ui->activeCombobox->setEnabled(false);
@@ -153,7 +161,22 @@ void EmployeeDialog::setupEmployeeField ()
 
 void EmployeeDialog::fillEmployeeField ()
 {
+    qDebug() << "EmployeeDialog::fillEmployeeField()";
 
+    ui->idText->setText(QString::number(m_employee->getId()));
+
+    ui->nameText->setText(m_employee->getName());
+    ui->surnameText->setText(m_employee->getSurname());
+
+    ui->usernameText->setText(m_employee->getUsername());
+    ui->passwordText->setText(m_employee->getPassword());
+
+    ui->roleCombobox->setCurrentIndex(m_employee->getRole());
+    ui->sysroleCombobox->setCurrentIndex(m_employee->getSystemRole());
+    ui->companyCombobox->setCurrentIndex(m_employee->getCompany());
+    ui->activeCombobox->setCurrentIndex(m_employee->getActiveStatus());
+
+    ui->noteText->setText(m_employee->getNote());
 }
 
 void EmployeeDialog::saveValues ()

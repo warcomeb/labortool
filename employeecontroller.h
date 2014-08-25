@@ -44,8 +44,8 @@ public:
     EmployeeController(QSqlDatabase* db);
 
     void openAddEmployeeDialog ();
-    void openEditEmployeeDialog ();
-    void openViewEmployeeDialog ();
+    void openEditEmployeeDialog (int employeeId);
+    void openViewEmployeeDialog (int employeeId);
 
     QVector<QVector<QString> > getEmployeesList (EmployeesListType type);
     QVector<QVector<QString> > getEmployeesList (QStringList searchParams);

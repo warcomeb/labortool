@@ -66,8 +66,40 @@ bool EmployeeDatabase::addEmployee (Employee* employee)
     }
 }
 
-bool EmployeeDatabase::getEmployee (uint id, Employee* employee)
+bool EmployeeDatabase::getEmployee (int id, Employee* employee)
 {
+    qDebug() << "EmployeeDatabase::getEmployee()";
+
+    QString queryString = "SELECT * FROM employee WHERE EmployeeId='" +
+            QString::number(id) + "'";
+
+    qDebug() << "EmployeeDatabase::getEmployee() - Final search string: " << queryString;
+    QSqlQuery query( queryString, *m_database);
+
+    if (query.size() != 1)
+    {
+        qDebug() << "EmployeeDatabase::getEmployee() - database problems!";
+        return false;
+    }
+
+    /* Read record! */
+    qDebug() << "EmployeeDatabase::getEmployee() - read record";
+    query.next();
+
+    employee->setId(id);
+    employee->setName(query.value(1).toString());
+    employee->setSurname(query.value(2).toString());
+    employee->setUsername(query.value(3).toString());
+    /* Do not use the password field! */
+//    employee->setPassword(query.value(4).toString());
+    employee->setRole(query.value(5).toString());
+    employee->setSystemRole(query.value(6).toString());
+    employee->setCompany(query.value(7).toString());
+    employee->setActiveStatus(query.value(8).toString());
+    employee->setNote(query.value(9).toString());
+
+    qDebug() << "EmployeeDatabase::getEmployee() - employee" <<
+                query.value(2).toString() << query.value(1).toString();
     return true;
 }
 
@@ -75,32 +107,6 @@ bool EmployeeDatabase::updateEmployee (Employee* employee)
 {
 return true;
 }
-
-//QVector< QVector<QString> > EmployeeDatabase::getActiveEmployees()
-//{
-//    qDebug() << "EmployeeDatabase::getActiveEmployees()";
-
-//    QVector<QVector<QString> > employeesList;
-//    QString queryString = "SELECT EmployeeId, EmployeeSurname, EmployeeName, "
-//                          "EmployeeUsername, EmployeeRole FROM employee "
-//                          "WHERE EmployeeActive='Yes' "
-//                          "ORDER BY EmployeeSurname ASC";
-
-//    QSqlQuery query( queryString, *m_database);
-//    while (query.next())
-//    {
-//        QVector<QString> employee;
-//        employee.append(query.value(0).toString()); // Id
-//        employee.append(query.value(1).toString()); // Surname
-//        employee.append(query.value(2).toString()); // Name
-//        employee.append(query.value(3).toString()); // Username
-//        employee.append(query.value(4).toString()); // Role
-
-//        employeesList.append(employee);
-//    }
-
-//    return employeesList;
-//}
 
 /* TODO: Encoding dei caratteri particolari. */
 QVector< QVector< QString > >

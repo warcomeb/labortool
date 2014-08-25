@@ -36,6 +36,7 @@ class Employee : public QObject
 
 public:
     Employee(const QString &surname, const QString &name);
+    Employee();
 
     typedef enum
     {
@@ -92,6 +93,11 @@ public:
     void setSystemRole (SystemRole systemRole);
     void setCompany (Company company);
     void setActiveStatus (Active active);
+
+    void setRole(QString role);
+    void setSystemRole (QString systemRole);
+    void setCompany (QString company);
+    void setActiveStatus (QString active);
 
     void setNote (QString note);
 

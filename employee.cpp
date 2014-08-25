@@ -31,6 +31,10 @@ Employee::Employee(const QString &surname, const QString &name)
     m_name = name;
 }
 
+Employee::Employee()
+{
+}
+
 void Employee::setId (uint id)
 {
     m_id = id;
@@ -88,6 +92,62 @@ void Employee::setCompany (Employee::Company company)
 void Employee::setActiveStatus (Employee::Active active)
 {
     m_active = active;
+}
+
+void Employee::setRole (QString role)
+{
+    qDebug() << "Employee::setRole()";
+    QByteArray bytearray = role.toLocal8Bit();
+    qDebug() << "Employee::setRole() - string value" << role;
+
+    int value = Employee::staticMetaObject.enumerator(
+                 Employee::staticMetaObject.indexOfEnumerator("Role")).
+                 keysToValue(bytearray.data());
+
+    qDebug() << "Employee::setRole() - value" << value;
+    m_role = static_cast<Employee::Role>(value);
+}
+
+void Employee::setSystemRole (QString systemRole)
+{
+    qDebug() << "Employee::setSystemRole()";
+    QByteArray bytearray = systemRole.toLocal8Bit();
+    qDebug() << "Employee::setSystemRole() - string value" << systemRole;
+
+    int value = Employee::staticMetaObject.enumerator(
+                 Employee::staticMetaObject.indexOfEnumerator("SystemRole")).
+                 keysToValue(bytearray.data());
+
+    qDebug() << "Employee::setSystemRole() - value" << value;
+    m_systemRole = static_cast<Employee::SystemRole>(value);
+}
+
+void Employee::setCompany (QString company)
+{
+    qDebug() << "Employee::setCompany()";
+    QByteArray bytearray = company.toLocal8Bit();
+    qDebug() << "Employee::setCompany() - string value" << company;
+
+    int value = Employee::staticMetaObject.enumerator(
+                 Employee::staticMetaObject.indexOfEnumerator("Company")).
+                 keysToValue(bytearray.data());
+
+    qDebug() << "Employee::setCompany() - value" << value;
+    m_company = static_cast<Employee::Company>(value);
+}
+
+void Employee::setActiveStatus(QString active)
+{
+    qDebug() << "Employee::setActiveStatus()";
+    QByteArray bytearray = active.toLocal8Bit();
+    qDebug() << "Employee::setActiveStatus() - string value" << active;
+
+    int value = Employee::staticMetaObject.enumerator(
+                 Employee::staticMetaObject.indexOfEnumerator("Active")).
+                 keysToValue(bytearray.data());
+
+    qDebug() << "Employee::setActiveStatus() - value" << value;
+    m_active = static_cast<Employee::Active>(value);
 }
 
 void Employee::setNote (QString note)

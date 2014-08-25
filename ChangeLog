@@ -1,3 +1,13 @@
+2014-08-25 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Completata la funzione per il riempimento dell'employee dialog per il view e per l'edit.
+
+2014-08-22 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Implementato la funzione getEmployee() nel wrapper del database.
+
+    * Aggiunte funzioni per il setting degli enum nella classe Employee da stringa.
+
 2014-08-21 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Implementato il riconoscimento del dipendente selezionato sulla tabella.
