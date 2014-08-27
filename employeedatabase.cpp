@@ -98,14 +98,54 @@ bool EmployeeDatabase::getEmployee (int id, Employee* employee)
     employee->setActiveStatus(query.value(8).toString());
     employee->setNote(query.value(9).toString());
 
-    qDebug() << "EmployeeDatabase::getEmployee() - employee" <<
+    qDebug() << "EmployeeDatabase::getEmployee() - employee" << id <<
                 query.value(2).toString() << query.value(1).toString();
     return true;
 }
 
 bool EmployeeDatabase::updateEmployee (Employee* employee)
 {
-return true;
+    qDebug() << "EmployeeDatabase::updateEmployee()";
+
+    QSqlQuery query(*m_database);
+    QString queryString = "UPDATE employee SET "
+            "EmployeeUsername=:user "
+            "WHERE EmployeeId=:rowid";
+
+//    "EmployeeSurname=?, EmployeeName=?, EmployeeUsername=?, "
+//                          "EmployeeRole=?, EmployeeSysRole=?, EmployeeCompany=?, "
+//                          "EmployeeActive=?, EmployeeNote=? "
+//                          "WHERE EmployeeId=?";
+
+    query.prepare(queryString);
+//    query.bindValue(0,employee->getSurname());
+//    query.bindValue(1,employee->getName());
+    query.bindValue(":user",employee->getUsername());
+//    query.bindValue(3,employee->getPassword());
+
+//    query.bindValue(3,Employee::getRoleString(employee->getRole()));
+//    query.bindValue(4,Employee::getSystemRoleString(employee->getSystemRole()));
+//    query.bindValue(5,Employee::getCompanyString(employee->getCompany()));
+//    query.bindValue(6,Employee::getActiveStatusString(employee->getActiveStatus()));
+//    query.bindValue(7,employee->getNote());
+    query.bindValue(":rowid",QString::number(employee->getId()));
+
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 0 " << query.boundValue(0);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 1 " << query.boundValue(1);
+
+    if (query.exec())
+    {
+        qDebug() << "EmployeeDatabase::updateEmployee() - " << query.lastQuery();
+        qDebug() << "EmployeeDatabase::updateEmployee() - "<< query.lastError();
+        qDebug() << "EmployeeDatabase::updateEmployee() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "EmployeeDatabase::updateEmployee() - " << query.lastQuery();
+        qDebug() << "EmployeeDatabase::updateEmployee() - "<< query.lastError();
+        return false;
+    }
 }
 
 /* TODO: Encoding dei caratteri particolari. */

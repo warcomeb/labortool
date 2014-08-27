@@ -122,7 +122,11 @@
     </widget>
    </item>
    <item row="5" column="1" colspan="3">
-    <widget class="QTextEdit" name="noteText"/>
+    <widget class="QTextEdit" name="noteText">
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="2" column="2">
     <widget class="QLabel" name="passwordLabel">

@@ -1,3 +1,7 @@
+2014-08-26 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Alcuni fix per l'edit dell'employee dialog.
+
 2014-08-25 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Completata la funzione per il riempimento dell'employee dialog per il view e per l'edit.

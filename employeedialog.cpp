@@ -127,8 +127,8 @@ void EmployeeDialog::setupEmployeeField ()
 
         ui->usernameText->setEnabled(true);
 
-        /* TODO: La password è modificabile solo dall'utente se è loggato!! */
-        ui->passwordText->setEnabled(true);
+        /* The password can be changed in other field! */
+        ui->passwordText->setEnabled(false);
 
         ui->sysroleCombobox->setEnabled(true);
         ui->roleCombobox->setEnabled(true);
@@ -182,6 +182,7 @@ void EmployeeDialog::fillEmployeeField ()
 void EmployeeDialog::saveValues ()
 {
     qDebug() << "EmployeeDialog::saveValues()";
+    m_employee = 0;
 
     QRegExp name = QRegExp(QString::fromUtf8("^[a-zA-Zèéìòàù' ]+$"));
     QRegExp nick = QRegExp(QString::fromUtf8("[a-zA-Z0-9]{6,20}"));
@@ -222,21 +223,26 @@ void EmployeeDialog::saveValues ()
         return;
     }
 
-    if (nick.exactMatch(ui->passwordText->text()))
+    /* The password can be setted only during user creation and by a specific button in a home! */
+    if (m_openType == DialogType_Add)
     {
-        qDebug() << "Password correct:" << ui->passwordText->text();
-    }
-    else
-    {
-        qDebug() << "Password not correct:" << ui->usernameText->text();
-        QMessageBox::critical(this, tr("Error"),
-            tr("Password not correct!"));
-        return;
+        if (nick.exactMatch(ui->passwordText->text()))
+        {
+            qDebug() << "Password correct:" << ui->passwordText->text();
+        }
+        else
+        {
+            qDebug() << "Password not correct:" << ui->usernameText->text();
+            QMessageBox::critical(this, tr("Error"),
+                tr("Password not correct!"));
+            return;
+        }
     }
 
     m_employee = new Employee(ui->surnameText->text(),ui->nameText->text());
+    if (m_openType != DialogType_Add) m_employee->setId(ui->idText->text().toUInt());
     m_employee->setUsername(ui->usernameText->text());
-    m_employee->setPassword(ui->passwordText->text());
+    if (m_openType == DialogType_Add) m_employee->setPassword(ui->passwordText->text());
     m_employee->setRole(static_cast<Employee::Role>(
                             ui->roleCombobox->currentData().toInt())
                         );
@@ -257,7 +263,8 @@ void EmployeeDialog::saveValues ()
                            );
     qDebug() << "Active Status:" << static_cast<Employee::Active>(
                     ui->activeCombobox->currentData().toInt());
-
+    m_employee->setNote(ui->noteText->toPlainText());
+    qDebug() << "Note:" << ui->noteText->toPlainText();
 }
 
 void EmployeeDialog::apply()

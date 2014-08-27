@@ -45,7 +45,8 @@ void EmployeeController::openAddEmployeeDialog ()
     {
         if (m_databaseWrapper->addEmployee(employee))
         {
-            qDebug() << "EmployeeController::openAddEmployeeDialog() - Add employee successful";    QStringList searchParams;
+            qDebug() << "EmployeeController::openAddEmployeeDialog() - Add employee successful";
+            QStringList searchParams;
             searchParams << "Active=Yes";
             emit updatedEmployeesList(searchParams);
         }
@@ -95,8 +96,24 @@ void EmployeeController::openEditEmployeeDialog (int employeeId)
 
     m_employeeDialog->exec();
 
-
-    /* TODO */
+    employee = m_employeeDialog->getSavedEmployee();
+    if (employee)
+    {
+        if (m_databaseWrapper->updateEmployee(employee))
+        {
+            qDebug() << "EmployeeController::openEditEmployeeDialog() - Update employee successful";
+            QStringList searchParams;
+            searchParams << "Active=Yes";
+            emit updatedEmployeesList(searchParams);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "EmployeeController::openEditEmployeeDialog() - Update employee error!";
+            QMessageBox::warning(0, tr("Update Employee Error"),
+                                 tr("The employee has not been updated! Database Error!"));
+        }
+    }
 }
 
 QVector<QVector<QString> >
