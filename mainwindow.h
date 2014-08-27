@@ -53,8 +53,9 @@ private slots:
     void openActivityDialog ();
     void openEmployeeDialog ();
 
-    void selectionChangedEmployeesTable(const QItemSelection & sel, const QItemSelection & des);
-    void updateEmployeesTable(QStringList searchParams);
+    void selectionChangedEmployeesTable (const QItemSelection & sel, const QItemSelection & des);
+    void updateEmployeesTable (QStringList searchParams);
+    void searchEmployees ();
 
 private:
     Ui::MainWindow *ui;

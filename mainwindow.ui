@@ -103,7 +103,7 @@
        <attribute name="title">
         <string>Employee</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -140,17 +140,83 @@
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QLineEdit" name="searchEmployeeText"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="searchEmployeeButton">
-            <property name="text">
-             <string>Search</string>
-            </property>
-           </widget>
-          </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="searchBox">
+          <property name="title">
+           <string>Search Box</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QLabel" name="searchEmployeeTextLabel">
+             <property name="text">
+              <string>Text</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="searchEmployeeText">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchEmployeeActiveLabel">
+             <property name="text">
+              <string>Active</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchEmployeeActiveCombobox"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchEmployeeRoleLabel">
+             <property name="text">
+              <string>Role</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchEmployeeRoleCombobox"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchEmployeeCompanyLabel">
+             <property name="text">
+              <string>Company</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchEmployeeCompanyCombobox"/>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="searchEmployeeButton">
+             <property name="text">
+              <string>Search</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <widget class="QTableView" name="employeeTable"/>

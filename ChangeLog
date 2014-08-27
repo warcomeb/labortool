@@ -1,3 +1,7 @@
+2014-08-27 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Disegnato gli strumenti per la ricerca degli employee. Iniziata anche l'implementazione.
+
 2014-08-26 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Alcuni fix per l'edit dell'employee dialog.

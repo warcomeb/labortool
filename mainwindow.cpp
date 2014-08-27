@@ -148,6 +148,27 @@ void MainWindow::initEmployeeTab()
     connect(ui->editEmployeeButton,SIGNAL(clicked()),
             this,SLOT(openEmployeeDialog()));
 
+    connect(ui->searchEmployeeButton,SIGNAL(clicked()),
+            this,SLOT(searchEmployees()));
+
+    /* Fill search combo box */
+    ui->searchEmployeeRoleCombobox->clear();
+    ui->searchEmployeeRoleCombobox->addItem(tr("Coordinator"), Employee::Coordinator);
+    ui->searchEmployeeRoleCombobox->addItem(tr("Senior Designer"), Employee::SeniorDesigner);
+    ui->searchEmployeeRoleCombobox->addItem(tr("Designer"), Employee::Designer);
+    ui->searchEmployeeRoleCombobox->addItem(tr("Technician"), Employee::Technician);
+    ui->searchEmployeeRoleCombobox->addItem(tr("Student"), Employee::Student);
+
+    ui->searchEmployeeCompanyCombobox->clear();
+    ui->searchEmployeeCompanyCombobox->addItem(tr("AEA"), Employee::Aea);
+    ui->searchEmployeeCompanyCombobox->addItem(tr("General Impianti"), Employee::Gi);
+    ui->searchEmployeeCompanyCombobox->addItem(tr("Extern"), Employee::Extern);
+
+    ui->searchEmployeeActiveCombobox->clear();
+    ui->searchEmployeeActiveCombobox->addItem(tr("Yes"), Employee::Yes);
+    ui->searchEmployeeActiveCombobox->addItem(tr("No"), Employee::No);
+
+
     /* Update table slots */
     connect(m_employeeController,SIGNAL(updatedEmployeesList(QStringList)),
             this,SLOT(updateEmployeesTable(QStringList)));
@@ -267,4 +288,9 @@ void MainWindow::updateEmployeesTable(QStringList searchParams)
             }
         }
     }
+}
+
+void MainWindow::searchEmployees()
+{
+    qDebug() << "MainWindow::searchEmployees()";
 }
