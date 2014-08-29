@@ -56,6 +56,7 @@ private slots:
     void selectionChangedEmployeesTable (const QItemSelection & sel, const QItemSelection & des);
     void updateEmployeesTable (QStringList searchParams);
     void searchEmployees ();
+    void resetSearchEmployees ();
 
 private:
     Ui::MainWindow *ui;

@@ -167,17 +167,47 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
         {
             qDebug() << "EmployeeDatabase::searchEmployees() - Param:" << searchParams.at(i);
 
-            QStringList searchParam = searchParams.at(i).split('=');
-            if (searchParam.size() == 2)
+            if (searchParams.at(i).indexOf('=') != -1)
             {
-                qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
-                queryString.append(DB_FIELD_SUFFIX +
-                                   searchParam.at(0) +  "='" +
-                                   searchParam.at(1) + "' ");
+                QStringList searchParam = searchParams.at(i).split('=');
+                if (searchParam.size() == 2)
+                {
+                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
+                    queryString.append(DB_FIELD_SUFFIX +
+                                       searchParam.at(0) +  "='" +
+                                       searchParam.at(1) + "' ");
+                }
+                else
+                {
+                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+                    return employeesList;
+                }
+
+            }
+            else if (searchParams.at(i).indexOf('%') != -1)
+            {
+                QStringList searchParam = searchParams.at(i).split('%');
+                if (searchParam.size() == 2)
+                {
+                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
+                    queryString.append(
+                        "( EmployeeName LIKE '%" + searchParam.at(1) + "%' OR " +
+                        "EmployeeSurname LIKE '%" + searchParam.at(1) + "%' OR " +
+                        "EmployeeUsername LIKE '%" + searchParam.at(1) + "%' OR " +
+                        "EmployeeNote LIKE '%" + searchParam.at(1) + "%') "
+                    );
+                }
+                else
+                {
+                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+                    return employeesList;
+                }
+
             }
             else
             {
                 qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+                return employeesList;
             }
 
             if (i+1 == searchParams.size())

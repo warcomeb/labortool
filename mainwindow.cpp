@@ -150,9 +150,12 @@ void MainWindow::initEmployeeTab()
 
     connect(ui->searchEmployeeButton,SIGNAL(clicked()),
             this,SLOT(searchEmployees()));
+    connect(ui->searchEmployeeResetButton,SIGNAL(clicked()),
+            this,SLOT(resetSearchEmployees()));
 
     /* Fill search combo box */
     ui->searchEmployeeRoleCombobox->clear();
+    ui->searchEmployeeRoleCombobox->addItem(tr("All"), -1);
     ui->searchEmployeeRoleCombobox->addItem(tr("Coordinator"), Employee::Coordinator);
     ui->searchEmployeeRoleCombobox->addItem(tr("Senior Designer"), Employee::SeniorDesigner);
     ui->searchEmployeeRoleCombobox->addItem(tr("Designer"), Employee::Designer);
@@ -160,14 +163,15 @@ void MainWindow::initEmployeeTab()
     ui->searchEmployeeRoleCombobox->addItem(tr("Student"), Employee::Student);
 
     ui->searchEmployeeCompanyCombobox->clear();
+    ui->searchEmployeeCompanyCombobox->addItem(tr("All"), -1);
     ui->searchEmployeeCompanyCombobox->addItem(tr("AEA"), Employee::Aea);
     ui->searchEmployeeCompanyCombobox->addItem(tr("General Impianti"), Employee::Gi);
     ui->searchEmployeeCompanyCombobox->addItem(tr("Extern"), Employee::Extern);
 
     ui->searchEmployeeActiveCombobox->clear();
+    ui->searchEmployeeActiveCombobox->addItem(tr("All"), -1);
     ui->searchEmployeeActiveCombobox->addItem(tr("Yes"), Employee::Yes);
     ui->searchEmployeeActiveCombobox->addItem(tr("No"), Employee::No);
-
 
     /* Update table slots */
     connect(m_employeeController,SIGNAL(updatedEmployeesList(QStringList)),
@@ -293,4 +297,60 @@ void MainWindow::updateEmployeesTable(QStringList searchParams)
 void MainWindow::searchEmployees()
 {
     qDebug() << "MainWindow::searchEmployees()";
+    QStringList searchParams;
+
+    if (!ui->searchEmployeeText->text().isEmpty())
+    {
+        QString text = "Text%" + ui->searchEmployeeText->text();
+        qDebug() << "MainWindow::searchEmployees() - String" << text;
+        searchParams << text;
+    }
+
+    if (ui->searchEmployeeRoleCombobox->currentData().toInt() != -1)
+    {
+        QString role = "Role=";
+        role.append(Employee::getRoleString(
+            static_cast<Employee::Role>(ui->searchEmployeeRoleCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchEmployees() - Role" << role ;
+        searchParams << role;
+    }
+
+    if (ui->searchEmployeeActiveCombobox->currentData().toInt() != -1)
+    {
+        QString active = "Active=";
+        active.append(Employee::getActiveStatusString(
+            static_cast<Employee::Active>(ui->searchEmployeeActiveCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchEmployees() - Active" << active ;
+        searchParams << active;
+    }
+
+    if (ui->searchEmployeeCompanyCombobox->currentData().toInt() != -1)
+    {
+        QString company = "Company=";
+        company.append(Employee::getCompanyString(
+            static_cast<Employee::Company>(ui->searchEmployeeCompanyCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchEmployees() - Company" << company ;
+        searchParams << company;
+    }
+
+    qDebug() << "MainWindow::searchEmployees() - update table";
+    updateEmployeesTable(searchParams);
+}
+
+void MainWindow::resetSearchEmployees()
+{
+    qDebug() << "MainWindow::resetSearchEmployees()";
+    QStringList searchParams;
+    searchParams << "Active=Yes";
+
+    ui->searchEmployeeText->setText("");
+    ui->searchEmployeeRoleCombobox->setCurrentIndex(0);
+    ui->searchEmployeeCompanyCombobox->setCurrentIndex(0);
+    ui->searchEmployeeActiveCombobox->setCurrentIndex(0);
+
+    qDebug() << "MainWindow::resetSearchEmployees() - update table";
+    updateEmployeesTable(searchParams);
 }
