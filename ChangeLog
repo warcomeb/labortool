@@ -1,3 +1,8 @@
+2014-09-12 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Iniziata l'implementazione delle classi riguardanti la gestione delle attivita'.
+    In particolare e' stato aggiunto il campo priority.
+
 2014-08-29 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Ultimata l'implementazione del motore di ricerca dei dipendenti. E' possibile

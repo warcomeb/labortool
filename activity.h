@@ -22,6 +22,8 @@
 #ifndef ACTIVITY_H
 #define ACTIVITY_H
 
+#include <QObject>
+
 #include <QVector>
 #include <QMap>
 #include <QString>
@@ -30,60 +32,73 @@
 #include "employee.h"
 #include "activitynote.h"
 
-class Activity
+class Activity : public QObject
 {
+    Q_OBJECT
+    Q_ENUMS(Status Type Priority)
+    Q_PROPERTY(Status status READ getStatus WRITE setStatus)
+    Q_PROPERTY(Type type READ getType WRITE setType)
+    Q_PROPERTY(Priority priority READ getPriority WRITE setPriority)
+
 public:
     Activity(QString title);
+    Activity();
 
     typedef enum
     {
-        Status_NotStarted,
-        Status_InProgress,
-        Status_Ended,
-        Status_Postponed,
-        Status_Waiting,
+        NotStarted,
+        InProgress,
+        Ended,
+        Postponed,
+        Waiting,
     } Status;
 
     typedef enum
     {
-        Type_Board,
-        Type_Repair,
-        Type_Support,
-        Type_Firmware,
-        Type_Production,
+        Board,
+        Repair,
+        Support,
+        Firmware,
+        Production,
     } Type;
 
-//    typedef enum
-//    {
-//        Typology_Internal,
-//        Typology_Research,
-//        Typology_Production,
-//    } Typology;
+    typedef enum
+    {
+        Low,
+        Medium,
+        High,
+        Now,
+    } Priority;
 
+    uint getId () const { return m_id; }
 
-    void setTitle  (QString title);
-    QString getTitle ();
+    QString getTitle () const { return m_title; }
+    QString getDescription () const { return m_description; }
+    QString getWorkCode () const { return m_workCode; }
 
-    void setDescription  (QString description);
-    QString getDescription ();
+    Employee* getEmployee () const { return m_assignedEmployee; }
+    QDate getDeadline () const { return m_deadline; }
 
-    void setWorkCode  (QString code);
-    QString getWorkCode ();
+    Type getType () const { return m_type; }
+    Status getStatus () const { return m_status; }
+    Priority getPriority () const { return m_priority; }
+
+    void setId (uint id);
+
+    void setTitle (QString title);
+    void setDescription (QString description);
+    void setWorkCode (QString code);
 
     void setDeadline (QDate deadline);
-    QDate getDeadline ();
-
     void setEmployee (Employee* employee);
-    Employee* getEmployee ();
-
-//    void setTypology (Typology typology);
-//    Typology getTypology ();
 
     void setType (Type type);
-    Type getType ();
-
     void setStatus (Status status);
-    Status getStatus ();
+    void setPriority (Priority priority);
+
+    void setType (QString type);
+    void setStatus (QString status);
+    void setPriority (QString priority);
 
     void addNote (ActivityNote* note);
     void deleteNote (ActivityNote* note);
@@ -93,8 +108,9 @@ public:
     void deleteAttachment (uint attachment);
     QMap<uint,QString> getAttachments ();
 
-    void storeData ();
-    void readData ();
+    static QString getTypeString (Type value);
+    static QString getStatusString (Status value);
+    static QString getPriorityString (Priority value);
 
 private:
     uint m_id;
@@ -105,11 +121,11 @@ private:
 
     Employee* m_assignedEmployee;
 
-    Status m_status;
     QDate m_deadline;
 
-//    Typology m_typology;
+    Status m_status;
     Type m_type;
+    Priority m_priority;
 
     QVector<ActivityNote*> m_notes;
 

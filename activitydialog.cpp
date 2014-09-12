@@ -42,18 +42,25 @@ ActivityDialog::~ActivityDialog()
 void ActivityDialog::fillCombobox ()
 {
     ui->statusCombobox->clear();
-    ui->statusCombobox->addItem(tr("Not Started"), Activity::Status_NotStarted);
-    ui->statusCombobox->addItem(tr("In Progress"), Activity::Status_InProgress);
-    ui->statusCombobox->addItem(tr("Ended"), Activity::Status_Ended);
-    ui->statusCombobox->addItem(tr("Postponed"), Activity::Status_Postponed);
-    ui->statusCombobox->addItem(tr("Waiting"), Activity::Status_Waiting);
+    ui->statusCombobox->addItem(tr("Not Started"), Activity::NotStarted);
+    ui->statusCombobox->addItem(tr("In Progress"), Activity::InProgress);
+    ui->statusCombobox->addItem(tr("Ended"), Activity::Ended);
+    ui->statusCombobox->addItem(tr("Postponed"), Activity::Postponed);
+    ui->statusCombobox->addItem(tr("Waiting"), Activity::Waiting);
 
     ui->typeCombobox->clear();
-    ui->typeCombobox->addItem(tr("Board"), Activity::Type_Board);
-    ui->typeCombobox->addItem(tr("Repair"), Activity::Type_Repair);
-    ui->typeCombobox->addItem(tr("Support"), Activity::Type_Support);
-    ui->typeCombobox->addItem(tr("Firmware"), Activity::Type_Firmware);
-    ui->typeCombobox->addItem(tr("Production"), Activity::Type_Production);
+    ui->typeCombobox->addItem(tr("Board"), Activity::Board);
+    ui->typeCombobox->addItem(tr("Repair"), Activity::Repair);
+    ui->typeCombobox->addItem(tr("Support"), Activity::Support);
+    ui->typeCombobox->addItem(tr("Firmware"), Activity::Firmware);
+    ui->typeCombobox->addItem(tr("Production"), Activity::Production);
+
+    ui->priorityCombobox->clear();
+    ui->priorityCombobox->addItem(tr("Low"), Activity::Low);
+    ui->priorityCombobox->addItem(tr("Medium"), Activity::Medium);
+    ui->priorityCombobox->addItem(tr("High"), Activity::High);
+    ui->priorityCombobox->addItem(tr("Now"), Activity::Now);
+
 }
 
 void ActivityDialog::setOpenType (ActivityDialog::DialogType type)
@@ -83,6 +90,7 @@ void ActivityDialog::setupActivityField ()
 
         ui->typeCombobox->setEnabled(true);
         ui->statusCombobox->setEnabled(true);
+        ui->priorityCombobox->setEnabled(true);
 
         /* TODO: Come li riempiamo? */
         ui->employeeCombobox->setEnabled(true);
@@ -100,6 +108,7 @@ void ActivityDialog::setupActivityField ()
 
         ui->typeCombobox->setEnabled(true);
         ui->statusCombobox->setEnabled(true);
+        ui->priorityCombobox->setEnabled(true);
 
         ui->employeeCombobox->setEnabled(true);
 
@@ -114,6 +123,7 @@ void ActivityDialog::setupActivityField ()
 
         ui->typeCombobox->setEnabled(false);
         ui->statusCombobox->setEnabled(false);
+        ui->priorityCombobox->setEnabled(false);
 
         /* TODO: Come li riempiamo? */
         ui->employeeCombobox->setEnabled(false);

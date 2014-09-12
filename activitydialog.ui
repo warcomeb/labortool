@@ -6,13 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </size>
   </property>
@@ -30,16 +36,6 @@
        <string>Data</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="3" colspan="5">
-        <widget class="QTextEdit" name="descriptionText"/>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLabel" name="statusLabel">
-         <property name="text">
-          <string>Status</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="employeeLabel">
          <property name="text">
@@ -47,17 +43,44 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="6">
-        <widget class="QLabel" name="typeLabel">
-         <property name="text">
-          <string>Type</string>
+       <item row="1" column="7">
+        <widget class="QComboBox" name="typeCombobox"/>
+       </item>
+       <item row="2" column="7">
+        <widget class="QDateEdit" name="deadlineEdit">
+         <property name="displayFormat">
+          <string>dd.MM.yyyy</string>
+         </property>
+         <property name="date">
+          <date>
+           <year>2014</year>
+           <month>1</month>
+           <day>1</day>
+          </date>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="descriptionLabel">
+       <item row="2" column="5">
+        <widget class="QComboBox" name="statusCombobox"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="idLabel">
          <property name="text">
-          <string>Description</string>
+          <string>Id</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLabel" name="jobcodeLabel">
+         <property name="text">
+          <string>Job Code</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="idText">
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -68,7 +91,65 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="6" colspan="2">
+       <item row="1" column="6">
+        <widget class="QLabel" name="typeLabel">
+         <property name="text">
+          <string>Type</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QLineEdit" name="jobcodeText">
+         <property name="maxLength">
+          <number>12</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="descriptionLabel">
+         <property name="text">
+          <string>Description</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="titleLabel">
+         <property name="text">
+          <string>Title</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="employeeCombobox"/>
+       </item>
+       <item row="2" column="4">
+        <widget class="QLabel" name="statusLabel">
+         <property name="text">
+          <string>Status</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="8">
+        <widget class="QLabel" name="priorityLabel">
+         <property name="text">
+          <string>Priority</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="9">
+        <widget class="QComboBox" name="priorityCombobox"/>
+       </item>
+       <item row="0" column="3" colspan="7">
+        <widget class="QLineEdit" name="titleText">
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3" colspan="7">
+        <widget class="QTextEdit" name="descriptionText"/>
+       </item>
+       <item row="4" column="8" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <spacer name="horizontalSpacer">
@@ -99,71 +180,6 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="3">
-        <widget class="QComboBox" name="employeeCombobox"/>
-       </item>
-       <item row="2" column="5">
-        <widget class="QComboBox" name="statusCombobox"/>
-       </item>
-       <item row="1" column="7">
-        <widget class="QComboBox" name="typeCombobox"/>
-       </item>
-       <item row="2" column="7">
-        <widget class="QDateEdit" name="deadlineEdit">
-         <property name="displayFormat">
-          <string>dd.MM.yyyy</string>
-         </property>
-         <property name="date">
-          <date>
-           <year>2014</year>
-           <month>1</month>
-           <day>1</day>
-          </date>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QLineEdit" name="jobcodeText">
-         <property name="maxLength">
-          <number>12</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLabel" name="jobcodeLabel">
-         <property name="text">
-          <string>Job Code</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLineEdit" name="idText">
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="idLabel">
-         <property name="text">
-          <string>Id</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="titleLabel">
-         <property name="text">
-          <string>Title</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3" colspan="5">
-        <widget class="QLineEdit" name="titleText">
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tabNotes">
@@ -176,7 +192,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>titleText</tabstop>
   <tabstop>typeCombobox</tabstop>
   <tabstop>employeeCombobox</tabstop>
