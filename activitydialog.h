@@ -24,6 +24,8 @@
 
 #include <QDialog>
 
+#include <QVector>
+
 #include "activity.h"
 
 namespace Ui {
@@ -49,6 +51,14 @@ public:
     void setOpenType (DialogType type);
     void setSelectedActivity (Activity * activity);
 
+    void updateEmployeesList (QVector<QVector<QString> > employeesList);
+
+    Activity* getSavedActivity ();
+
+private slots:
+    void apply();
+    void noApply();
+
 private:
     Ui::ActivityDialog *ui;
 
@@ -59,7 +69,10 @@ private:
     void fillCombobox ();
 
     void setupActivityField ();
-    void fillActivityField ();
+    void fillActivityFields ();
+    void fillEmployeeField ();
+
+    void saveValues ();
 };
 
 #endif // ACTIVITYDIALOG_H

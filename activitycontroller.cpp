@@ -31,15 +31,21 @@ ActivityController::ActivityController(QTableView *activities, QSqlDatabase *db)
     m_databaseWrapper = new ActivityDatabase (m_database);
 }
 
-void ActivityController::openAddActivityDialog ()
+void ActivityController::openAddActivityDialog (QVector<QVector<QString> > employeesList)
 {
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Add);
+    m_activityDialog->updateEmployeesList(employeesList);
     m_activityDialog->exec();
 
+    Activity * activity = m_activityDialog->getSavedActivity();
+    if (activity)
+    {
+
+    }
     /* TODO */
 }
 
-void ActivityController::openViewActivityDialog ()
+void ActivityController::openViewActivityDialog (QVector<QVector<QString> > employeesList)
 {
     m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
     m_activityDialog->exec();
@@ -47,7 +53,7 @@ void ActivityController::openViewActivityDialog ()
     /* TODO */
 }
 
-void ActivityController::openEditActivityDialog ()
+void ActivityController::openEditActivityDialog (QVector<QVector<QString> > employeesList)
 {
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Edit);
     m_activityDialog->exec();

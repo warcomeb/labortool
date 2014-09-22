@@ -35,9 +35,9 @@ class ActivityController
 public:
     ActivityController(QTableView * activities, QSqlDatabase* db);
 
-    void openAddActivityDialog ();
-    void openEditActivityDialog ();
-    void openViewActivityDialog ();
+    void openAddActivityDialog (QVector<QVector<QString> > employeesList);
+    void openEditActivityDialog (QVector<QVector<QString> > employeesList);
+    void openViewActivityDialog (QVector<QVector<QString> > employeesList);
 
 private:
 

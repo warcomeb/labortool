@@ -93,7 +93,7 @@ bool MainWindow::connectToDatabase ()
     m_database.setHostName( DB_HOST );
     m_database.setPort( DB_PORT );
     /* FIXME: questa stringa non può andare bene, deve essere universale!!! */
-    m_database.setConnectOptions("UNIX_SOCKET=/Applications/mampstack-5.4.26-0/mysql/tmp/mysql.sock");
+    //m_database.setConnectOptions("UNIX_SOCKET=/Applications/mampstack-5.4.26-0/mysql/tmp/mysql.sock");
 
     if ( !m_database.open() )
     {
@@ -203,17 +203,28 @@ void MainWindow::initEmployeeTab()
  */
 void MainWindow::openActivityDialog()
 {
+    qDebug() << "MainWindow::openActivityDialog()";
+    QStringList searchParams;
+    QVector<QVector<QString> > employeesList;
+
     if (sender() == ui->addActivityButton)
     {
-        m_activityController->openAddActivityDialog();
+        searchParams << "Active=Yes";
+        employeesList = m_employeeController->getEmployeesList(searchParams);
+
+        m_activityController->openAddActivityDialog(employeesList);
     }
     else if (sender() == ui->viewActivityButton)
     {
-        m_activityController->openViewActivityDialog();
+        employeesList = m_employeeController->getEmployeesList(searchParams);
+
+        m_activityController->openViewActivityDialog(employeesList);
     }
     else if (sender() == ui->editActivityButton)
     {
-        m_activityController->openEditActivityDialog();
+        employeesList = m_employeeController->getEmployeesList(searchParams);
+
+        m_activityController->openEditActivityDialog(employeesList);
     }
     else if (sender() == ui->deleteActivityButton)
     {
@@ -231,6 +242,8 @@ void MainWindow::openActivityDialog()
  */
 void MainWindow::openEmployeeDialog()
 {
+    qDebug() << "MainWindow::openEmployeeDialog()";
+
     if (sender() == ui->addEmployeeButton)
     {
         m_employeeController->openAddEmployeeDialog();

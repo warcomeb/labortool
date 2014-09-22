@@ -22,12 +22,21 @@
 #include "activitydialog.h"
 #include "ui_activitydialog.h"
 
+#include "metadata.h"
+
+#include <QDebug>
+
 ActivityDialog::ActivityDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ActivityDialog),
     m_openType(ActivityDialog::DialogType_Add)
 {
     ui->setupUi(this);
+
+    setWindowTitle(QString(PROJECT_NAME) + " v." + QString(PROJECT_VERSION) + " - Activity Dialog");
+
+    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(apply()));
+    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(noApply()));
 
     fillCombobox();
 
@@ -36,6 +45,9 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
 
 ActivityDialog::~ActivityDialog()
 {
+    if (m_activity)
+        delete m_activity;
+
     delete ui;
 }
 
@@ -60,19 +72,22 @@ void ActivityDialog::fillCombobox ()
     ui->priorityCombobox->addItem(tr("Medium"), Activity::Medium);
     ui->priorityCombobox->addItem(tr("High"), Activity::High);
     ui->priorityCombobox->addItem(tr("Now"), Activity::Now);
-
 }
 
 void ActivityDialog::setOpenType (ActivityDialog::DialogType type)
 {
+    qDebug() << "ActivityDialog::setOpenType()";
+
     m_openType = type;
     setupActivityField();
 }
 
 void ActivityDialog::setSelectedActivity (Activity * activity)
 {
+    qDebug() << "ActivityDialog::setSelectedActivity()";
     m_activity = activity;
-    fillActivityField();
+    if (m_openType != ActivityDialog::DialogType_Add)
+        fillActivityFields();
 }
 
 void ActivityDialog::setupActivityField ()
@@ -92,7 +107,6 @@ void ActivityDialog::setupActivityField ()
         ui->statusCombobox->setEnabled(true);
         ui->priorityCombobox->setEnabled(true);
 
-        /* TODO: Come li riempiamo? */
         ui->employeeCombobox->setEnabled(true);
 
         ui->deadlineEdit->setEnabled(true);
@@ -125,7 +139,6 @@ void ActivityDialog::setupActivityField ()
         ui->statusCombobox->setEnabled(false);
         ui->priorityCombobox->setEnabled(false);
 
-        /* TODO: Come li riempiamo? */
         ui->employeeCombobox->setEnabled(false);
 
         ui->deadlineEdit->setEnabled(false);
@@ -138,7 +151,55 @@ void ActivityDialog::setupActivityField ()
     }
 }
 
-void ActivityDialog::fillActivityField ()
+void ActivityDialog::updateEmployeesList (QVector<QVector<QString> > employeesList)
 {
+    qDebug() << "ActivityDialog::updateEmployeesList()";
 
+    ui->employeeCombobox->clear();
+    for (int row = 0; row < employeesList.size(); ++row)
+    {
+        QString name = employeesList.at(row).at(1) + " " + employeesList.at(row).at(2);
+        qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name;
+        ui->employeeCombobox->addItem(name,employeesList.at(row).at(0).toUInt());
+    }
+}
+
+void ActivityDialog::fillActivityFields ()
+{
+    qDebug() << "ActivityDialog::fillActivityField()";
+
+    ui->idText->setText(QString::number(m_activity->getId()));
+
+    /* ToDo */
+
+}
+
+void ActivityDialog::saveValues ()
+{
+    qDebug() << "ActivityDialog::saveValues()";
+    m_activity = 0;
+
+}
+
+void ActivityDialog::apply()
+{
+    if (m_openType != ActivityDialog::DialogType_View)
+        saveValues ();
+
+    close();
+}
+
+void ActivityDialog::noApply()
+{
+    if (m_openType != ActivityDialog::DialogType_View)
+        m_activity = 0;
+    close();
+}
+
+Activity* ActivityDialog::getSavedActivity ()
+{
+    if (m_activity)
+        return m_activity;
+    else
+        return 0;
 }

@@ -57,10 +57,10 @@ private:
 
     EmployeeDialog * m_employeeDialog;
 
-    /* Activities list */
+    /* Employees list */
     QVector<Employee*> m_employees;
 
-    /* Activity wrapper for database */
+    /* Employee wrapper for database */
     EmployeeDatabase * m_databaseWrapper;
     QSqlDatabase * m_database;
 };
