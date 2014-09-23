@@ -44,4 +44,5 @@ OTHER_FILES += \
     ChangeLog \
     LICENSE \
     TODO \
-    README
+    README \
+    labortool.sql

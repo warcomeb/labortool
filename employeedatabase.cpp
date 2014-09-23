@@ -103,6 +103,8 @@ bool EmployeeDatabase::getEmployee (int id, Employee* employee)
     return true;
 }
 
+/* TODO: Update completo della riga */
+
 bool EmployeeDatabase::updateEmployee (Employee* employee)
 {
     qDebug() << "EmployeeDatabase::updateEmployee()";
@@ -112,22 +114,8 @@ bool EmployeeDatabase::updateEmployee (Employee* employee)
             "EmployeeUsername=:user "
             "WHERE EmployeeId=:rowid";
 
-//    "EmployeeSurname=?, EmployeeName=?, EmployeeUsername=?, "
-//                          "EmployeeRole=?, EmployeeSysRole=?, EmployeeCompany=?, "
-//                          "EmployeeActive=?, EmployeeNote=? "
-//                          "WHERE EmployeeId=?";
-
     query.prepare(queryString);
-//    query.bindValue(0,employee->getSurname());
-//    query.bindValue(1,employee->getName());
     query.bindValue(":user",employee->getUsername());
-//    query.bindValue(3,employee->getPassword());
-
-//    query.bindValue(3,Employee::getRoleString(employee->getRole()));
-//    query.bindValue(4,Employee::getSystemRoleString(employee->getSystemRole()));
-//    query.bindValue(5,Employee::getCompanyString(employee->getCompany()));
-//    query.bindValue(6,Employee::getActiveStatusString(employee->getActiveStatus()));
-//    query.bindValue(7,employee->getNote());
     query.bindValue(":rowid",QString::number(employee->getId()));
 
     qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 0 " << query.boundValue(0);
