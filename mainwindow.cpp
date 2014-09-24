@@ -27,7 +27,7 @@
 #include <QDebug>
 
 #define DB_TYPE "QMYSQL"
-#define DB_NAME "prova"
+#define DB_NAME "labortool"
 #define DB_USER "root"
 #define DB_PASS "scossa"
 #define DB_HOST "localhost"
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connectToDatabase();
 
     /* Initialize each controller */
-    m_activityController = new ActivityController(ui->activityTable,&m_database);
+    m_activityController = new ActivityController(&m_database);
     initActivityTab();
     m_employeeController = new EmployeeController(&m_database);
     initEmployeeTab();
@@ -128,7 +128,20 @@ void MainWindow::initActivityTab()
             this,SLOT(openActivityDialog()));
 
     connect(ui->deleteActivityButton,SIGNAL(clicked()),
-            this,SLOT(openActivityDialog())); 
+            this,SLOT(openActivityDialog()));
+
+//    connect(ui->searchActivityButton,SIGNAL(clicked()),
+//            this,SLOT(searchActivities()));
+//    connect(ui->searchActivityResetButton,SIGNAL(clicked()),
+//            this,SLOT(resetSearchActivities()));
+
+    /* Update table slots */
+    connect(m_activityController,SIGNAL(updatedActivitiesList(QStringList)),
+            this,SLOT(updateActivitiesTable(QStringList)));
+
+    QStringList searchParams;
+    searchParams << "Status=NotStarted|InProgress";
+    updateActivitiesTable(searchParams);
 }
 
 /**
@@ -366,4 +379,22 @@ void MainWindow::resetSearchEmployees()
 
     qDebug() << "MainWindow::resetSearchEmployees() - update table";
     updateEmployeesTable(searchParams);
+}
+
+void MainWindow::updateActivitiesTable(QStringList searchParams)
+{
+    qDebug() << "MainWindow::updateActivitiesTable()";
+
+}
+
+void MainWindow::searchActivities()
+{
+    qDebug() << "MainWindow::searchActivities()";
+    QStringList searchParams;
+}
+
+void MainWindow::resetSearchActivities()
+{
+    qDebug() << "MainWindow::resetSearchActivities()";
+
 }

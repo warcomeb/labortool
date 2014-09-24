@@ -1,3 +1,7 @@
+2014-09-24 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunta la definizione vuota delle funzioni per la gestione del tab activity.
+
 2014-09-23 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la funzione addActivity() nel wrapper del database.

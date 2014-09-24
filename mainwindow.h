@@ -58,6 +58,10 @@ private slots:
     void searchEmployees ();
     void resetSearchEmployees ();
 
+    void updateActivitiesTable (QStringList searchParams);
+    void searchActivities ();
+    void resetSearchActivities ();
+
 private:
     Ui::MainWindow *ui;
 
