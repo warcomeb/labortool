@@ -35,6 +35,41 @@ Activity::Activity():
 {
 }
 
+void Activity::setId (uint id)
+{
+    m_id = id;
+}
+
+void Activity::setTitle (QString title)
+{
+    m_title = title;
+}
+
+void Activity::setDescription (QString description)
+{
+    m_description =  description;
+}
+
+void Activity::setWorkCode (QString code)
+{
+    m_workCode = code;
+}
+
+void Activity::setDeadline (QDate deadline)
+{
+    m_deadline = deadline;
+}
+
+void Activity::setDeadline (QString deadline)
+{
+    m_deadline = QDate::fromString(deadline,"yyyy-MM-dd");
+}
+
+void Activity::setEmployee (uint employee)
+{
+    m_assignedEmployee = employee;
+}
+
 void Activity::setStatus(Activity::Status status)
 {
     m_status = status;

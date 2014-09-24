@@ -2,6 +2,8 @@
 
     * Aggiunta la definizione vuota delle funzioni per la gestione del tab activity.
 
+    * Aggiunte le funzioni per il salvataggio dei vari parametri all'interno della classe Activity.
+
 2014-09-23 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la funzione addActivity() nel wrapper del database.

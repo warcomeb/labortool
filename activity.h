@@ -89,6 +89,7 @@ public:
     void setWorkCode (QString code);
 
     void setDeadline (QDate deadline);
+    void setDeadline (QString deadline);
     void setEmployee (uint employee);
 
     void setType (Type type);
