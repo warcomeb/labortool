@@ -21,7 +21,45 @@
 
 #include "activitydatabase.h"
 
+#include <QVariant>
+#include <QSqlError>
+
 ActivityDatabase::ActivityDatabase(QSqlDatabase *db)
 {
     m_database = db;
+}
+
+bool ActivityDatabase::addActivity (Activity* activity)
+{
+    qDebug() << "ActivityDatabase::addActivity()";
+
+    QSqlQuery query(*m_database);
+    QString queryString = "INSERT INTO activity "
+                          "(ActivityTitle, ActivityDescription, ActivityWorkCode, "
+                          "ActivityDeadline, ActivityEmployee, ActivityStatus, "
+                          "ActivityType, ActivityPriority) "
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    query.prepare(queryString);
+    query.bindValue(0,activity->getTitle());
+    query.bindValue(1,activity->getDescription());
+    query.bindValue(2,activity->getWorkCode());
+    query.bindValue(3,activity->getDeadline().toString("yyyy-MM-dd"));
+    query.bindValue(4,activity->getEmployee());
+    query.bindValue(5,Activity::getStatusString(activity->getStatus()));
+    query.bindValue(6,Activity::getTypeString(activity->getType()));
+    query.bindValue(7,Activity::getPriorityString(activity->getPriority()));
+
+    qDebug() << "ActivityDatabase::addActivity() - " << query.lastQuery();
+
+    if (query.exec())
+    {
+        qDebug() << "ActivityDatabase::addActivity() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ActivityDatabase::addActivity() - "<< query.lastError();
+        return false;
+    }
 }

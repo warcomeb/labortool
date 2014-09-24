@@ -23,11 +23,19 @@
 #define ACTIVITYDATABASE_H
 
 #include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QVector>
+#include <QDebug>
+#include <QString>
+
+#include "activity.h"
 
 class ActivityDatabase
 {
 public:
     ActivityDatabase(QSqlDatabase * db);
+
+    bool addActivity (Activity* activity);
 
 private:
 
