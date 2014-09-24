@@ -22,7 +22,6 @@
 #ifndef ACTIVITYCONTROLLER_H
 #define ACTIVITYCONTROLLER_H
 
-#include <QTableView>
 #include <QVector>
 #include <QSqlDatabase>
 
@@ -30,19 +29,25 @@
 #include "activitydialog.h"
 #include "activitydatabase.h"
 
-class ActivityController
+class ActivityController: public QObject
 {
+    Q_OBJECT
+
 public:
-    ActivityController(QTableView * activities, QSqlDatabase* db);
+    ActivityController(QSqlDatabase* db);
 
     void openAddActivityDialog (QVector<QVector<QString> > employeesList);
-    void openEditActivityDialog (QVector<QVector<QString> > employeesList);
-    void openViewActivityDialog (QVector<QVector<QString> > employeesList);
+    void openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
+    void openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
+
+    QVector<QVector<QString> > getActivitiesList (QStringList searchParams);
+
+signals:
+    void updatedActivitiesList(QStringList searchParams);
 
 private:
 
     /* View panel */
-    QTableView * m_tableActivities;
     ActivityDialog * m_activityDialog;
 
     /* Activities list */

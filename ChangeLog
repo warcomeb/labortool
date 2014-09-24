@@ -2,6 +2,8 @@
 
     * Aggiunta la funzione addActivity() nel wrapper del database.
 
+    * Estesa e quasi ultimata l'implementazione del openAddActivityDialog() e piccole sistemazioni in giro.
+
 2014-09-15 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Iniziata l'implementazione del dialog dell'activity.

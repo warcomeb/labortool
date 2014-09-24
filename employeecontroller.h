@@ -55,6 +55,7 @@ signals:
 
 private:
 
+    /* View panel */
     EmployeeDialog * m_employeeDialog;
 
     /* Employees list */

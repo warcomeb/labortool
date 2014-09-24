@@ -29,7 +29,6 @@
 #include <QString>
 #include <QDate>
 
-#include "employee.h"
 #include "activitynote.h"
 
 class Activity : public QObject
@@ -76,7 +75,7 @@ public:
     QString getDescription () const { return m_description; }
     QString getWorkCode () const { return m_workCode; }
 
-    Employee* getEmployee () const { return m_assignedEmployee; }
+    uint getEmployee () const { return m_assignedEmployee; }
     QDate getDeadline () const { return m_deadline; }
 
     Type getType () const { return m_type; }
@@ -90,7 +89,7 @@ public:
     void setWorkCode (QString code);
 
     void setDeadline (QDate deadline);
-    void setEmployee (Employee* employee);
+    void setEmployee (uint employee);
 
     void setType (Type type);
     void setStatus (Status status);
@@ -119,7 +118,7 @@ private:
     QString m_description;
     QString m_workCode;
 
-    Employee* m_assignedEmployee;
+    uint m_assignedEmployee;
 
     QDate m_deadline;
 

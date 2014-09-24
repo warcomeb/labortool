@@ -57,7 +57,6 @@ void EmployeeController::openAddEmployeeDialog ()
             QMessageBox::warning(0, tr("Add Employee Error"),
                                  tr("The employee has not been added! Database Error!"));
         }
-
     }
 }
 

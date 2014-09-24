@@ -21,9 +21,11 @@
 
 #include "activitycontroller.h"
 
-ActivityController::ActivityController(QTableView *activities, QSqlDatabase *db)
+#include <QDebug>
+#include <QMessageBox>
+
+ActivityController::ActivityController(QSqlDatabase *db)
 {
-    m_tableActivities = activities;
     m_database = db;
 
     m_activityDialog = new ActivityDialog;
@@ -33,6 +35,8 @@ ActivityController::ActivityController(QTableView *activities, QSqlDatabase *db)
 
 void ActivityController::openAddActivityDialog (QVector<QVector<QString> > employeesList)
 {
+    qDebug() << "ActivityController::openAddActivityDialog()";
+
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Add);
     m_activityDialog->updateEmployeesList(employeesList);
     m_activityDialog->exec();
@@ -40,12 +44,25 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
     Activity * activity = m_activityDialog->getSavedActivity();
     if (activity)
     {
+        if (m_databaseWrapper->addActivity(activity))
+        {
+            qDebug() << "ActivityController::openAddActivityDialog() - Add activity successful";
+//            QStringList searchParams;
+//            searchParams << "Active=Yes";
+//            emit updatedEmployeesList(searchParams);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ActivityController::openAddActivityDialog() - Add activity error!";
+            QMessageBox::warning(0, tr("Add Activity Error"),
+                                 tr("The activity has not been added! Database Error!"));
+        }
 
     }
-    /* TODO */
 }
 
-void ActivityController::openViewActivityDialog (QVector<QVector<QString> > employeesList)
+void ActivityController::openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
 {
     m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
     m_activityDialog->exec();
@@ -53,7 +70,7 @@ void ActivityController::openViewActivityDialog (QVector<QVector<QString> > empl
     /* TODO */
 }
 
-void ActivityController::openEditActivityDialog (QVector<QVector<QString> > employeesList)
+void ActivityController::openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
 {
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Edit);
     m_activityDialog->exec();
