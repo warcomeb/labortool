@@ -231,13 +231,13 @@ void MainWindow::openActivityDialog()
     {
         employeesList = m_employeeController->getEmployeesList(searchParams);
 
-        m_activityController->openViewActivityDialog(employeesList);
+        m_activityController->openViewActivityDialog(0,employeesList);
     }
     else if (sender() == ui->editActivityButton)
     {
         employeesList = m_employeeController->getEmployeesList(searchParams);
 
-        m_activityController->openEditActivityDialog(employeesList);
+        m_activityController->openEditActivityDialog(0,employeesList);
     }
     else if (sender() == ui->deleteActivityButton)
     {

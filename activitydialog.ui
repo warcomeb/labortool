@@ -36,13 +36,6 @@
        <string>Data</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <widget class="QLabel" name="employeeLabel">
-         <property name="text">
-          <string>Employee</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="7">
         <widget class="QComboBox" name="typeCombobox"/>
        </item>
@@ -62,13 +55,6 @@
        </item>
        <item row="2" column="5">
         <widget class="QComboBox" name="statusCombobox"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="idLabel">
-         <property name="text">
-          <string>Id</string>
-         </property>
-        </widget>
        </item>
        <item row="1" column="4">
         <widget class="QLabel" name="jobcodeLabel">
@@ -105,20 +91,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="descriptionLabel">
-         <property name="text">
-          <string>Description</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="titleLabel">
-         <property name="text">
-          <string>Title</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="3">
         <widget class="QComboBox" name="employeeCombobox"/>
        </item>
@@ -149,7 +121,35 @@
        <item row="3" column="3" colspan="7">
         <widget class="QTextEdit" name="descriptionText"/>
        </item>
-       <item row="4" column="8" colspan="2">
+       <item row="2" column="1">
+        <widget class="QLabel" name="employeeLabel">
+         <property name="text">
+          <string>Employee</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="idLabel">
+         <property name="text">
+          <string>Id</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="titleLabel">
+         <property name="text">
+          <string>Title</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="descriptionLabel">
+         <property name="text">
+          <string>Description</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="9">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <spacer name="horizontalSpacer">
@@ -168,6 +168,13 @@
           <widget class="QPushButton" name="saveButton">
            <property name="text">
             <string>Save</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="closeButton">
+           <property name="text">
+            <string>Close</string>
            </property>
           </widget>
          </item>

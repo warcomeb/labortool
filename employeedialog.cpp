@@ -98,6 +98,7 @@ void EmployeeDialog::setupEmployeeField ()
     switch (m_openType)
     {
     case DialogType_Add:
+        qDebug() << "EmployeeDialog::setupEmployeeField() - Add";
         ui->idText->setText("0");
 
         ui->nameText->setText("");
@@ -117,10 +118,16 @@ void EmployeeDialog::setupEmployeeField ()
         ui->companyCombobox->setEnabled(true);
         ui->activeCombobox->setEnabled(true);
 
+        ui->sysroleCombobox->setCurrentIndex(0);
+        ui->roleCombobox->setCurrentIndex(0);
+        ui->companyCombobox->setCurrentIndex(0);
+        ui->activeCombobox->setCurrentIndex(0);
+
         ui->noteText->setEnabled(true);
         ui->noteText->setText("");
         break;
     case DialogType_Edit:
+        qDebug() << "EmployeeDialog::setupEmployeeField() - Edit";
         ui->nameText->setEnabled(false);
 
         ui->surnameText->setEnabled(false);
@@ -138,6 +145,7 @@ void EmployeeDialog::setupEmployeeField ()
         ui->noteText->setEnabled(true);
         break;
     case DialogType_View:
+        qDebug() << "EmployeeDialog::setupEmployeeField() - View";
         ui->nameText->setEnabled(false);
 
         ui->surnameText->setEnabled(false);

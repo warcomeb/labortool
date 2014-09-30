@@ -92,11 +92,11 @@ bool EmployeeDatabase::getEmployee (int id, Employee* employee)
     employee->setUsername(query.value(3).toString());
     /* Do not use the password field! */
 //    employee->setPassword(query.value(4).toString());
-    employee->setRole(query.value(5).toString());
-    employee->setSystemRole(query.value(6).toString());
-    employee->setCompany(query.value(7).toString());
-    employee->setActiveStatus(query.value(8).toString());
-    employee->setNote(query.value(9).toString());
+    employee->setNote(query.value(5).toString());
+    employee->setRole(query.value(6).toString());
+    employee->setSystemRole(query.value(7).toString());
+    employee->setCompany(query.value(8).toString());
+    employee->setActiveStatus(query.value(9).toString());
 
     qDebug() << "EmployeeDatabase::getEmployee() - employee" << id <<
                 query.value(2).toString() << query.value(1).toString();

@@ -25,6 +25,7 @@
 #include "metadata.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 ActivityDialog::ActivityDialog(QWidget *parent) :
     QDialog(parent),
@@ -178,6 +179,58 @@ void ActivityDialog::saveValues ()
 {
     qDebug() << "ActivityDialog::saveValues()";
     m_activity = 0;
+
+    QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
+
+    if (ui->titleText->text().isEmpty())
+    {
+        qDebug() << "Title is empty";
+        QMessageBox::critical(this, tr("Error"),
+            tr("Activity title is empty!"));
+    }
+
+    if (workCode.exactMatch(ui->jobcodeText->text()))
+    {
+        qDebug() << "Job Code correct:" << ui->jobcodeText->text();
+    }
+    else
+    {
+        qDebug() << "Job Code not correct:" << ui->jobcodeText->text();
+        QMessageBox::critical(this, tr("Error"),
+            tr("Job Code not correct!"));
+//        return;
+    }
+
+    m_activity = new Activity(ui->jobcodeText->text());
+    if (m_openType != DialogType_Add) m_activity->setId(ui->idText->text().toUInt());
+    m_activity->setDeadline(ui->deadlineEdit->date());
+    m_activity->setDescription(ui->descriptionText->toPlainText());
+    m_activity->setEmployee(ui->employeeCombobox->currentIndex());
+    m_activity->setWorkCode(ui->jobcodeText->text());
+
+    m_activity->setPriority(
+        static_cast<Activity::Priority>(
+            ui->priorityCombobox->currentData().toInt()
+        )
+    );
+    qDebug() << "Priority:" << static_cast<Activity::Priority>(
+        ui->priorityCombobox->currentData().toInt());
+
+    m_activity->setType(
+        static_cast<Activity::Type>(
+            ui->typeCombobox->currentData().toInt()
+        )
+    );
+    qDebug() << "Type:" << static_cast<Activity::Type>(
+        ui->typeCombobox->currentData().toInt());
+
+    m_activity->setStatus(
+        static_cast<Activity::Status>(
+            ui->statusCombobox->currentData().toInt()
+        )
+    );
+    qDebug() << "Status:" << static_cast<Activity::Status>(
+        ui->statusCombobox->currentData().toInt());
 
 }
 
