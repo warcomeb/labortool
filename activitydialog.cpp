@@ -184,21 +184,22 @@ void ActivityDialog::saveValues ()
 
     if (ui->titleText->text().isEmpty())
     {
-        qDebug() << "Title is empty";
+        qDebug() << "ActivityDialog::saveValues() - Title is empty";
         QMessageBox::critical(this, tr("Error"),
             tr("Activity title is empty!"));
+        return;
     }
 
     if (workCode.exactMatch(ui->jobcodeText->text()))
     {
-        qDebug() << "Job Code correct:" << ui->jobcodeText->text();
+        qDebug() << "ActivityDialog::saveValues() - Job Code correct:" << ui->jobcodeText->text();
     }
     else
     {
-        qDebug() << "Job Code not correct:" << ui->jobcodeText->text();
+        qDebug() << "ActivityDialog::saveValues() - Job Code not correct:" << ui->jobcodeText->text();
         QMessageBox::critical(this, tr("Error"),
             tr("Job Code not correct!"));
-//        return;
+        return;
     }
 
     m_activity = new Activity(ui->jobcodeText->text());
@@ -213,7 +214,7 @@ void ActivityDialog::saveValues ()
             ui->priorityCombobox->currentData().toInt()
         )
     );
-    qDebug() << "Priority:" << static_cast<Activity::Priority>(
+    qDebug() << "ActivityDialog::saveValues() - Priority:" << static_cast<Activity::Priority>(
         ui->priorityCombobox->currentData().toInt());
 
     m_activity->setType(
@@ -221,7 +222,7 @@ void ActivityDialog::saveValues ()
             ui->typeCombobox->currentData().toInt()
         )
     );
-    qDebug() << "Type:" << static_cast<Activity::Type>(
+    qDebug() << "ActivityDialog::saveValues() - Type:" << static_cast<Activity::Type>(
         ui->typeCombobox->currentData().toInt());
 
     m_activity->setStatus(
@@ -229,9 +230,8 @@ void ActivityDialog::saveValues ()
             ui->statusCombobox->currentData().toInt()
         )
     );
-    qDebug() << "Status:" << static_cast<Activity::Status>(
+    qDebug() << "ActivityDialog::saveValues() - Status:" << static_cast<Activity::Status>(
         ui->statusCombobox->currentData().toInt());
-
 }
 
 void ActivityDialog::apply()
@@ -239,7 +239,10 @@ void ActivityDialog::apply()
     if (m_openType != ActivityDialog::DialogType_View)
         saveValues ();
 
-    close();
+    if (m_activity != 0)
+    {
+        close();
+    }
 }
 
 void ActivityDialog::noApply()

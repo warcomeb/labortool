@@ -44,8 +44,20 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
     Activity * activity = m_activityDialog->getSavedActivity();
     if (activity)
     {
-
-
+        if (m_databaseWrapper->addActivity(activity))
+        {
+            qDebug() << "ActivityController::openAddActivityDialog() - Add activities successful";
+            QStringList searchParams;
+            searchParams << "Status=NotStarted|InProgress|Waiting";
+            emit updatedActivitiesList(searchParams);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ActivityController::openAddActivityDialog() - Add activity error!";
+            QMessageBox::warning(0, tr("Add Activity Error"),
+                                 tr("The activity has not been added! Database Error!"));
+        }
     }
 }
 
