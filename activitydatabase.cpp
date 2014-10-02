@@ -63,3 +63,34 @@ bool ActivityDatabase::addActivity (Activity* activity)
         return false;
     }
 }
+
+QVector< QVector< QString > >
+ActivityDatabase::searchActivities(QStringList searchParams)
+{
+    qDebug() << "ActivityDatabase::searchActivities()";
+
+    QVector<QVector<QString> > activitiesList;
+
+    QString queryString = "SELECT ActivityId, ActivityTitle, ActivityEmployee, "
+                          "ActivityPriority, ActivityStatus, ActivityType, "
+                          "ActivityDeadline FROM activity ";
+
+    if (searchParams.size()>0)
+    {
+        qDebug() << "ActivityDatabase::searchActivities() - Search param list is not empty";
+
+//        queryString.append("WHERE ( ");
+        for (int i = 0; i < searchParams.size(); ++i)
+        {
+            qDebug() << "ActivityDatabase::searchActivities() - Param:" << searchParams.at(i);
+
+        }
+
+    }
+    queryString.append("ORDER BY ActivityDeadline ASC");
+
+    qDebug() << "ActivityDatabase::searchActivities() - Final search string: " << queryString;
+
+
+    return activitiesList;
+}

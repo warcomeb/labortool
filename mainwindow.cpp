@@ -139,6 +139,11 @@ void MainWindow::initActivityTab()
     connect(m_activityController,SIGNAL(updatedActivitiesList(QStringList)),
             this,SLOT(updateActivitiesTable(QStringList)));
 
+    /* Startup table! */
+    m_activityModel = new QStandardItemModel(1, 6);
+    ui->activityTable->setModel(m_activityModel);
+    ui->activityTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     QStringList searchParams;
     searchParams << "Status=NotStarted|InProgress";
     updateActivitiesTable(searchParams);
@@ -199,7 +204,6 @@ void MainWindow::initEmployeeTab()
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
             this,
             SLOT(selectionChangedEmployeesTable(const QItemSelection &, const QItemSelection &)));
-
 
     QStringList searchParams;
     searchParams << "Active=Yes";
@@ -384,6 +388,22 @@ void MainWindow::resetSearchEmployees()
 void MainWindow::updateActivitiesTable(QStringList searchParams)
 {
     qDebug() << "MainWindow::updateActivitiesTable()";
+
+    m_activityModel->clear();
+    m_activityModel->setColumnCount(6);
+//    m_activityModel->sort(1,Qt::AscendingOrder);
+
+    m_activityModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    m_activityModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Title"));
+    m_activityModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Employee"));
+    m_activityModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Type"));
+    m_activityModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Status"));
+    m_activityModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Deadline"));
+
+    QVector<QVector<QString> > activitiesList =
+            m_activityController->getActivitiesList(searchParams);
+
+    qDebug() << "MainWindow::updateActivitiesTable() - Activities size:" << activitiesList.size();
 
 }
 

@@ -76,3 +76,11 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
 
     /* TODO */
 }
+
+QVector<QVector<QString> >
+ActivityController::getActivitiesList (QStringList searchParams)
+{
+    qDebug() << "ActivityController::getActivitiesList(QStringList)";
+
+    return m_databaseWrapper->searchActivities(searchParams);
+}

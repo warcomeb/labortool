@@ -1,16 +1,23 @@
 Task:       ProgressiveNumber.Status.Developers
 Status:     O=Open|P=InProgress|C=Closed
-Developers: A=Marco|B=Cristiano|C=Simone
+Developers: A=Marco
 
-LastNumber: 0
-
-        OPEN TASK
-        ---------
+LastNumber: 2
 
 
-        IN PROGRESS TASK
-        ----------------
+OPEN TASK
+-------------------------------------------------------------------------------
+
+1.O.A
+Aggiungere un colore alla linea delle attività.
+Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre arancioni.
+
+2.O.A
+Complatere l'update dei dati dell'utente dentro al wrapper per il database.
+
+IN PROGRESS TASK
+-------------------------------------------------------------------------------
 
 
-        CLOSED TASK
-        -----------
+CLOSED TASK
+-------------------------------------------------------------------------------

@@ -74,7 +74,8 @@ private:
     /* Models */
     QStandardItemModel * m_employeeModel;
     int m_employeeSelected;
-
+    QStandardItemModel * m_activityModel;
+    int m_activitySelected;
 
     /* Initialize signals and slots into tabs */
     void initActivityTab();

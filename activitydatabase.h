@@ -37,6 +37,9 @@ public:
 
     bool addActivity (Activity* activity);
 
+    QVector< QVector< QString > > searchActivities(QStringList searchParams);
+
+
 private:
 
     QSqlDatabase * m_database;
