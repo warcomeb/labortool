@@ -24,6 +24,8 @@
 #include <QVariant>
 #include <QSqlError>
 
+#define DB_FIELD_SUFFIX     "Activity"
+
 ActivityDatabase::ActivityDatabase(QSqlDatabase *db)
 {
     m_database = db;
@@ -71,7 +73,7 @@ ActivityDatabase::searchActivities(QStringList searchParams)
 
     QVector<QVector<QString> > activitiesList;
 
-    QString queryString = "SELECT ActivityId, ActivityTitle, ActivityEmployee, "
+    QString queryString = "SELECT ActivityId, ActivityTitle, ActivityWorkCode, ActivityEmployee, "
                           "ActivityPriority, ActivityStatus, ActivityType, "
                           "ActivityDeadline FROM activity ";
 
@@ -79,11 +81,82 @@ ActivityDatabase::searchActivities(QStringList searchParams)
     {
         qDebug() << "ActivityDatabase::searchActivities() - Search param list is not empty";
 
-//        queryString.append("WHERE ( ");
+        queryString.append("WHERE ( ");
         for (int i = 0; i < searchParams.size(); ++i)
         {
             qDebug() << "ActivityDatabase::searchActivities() - Param:" << searchParams.at(i);
 
+            if (searchParams.at(i).indexOf('=') != -1)
+            {
+                QStringList searchParam = searchParams.at(i).split('=');
+                if (searchParam.size() == 2)
+                {
+                    qDebug() << "ActivityDatabase::searchActivities() - Param is correct";
+                    queryString.append(DB_FIELD_SUFFIX +
+                                       searchParam.at(0) +  "='" +
+                                       searchParam.at(1) + "' ");
+                }
+                else
+                {
+                    qDebug() << "ActivityDatabase::searchActivities() - Param is not correct";
+                    return activitiesList;
+                }
+
+            }
+            else if (searchParams.at(i).indexOf('$') != -1)
+            {
+                QStringList searchParam = searchParams.at(i).split('$');
+                if (searchParam.size() == 2)
+                {
+                    qDebug() << "ActivityDatabase::searchActivities() - Param is correct";
+                    qDebug() << "ActivityDatabase::searchActivities()" << searchParam;
+                    QStringList searchComboParams = searchParam.at(1).split('|');
+                    queryString.append("( ");
+                    for (int j = 0; j < searchComboParams.size(); ++j)
+                    {
+                        queryString.append(DB_FIELD_SUFFIX +
+                                           searchParam.at(0) +  "='" +
+                                           searchComboParams.at(i) + "' ");
+
+                        if (j+1 == searchComboParams.size())
+                            queryString.append(") ");
+                        else
+                            queryString.append("OR ");
+                    }
+                }
+                else
+                {
+                    qDebug() << "ActivityDatabase::searchActivities() - Param is not correct";
+                    return activitiesList;
+                }
+            }
+            else if (searchParams.at(i).indexOf('%') != -1)
+            {
+                QStringList searchParam = searchParams.at(i).split('%');
+                if (searchParam.size() == 2)
+                {
+                    qDebug() << "ActivityDatabase::searchActivities() - Param is correct";
+                    queryString.append(
+                        "( ActivityTitle LIKE '%" + searchParam.at(1) + "%' OR " +
+                        "ActivityDescription LIKE '%" + searchParam.at(1) + "%') "
+                    );
+                }
+                else
+                {
+                    qDebug() << "ActivityDatabase::searchActivities() - Param is not correct";
+                    return activitiesList;
+                }
+            }
+            else
+            {
+                qDebug() << "ActivityDatabase::searchActivities() - Param is not correct";
+                return activitiesList;
+            }
+
+            if (i+1 == searchParams.size())
+                queryString.append(") ");
+            else
+                queryString.append(" AND ");
         }
 
     }
@@ -91,6 +164,21 @@ ActivityDatabase::searchActivities(QStringList searchParams)
 
     qDebug() << "ActivityDatabase::searchActivities() - Final search string: " << queryString;
 
+    QSqlQuery query( queryString, *m_database);
+    while (query.next())
+    {
+        QVector<QString> activity;
+        activity.append(query.value(0).toString()); // Id
+        activity.append(query.value(1).toString()); // Title
+        activity.append(query.value(2).toString()); // WorkCode
+        activity.append(query.value(3).toString()); // Employee
+        activity.append(query.value(4).toString()); // Priority
+        activity.append(query.value(5).toString()); // Status
+        activity.append(query.value(6).toString()); // Type
 
+        activitiesList.append(activity);
+    }
+
+    qDebug() << "ActivityDatabase::searchActivities() - Final list" << activitiesList;
     return activitiesList;
 }

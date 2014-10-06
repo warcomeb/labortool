@@ -48,7 +48,7 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
         {
             qDebug() << "ActivityController::openAddActivityDialog() - Add activities successful";
             QStringList searchParams;
-            searchParams << "Status=NotStarted|InProgress|Waiting";
+            searchParams << "Status$NotStarted|InProgress|Waiting";
             emit updatedActivitiesList(searchParams);
         }
         else

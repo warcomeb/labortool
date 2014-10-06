@@ -221,5 +221,6 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
         employeesList.append(employee);
     }
 
+    qDebug() << "EmployeeDatabase::searchEmployees() - Final list" << employeesList;
     return employeesList;
 }

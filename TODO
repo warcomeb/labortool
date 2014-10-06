@@ -2,7 +2,7 @@ Task:       ProgressiveNumber.Status.Developers
 Status:     O=Open|P=InProgress|C=Closed
 Developers: A=Marco
 
-LastNumber: 2
+LastNumber: 3
 
 
 OPEN TASK
@@ -14,6 +14,10 @@ Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre ara
 
 2.O.A
 Complatere l'update dei dati dell'utente dentro al wrapper per il database.
+
+3.O.A
+Aggiungere il parsing di scelte multiple all'interno di un parametro nei dati del dipendente.
+Aggiungere il parsing del comando $.
 
 IN PROGRESS TASK
 -------------------------------------------------------------------------------

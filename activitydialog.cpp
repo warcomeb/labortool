@@ -202,7 +202,7 @@ void ActivityDialog::saveValues ()
         return;
     }
 
-    m_activity = new Activity(ui->jobcodeText->text());
+    m_activity = new Activity(ui->titleText->text());
     if (m_openType != DialogType_Add) m_activity->setId(ui->idText->text().toUInt());
     m_activity->setDeadline(ui->deadlineEdit->date());
     m_activity->setDescription(ui->descriptionText->toPlainText());
