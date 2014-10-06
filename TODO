@@ -8,10 +8,6 @@ LastNumber: 3
 OPEN TASK
 -------------------------------------------------------------------------------
 
-1.O.A
-Aggiungere un colore alla linea delle attività.
-Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre arancioni.
-
 2.O.A
 Complatere l'update dei dati dell'utente dentro al wrapper per il database.
 
@@ -21,6 +17,10 @@ Aggiungere il parsing del comando $.
 
 IN PROGRESS TASK
 -------------------------------------------------------------------------------
+
+1.P.A
+Aggiungere un colore alla linea delle attività.
+Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre arancioni.
 
 
 CLOSED TASK

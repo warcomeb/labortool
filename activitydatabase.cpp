@@ -73,9 +73,9 @@ ActivityDatabase::searchActivities(QStringList searchParams)
 
     QVector<QVector<QString> > activitiesList;
 
-    QString queryString = "SELECT ActivityId, ActivityTitle, ActivityWorkCode, ActivityEmployee, "
-                          "ActivityPriority, ActivityStatus, ActivityType, "
-                          "ActivityDeadline FROM activity ";
+    QString queryString = "SELECT ActivityId, ActivityTitle, ActivityWorkCode, "
+                          "ActivityEmployee, ActivityPriority, ActivityStatus, "
+                          "ActivityType, ActivityDeadline FROM activity ";
 
     if (searchParams.size()>0)
     {
@@ -175,6 +175,7 @@ ActivityDatabase::searchActivities(QStringList searchParams)
         activity.append(query.value(4).toString()); // Priority
         activity.append(query.value(5).toString()); // Status
         activity.append(query.value(6).toString()); // Type
+        activity.append(query.value(7).toString()); // Deadline
 
         activitiesList.append(activity);
     }

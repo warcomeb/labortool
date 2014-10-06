@@ -10,6 +10,9 @@
 
     * Continua lo sviluppo dell'add delle attivitità.
 
+    * Aggiunta la visualizzazione delle attivita' e il cambio di colore in caso di deadline pressanti.
+    E' comunque da testare bene.
+
 2014-09-30 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunto il salvataggio su oggetto dell'activity.

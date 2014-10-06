@@ -389,23 +389,63 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
 {
     qDebug() << "MainWindow::updateActivitiesTable()";
 
+    QDate shortDeadline = QDate::currentDate().addDays(7);
+    bool isShortDeadline = false;
+    qDebug() << "MainWindow::updateActivitiesTable() - short deadline" << shortDeadline;
+    QDate mediumDeadline = QDate::currentDate().addDays(21);
+    bool isMediumDeadline = false;
+    qDebug() << "MainWindow::updateActivitiesTable() - medium deadline" << mediumDeadline;
+
     m_activityModel->clear();
-    m_activityModel->setColumnCount(6);
+    m_activityModel->setColumnCount(7);
 //    m_activityModel->sort(1,Qt::AscendingOrder);
 
     m_activityModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     m_activityModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Title"));
     m_activityModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Workcode"));
     m_activityModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Employee"));
-    m_activityModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Type"));
+    m_activityModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Priority"));
     m_activityModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Status"));
-    m_activityModel->setHeaderData(6, Qt::Horizontal, QObject::tr("Deadline"));
+    m_activityModel->setHeaderData(6, Qt::Horizontal, QObject::tr("Type"));
 
     QVector<QVector<QString> > activitiesList =
             m_activityController->getActivitiesList(searchParams);
 
     qDebug() << "MainWindow::updateActivitiesTable() - Activities size:" << activitiesList.size();
+    if (activitiesList.size()>0)
+    {
+        for (int row = 0; row < activitiesList.size(); ++row)
+        {
+            qDebug() << "MainWindow::updateActivitiesTable() - db deadline" << activitiesList.at(row).at(7);
+            QDate deadline = QDate::fromString(activitiesList.at(row).at(7),"yyyy-MM-dd");
+            qDebug() << "MainWindow::updateActivitiesTable() - deadline" << deadline;
 
+            if (deadline < shortDeadline)
+            {
+                isShortDeadline = true;
+                qDebug() << "MainWindow::updateActivitiesTable() - less than 7 days!";
+            }
+            else if (deadline < mediumDeadline)
+            {
+                isMediumDeadline = true;
+                qDebug() << "MainWindow::updateActivitiesTable() - less then 21 days!";
+            }
+
+            for (int column = 0; column < 7; ++column)
+            {
+                QStandardItem *item = new QStandardItem(activitiesList.at(row).at(column));
+                if (isShortDeadline)
+                    item->setBackground(QBrush(Qt::red));
+                else if (isMediumDeadline)
+                    item->setBackground(QBrush(Qt::yellow));
+
+                m_activityModel->setItem(row, column, item);
+            }
+
+            isMediumDeadline = false;
+            isShortDeadline = false;
+        }
+    }
 }
 
 void MainWindow::searchActivities()
