@@ -63,10 +63,21 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
 
 void ActivityController::openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
 {
-    m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
-    m_activityDialog->exec();
+    qDebug() << "ActivityController::openViewActivityDialog()";
 
-    /* TODO */
+    Activity * activity = new Activity;
+    if (!m_databaseWrapper->getActivity(activityId,activity))
+    {
+        QMessageBox::warning(0, tr("View Activity Error"),
+                             tr("The activity can not be displayed!\n Database Error!"));
+        qDebug() << "ActivityController::openViewActivityDialog() - Database Error!";
+        return;
+    }
+
+//    m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
+//    m_activityDialog->setSelectedActivity(activity);
+
+//    m_activityDialog->exec();
 }
 
 void ActivityController::openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)

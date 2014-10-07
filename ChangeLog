@@ -1,6 +1,13 @@
+2014-10-07 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Completata la funzione getActivity() in ActivityDatabase.
+
 2014-10-06 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Completata la funzione di ricerca all'interno del database delle varie attivita'.
+
+    * Aggiunta la visualizzazione delle attivita' e il cambio di colore in caso di deadline pressanti.
+    E' comunque da testare bene.
 
 2014-10-02 Marco Giammarini <m.giammarini@warcomeb.it>
 
@@ -9,9 +16,6 @@
 2014-10-01 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Continua lo sviluppo dell'add delle attivitità.
-
-    * Aggiunta la visualizzazione delle attivita' e il cambio di colore in caso di deadline pressanti.
-    E' comunque da testare bene.
 
 2014-09-30 Marco Giammarini <m.giammarini@warcomeb.it>
 

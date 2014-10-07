@@ -58,6 +58,7 @@ private slots:
     void searchEmployees ();
     void resetSearchEmployees ();
 
+    void selectionChangedActivitiesTable (const QItemSelection & sel, const QItemSelection & des);
     void updateActivitiesTable (QStringList searchParams);
     void searchActivities ();
     void resetSearchActivities ();

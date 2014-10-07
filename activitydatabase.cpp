@@ -66,6 +66,48 @@ bool ActivityDatabase::addActivity (Activity* activity)
     }
 }
 
+bool ActivityDatabase::getActivity (int id, Activity *activity)
+{
+    qDebug() << "ActivityDatabase::getActivity()";
+
+    QString queryString = "SELECT * FROM activity WHERE ActivityId='" +
+            QString::number(id) + "'";
+
+    qDebug() << "ActivityDatabase::getActivity() - Final search string: " << queryString;
+    QSqlQuery query( queryString, *m_database);
+
+    if (query.size() != 1)
+    {
+        qDebug() << "ActivityDatabase::getActivity() - database problems!";
+        return false;
+    }
+
+    /* Read record! */
+    qDebug() << "ActivityDatabase::getActivity() - read record";
+    query.next();
+
+    /* TODO */
+    activity->setId(id);
+    activity->setTitle(query.value(1).toString());
+    activity->setDescription(query.value(2).toString());
+    activity->setWorkCode(query.value(3).toString());
+    activity->setDeadline(query.value(4).toString());
+    activity->setPriority(query.value(5).toString());
+    activity->setStatus(query.value(6).toString());
+    activity->setType(query.value(7).toString());
+    activity->setEmployee(query.value(8).toString().toUInt());
+
+    qDebug() << "ActivityDatabase::getActivity() - activity" << id <<
+                query.value(3).toString() << query.value(1).toString();
+    return true;
+}
+
+bool ActivityDatabase::updateActivity (Activity *activity)
+{
+    qDebug() << "ActivityDatabase::updateActivity()";
+
+}
+
 QVector< QVector< QString > >
 ActivityDatabase::searchActivities(QStringList searchParams)
 {

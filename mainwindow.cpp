@@ -144,6 +144,12 @@ void MainWindow::initActivityTab()
     ui->activityTable->setModel(m_activityModel);
     ui->activityTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    connect(ui->activityTable->selectionModel(),
+            SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
+            this,
+            SLOT(selectionChangedActivitiesTable(const QItemSelection &, const QItemSelection &)));
+
+
     QStringList searchParams;
     searchParams << "Status$NotStarted|InProgress|Waiting";
     updateActivitiesTable(searchParams);
@@ -235,13 +241,13 @@ void MainWindow::openActivityDialog()
     {
         employeesList = m_employeeController->getEmployeesList(searchParams);
 
-        m_activityController->openViewActivityDialog(0,employeesList);
+        m_activityController->openViewActivityDialog(m_activitySelected,employeesList);
     }
     else if (sender() == ui->editActivityButton)
     {
         employeesList = m_employeeController->getEmployeesList(searchParams);
 
-        m_activityController->openEditActivityDialog(0,employeesList);
+        m_activityController->openEditActivityDialog(m_activitySelected,employeesList);
     }
     else if (sender() == ui->deleteActivityButton)
     {
@@ -383,6 +389,23 @@ void MainWindow::resetSearchEmployees()
 
     qDebug() << "MainWindow::resetSearchEmployees() - update table";
     updateEmployeesTable(searchParams);
+}
+
+void MainWindow::selectionChangedActivitiesTable(const QItemSelection & sel,
+                                                const QItemSelection & des)
+{
+    qDebug() << "MainWindow::selectionChangedActivitiesTable()";
+    QModelIndexList indexes = sel.indexes();
+    qDebug() << "MainWindow::selectionChangedActivitiesTable() - selected number" << indexes.count();
+    if (indexes.count() != 1 )
+    {
+        m_activitySelected = -1;
+        qDebug() << "MainWindow::selectionChangedActivitiesTable() - Too many items selected";
+        return;
+    }
+
+    qDebug() << "MainWindow::selectionChangedActivitiesTable() - row selected" << indexes.at(0).row();
+    m_activitySelected = m_activityModel->item(indexes.at(0).row(),0)->text().toInt();
 }
 
 void MainWindow::updateActivitiesTable(QStringList searchParams)

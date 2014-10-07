@@ -36,6 +36,8 @@ public:
     ActivityDatabase(QSqlDatabase * db);
 
     bool addActivity (Activity* activity);
+    bool updateActivity (Activity* activity);
+    bool getActivity (int id, Activity* activity);
 
     QVector< QVector< QString > > searchActivities(QStringList searchParams);
 
