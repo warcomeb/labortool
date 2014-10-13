@@ -209,8 +209,10 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
     qDebug() << "EmployeeDatabase::searchEmployees() - Final search string: " << queryString;
 
     QSqlQuery query( queryString, *m_database);
+    qDebug() << "EmployeeDatabase::searchEmployees() - Query executed!";
     while (query.next())
     {
+        qDebug() << "EmployeeDatabase::searchEmployees() - Query result...";
         QVector<QString> employee;
         employee.append(query.value(0).toString()); // Id
         employee.append(query.value(1).toString()); // Surname
@@ -218,7 +220,10 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
         employee.append(query.value(3).toString()); // Username
         employee.append(query.value(4).toString()); // Role
 
+        qDebug() << "EmployeeDatabase::searchEmployees() - query to vector ok!";
+
         employeesList.append(employee);
+        qDebug() << "EmployeeDatabase::searchEmployees() - vector added!";
     }
 
     qDebug() << "EmployeeDatabase::searchEmployees() - Final list" << employeesList;

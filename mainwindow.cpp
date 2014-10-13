@@ -52,10 +52,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connectToDatabase();
 
     /* Initialize each controller */
-    m_activityController = new ActivityController(&m_database);
-    initActivityTab();
     m_employeeController = new EmployeeController(&m_database);
     initEmployeeTab();
+    m_activityController = new ActivityController(&m_database);
+    initActivityTab();
+
 
     /* Update data into tab when it was selected!! */
     /* TODO: Add waiting... */
@@ -439,6 +440,11 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
     if (activitiesList.size()>0)
     {
         /* Get the employees list */
+        QStringList employeesSearchParams;
+        employeesSearchParams << "Active=Yes";
+        QVector<QVector<QString> > employeesList =
+                m_employeeController->getEmployeesList(employeesSearchParams);
+        qDebug() << "MainWindow::updateActivitiesTable() - Employees size:" << employeesList.size();
 
 
         for (int row = 0; row < activitiesList.size(); ++row)
@@ -462,25 +468,25 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
             {
                 QStandardItem *item;
 
-//                if (column == 3) // Employee
-//                {
-//                    uint employeeId = activitiesList.at(row).at(column).toUInt();
-//                    for (int i = 0; i < employeesList.size(); ++i)
-//                    {
-//                        uint searchEmployeeId = employeesList.at(i).at(0).toUInt();
-//                        if (employeeId == searchEmployeeId)
-//                        {
-//                            item = new QStandardItem(
-//                                employeesList.at(i).at(1) + " " + employeesList.at(i).at(2)
-//                            );
-//                            break;
-//                        }
-//                    }
-//                }
-//                else
-//                {
+                if (column == 3) // Employee
+                {
+                    uint employeeId = activitiesList.at(row).at(column).toUInt();
+                    for (int i = 0; i < employeesList.size(); ++i)
+                    {
+                        uint searchEmployeeId = employeesList.at(i).at(0).toUInt();
+                        if (employeeId == searchEmployeeId)
+                        {
+                            item = new QStandardItem(
+                                employeesList.at(i).at(1) + " " + employeesList.at(i).at(2)
+                            );
+                            break;
+                        }
+                    }
+                }
+                else
+                {
                     item = new QStandardItem(activitiesList.at(row).at(column));
-//                }
+                }
 
                 if (isShortDeadline)
                     item->setBackground(QBrush(Qt::red));
