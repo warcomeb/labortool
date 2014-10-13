@@ -68,7 +68,7 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
     if (!m_databaseWrapper->getEmployee(employeeId,employee))
     {
         QMessageBox::warning(0, tr("View Employee Error"),
-                             tr("The employee can not be displayed!\n Database Error!"));
+                             tr("The employee can not be displayed! Database Error!"));
         return;
     }
 

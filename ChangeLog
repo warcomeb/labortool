@@ -1,3 +1,7 @@
+2014-10-08 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Completata la funzione fillActivityFields() in ActivityDialog.
+
 2014-10-07 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Completata la funzione getActivity() in ActivityDatabase.

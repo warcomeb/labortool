@@ -41,7 +41,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_employeeSelected(-1)
+    m_employeeSelected(-1),
+    m_activitySelected(-1)
 {
     ui->setupUi(this);
 
@@ -437,6 +438,9 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
     qDebug() << "MainWindow::updateActivitiesTable() - Activities size:" << activitiesList.size();
     if (activitiesList.size()>0)
     {
+        /* Get the employees list */
+
+
         for (int row = 0; row < activitiesList.size(); ++row)
         {
             qDebug() << "MainWindow::updateActivitiesTable() - db deadline" << activitiesList.at(row).at(7);
@@ -456,7 +460,28 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
 
             for (int column = 0; column < 7; ++column)
             {
-                QStandardItem *item = new QStandardItem(activitiesList.at(row).at(column));
+                QStandardItem *item;
+
+//                if (column == 3) // Employee
+//                {
+//                    uint employeeId = activitiesList.at(row).at(column).toUInt();
+//                    for (int i = 0; i < employeesList.size(); ++i)
+//                    {
+//                        uint searchEmployeeId = employeesList.at(i).at(0).toUInt();
+//                        if (employeeId == searchEmployeeId)
+//                        {
+//                            item = new QStandardItem(
+//                                employeesList.at(i).at(1) + " " + employeesList.at(i).at(2)
+//                            );
+//                            break;
+//                        }
+//                    }
+//                }
+//                else
+//                {
+                    item = new QStandardItem(activitiesList.at(row).at(column));
+//                }
+
                 if (isShortDeadline)
                     item->setBackground(QBrush(Qt::red));
                 else if (isMediumDeadline)

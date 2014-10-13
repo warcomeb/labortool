@@ -27,6 +27,8 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#include <QVariant>
+
 ActivityDialog::ActivityDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ActivityDialog),
@@ -170,9 +172,30 @@ void ActivityDialog::fillActivityFields ()
     qDebug() << "ActivityDialog::fillActivityField()";
 
     ui->idText->setText(QString::number(m_activity->getId()));
+    ui->titleText->setText(m_activity->getTitle());
+    ui->descriptionText->setText(m_activity->getDescription());
+    ui->jobcodeText->setText(m_activity->getWorkCode());
 
-    /* ToDo */
+    ui->deadlineEdit->setDate(m_activity->getDeadline());
 
+    ui->statusCombobox->setCurrentIndex(m_activity->getStatus());
+    ui->priorityCombobox->setCurrentIndex(m_activity->getPriority());
+    ui->typeCombobox->setCurrentIndex(m_activity->getType());
+
+    qDebug() << "ActivityDialog::fillActivityField() - count employee" << ui->employeeCombobox->count();
+    for (int i  = 0; i <  ui->employeeCombobox->count(); ++i)
+    {
+        qDebug() << "ActivityDialog::fillActivityField() - employee combobox" <<
+                    ui->employeeCombobox->itemData(i);
+        uint employeeId = qvariant_cast<uint>(ui->employeeCombobox->itemData(i));
+        qDebug() << "ActivityDialog::fillActivityField() - Test employee" << employeeId;
+        if (employeeId == m_activity->getEmployee())
+        {
+            qDebug() << "ActivityDialog::fillActivityField() - employee" << employeeId;
+            ui->employeeCombobox->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void ActivityDialog::saveValues ()

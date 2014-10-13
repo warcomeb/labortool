@@ -69,15 +69,16 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<QVecto
     if (!m_databaseWrapper->getActivity(activityId,activity))
     {
         QMessageBox::warning(0, tr("View Activity Error"),
-                             tr("The activity can not be displayed!\n Database Error!"));
+                             tr("The activity can not be displayed! Database Error!"));
         qDebug() << "ActivityController::openViewActivityDialog() - Database Error!";
         return;
     }
 
-//    m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
-//    m_activityDialog->setSelectedActivity(activity);
+    m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
+    m_activityDialog->updateEmployeesList(employeesList);
+    m_activityDialog->setSelectedActivity(activity);
 
-//    m_activityDialog->exec();
+    m_activityDialog->exec();
 }
 
 void ActivityController::openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
