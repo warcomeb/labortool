@@ -124,14 +124,14 @@ bool EmployeeDatabase::updateEmployee (Employee* employee)
     if (query.exec())
     {
         qDebug() << "EmployeeDatabase::updateEmployee() - " << query.lastQuery();
-        qDebug() << "EmployeeDatabase::updateEmployee() - "<< query.lastError();
+        qDebug() << "EmployeeDatabase::updateEmployee() - " << query.lastError();
         qDebug() << "EmployeeDatabase::updateEmployee() - Query successful";
         return true;
     }
     else
     {
         qDebug() << "EmployeeDatabase::updateEmployee() - " << query.lastQuery();
-        qDebug() << "EmployeeDatabase::updateEmployee() - "<< query.lastError();
+        qDebug() << "EmployeeDatabase::updateEmployee() - " << query.lastError();
         return false;
     }
 }

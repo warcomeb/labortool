@@ -1,3 +1,11 @@
+2014-10-14 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Completata la funzione updateActivity() della classe ActivityDatabase.
+
+2014-10-13 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Completata la visualizzazione del nome del tecnico designato nella tabella delle attivita'.
+
 2014-10-08 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Completata la funzione fillActivityFields() in ActivityDialog.

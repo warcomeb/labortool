@@ -106,6 +106,52 @@ bool ActivityDatabase::updateActivity (Activity *activity)
 {
     qDebug() << "ActivityDatabase::updateActivity()";
 
+    QSqlQuery query(*m_database);
+    QString queryString = "UPDATE activity SET "
+            "ActivityTitle=:title ,"
+            "ActivityDescription=:desc ,"
+            "ActivityWorkCode=:code ,"
+            "ActivityDeadline=:deadline ,"
+            "ActivityEmployee=:employee ,"
+            "ActivityStatus=:status ,"
+            "ActivityType=:type ,"
+            "ActivityPriority=:priority "
+            "WHERE ActivityId=:rowid";
+
+    query.prepare(queryString);
+    query.bindValue(":title",activity->getTitle());
+    query.bindValue(":desc",activity->getDescription());
+    query.bindValue(":code",activity->getWorkCode());
+    query.bindValue(":deadline",activity->getDeadline().toString("yyyy-MM-dd"));
+    query.bindValue(":employee",QString::number(activity->getEmployee()));
+    query.bindValue(":status",QString(Activity::getStatusString(activity->getStatus())));
+    query.bindValue(":type",Activity::getTypeString(activity->getType()));
+    query.bindValue(":priority",Activity::getPriorityString(activity->getPriority()));
+    query.bindValue(":rowid",QString::number(activity->getId()));
+
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 0 " << query.boundValue(0);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 1 " << query.boundValue(1);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 2 " << query.boundValue(2);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 3 " << query.boundValue(3);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 4 " << query.boundValue(4);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 5 " << query.boundValue(5);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 6 " << query.boundValue(6);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 7 " << query.boundValue(7);
+    qDebug() << "ActivityDatabase::updateActivity() - Bound Value 8 " << query.boundValue(8);
+
+    if (query.exec())
+    {
+        qDebug() << "ActivityDatabase::updateActivity() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::updateActivity() - " << query.lastError();
+        qDebug() << "ActivityDatabase::updateActivity() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ActivityDatabase::updateActivity() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::updateActivity() - " << query.lastError();
+        return false;
+    }
 }
 
 QVector< QVector< QString > >

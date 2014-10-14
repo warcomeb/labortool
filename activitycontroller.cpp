@@ -83,10 +83,41 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<QVecto
 
 void ActivityController::openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
 {
+    qDebug() << "ActivityController::openEditActivityDialog()";
+
+    Activity * activity = new Activity;
+    if (!m_databaseWrapper->getActivity(activityId,activity))
+    {
+        QMessageBox::warning(0, tr("Edit Activity Error"),
+                             tr("The activity can not be edited! Database Error!"));
+        qDebug() << "ActivityController::openEditActivityDialog() - Database Error!";
+        return;
+    }
+
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Edit);
+    m_activityDialog->updateEmployeesList(employeesList);
+    m_activityDialog->setSelectedActivity(activity);
+
     m_activityDialog->exec();
 
-    /* TODO */
+    activity = m_activityDialog->getSavedActivity();
+    if (activity)
+    {
+        if (m_databaseWrapper->updateActivity(activity))
+        {
+            qDebug() << "ActivityController::openEditActivityDialog() - Update employee successful";
+            QStringList searchParams;
+            searchParams << "Status$NotStarted|InProgress|Waiting";
+            emit updatedActivitiesList(searchParams);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ActivityController::openEditActivityDialog() - Update activity error!";
+            QMessageBox::warning(0, tr("Update Activity Error"),
+                                 tr("The activity has not been updated! Database Error!"));
+        }
+    }
 }
 
 QVector<QVector<QString> >
