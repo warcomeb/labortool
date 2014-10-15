@@ -1,3 +1,7 @@
+2014-10-15 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunto il dialog per il login e quindi la classe LoginDialog.
+
 2014-10-14 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Completata la funzione updateActivity() della classe ActivityDatabase.

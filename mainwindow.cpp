@@ -62,6 +62,11 @@ MainWindow::MainWindow(QWidget *parent) :
     /* TODO: Add waiting... */
     connect(ui->tabWidget,SIGNAL(currentChanged(int)),
             this,SLOT(updateSelectedTab(int)));
+
+    /* Connect Login button to specific slot */
+    m_loginDialog = new LoginDialog;
+    connect(ui->loginButton,SIGNAL(clicked()),
+            this,SLOT(userLogin()));
 }
 
 MainWindow::~MainWindow()
@@ -511,5 +516,17 @@ void MainWindow::searchActivities()
 void MainWindow::resetSearchActivities()
 {
     qDebug() << "MainWindow::resetSearchActivities()";
+
+}
+
+void MainWindow::userLogin()
+{
+    qDebug() << "MainWindow::userLogin()";
+    m_loginDialog->exec();
+}
+
+void MainWindow::userLogout()
+{
+    qDebug() << "MainWindow::userLogout()";
 
 }

@@ -31,6 +31,7 @@
 #include "activitycontroller.h"
 #include "employeecontroller.h"
 
+#include "logindialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -63,6 +64,9 @@ private slots:
     void searchActivities ();
     void resetSearchActivities ();
 
+    void userLogin ();
+    void userLogout ();
+
 private:
     Ui::MainWindow *ui;
 
@@ -77,6 +81,9 @@ private:
     int m_employeeSelected;
     QStandardItemModel * m_activityModel;
     int m_activitySelected;
+
+    /* Login panel */
+    LoginDialog * m_loginDialog;
 
     /* Initialize signals and slots into tabs */
     void initActivityTab();
