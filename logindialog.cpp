@@ -31,12 +31,18 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
 
     setWindowTitle(QString(PROJECT_NAME) + " v." + QString(PROJECT_VERSION) + " - Login Dialog");
+    ui->statusText->setText(tr("Enter username and password"));
 
-//    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(apply()));
-//    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(noApply()));
+    connect(ui->loginButton, SIGNAL(clicked()), this, SLOT(controlData()));
+    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 LoginDialog::~LoginDialog()
 {
     delete ui;
+}
+
+void LoginDialog::controlData()
+{
+
 }

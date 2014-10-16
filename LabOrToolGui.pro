@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     employeecontroller.cpp \
     employeedialog.cpp \
     employeedatabase.cpp \
-    logindialog.cpp
+    logindialog.cpp \
+    logincontroller.cpp
 
 HEADERS  += mainwindow.h \
     metadata.h \
@@ -36,7 +37,8 @@ HEADERS  += mainwindow.h \
     employeecontroller.h \
     employeedialog.h \
     employeedatabase.h \
-    logindialog.h
+    logindialog.h \
+    logincontroller.h
 
 FORMS    += mainwindow.ui \
     activitydialog.ui \

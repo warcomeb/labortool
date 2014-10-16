@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(QString(PROJECT_NAME) + " v." + QString(PROJECT_VERSION));
     setFocusPolicy(Qt::StrongFocus);
 
+    initBasicCommand();
+
     connectToDatabase();
 
     /* Initialize each controller */
@@ -56,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initEmployeeTab();
     m_activityController = new ActivityController(&m_database);
     initActivityTab();
+    m_loginController = new LoginController(&m_database);
 
 
     /* Update data into tab when it was selected!! */
@@ -64,7 +67,6 @@ MainWindow::MainWindow(QWidget *parent) :
             this,SLOT(updateSelectedTab(int)));
 
     /* Connect Login button to specific slot */
-    m_loginDialog = new LoginDialog;
     connect(ui->loginButton,SIGNAL(clicked()),
             this,SLOT(userLogin()));
 }
@@ -115,6 +117,11 @@ bool MainWindow::connectToDatabase ()
 bool MainWindow::disconnectToDatabase()
 {
 
+}
+
+void MainWindow::initBasicCommand()
+{
+    ui->loginLabel->setText(tr("Welcome unknown User!"));
 }
 
 /**
@@ -522,7 +529,7 @@ void MainWindow::resetSearchActivities()
 void MainWindow::userLogin()
 {
     qDebug() << "MainWindow::userLogin()";
-    m_loginDialog->exec();
+    m_loginController->openDialog();
 }
 
 void MainWindow::userLogout()

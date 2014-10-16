@@ -19,31 +19,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  ******************************************************************************/
 
-#ifndef LOGINDIALOG_H
-#define LOGINDIALOG_H
+#include "logincontroller.h"
 
-#include <QDialog>
+#include <QDebug>
 
-namespace Ui {
-class LoginDialog;
+LoginController::LoginController(QSqlDatabase* db)
+{
+    m_database = db;
+
+    m_loginDialog = new LoginDialog;
+
+    m_databaseWrapper = new EmployeeDatabase (m_database);
 }
 
-class LoginDialog : public QDialog
+void LoginController::openDialog()
 {
-    Q_OBJECT
+    qDebug() << "LoginController::openDialog()";
 
-signals:
-    void dataReady();
-
-private slots:
-    void controlData();
-
-public:
-    explicit LoginDialog(QWidget *parent = 0);
-    ~LoginDialog();
-
-private:
-    Ui::LoginDialog *ui;
-};
-
-#endif // LOGINDIALOG_H
+    m_loginDialog->exec();
+}

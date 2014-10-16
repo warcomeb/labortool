@@ -1,3 +1,7 @@
+2014-10-16 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Iniziata l'implementazione del login, aggiungendo anche la classe LoginController
+
 2014-10-15 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunto il dialog per il login e quindi la classe LoginDialog.
