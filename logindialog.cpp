@@ -22,6 +22,10 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 
+#include <QDebug>
+#include <QMessageBox>
+#include <QCryptographicHash>
+
 #include "metadata.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
@@ -44,5 +48,45 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::controlData()
 {
+    qDebug() << "LoginDialog::controlData()";
 
+    QByteArray hash;
+    QRegExp nick = QRegExp(QString::fromUtf8("[a-zA-Z0-9]{6,20}"));
+
+    qDebug() << "LoginDialog::controlData() - test username";
+    if (nick.exactMatch(ui->usernameText->text()))
+    {
+        qDebug() << "LoginDialog::controlData() - Username correct:" << ui->usernameText->text();
+        m_username = ui->usernameText->text();
+    }
+    else
+    {
+        qDebug() << "LoginDialog::controlData() - Username not correct:" << ui->usernameText->text();
+        QMessageBox::critical(this, tr("Error"),
+            tr("Username not correct!"));
+        m_username = "";
+        return;
+    }
+
+    qDebug() << "LoginDialog::controlData() - test password";
+    if (nick.exactMatch(ui->passwordText->text()))
+    {
+        qDebug() << "LoginDialog::controlData() - Password correct:" << ui->passwordText->text();
+
+        hash.append(ui->passwordText->text());
+        hash = QCryptographicHash::hash(hash,QCryptographicHash::Sha1);
+//        qDebug() << "LoginDialog::controlData() - The hashed byte array:" << hash;
+        m_password = QString(hash.toHex());
+        qDebug() << "LoginDialog::controlData() - The hashed password:" << m_password.toUtf8();
+    }
+    else
+    {
+        qDebug() << "LoginDialog::controlData() - Password not correct:" << ui->passwordText->text();
+        QMessageBox::critical(this, tr("Error"),
+            tr("Password not correct!"));
+        m_password = "";
+        return;
+    }
+
+    emit dataReady();
 }

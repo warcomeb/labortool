@@ -1,3 +1,7 @@
+2014-10-20 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Implementato il controllo controlData() della classe LoginDialog.
+
 2014-10-16 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Iniziata l'implementazione del login, aggiungendo anche la classe LoginController

@@ -37,4 +37,6 @@ void LoginController::openDialog()
     qDebug() << "LoginController::openDialog()";
 
     m_loginDialog->exec();
+
+    qDebug() << "LoginController::openDialog() - Exit!";
 }

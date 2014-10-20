@@ -44,6 +44,9 @@ public:
 
 private:
     Ui::LoginDialog *ui;
+
+    QString m_username;
+    QString m_password;
 };
 
 #endif // LOGINDIALOG_H

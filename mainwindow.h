@@ -30,6 +30,7 @@
 
 #include "activitycontroller.h"
 #include "employeecontroller.h"
+#include "logincontroller.h"
 
 #include "logindialog.h"
 
@@ -75,6 +76,7 @@ private:
     /* Controllers list */
     ActivityController * m_activityController;
     EmployeeController * m_employeeController;
+    LoginController * m_loginController;
 
     /* Models */
     QStandardItemModel * m_employeeModel;
@@ -82,8 +84,7 @@ private:
     QStandardItemModel * m_activityModel;
     int m_activitySelected;
 
-    /* Login panel */
-    LoginDialog * m_loginDialog;
+    void initBasicCommand();
 
     /* Initialize signals and slots into tabs */
     void initActivityTab();
