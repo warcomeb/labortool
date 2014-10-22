@@ -34,8 +34,12 @@ LoginDialog::LoginDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    m_username = "";
+    m_password = "";
+
     setWindowTitle(QString(PROJECT_NAME) + " v." + QString(PROJECT_VERSION) + " - Login Dialog");
     ui->statusText->setText(tr("Enter username and password"));
+
 
     connect(ui->loginButton, SIGNAL(clicked()), this, SLOT(controlData()));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(close()));
@@ -62,8 +66,7 @@ void LoginDialog::controlData()
     else
     {
         qDebug() << "LoginDialog::controlData() - Username not correct:" << ui->usernameText->text();
-        QMessageBox::critical(this, tr("Error"),
-            tr("Username not correct!"));
+        printMessage(tr("Username not valid!"));
         m_username = "";
         return;
     }
@@ -71,22 +74,39 @@ void LoginDialog::controlData()
     qDebug() << "LoginDialog::controlData() - test password";
     if (nick.exactMatch(ui->passwordText->text()))
     {
-        qDebug() << "LoginDialog::controlData() - Password correct:" << ui->passwordText->text();
+//        qDebug() << "LoginDialog::controlData() - Password correct:" << ui->passwordText->text();
 
         hash.append(ui->passwordText->text());
         hash = QCryptographicHash::hash(hash,QCryptographicHash::Sha1);
-//        qDebug() << "LoginDialog::controlData() - The hashed byte array:" << hash;
         m_password = QString(hash.toHex());
         qDebug() << "LoginDialog::controlData() - The hashed password:" << m_password.toUtf8();
     }
     else
     {
         qDebug() << "LoginDialog::controlData() - Password not correct:" << ui->passwordText->text();
-        QMessageBox::critical(this, tr("Error"),
-            tr("Password not correct!"));
+        printMessage(tr("Password not valid!"));
         m_password = "";
         return;
     }
 
-    emit dataReady();
+    emit dataReady(m_username,m_password);
+}
+
+void LoginDialog::getData(QString &username, QString &password)
+{
+    username = m_username;
+    password = m_password;
+}
+
+void LoginDialog::resetField()
+{
+    qDebug() << "LoginDialog::resetField()";
+    ui->usernameText->clear();
+    ui->passwordText->clear();
+    qDebug() << "LoginDialog::resetField() - Exit!";
+}
+
+void LoginDialog::printMessage(QString message)
+{
+    QMessageBox::critical(this, tr("Login Message"),message);
 }

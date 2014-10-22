@@ -103,6 +103,45 @@ bool EmployeeDatabase::getEmployee (int id, Employee* employee)
     return true;
 }
 
+bool EmployeeDatabase::getEmployeeByLogin(QString username,
+                                          QString password,
+                                          Employee* employee)
+{
+    qDebug() << "EmployeeDatabase::getEmployeeByLogin()";
+
+    QString queryString = "SELECT * FROM employee WHERE ("
+            "EmployeeUsername='" + username + "' AND "
+            "EmployeePassword='" + password + "')";
+
+    qDebug() << "EmployeeDatabase::getEmployeeByLogin() - Final search string: " << queryString;
+    QSqlQuery query( queryString, *m_database);
+
+    if (query.size() != 1)
+    {
+        qDebug() << "EmployeeDatabase::getEmployee() - database problems!";
+        return false;
+    }
+
+    /* Read record! */
+    qDebug() << "EmployeeDatabase::getEmployee() - read record";
+    query.next();
+
+    employee->setId(query.value(1).toString().toUInt());
+    employee->setName(query.value(1).toString());
+    employee->setSurname(query.value(2).toString());
+    employee->setUsername(query.value(3).toString());
+    /* Do not use the password field! */
+//    employee->setPassword(query.value(4).toString());
+    employee->setNote(query.value(5).toString());
+    employee->setRole(query.value(6).toString());
+    employee->setSystemRole(query.value(7).toString());
+    employee->setCompany(query.value(8).toString());
+    employee->setActiveStatus(query.value(9).toString());
+
+    qDebug() << "EmployeeDatabase::getEmployeeByLogin() - Exit!";
+    return true;
+}
+
 /* TODO: Update completo della riga */
 
 bool EmployeeDatabase::updateEmployee (Employee* employee)

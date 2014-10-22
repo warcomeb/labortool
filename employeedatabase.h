@@ -39,6 +39,8 @@ public:
     bool updateEmployee (Employee* employee);
     bool getEmployee (int id, Employee* employee);
 
+    bool getEmployeeByLogin(QString username, QString password, Employee* employee);
+
     QVector< QVector< QString > > searchEmployees(QStringList searchParams);
 
 private:

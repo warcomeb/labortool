@@ -58,7 +58,9 @@ MainWindow::MainWindow(QWidget *parent) :
     initEmployeeTab();
     m_activityController = new ActivityController(&m_database);
     initActivityTab();
+
     m_loginController = new LoginController(&m_database);
+
 
 
     /* Update data into tab when it was selected!! */
@@ -69,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Connect Login button to specific slot */
     connect(ui->loginButton,SIGNAL(clicked()),
             this,SLOT(userLogin()));
+    connect(m_loginController,SIGNAL(loggedUser(Employee*)),
+            this,SLOT(loggedUser(Employee*)));
 }
 
 MainWindow::~MainWindow()
@@ -530,10 +534,36 @@ void MainWindow::userLogin()
 {
     qDebug() << "MainWindow::userLogin()";
     m_loginController->openDialog();
+    qDebug() << "MainWindow::userLogin() - Exit!";
 }
 
 void MainWindow::userLogout()
 {
     qDebug() << "MainWindow::userLogout()";
 
+    ui->loginLabel->setText(tr("Welcome unknown User!"));
+
+    disconnect(ui->loginButton,SIGNAL(clicked()),
+            this,SLOT(userLogout()));
+    ui->loginButton->setText(tr("Login"));
+    connect(ui->loginButton,SIGNAL(clicked()),
+            this,SLOT(userLogin()));
+
+    qDebug() << "MainWindow::userLogout() - Exit!";
+}
+
+void MainWindow::loggedUser(Employee *employee)
+{
+    qDebug() << "MainWindow::loggedUser()";
+
+    ui->loginLabel->setText(
+        tr("Welcome ") + employee->getName() + " " + employee->getSurname() + "!");
+
+    disconnect(ui->loginButton,SIGNAL(clicked()),
+            this,SLOT(userLogin()));
+    ui->loginButton->setText(tr("Logout"));
+    connect(ui->loginButton,SIGNAL(clicked()),
+            this,SLOT(userLogout()));
+
+    qDebug() << "MainWindow::loggedUser() - Exit!";
 }

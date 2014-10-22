@@ -36,6 +36,14 @@ public:
 
     void openDialog();
 
+signals:
+
+    void loggedUser(Employee*);
+
+private slots:
+
+    void checkData(QString username, QString password);
+
 private:
     /* View panel */
     LoginDialog * m_loginDialog;

@@ -33,7 +33,7 @@ class LoginDialog : public QDialog
     Q_OBJECT
 
 signals:
-    void dataReady();
+    void dataReady(QString,QString);
 
 private slots:
     void controlData();
@@ -41,6 +41,11 @@ private slots:
 public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
+
+    void getData(QString &username, QString &password);
+    void resetField();
+
+    void printMessage(QString message);
 
 private:
     Ui::LoginDialog *ui;

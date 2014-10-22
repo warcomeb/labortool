@@ -2,7 +2,7 @@ Task:       ProgressiveNumber.Status.Developers
 Status:     O=Open|P=InProgress|C=Closed
 Developers: A=Marco
 
-LastNumber: 3
+LastNumber: 6
 
 
 OPEN TASK
@@ -15,6 +15,12 @@ Complatere l'update dei dati dell'utente dentro al wrapper per il database.
 Aggiungere il parsing di scelte multiple all'interno di un parametro nei dati del dipendente.
 Aggiungere il parsing del comando $.
 
+5.O.A
+Aggiungere disabilitazione di alcune funzionalità in base ai privilegi assegnati all'utente.
+
+6.O.A
+Aggiungere trace delle attivita' di ogni singolo utente una volta che fa il login.
+
 IN PROGRESS TASK
 -------------------------------------------------------------------------------
 
@@ -25,3 +31,6 @@ Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre ara
 
 CLOSED TASK
 -------------------------------------------------------------------------------
+
+4.C.A
+Aggiungere messaggio di errore in caso di login fallito

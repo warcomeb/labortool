@@ -1,3 +1,7 @@
+2014-10-23 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Ultimata la gestione del login, anche se ancora l'utente loggato non viene salvato  nel sistema.
+
 2014-10-20 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Implementato il controllo controlData() della classe LoginDialog.

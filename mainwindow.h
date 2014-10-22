@@ -67,6 +67,7 @@ private slots:
 
     void userLogin ();
     void userLogout ();
+    void loggedUser (Employee*);
 
 private:
     Ui::MainWindow *ui;

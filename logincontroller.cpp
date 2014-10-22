@@ -30,6 +30,8 @@ LoginController::LoginController(QSqlDatabase* db)
     m_loginDialog = new LoginDialog;
 
     m_databaseWrapper = new EmployeeDatabase (m_database);
+
+    connect(m_loginDialog, SIGNAL(dataReady(QString,QString)), this, SLOT(checkData(QString,QString)));
 }
 
 void LoginController::openDialog()
@@ -39,4 +41,30 @@ void LoginController::openDialog()
     m_loginDialog->exec();
 
     qDebug() << "LoginController::openDialog() - Exit!";
+}
+
+void LoginController::checkData(QString username, QString password)
+{
+    qDebug() << "LoginController::checkData()";
+
+    qDebug() << "LoginController::checkData() - Username" << username;
+    qDebug() << "LoginController::checkData() - Password" << password;
+
+    Employee * employee = new Employee;
+
+    /* TODO: Controllo se il login riesce! */
+    if (m_databaseWrapper->getEmployeeByLogin(username,password,employee))
+    {
+        qDebug() << "LoginController::checkData() - Emit loggedUser()";
+        emit loggedUser(employee);
+        m_loginDialog->resetField();
+        m_loginDialog->close();
+    }
+    else
+    {
+        qDebug() << "LoginController::checkData() - Username or password not correct!";
+        m_loginDialog->printMessage("Username or password not correct!");
+    }
+
+    qDebug() << "LoginController::checkData() - Exit!";
 }
