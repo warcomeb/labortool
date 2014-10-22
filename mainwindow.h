@@ -74,6 +74,8 @@ private:
 
     QSqlDatabase m_database;
 
+    Employee * m_employeeLogged;
+
     /* Controllers list */
     ActivityController * m_activityController;
     EmployeeController * m_employeeController;
@@ -90,6 +92,8 @@ private:
     /* Initialize signals and slots into tabs */
     void initActivityTab();
     void initEmployeeTab();
+
+    void updateButtonStatus();
 
 };
 

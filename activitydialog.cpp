@@ -205,6 +205,7 @@ void ActivityDialog::saveValues ()
 
     QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
 
+
     if (ui->titleText->text().isEmpty())
     {
         qDebug() << "ActivityDialog::saveValues() - Title is empty";

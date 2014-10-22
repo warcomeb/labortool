@@ -41,6 +41,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
+    m_employeeLogged(0),
     m_employeeSelected(-1),
     m_activitySelected(-1)
 {
@@ -136,17 +137,42 @@ void MainWindow::initBasicCommand()
  */
 void MainWindow::initActivityTab()
 {
-    connect(ui->addActivityButton,SIGNAL(clicked()),
-            this,SLOT(openActivityDialog()));
+    if (m_employeeLogged == 0)
+    {
+        disconnect(ui->addActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addActivityButton->setEnabled(false);
 
-    connect(ui->viewActivityButton,SIGNAL(clicked()),
-            this,SLOT(openActivityDialog()));
+        connect(ui->viewActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->viewActivityButton->setEnabled(true);
 
-    connect(ui->editActivityButton,SIGNAL(clicked()),
-            this,SLOT(openActivityDialog()));
+        disconnect(ui->editActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->editActivityButton->setEnabled(false);
 
-    connect(ui->deleteActivityButton,SIGNAL(clicked()),
-            this,SLOT(openActivityDialog()));
+//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
+//                this,SLOT(openActivityDialog()));
+        ui->deleteActivityButton->setEnabled(false);
+    }
+    else
+    {
+        connect(ui->addActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addActivityButton->setEnabled(true);
+
+        connect(ui->viewActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->viewActivityButton->setEnabled(true);
+
+        connect(ui->editActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->editActivityButton->setEnabled(true);
+
+//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
+//                this,SLOT(openActivityDialog()));
+        ui->deleteActivityButton->setEnabled(false);
+    }
 
 //    connect(ui->searchActivityButton,SIGNAL(clicked()),
 //            this,SLOT(searchActivities()));
@@ -181,14 +207,53 @@ void MainWindow::initActivityTab()
  */
 void MainWindow::initEmployeeTab()
 {
-    connect(ui->addEmployeeButton,SIGNAL(clicked()),
-            this,SLOT(openEmployeeDialog()));
+    if (m_employeeLogged == 0)
+    {
+        disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
+                this,SLOT(openEmployeeDialog()));
+        ui->addEmployeeButton->setEnabled(false);
 
-    connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-            this,SLOT(openEmployeeDialog()));
+        connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+                this,SLOT(openEmployeeDialog()));
+        ui->viewEmployeeButton->setEnabled(true);
 
-    connect(ui->editEmployeeButton,SIGNAL(clicked()),
-            this,SLOT(openEmployeeDialog()));
+        disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
+                this,SLOT(openEmployeeDialog()));
+        ui->editEmployeeButton->setEnabled(false);
+    }
+    else
+    {
+        switch (m_employeeLogged->getSystemRole())
+        {
+        case Employee::Editor:
+            disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->addEmployeeButton->setEnabled(false);
+
+            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->viewEmployeeButton->setEnabled(true);
+
+            disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->editEmployeeButton->setEnabled(false);
+            break;
+
+        case Employee::Administrator:
+            connect(ui->addEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->addEmployeeButton->setEnabled(true);
+
+            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->viewEmployeeButton->setEnabled(true);
+
+            connect(ui->editEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->editEmployeeButton->setEnabled(true);
+            break;
+        }
+    }
 
     connect(ui->searchEmployeeButton,SIGNAL(clicked()),
             this,SLOT(searchEmployees()));
@@ -541,6 +606,7 @@ void MainWindow::userLogout()
 {
     qDebug() << "MainWindow::userLogout()";
 
+    m_employeeLogged = 0;
     ui->loginLabel->setText(tr("Welcome unknown User!"));
 
     disconnect(ui->loginButton,SIGNAL(clicked()),
@@ -549,12 +615,16 @@ void MainWindow::userLogout()
     connect(ui->loginButton,SIGNAL(clicked()),
             this,SLOT(userLogin()));
 
+    updateButtonStatus();
+
     qDebug() << "MainWindow::userLogout() - Exit!";
 }
 
 void MainWindow::loggedUser(Employee *employee)
 {
     qDebug() << "MainWindow::loggedUser()";
+
+    m_employeeLogged = employee;
 
     ui->loginLabel->setText(
         tr("Welcome ") + employee->getName() + " " + employee->getSurname() + "!");
@@ -565,5 +635,90 @@ void MainWindow::loggedUser(Employee *employee)
     connect(ui->loginButton,SIGNAL(clicked()),
             this,SLOT(userLogout()));
 
+    updateButtonStatus();
+
     qDebug() << "MainWindow::loggedUser() - Exit!";
+}
+
+void MainWindow::updateButtonStatus()
+{
+    if (m_employeeLogged == 0)
+    {
+        disconnect(ui->addActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addActivityButton->setEnabled(false);
+
+        connect(ui->viewActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->viewActivityButton->setEnabled(true);
+
+        disconnect(ui->editActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->editActivityButton->setEnabled(false);
+
+//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
+//                this,SLOT(openActivityDialog()));
+        ui->deleteActivityButton->setEnabled(false);
+
+        disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
+                this,SLOT(openEmployeeDialog()));
+        ui->addEmployeeButton->setEnabled(false);
+
+        connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+                this,SLOT(openEmployeeDialog()));
+        ui->viewEmployeeButton->setEnabled(true);
+
+        disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
+                this,SLOT(openEmployeeDialog()));
+        ui->editEmployeeButton->setEnabled(false);
+    }
+    else
+    {
+        connect(ui->addActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addActivityButton->setEnabled(true);
+
+        connect(ui->viewActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->viewActivityButton->setEnabled(true);
+
+        connect(ui->editActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->editActivityButton->setEnabled(true);
+
+//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
+//                this,SLOT(openActivityDialog()));
+        ui->deleteActivityButton->setEnabled(false);
+
+        switch (m_employeeLogged->getSystemRole())
+        {
+        case Employee::Editor:
+            disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->addEmployeeButton->setEnabled(false);
+
+            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->viewEmployeeButton->setEnabled(true);
+
+            disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->editEmployeeButton->setEnabled(false);
+            break;
+
+        case Employee::Administrator:
+            connect(ui->addEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->addEmployeeButton->setEnabled(true);
+
+            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->viewEmployeeButton->setEnabled(true);
+
+            connect(ui->editEmployeeButton,SIGNAL(clicked()),
+                    this,SLOT(openEmployeeDialog()));
+            ui->editEmployeeButton->setEnabled(true);
+            break;
+        }
+    }
 }
