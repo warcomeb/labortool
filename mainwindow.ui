@@ -110,20 +110,20 @@
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QLineEdit" name="searchActivityText"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="searchActivityButton">
-            <property name="text">
-             <string>Search</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item>
-         <widget class="QTableView" name="activityTable"/>
+         <widget class="QTableView" name="activityTable">
+          <property name="editTriggers">
+           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -257,7 +257,17 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableView" name="employeeTable"/>
+         <widget class="QTableView" name="employeeTable">
+          <property name="editTriggers">
+           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

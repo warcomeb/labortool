@@ -371,12 +371,13 @@ void MainWindow::selectionChangedEmployeesTable(const QItemSelection & sel,
     QModelIndexList indexes = sel.indexes();
     //QModelIndexList indexes = ui->employeeTable->selectionModel()->selection().indexes();
     qDebug() << "MainWindow::selectionChangedEmployeesTable() - selected number" << indexes.count();
-    if (indexes.count() != 1 )
-    {
-        m_employeeSelected = -1;
-        qDebug() << "MainWindow::selectionChangedEmployeesTable() - Too many items selected";
-        return;
-    }
+
+//    if (indexes.count() != 1 )
+//    {
+//        m_employeeSelected = -1;
+//        qDebug() << "MainWindow::selectionChangedEmployeesTable() - Too many items selected";
+//        return;
+//    }
 
     qDebug() << "MainWindow::selectionChangedEmployeesTable() - row selected" << indexes.at(0).row();
     m_employeeSelected = m_employeeModel->item(indexes.at(0).row(),0)->text().toInt();
@@ -480,12 +481,13 @@ void MainWindow::selectionChangedActivitiesTable(const QItemSelection & sel,
     qDebug() << "MainWindow::selectionChangedActivitiesTable()";
     QModelIndexList indexes = sel.indexes();
     qDebug() << "MainWindow::selectionChangedActivitiesTable() - selected number" << indexes.count();
-    if (indexes.count() != 1 )
-    {
-        m_activitySelected = -1;
-        qDebug() << "MainWindow::selectionChangedActivitiesTable() - Too many items selected";
-        return;
-    }
+
+//    if (indexes.count() != 1 )
+//    {
+//        m_activitySelected = -1;
+//        qDebug() << "MainWindow::selectionChangedActivitiesTable() - Too many items selected";
+//        return;
+//    }
 
     qDebug() << "MainWindow::selectionChangedActivitiesTable() - row selected" << indexes.at(0).row();
     m_activitySelected = m_activityModel->item(indexes.at(0).row(),0)->text().toInt();
@@ -508,7 +510,7 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
 
     m_activityModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     m_activityModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Title"));
-    m_activityModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Workcode"));
+    m_activityModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Work Order"));
     m_activityModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Employee"));
     m_activityModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Priority"));
     m_activityModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Status"));

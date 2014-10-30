@@ -1,3 +1,7 @@
+2014-10-29 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunta la selezione dell'intera riga e la disabilitazione alle modifiche sulle tabelle nella main window.
+
 2014-10-23 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la disabilitazione di alcune funzionalita' in base ai privilegi degli utenti.
