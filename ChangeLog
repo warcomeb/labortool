@@ -1,3 +1,7 @@
+2014-11-07 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Ultimata l'implementazione della classe ActivityNote.
+
 2014-10-29 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la selezione dell'intera riga e la disabilitazione alle modifiche sulle tabelle nella main window.
