@@ -1,3 +1,7 @@
+2014-11-14 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Piccolo fix nella funzione getEmployeeByLogin che restituiva un id non vero.
+
 2014-11-07 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Ultimata l'implementazione della classe ActivityNote.

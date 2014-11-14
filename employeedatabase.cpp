@@ -126,7 +126,7 @@ bool EmployeeDatabase::getEmployeeByLogin(QString username,
     qDebug() << "EmployeeDatabase::getEmployee() - read record";
     query.next();
 
-    employee->setId(query.value(1).toString().toUInt());
+    employee->setId(query.value(0).toString().toUInt());
     employee->setName(query.value(1).toString());
     employee->setSurname(query.value(2).toString());
     employee->setUsername(query.value(3).toString());
