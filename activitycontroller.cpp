@@ -29,6 +29,7 @@ ActivityController::ActivityController(QSqlDatabase *db)
     m_database = db;
 
     m_activityDialog = new ActivityDialog;
+    m_activityNoteDialog = new ActivityNoteDialog;
 
     m_databaseWrapper = new ActivityDatabase (m_database);
 }
@@ -105,7 +106,7 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
     {
         if (m_databaseWrapper->updateActivity(activity))
         {
-            qDebug() << "ActivityController::openEditActivityDialog() - Update employee successful";
+            qDebug() << "ActivityController::openEditActivityDialog() - Update activity successful";
             QStringList searchParams;
             searchParams << "Status$NotStarted|InProgress|Waiting";
             emit updatedActivitiesList(searchParams);
@@ -118,6 +119,43 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
                                  tr("The activity has not been updated! Database Error!"));
         }
     }
+}
+
+void ActivityController::openAddNoteActivityDialog (uint activityId, Employee* loggedEmployee)
+{
+    qDebug() << "ActivityController::openAddNoteActivityDialog()";
+
+    Activity * activity = new Activity;
+    if (!m_databaseWrapper->getActivity(activityId,activity))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Add Activity Note Error"),
+                             tr("You must select an activity!"));
+            qDebug() << "ActivityController::openAddNoteActivityDialog() - Exit!";
+        return;
+    }
+
+    m_activityNoteDialog->setOpenType(ActivityNoteDialog::Add);
+    m_activityNoteDialog->setOwners(activity,loggedEmployee);
+    m_activityNoteDialog->exec();
+
+    ActivityNote* note = m_activityNoteDialog->getSavedActivityNote();
+    if (note)
+    {
+        qDebug() << "ActivityController::openAddNoteActivityDialog() - Note not empty";
+        if (m_databaseWrapper->addActivityNote(note))
+        {
+            qDebug() << "ActivityController::openAddNoteActivityDialog() - Add activity note successful";
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ActivityController::openAddNoteActivityDialog() - Add activity note error!";
+            QMessageBox::warning(0, tr("Add Activity Note Error"),
+                                 tr("The activity note has not been added! Database Error!"));
+        }
+    }
+    qDebug() << "ActivityController::openAddNoteActivityDialog() - Exit!";
 }
 
 QVector<QVector<QString> >

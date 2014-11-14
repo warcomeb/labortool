@@ -4,6 +4,8 @@
 
     * Aggiunta la finestra di dialog per visualizzare una nota. Per ora solo in versione Add.
 
+    * Aggiunta tutta la logica di gestione dell'aggiunta di una nota ad una attivita'.
+
 2014-11-07 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Ultimata l'implementazione della classe ActivityNote.

@@ -25,9 +25,13 @@
 #include <QVector>
 #include <QSqlDatabase>
 
+#include "employee.h"
+
 #include "activity.h"
 #include "activitydialog.h"
 #include "activitydatabase.h"
+
+#include "activitynotedialog.h"
 
 class ActivityController: public QObject
 {
@@ -40,6 +44,8 @@ public:
     void openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
     void openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
 
+    void openAddNoteActivityDialog (uint activityId, Employee *loggedEmployee);
+
     QVector<QVector<QString> > getActivitiesList (QStringList searchParams);
 
 signals:
@@ -49,6 +55,9 @@ private:
 
     /* View panel */
     ActivityDialog * m_activityDialog;
+
+    /* Activity note pannel */
+    ActivityNoteDialog * m_activityNoteDialog;
 
     /* Activities list */
     QVector<Activity> m_activities;

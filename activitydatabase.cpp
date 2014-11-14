@@ -154,6 +154,40 @@ bool ActivityDatabase::updateActivity (Activity *activity)
     }
 }
 
+
+bool ActivityDatabase::addActivityNote (ActivityNote* note)
+{
+    qDebug() << "ActivityDatabase::addActivityNote()";
+
+    QSqlQuery query(*m_database);
+    QString queryString = "INSERT INTO activitynote "
+                          "(ActivityNoteActivity, ActivityNoteText, "
+                          "ActivityNoteEmployeeCreation, ActivityNoteDateCreation, "
+                          "ActivityNoteEmployeeModification, ActivityNoteDateModification) "
+                          "VALUES (?, ?, ?, ?, ?, ?)";
+
+    query.prepare(queryString);
+    query.bindValue(0,note->getActivityId());
+    query.bindValue(1,note->getText());
+    query.bindValue(2,note->getCreationEmployee());
+    query.bindValue(3,note->getCreationDate().toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(4,note->getModificationEmployee());
+    query.bindValue(5,note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
+
+    qDebug() << "ActivityDatabase::addActivity() - " << query.lastQuery();
+
+    if (query.exec())
+    {
+        qDebug() << "ActivityDatabase::addActivityNote() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ActivityDatabase::addActivityNote() - "<< query.lastError();
+        return false;
+    }
+}
+
 QVector< QVector< QString > >
 ActivityDatabase::searchActivities(QStringList searchParams)
 {

@@ -29,8 +29,6 @@
 #include <QString>
 #include <QDate>
 
-#include "activitynote.h"
-
 class Activity : public QObject
 {
     Q_OBJECT
@@ -100,9 +98,9 @@ public:
     void setStatus (QString status);
     void setPriority (QString priority);
 
-    void addNote (ActivityNote* note);
-    void deleteNote (ActivityNote* note);
-    QVector<ActivityNote*> getNotes ();
+//    void addNote (ActivityNote* note);
+//    void deleteNote (ActivityNote* note);
+//    QVector<ActivityNote*> getNotes ();
 
     void addAttachment (QString attachment);
     void deleteAttachment (uint attachment);
@@ -126,8 +124,6 @@ private:
     Status m_status;
     Type m_type;
     Priority m_priority;
-
-    QVector<ActivityNote*> m_notes;
 
     QMap<uint,QString> m_attachments;
 };

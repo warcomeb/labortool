@@ -83,9 +83,9 @@ private:
 
     /* Models */
     QStandardItemModel * m_employeeModel;
-    int m_employeeSelected;
+    uint m_employeeSelected;
     QStandardItemModel * m_activityModel;
-    int m_activitySelected;
+    uint m_activitySelected;
 
     void initBasicCommand();
 

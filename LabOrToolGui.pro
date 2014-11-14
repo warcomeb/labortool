@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     employeedialog.cpp \
     employeedatabase.cpp \
     logindialog.cpp \
-    logincontroller.cpp
+    logincontroller.cpp \
+    activitynotedialog.cpp
 
 HEADERS  += mainwindow.h \
     metadata.h \
@@ -38,12 +39,14 @@ HEADERS  += mainwindow.h \
     employeedialog.h \
     employeedatabase.h \
     logindialog.h \
-    logincontroller.h
+    logincontroller.h \
+    activitynotedialog.h
 
 FORMS    += mainwindow.ui \
     activitydialog.ui \
     employeedialog.ui \
-    logindialog.ui
+    logindialog.ui \
+    activitynotedialog.ui
 
 OTHER_FILES += \
     ChangeLog \

@@ -25,6 +25,7 @@
 #include "metadata.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 #define DB_TYPE "QMYSQL"
 #define DB_NAME "labortool"
@@ -42,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_employeeLogged(0),
-    m_employeeSelected(-1),
-    m_activitySelected(-1)
+    m_employeeSelected(0),
+    m_activitySelected(0)
 {
     ui->setupUi(this);
 
@@ -127,6 +128,9 @@ bool MainWindow::disconnectToDatabase()
 void MainWindow::initBasicCommand()
 {
     ui->loginLabel->setText(tr("Welcome unknown User!"));
+
+    /* We want to show the welcome tab! */
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 /**
@@ -154,6 +158,10 @@ void MainWindow::initActivityTab()
 //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
 //                this,SLOT(openActivityDialog()));
         ui->deleteActivityButton->setEnabled(false);
+
+        disconnect(ui->addNoteActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addNoteActivityButton->setEnabled(false);
     }
     else
     {
@@ -172,6 +180,10 @@ void MainWindow::initActivityTab()
 //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
 //                this,SLOT(openActivityDialog()));
         ui->deleteActivityButton->setEnabled(false);
+
+        connect(ui->addNoteActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addNoteActivityButton->setEnabled(true);
     }
 
 //    connect(ui->searchActivityButton,SIGNAL(clicked()),
@@ -335,6 +347,18 @@ void MainWindow::openActivityDialog()
     else if (sender() == ui->deleteActivityButton)
     {
         /* TODO */
+    }
+    else if (sender() == ui->addNoteActivityButton)
+    {
+        if (m_employeeLogged == 0)
+        {
+            qDebug() << "MainWindow::openActivityDialog() - Employee not logged!";
+            QMessageBox::critical(0, tr("Add Activity Note Error"),
+                                 tr("You must not stay here!"));
+
+        }
+
+        m_activityController->openAddNoteActivityDialog(m_activitySelected,m_employeeLogged);
     }
 }
 
@@ -646,6 +670,7 @@ void MainWindow::updateButtonStatus()
 {
     if (m_employeeLogged == 0)
     {
+        /* Activity tab buttons */
         disconnect(ui->addActivityButton,SIGNAL(clicked()),
                 this,SLOT(openActivityDialog()));
         ui->addActivityButton->setEnabled(false);
@@ -662,6 +687,11 @@ void MainWindow::updateButtonStatus()
 //                this,SLOT(openActivityDialog()));
         ui->deleteActivityButton->setEnabled(false);
 
+        disconnect(ui->addNoteActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addNoteActivityButton->setEnabled(false);
+
+        /* Employee tab buttons */
         disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
                 this,SLOT(openEmployeeDialog()));
         ui->addEmployeeButton->setEnabled(false);
@@ -691,6 +721,10 @@ void MainWindow::updateButtonStatus()
 //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
 //                this,SLOT(openActivityDialog()));
         ui->deleteActivityButton->setEnabled(false);
+
+        connect(ui->addNoteActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
+        ui->addNoteActivityButton->setEnabled(true);
 
         switch (m_employeeLogged->getSystemRole())
         {

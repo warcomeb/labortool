@@ -116,7 +116,7 @@ void ActivityDialog::setupActivityField ()
         ui->deadlineEdit->setDateTime(QDateTime::currentDateTime());
 
         ui->descriptionText->setEnabled(true);
-        ui->descriptionText->setText("");
+        ui->descriptionText->setPlainText("");
         break;
     case DialogType_Edit:
         ui->titleText->setEnabled(true);
@@ -173,7 +173,7 @@ void ActivityDialog::fillActivityFields ()
 
     ui->idText->setText(QString::number(m_activity->getId()));
     ui->titleText->setText(m_activity->getTitle());
-    ui->descriptionText->setText(m_activity->getDescription());
+    ui->descriptionText->setPlainText(m_activity->getDescription());
     ui->jobcodeText->setText(m_activity->getWorkCode());
 
     ui->deadlineEdit->setDate(m_activity->getDeadline());
