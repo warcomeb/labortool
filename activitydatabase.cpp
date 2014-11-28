@@ -189,6 +189,37 @@ bool ActivityDatabase::addActivityNote (ActivityNote* note)
 }
 
 QVector< QVector< QString > >
+ActivityDatabase::getNotes(uint activityId)
+{
+    qDebug() << "ActivityDatabase::getNotes()";
+
+    QVector<QVector<QString> > notesList;
+
+    QString queryString = "SELECT * FROM activitynote WHERE ActivityNoteActivity='" +
+            QString::number(activityId) + "' ORDER BY ActivityNoteDateCreation DESC";
+
+    qDebug() << "ActivityDatabase::getNotes() - Final search string: " << queryString;
+
+    QSqlQuery query( queryString, *m_database);
+    while (query.next())
+    {
+        QVector<QString> note;
+        note.append(query.value(0).toString()); // Id
+        note.append(query.value(1).toString()); // Activity
+        note.append(query.value(2).toString()); // Text
+        note.append(query.value(3).toString()); // EmployeeCreation
+        note.append(query.value(4).toString()); // EmployeeModification
+        note.append(query.value(5).toString()); // DateCreation
+        note.append(query.value(6).toString()); // DateModification
+
+        notesList.append(note);
+    }
+
+    qDebug() << "ActivityDatabase::getNotes() - Final list" << notesList;
+    return notesList;
+}
+
+QVector< QVector< QString > >
 ActivityDatabase::searchActivities(QStringList searchParams)
 {
     qDebug() << "ActivityDatabase::searchActivities()";

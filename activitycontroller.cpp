@@ -75,8 +75,11 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<QVecto
         return;
     }
 
+    QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
+
     m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
     m_activityDialog->updateEmployeesList(employeesList);
+    m_activityDialog->updateNotesList(notesList);
     m_activityDialog->setSelectedActivity(activity);
 
     m_activityDialog->exec();

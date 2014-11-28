@@ -44,6 +44,16 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
     fillCombobox();
 
     setupActivityField();
+
+    /* Startup note table! */
+    m_noteModel = new QStandardItemModel(1, 4);
+    ui->noteTable->setModel(m_noteModel);
+    ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    connect(ui->noteTable->selectionModel(),
+            SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
+            this,
+            SLOT(selectionChangedNotesTable(const QItemSelection &, const QItemSelection &)));
 }
 
 ActivityDialog::~ActivityDialog()
@@ -81,6 +91,8 @@ void ActivityDialog::setOpenType (ActivityDialog::DialogType type)
 {
     qDebug() << "ActivityDialog::setOpenType()";
 
+    ui->tabWidget->setCurrentIndex(0);
+
     m_openType = type;
     setupActivityField();
 }
@@ -101,10 +113,10 @@ void ActivityDialog::setupActivityField ()
         ui->idText->setText("0");
 
         ui->titleText->setText("");
-        ui->titleText->setEnabled(true);
+        ui->titleText->setReadOnly(false);
 
         ui->jobcodeText->setText("");
-        ui->jobcodeText->setEnabled(true);
+        ui->jobcodeText->setReadOnly(false);
 
         ui->typeCombobox->setEnabled(true);
         ui->statusCombobox->setEnabled(true);
@@ -112,16 +124,20 @@ void ActivityDialog::setupActivityField ()
 
         ui->employeeCombobox->setEnabled(true);
 
-        ui->deadlineEdit->setEnabled(true);
+        ui->deadlineEdit->setReadOnly(false);
         ui->deadlineEdit->setDateTime(QDateTime::currentDateTime());
 
-        ui->descriptionText->setEnabled(true);
+        ui->descriptionText->setReadOnly(false);
         ui->descriptionText->setPlainText("");
+
+        /* Notes tab */
+        ui->activityNoteDeleteButton->setEnabled(false);
+        ui->activityNoteEditButton->setEnabled(false);
         break;
     case DialogType_Edit:
-        ui->titleText->setEnabled(true);
+        ui->titleText->setReadOnly(false);
 
-        ui->jobcodeText->setEnabled(true);
+        ui->jobcodeText->setReadOnly(false);
 
         ui->typeCombobox->setEnabled(true);
         ui->statusCombobox->setEnabled(true);
@@ -129,14 +145,14 @@ void ActivityDialog::setupActivityField ()
 
         ui->employeeCombobox->setEnabled(true);
 
-        ui->deadlineEdit->setEnabled(true);
+        ui->deadlineEdit->setReadOnly(false);
 
-        ui->descriptionText->setEnabled(true);
+        ui->descriptionText->setReadOnly(false);
         break;
     case DialogType_View:
-        ui->titleText->setEnabled(false);
+        ui->titleText->setReadOnly(true);
 
-        ui->jobcodeText->setEnabled(false);
+        ui->jobcodeText->setReadOnly(true);
 
         ui->typeCombobox->setEnabled(false);
         ui->statusCombobox->setEnabled(false);
@@ -144,9 +160,9 @@ void ActivityDialog::setupActivityField ()
 
         ui->employeeCombobox->setEnabled(false);
 
-        ui->deadlineEdit->setEnabled(false);
+        ui->deadlineEdit->setReadOnly(true);
 
-        ui->descriptionText->setEnabled(false);
+        ui->descriptionText->setReadOnly(true);
         break;
     default:
         /* mmm */
@@ -158,12 +174,64 @@ void ActivityDialog::updateEmployeesList (QVector<QVector<QString> > employeesLi
 {
     qDebug() << "ActivityDialog::updateEmployeesList()";
 
+    m_employeesList = employeesList;
+
     ui->employeeCombobox->clear();
     for (int row = 0; row < employeesList.size(); ++row)
     {
         QString name = employeesList.at(row).at(1) + " " + employeesList.at(row).at(2);
         qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name;
         ui->employeeCombobox->addItem(name,employeesList.at(row).at(0).toUInt());
+    }
+}
+
+void ActivityDialog::updateNotesList (QVector<QVector<QString> > notesList)
+{
+    qDebug() << "ActivityDialog::updateNotesList()";
+
+    m_notesList = notesList;
+
+    qDebug() << "ActivityDialog::updateNotesList() - setting table";
+    m_noteModel->clear();
+    m_noteModel->setColumnCount(4);
+
+    m_noteModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    m_noteModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Date"));
+    m_noteModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Author"));
+    m_noteModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Text"));
+
+    qDebug() << "ActivityDialog::updateNotesList() - Notes size:" << m_notesList.size();
+
+    if (m_notesList.size()>0)
+    {
+        for (int row = 0; row < m_notesList.size(); ++row)
+        {
+            QStandardItem *item;
+
+            item = new QStandardItem(m_notesList.at(row).at(0));
+            m_noteModel->setItem(row, 0, item);
+
+            qDebug() << "ActivityDialog::updateNotesList() - Note creation:" << m_notesList.at(row).at(5);
+            qDebug() << "ActivityDialog::updateNotesList() - Note creation conversion:" <<
+                QDateTime::fromString(m_notesList.at(row).at(5),"yyyy-MM-ddThh:mm:ss");
+            item = new QStandardItem(
+                QDateTime::fromString(m_notesList.at(row).at(5),"yyyy-MM-ddThh:mm:ss").toString("dd.MM.yyyy hh:mm:ss"));
+            m_noteModel->setItem(row, 1, item);
+
+            uint author = m_notesList.at(row).at(3).toUInt();
+            for (int i = 0; i < m_employeesList.size(); ++i)
+            {
+                if (author == m_employeesList.at(i).at(0).toUInt())
+                {
+                    item = new QStandardItem(m_employeesList.at(i).at(1) + " " + m_employeesList.at(i).at(2));
+                    break;
+                }
+            }
+            m_noteModel->setItem(row, 2, item);
+
+            item = new QStandardItem(m_notesList.at(row).at(2));
+            m_noteModel->setItem(row, 3, item);
+        }
     }
 }
 
@@ -282,4 +350,61 @@ Activity* ActivityDialog::getSavedActivity ()
         return m_activity;
     else
         return 0;
+}
+
+void ActivityDialog::selectionChangedNotesTable(const QItemSelection & sel,
+                                                const QItemSelection & des)
+{
+    qDebug() << "ActivityDialog::selectionChangedNotesTable()";
+
+    bool noteFounded = false;
+
+    QModelIndexList indexes = sel.indexes();
+    qDebug() << "ActivityDialog::selectionChangedNotesTable() - selected number" << indexes.count();
+
+    qDebug() << "ActivityDialog::selectionChangedNotesTable() - row selected" << indexes.at(0).row();
+    uint noteSelected = m_noteModel->item(indexes.at(0).row(),0)->text().toUInt();
+    qDebug() << "ActivityDialog::selectionChangedNotesTable() - note selected" << noteSelected;
+
+    for (int i = 0; i < m_notesList.size(); ++i)
+    {
+        if (noteSelected == m_notesList.at(i).at(0).toUInt())
+        {
+            noteFounded = true;
+            qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note founded!";
+
+            ui->textNoteEdit->setPlainText(m_notesList.at(i).at(2));
+
+            uint creationAuthor = m_notesList.at(i).at(3).toUInt();
+            for (int j = 0; j < m_employeesList.size(); ++j)
+            {
+                if (creationAuthor == m_employeesList.at(j).at(0).toUInt())
+                {
+                    ui->authorNoteCreEdit->setText(m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2));
+                    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note creation author" <<
+                                m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2);
+                    break;
+                }
+            }
+
+            uint modificatioAuthor = m_notesList.at(i).at(4).toUInt();
+            for (int j = 0; j < m_employeesList.size(); ++j)
+            {
+                if (modificatioAuthor == m_employeesList.at(j).at(0).toUInt())
+                {
+                    ui->authorNoteModEdit->setText(m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2));
+                    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note modification author" <<
+                                m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2);
+                    break;
+                }
+            }
+
+
+            ui->dateNoteCreEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(5),"yyyy-MM-ddThh:mm:ss"));
+            ui->dateNoteModEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(6),"yyyy-MM-ddThh:mm:ss"));
+            break;
+        }
+    }
+
+    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Exit!";
 }

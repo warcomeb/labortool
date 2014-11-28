@@ -1,3 +1,7 @@
+2014-11-27 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'è da rendere piu' ermetico il codice.
+
 2014-11-14 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Piccolo fix nella funzione getEmployeeByLogin che restituiva un id non vero.

@@ -26,6 +26,9 @@
 
 #include <QVector>
 
+#include <QStandardItemModel>
+#include <QItemSelection>
+
 #include "activity.h"
 
 namespace Ui {
@@ -53,11 +56,15 @@ public:
 
     void updateEmployeesList (QVector<QVector<QString> > employeesList);
 
+    void updateNotesList (QVector<QVector<QString> > notesList);
+
     Activity* getSavedActivity ();
 
 private slots:
     void apply();
     void noApply();
+
+    void selectionChangedNotesTable(const QItemSelection & sel,const QItemSelection & des);
 
 private:
     Ui::ActivityDialog *ui;
@@ -65,6 +72,13 @@ private:
     DialogType m_openType;
 
     Activity * m_activity;
+
+    /* Note table models */
+    QStandardItemModel * m_noteModel;
+    uint m_noteSelected;
+
+    QVector<QVector<QString> > m_employeesList;
+    QVector<QVector<QString> > m_notesList;
 
     void fillCombobox ();
 
