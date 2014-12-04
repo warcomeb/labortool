@@ -188,6 +188,39 @@ bool ActivityDatabase::addActivityNote (ActivityNote* note)
     }
 }
 
+bool ActivityDatabase::getNote (int id, ActivityNote *note)
+{
+    qDebug() << "ActivityDatabase::getNote()";
+
+    QString queryString = "SELECT * FROM activitynote WHERE ActivityNoteId='" +
+            QString::number(id) + "'";
+
+    qDebug() << "ActivityDatabase::getNote() - Final search string: " << queryString;
+    QSqlQuery query( queryString, *m_database);
+
+    if (query.size() != 1)
+    {
+        qDebug() << "ActivityDatabase::getNote() - database problems!";
+        return false;
+    }
+
+    /* Read record! */
+    qDebug() << "ActivityDatabase::getNote() - read record";
+    query.next();
+
+    note->setId(id);
+    note->setActivityId(query.value(1).toString().toUInt());
+    note->setText(query.value(2).toString());
+    note->setCreationInformation(query.value(3).toString().toUInt(),
+                                 query.value(5).toString());
+    note->setModificationInformation(query.value(4).toString().toUInt(),
+                                     query.value(6).toString());
+
+    qDebug() << "ActivityDatabase::getNote() - note" << id;
+    return true;
+}
+
+
 QVector< QVector< QString > >
 ActivityDatabase::getNotes(uint activityId)
 {
