@@ -97,13 +97,38 @@ void ActivityDialog::setOpenType (ActivityDialog::DialogType type)
     setupActivityField();
 }
 
-void ActivityDialog::setSelectedActivity (Activity * activity)
+void ActivityDialog::setSelectedActivity (Activity * activity,
+                                          QVector<QVector<QString> > employeesList,
+                                          QVector<QVector<QString> > notesList)
 {
     qDebug() << "ActivityDialog::setSelectedActivity()";
+
     m_activity = activity;
-    if (m_openType != ActivityDialog::DialogType_Add)
-        fillActivityFields();
+    m_employeesList = employeesList;
+    m_notesList = notesList;
+
+    Q_ASSERT(m_openType != ActivityDialog::DialogType_Add);
+
+    updateEmployeesList();
+    updateNotesList();
+    fillActivityFields();
+
+    qDebug() << "ActivityDialog::setSelectedActivity() - Exit!";
 }
+
+void ActivityDialog::prepareNewActivity (QVector<QVector<QString> > employeesList)
+{
+    qDebug() << "ActivityDialog::prepareNewActivity()";
+
+    m_employeesList = employeesList;
+
+    Q_ASSERT(m_openType == ActivityDialog::DialogType_Add);
+
+    updateEmployeesList();
+
+    qDebug() << "ActivityDialog::prepareNewActivity() - Exit!";
+}
+
 
 void ActivityDialog::setupActivityField ()
 {
@@ -170,26 +195,22 @@ void ActivityDialog::setupActivityField ()
     }
 }
 
-void ActivityDialog::updateEmployeesList (QVector<QVector<QString> > employeesList)
+void ActivityDialog::updateEmployeesList ()
 {
     qDebug() << "ActivityDialog::updateEmployeesList()";
 
-    m_employeesList = employeesList;
-
     ui->employeeCombobox->clear();
-    for (int row = 0; row < employeesList.size(); ++row)
+    for (int row = 0; row < m_employeesList.size(); ++row)
     {
-        QString name = employeesList.at(row).at(1) + " " + employeesList.at(row).at(2);
+        QString name = m_employeesList.at(row).at(1) + " " + m_employeesList.at(row).at(2);
         qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name;
-        ui->employeeCombobox->addItem(name,employeesList.at(row).at(0).toUInt());
+        ui->employeeCombobox->addItem(name,m_employeesList.at(row).at(0).toUInt());
     }
 }
 
-void ActivityDialog::updateNotesList (QVector<QVector<QString> > notesList)
+void ActivityDialog::updateNotesList ()
 {
     qDebug() << "ActivityDialog::updateNotesList()";
-
-    m_notesList = notesList;
 
     qDebug() << "ActivityDialog::updateNotesList() - setting table";
     m_noteModel->clear();

@@ -675,8 +675,8 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openActivityDialog()));
         ui->addActivityButton->setEnabled(false);
 
-        connect(ui->viewActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
+//        connect(ui->viewActivityButton,SIGNAL(clicked()),
+//                this,SLOT(openActivityDialog()));
         ui->viewActivityButton->setEnabled(true);
 
         disconnect(ui->editActivityButton,SIGNAL(clicked()),
@@ -710,8 +710,8 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openActivityDialog()));
         ui->addActivityButton->setEnabled(true);
 
-        connect(ui->viewActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
+//        connect(ui->viewActivityButton,SIGNAL(clicked()),
+//                this,SLOT(openActivityDialog()));
         ui->viewActivityButton->setEnabled(true);
 
         connect(ui->editActivityButton,SIGNAL(clicked()),

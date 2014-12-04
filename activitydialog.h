@@ -52,11 +52,11 @@ public:
     } DialogType;
 
     void setOpenType (DialogType type);
-    void setSelectedActivity (Activity * activity);
 
-    void updateEmployeesList (QVector<QVector<QString> > employeesList);
-
-    void updateNotesList (QVector<QVector<QString> > notesList);
+    void setSelectedActivity (Activity * activity,
+                              QVector<QVector<QString> > employeesList,
+                              QVector<QVector<QString> > notesList);
+    void prepareNewActivity (QVector<QVector<QString> > employeesList);
 
     Activity* getSavedActivity ();
 
@@ -85,6 +85,9 @@ private:
     void setupActivityField ();
     void fillActivityFields ();
     void fillEmployeeField ();
+
+    void updateEmployeesList ();
+    void updateNotesList ();
 
     void saveValues ();
 };

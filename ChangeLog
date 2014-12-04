@@ -1,6 +1,12 @@
+2014-12-04 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Sistemata la gestione dell'aggiornamento del dialog activity sulla base delle informazioni ricevute. Ora e' tutto incapsulato.
+
+    * Sistemato un bug relativo alla multipla connessione del pulsante view activity che veniva chiamato piu' volte.
+
 2014-11-27 Marco Giammarini <m.giammarini@warcomeb.it>
 
-    * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'è da rendere piu' ermetico il codice.
+    * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'e' da rendere piu' ermetico il codice.
 
 2014-11-14 Marco Giammarini <m.giammarini@warcomeb.it>
 

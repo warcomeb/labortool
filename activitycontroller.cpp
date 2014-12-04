@@ -39,7 +39,7 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
     qDebug() << "ActivityController::openAddActivityDialog()";
 
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Add);
-    m_activityDialog->updateEmployeesList(employeesList);
+    m_activityDialog->prepareNewActivity(employeesList);
     m_activityDialog->exec();
 
     Activity * activity = m_activityDialog->getSavedActivity();
@@ -78,10 +78,7 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<QVecto
     QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
 
     m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
-    m_activityDialog->updateEmployeesList(employeesList);
-    m_activityDialog->updateNotesList(notesList);
-    m_activityDialog->setSelectedActivity(activity);
-
+    m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
     m_activityDialog->exec();
 }
 
@@ -98,9 +95,10 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
         return;
     }
 
+    QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
+
     m_activityDialog->setOpenType(ActivityDialog::DialogType_Edit);
-    m_activityDialog->updateEmployeesList(employeesList);
-    m_activityDialog->setSelectedActivity(activity);
+    m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
 
     m_activityDialog->exec();
 
