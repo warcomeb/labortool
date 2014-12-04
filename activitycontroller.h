@@ -44,9 +44,11 @@ public:
     void openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
     void openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
 
-    void openAddNoteActivityDialog (uint activityId, Employee *loggedEmployee);
+    void openAddNoteActivityDialog (uint activityId);
 
     QVector<QVector<QString> > getActivitiesList (QStringList searchParams);
+
+    void updateLoggedUser(Employee * const employee);
 
 signals:
     void updatedActivitiesList(QStringList searchParams);
@@ -69,6 +71,9 @@ private:
     /* Activity wrapper for database */
     ActivityDatabase * m_databaseWrapper;
     QSqlDatabase * m_database;
+
+    /* Logged user */
+    Employee* m_loggedUser;
 };
 
 #endif // ACTIVITYCONTROLLER_H

@@ -50,7 +50,7 @@ public:
 
     ActivityNote* getSavedActivityNote();
 
-    void setOwners (Activity* activity, Employee* author);
+    void setOwners (Activity* activity, Employee* const author);
 
 private slots:
     void apply();

@@ -75,6 +75,9 @@ MainWindow::MainWindow(QWidget *parent) :
             this,SLOT(userLogin()));
     connect(m_loginController,SIGNAL(loggedUser(Employee*)),
             this,SLOT(loggedUser(Employee*)));
+    /* Update all observer for this event */
+    connect(this,SIGNAL(changedLoggedUser()),
+            this,SLOT(updateLoggedUser()));
 }
 
 MainWindow::~MainWindow()
@@ -350,15 +353,9 @@ void MainWindow::openActivityDialog()
     }
     else if (sender() == ui->addNoteActivityButton)
     {
-        if (m_employeeLogged == 0)
-        {
-            qDebug() << "MainWindow::openActivityDialog() - Employee not logged!";
-            QMessageBox::critical(0, tr("Add Activity Note Error"),
-                                 tr("You must not stay here!"));
+        Q_ASSERT(m_employeeLogged != 0);
 
-        }
-
-        m_activityController->openAddNoteActivityDialog(m_activitySelected,m_employeeLogged);
+        m_activityController->openAddNoteActivityDialog(m_activitySelected);
     }
 }
 
@@ -643,6 +640,8 @@ void MainWindow::userLogout()
 
     updateButtonStatus();
 
+    emit changedLoggedUser();
+
     qDebug() << "MainWindow::userLogout() - Exit!";
 }
 
@@ -662,6 +661,8 @@ void MainWindow::loggedUser(Employee *employee)
             this,SLOT(userLogout()));
 
     updateButtonStatus();
+
+    emit changedLoggedUser();
 
     qDebug() << "MainWindow::loggedUser() - Exit!";
 }
@@ -757,4 +758,9 @@ void MainWindow::updateButtonStatus()
             break;
         }
     }
+}
+
+void MainWindow::updateLoggedUser ()
+{
+    m_activityController->updateLoggedUser(m_employeeLogged);
 }

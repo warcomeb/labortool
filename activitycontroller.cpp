@@ -137,7 +137,7 @@ void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
     qDebug() << "ActivityController::openDeleteNoteActivityDialog()";
 }
 
-void ActivityController::openAddNoteActivityDialog (uint activityId, Employee* loggedEmployee)
+void ActivityController::openAddNoteActivityDialog (uint activityId)
 {
     qDebug() << "ActivityController::openAddNoteActivityDialog()";
 
@@ -151,8 +151,10 @@ void ActivityController::openAddNoteActivityDialog (uint activityId, Employee* l
         return;
     }
 
+    Q_ASSERT(m_loggedUser != 0);
+
     m_activityNoteDialog->setOpenType(ActivityNoteDialog::Add);
-    m_activityNoteDialog->setOwners(activity,loggedEmployee);
+    m_activityNoteDialog->setOwners(activity,m_loggedUser);
     m_activityNoteDialog->exec();
 
     ActivityNote* note = m_activityNoteDialog->getSavedActivityNote();
@@ -180,4 +182,14 @@ ActivityController::getActivitiesList (QStringList searchParams)
     qDebug() << "ActivityController::getActivitiesList(QStringList)";
 
     return m_databaseWrapper->searchActivities(searchParams);
+}
+
+void ActivityController::updateLoggedUser(Employee* const employee)
+{
+    qDebug() << "ActivityController::updateLoggedUser()";
+    m_loggedUser = employee;
+
+    qDebug() << "ActivityController::updateLoggedUser() - User" << m_loggedUser->getName() << m_loggedUser->getSurname();
+
+    qDebug() << "ActivityController::updateLoggedUser() - Exit";
 }

@@ -130,10 +130,13 @@ void ActivityNoteDialog::setOpenType (DialogType type)
     qDebug() << "ActivityNoteDialog::setOpenType() - Exit!";
 }
 
-void ActivityNoteDialog::setOwners (Activity* activity, Employee* author)
+void ActivityNoteDialog::setOwners (Activity* activity, Employee* const author)
 {
+    qDebug() << "ActivityNoteDialog::setOwners()";
     m_activity = activity;
     m_author = author;
+    qDebug() << "ActivityNoteDialog::setOwners() - Author"  << m_author->getName() << m_author->getSurname();
+    qDebug() << "ActivityNoteDialog::setOwners() - Exit!";
 }
 
 void ActivityNoteDialog::setSelectedActivityNote (ActivityNote * note)

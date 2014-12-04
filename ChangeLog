@@ -6,6 +6,8 @@
 
     * Aggiunta la connessione tra i pulsanti edit e delete delle note ed il relativo controllo.
 
+    * Aggiornato il metodo di trasferimento dell'utente loggato ai vari controlli.
+
 2014-11-27 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'e' da rendere piu' ermetico il codice.
