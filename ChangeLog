@@ -4,6 +4,8 @@
 
     * Sistemato un bug relativo alla multipla connessione del pulsante view activity che veniva chiamato piu' volte.
 
+    * Aggiunta la connessione tra i pulsanti edit e delete delle note ed il relativo controllo.
+
 2014-11-27 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'e' da rendere piu' ermetico il codice.

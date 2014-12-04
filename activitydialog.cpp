@@ -32,7 +32,8 @@
 ActivityDialog::ActivityDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ActivityDialog),
-    m_openType(ActivityDialog::DialogType_Add)
+    m_openType(ActivityDialog::DialogType_Add),
+    m_noteSelected(0)
 {
     ui->setupUi(this);
 
@@ -54,6 +55,11 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
             this,
             SLOT(selectionChangedNotesTable(const QItemSelection &, const QItemSelection &)));
+
+    connect(ui->activityNoteDeleteButton,SIGNAL(clicked()),
+            this,SLOT(deleteNote()));
+    connect(ui->activityNoteEditButton,SIGNAL(clicked()),
+            this,SLOT(editNote()));
 }
 
 ActivityDialog::~ActivityDialog()
@@ -384,12 +390,12 @@ void ActivityDialog::selectionChangedNotesTable(const QItemSelection & sel,
     qDebug() << "ActivityDialog::selectionChangedNotesTable() - selected number" << indexes.count();
 
     qDebug() << "ActivityDialog::selectionChangedNotesTable() - row selected" << indexes.at(0).row();
-    uint noteSelected = m_noteModel->item(indexes.at(0).row(),0)->text().toUInt();
-    qDebug() << "ActivityDialog::selectionChangedNotesTable() - note selected" << noteSelected;
+    m_noteSelected = m_noteModel->item(indexes.at(0).row(),0)->text().toUInt();
+    qDebug() << "ActivityDialog::selectionChangedNotesTable() - note selected" << m_noteSelected;
 
     for (int i = 0; i < m_notesList.size(); ++i)
     {
-        if (noteSelected == m_notesList.at(i).at(0).toUInt())
+        if (m_noteSelected == m_notesList.at(i).at(0).toUInt())
         {
             noteFounded = true;
             qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note founded!";
@@ -428,4 +434,18 @@ void ActivityDialog::selectionChangedNotesTable(const QItemSelection & sel,
     }
 
     qDebug() << "ActivityDialog::selectionChangedNotesTable() - Exit!";
+}
+
+void ActivityDialog::editNote()
+{
+    qDebug() << "ActivityDialog::editNote()";
+
+    emit editNoteButton(m_noteSelected);
+}
+
+void ActivityDialog::deleteNote()
+{
+    qDebug() << "ActivityDialog::deleteNote()";
+
+    emit deleteNoteButton(m_noteSelected);
 }

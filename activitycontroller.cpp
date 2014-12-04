@@ -32,6 +32,11 @@ ActivityController::ActivityController(QSqlDatabase *db)
     m_activityNoteDialog = new ActivityNoteDialog;
 
     m_databaseWrapper = new ActivityDatabase (m_database);
+
+    connect(m_activityDialog,SIGNAL(editNoteButton(uint)),
+            this,SLOT(openEditNoteActivityDialog(uint)));
+    connect(m_activityDialog,SIGNAL(deleteNoteButton(uint)),
+            this,SLOT(openDeleteNoteActivityDialog(uint)));
 }
 
 void ActivityController::openAddActivityDialog (QVector<QVector<QString> > employeesList)
@@ -120,6 +125,16 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
                                  tr("The activity has not been updated! Database Error!"));
         }
     }
+}
+
+void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
+{
+    qDebug() << "ActivityController::openEditNoteActivityDialog()";
+}
+
+void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
+{
+    qDebug() << "ActivityController::openDeleteNoteActivityDialog()";
 }
 
 void ActivityController::openAddNoteActivityDialog (uint activityId, Employee* loggedEmployee)

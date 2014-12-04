@@ -60,7 +60,14 @@ public:
 
     Activity* getSavedActivity ();
 
+signals:
+    void deleteNoteButton(uint activityNoteId);
+    void editNoteButton(uint activityNoteId);
+
 private slots:
+    void editNote();
+    void deleteNote();
+
     void apply();
     void noApply();
 

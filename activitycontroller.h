@@ -51,6 +51,10 @@ public:
 signals:
     void updatedActivitiesList(QStringList searchParams);
 
+private slots:
+    void openEditNoteActivityDialog (uint activityNoteId);
+    void openDeleteNoteActivityDialog (uint activityNoteId);
+
 private:
 
     /* View panel */
