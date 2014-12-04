@@ -42,6 +42,7 @@ public:
 
     bool addActivityNote (ActivityNote *note);
     bool getNote (int id, ActivityNote *note);
+    bool updateNote (ActivityNote *note);
     QVector< QVector< QString > > getNotes(uint activityId);
 
 

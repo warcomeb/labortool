@@ -220,6 +220,42 @@ bool ActivityDatabase::getNote (int id, ActivityNote *note)
     return true;
 }
 
+bool ActivityDatabase::updateNote (ActivityNote *note)
+{
+    qDebug() << "ActivityDatabase::updateNote()";
+
+    QSqlQuery query(*m_database);
+    QString queryString = "UPDATE activitynote SET "
+            "ActivityNoteText=:text ,"
+            "ActivityNoteEmployeeModification=:modauthor ,"
+            "ActivityNoteDateModification=:moddate "
+            "WHERE ActivityNoteId=:rowid";
+
+    query.prepare(queryString);
+    query.bindValue(":text",note->getText());
+    query.bindValue(":modauthor",QString::number(note->getModificationEmployee()));
+    query.bindValue(":moddate",note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(":rowid",QString::number(note->getId()));
+
+    qDebug() << "ActivityDatabase::updateNote() - Bound Value 0 " << query.boundValue(0);
+    qDebug() << "ActivityDatabase::updateNote() - Bound Value 1 " << query.boundValue(1);
+    qDebug() << "ActivityDatabase::updateNote() - Bound Value 2 " << query.boundValue(2);
+    qDebug() << "ActivityDatabase::updateNote() - Bound Value 3 " << query.boundValue(3);
+
+    if (query.exec())
+    {
+        qDebug() << "ActivityDatabase::updateNote() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::updateNote() - " << query.lastError();
+        qDebug() << "ActivityDatabase::updateNote() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ActivityDatabase::updateNote() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::updateNote() - " << query.lastError();
+        return false;
+    }
+}
 
 QVector< QVector< QString > >
 ActivityDatabase::getNotes(uint activityId)

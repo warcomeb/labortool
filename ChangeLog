@@ -8,6 +8,10 @@
 
     * Aggiornato il metodo di trasferimento dell'utente loggato ai vari controlli.
 
+    * Aggiunta la funzione getNote nella classe ActivityDatabase.
+
+    * Aggiunta la funzione updateNote nella classe ActivityDatabase.
+
 2014-11-27 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'e' da rendere piu' ermetico il codice.
