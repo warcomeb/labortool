@@ -10,9 +10,6 @@ Per vedere chi è loggato mando una segnale che chi vuole recepisce!!!
 dalle connessioni presenti, posso chiamare i rispettivi controller che a loro volta chiamano i dialog!
 
 
-27.11.2014 - A setSelectedActivity vanno passati le note e la lista dei collaboaratori. Internamente chiamerà i metodi privati per aggiornare le liste.
-
-
 OPEN TASK
 -------------------------------------------------------------------------------
 

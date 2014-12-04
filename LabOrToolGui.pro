@@ -53,4 +53,5 @@ OTHER_FILES += \
     LICENSE \
     TODO \
     README \
-    labortool.sql
+    labortool.sql \
+    VersionLog
