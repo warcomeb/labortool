@@ -27,11 +27,15 @@ public:
     void setId (uint id);
     void setActivityId (uint id);
 
-    void setCreationInformation (Employee* author, QDateTime date);
-    void setCreationInformation (Employee* author, QString date);
+    void setCreationInformation (Employee * const author, QDateTime date);
+    void setCreationInformation (Employee* const author, QString date);
+    void setCreationInformation (uint authorId, QDateTime date);
+    void setCreationInformation (uint authorId, QString date);
 
-    void setModificationInformation (Employee* author, QDateTime date);
-    void setModificationInformation (Employee* author, QString date);
+    void setModificationInformation (Employee* const author, QDateTime date);
+    void setModificationInformation (Employee* const author, QString date);
+    void setModificationInformation (uint authorId, QDateTime date);
+    void setModificationInformation (uint authorId, QString date);
 
     void setText(QString text);
 

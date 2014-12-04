@@ -127,16 +127,6 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
     }
 }
 
-void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
-{
-    qDebug() << "ActivityController::openEditNoteActivityDialog()";
-}
-
-void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
-{
-    qDebug() << "ActivityController::openDeleteNoteActivityDialog()";
-}
-
 void ActivityController::openAddNoteActivityDialog (uint activityId)
 {
     qDebug() << "ActivityController::openAddNoteActivityDialog()";
@@ -176,6 +166,70 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
     qDebug() << "ActivityController::openAddNoteActivityDialog() - Exit!";
 }
 
+void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
+{
+    qDebug() << "ActivityController::openEditNoteActivityDialog()";
+
+    if (activityNoteId == 0)
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Edit Activity Note Error"),
+                             tr("You must select an activity note!"));
+            qDebug() << "ActivityController::openEditNoteActivityDialog() - Note not selected!";
+        return;
+    }
+
+    ActivityNote * note = new ActivityNote;
+    if (!m_databaseWrapper->getNote(activityNoteId,note))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Edit Activity Note Error"),
+                             tr("The activity note can not be edited! Database Error!"));
+            qDebug() << "ActivityController::openEditNoteActivityDialog() - Error!";
+        return;
+    }
+
+    Q_ASSERT(m_loggedUser != 0);
+
+    m_activityNoteDialog->setOpenType(ActivityNoteDialog::Edit);
+    m_activityNoteDialog->setSelectedActivityNote(note,m_loggedUser);
+    m_activityNoteDialog->exec();
+
+    note = m_activityNoteDialog->getSavedActivityNote();
+    if (note)
+    {
+        if (m_databaseWrapper->updateNote(note))
+        {
+            qDebug() << "ActivityController::openEditNoteActivityDialog() - Update activity note successful";
+            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
+
+            m_activityDialog->updateNotesList(notesList);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ActivityController::openEditNoteActivityDialog() - Update activity note error!";
+            QMessageBox::warning(0, tr("Update Activity Note Error"),
+                                 tr("The activity note has not been updated! Database Error!"));
+        }
+    }
+
+}
+
+void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
+{
+    qDebug() << "ActivityController::openDeleteNoteActivityDialog()";
+
+    if (activityNoteId == 0)
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Delete Activity Note Error"),
+                             tr("You must select an activity note!"));
+            qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Note not selected!";
+        return;
+    }
+}
+
 QVector<QVector<QString> >
 ActivityController::getActivitiesList (QStringList searchParams)
 {
@@ -187,9 +241,19 @@ ActivityController::getActivitiesList (QStringList searchParams)
 void ActivityController::updateLoggedUser(Employee* const employee)
 {
     qDebug() << "ActivityController::updateLoggedUser()";
-    m_loggedUser = employee;
 
+    m_loggedUser = employee;
     qDebug() << "ActivityController::updateLoggedUser() - User" << m_loggedUser->getName() << m_loggedUser->getSurname();
 
+    if (m_loggedUser != 0)
+    {
+        m_activityDialog->setLoggedUserRole(m_loggedUser->getSystemRole(),
+                                            m_loggedUser->getRole());
+    }
+    else
+    {
+        /* Low level permission! */
+        m_activityDialog->setLoggedUserRole();
+    }
     qDebug() << "ActivityController::updateLoggedUser() - Exit";
 }

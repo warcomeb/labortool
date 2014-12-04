@@ -31,6 +31,8 @@
 
 #include "activity.h"
 
+#include "employee.h"
+
 namespace Ui {
 class ActivityDialog;
 }
@@ -58,7 +60,17 @@ public:
                               QVector<QVector<QString> > notesList);
     void prepareNewActivity (QVector<QVector<QString> > employeesList);
 
+    void setLoggedUserRole(Employee::SystemRole systemRole = Employee::User,
+                           Employee::Role role = Employee::Student);
+
     Activity* getSavedActivity ();
+
+    /**
+     * This function must be used only to update an opened ActivityDialog.
+     * @brief updateNotesList
+     * @param notesList
+     */
+    void updateNotesList (QVector<QVector<QString> > notesList);
 
 signals:
     void deleteNoteButton(uint activityNoteId);
@@ -86,6 +98,9 @@ private:
 
     QVector<QVector<QString> > m_employeesList;
     QVector<QVector<QString> > m_notesList;
+
+    Employee::Role m_loggedUserRole;
+    Employee::SystemRole m_loggedUserSystemRole;
 
     void fillCombobox ();
 

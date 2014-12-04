@@ -102,9 +102,15 @@ void ActivityNoteDialog::saveValues ()
         return;
     }
 
-    if (m_openType == Add)
+    switch (m_openType)
     {
+    case Add:
         m_activityNote = new ActivityNote(ui->textEdit->toPlainText(),m_activity,m_author);
+        break;
+    case Edit:
+        m_activityNote->setText(ui->textEdit->toPlainText());
+        m_activityNote->setModificationInformation(m_author,QDateTime::currentDateTime());
+        break;
     }
 
     qDebug() << "ActivityNoteDialog::saveValues() - Exit!";
@@ -139,7 +145,23 @@ void ActivityNoteDialog::setOwners (Activity* activity, Employee* const author)
     qDebug() << "ActivityNoteDialog::setOwners() - Exit!";
 }
 
-void ActivityNoteDialog::setSelectedActivityNote (ActivityNote * note)
+void ActivityNoteDialog::setSelectedActivityNote (ActivityNote * note, Employee* const author)
 {
+    qDebug() << "ActivityNoteDialog::setSelectedActivityNote()";
 
+    m_activityNote = note;
+    m_author = author;
+
+    Q_ASSERT(m_openType != ActivityNoteDialog::Add);
+
+    fillNoteField();
+
+    qDebug() << "ActivityNoteDialog::setSelectedActivityNote() - Exit!";
+}
+
+void ActivityNoteDialog::fillNoteField()
+{
+    qDebug() << "ActivityNoteDialog::fillNoteField()";
+    ui->textEdit->setPlainText(m_activityNote->getText());
+    qDebug() << "ActivityNoteDialog::fillNoteField() - Exit";
 }

@@ -28,30 +28,54 @@ void ActivityNote::setActivityId (uint id)
     m_activityId = id;
 }
 
-void ActivityNote::setCreationInformation (Employee* author, QDateTime date)
+void ActivityNote::setCreationInformation (Employee* const author, QDateTime date)
 {
     m_creationEmployee = author->getId();
     m_creationDate = date;
 }
 
-void ActivityNote::setCreationInformation (Employee* author, QString date)
+void ActivityNote::setCreationInformation (Employee* const author, QString date)
 {
     m_creationEmployee = author->getId();
     m_creationDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
 }
 
-void ActivityNote::setModificationInformation (Employee* author, QDateTime date)
+void ActivityNote::setCreationInformation (uint authorId, QDateTime date)
+{
+    m_creationEmployee = authorId;
+    m_creationDate = date;
+}
+
+void ActivityNote::setCreationInformation (uint authorId, QString date)
+{
+    m_creationEmployee = authorId;
+    m_creationDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
+}
+
+
+void ActivityNote::setModificationInformation (Employee* const author, QDateTime date)
 {
     m_modificationEmployee = author->getId();
     m_modificationDate = date;
 }
 
-void ActivityNote::setModificationInformation (Employee* author, QString date)
+void ActivityNote::setModificationInformation (Employee* const author, QString date)
 {
     m_modificationEmployee = author->getId();
     m_modificationDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
 }
 
+void ActivityNote::setModificationInformation (uint authorId, QDateTime date)
+{
+    m_modificationEmployee = authorId;
+    m_modificationDate = date;
+}
+
+void ActivityNote::setModificationInformation (uint authorId, QString date)
+{
+    m_modificationEmployee = authorId;
+    m_modificationDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
+}
 void ActivityNote::setText(QString text)
 {
     m_text = text;

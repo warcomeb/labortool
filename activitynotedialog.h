@@ -46,7 +46,7 @@ public:
     } DialogType;
 
     void setOpenType (DialogType type);
-    void setSelectedActivityNote (ActivityNote * note);
+    void setSelectedActivityNote (ActivityNote * note, Employee * const author);
 
     ActivityNote* getSavedActivityNote();
 
@@ -68,6 +68,8 @@ private:
 
     void setupDialog ();
     void saveValues ();
+
+    void fillNoteField();
 };
 
 #endif // ACTIVITYNOTEDIALOG_H

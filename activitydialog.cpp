@@ -33,7 +33,9 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ActivityDialog),
     m_openType(ActivityDialog::DialogType_Add),
-    m_noteSelected(0)
+    m_noteSelected(0),
+    m_loggedUserRole(Employee::Student), /* Low level permissions */
+    m_loggedUserSystemRole(Employee::User)
 {
     ui->setupUi(this);
 
@@ -50,6 +52,7 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
     m_noteModel = new QStandardItemModel(1, 4);
     ui->noteTable->setModel(m_noteModel);
     ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    updateNotesList();
 
     connect(ui->noteTable->selectionModel(),
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
@@ -68,6 +71,13 @@ ActivityDialog::~ActivityDialog()
         delete m_activity;
 
     delete ui;
+}
+
+void ActivityDialog::setLoggedUserRole(Employee::SystemRole systemRole,
+                                       Employee::Role role)
+{
+    m_loggedUserRole = role;
+    m_loggedUserSystemRole = systemRole;
 }
 
 void ActivityDialog::fillCombobox ()
@@ -127,10 +137,12 @@ void ActivityDialog::prepareNewActivity (QVector<QVector<QString> > employeesLis
     qDebug() << "ActivityDialog::prepareNewActivity()";
 
     m_employeesList = employeesList;
+    m_notesList.clear();
 
     Q_ASSERT(m_openType == ActivityDialog::DialogType_Add);
 
     updateEmployeesList();
+    updateNotesList();
 
     qDebug() << "ActivityDialog::prepareNewActivity() - Exit!";
 }
@@ -179,6 +191,24 @@ void ActivityDialog::setupActivityField ()
         ui->deadlineEdit->setReadOnly(false);
 
         ui->descriptionText->setReadOnly(false);
+
+        /* Notes tab */
+        if ((m_loggedUserSystemRole == Employee::Administrator) ||
+            (m_loggedUserRole == Employee::Coordinator))
+        {
+            ui->activityNoteDeleteButton->setEnabled(true);
+            ui->activityNoteEditButton->setEnabled(true);
+        }
+        else if (m_loggedUserSystemRole == Employee::Editor)
+        {
+            ui->activityNoteDeleteButton->setEnabled(false);
+            ui->activityNoteEditButton->setEnabled(true);
+        }
+        else
+        {
+            Q_ASSERT(0);
+        }
+
         break;
     case DialogType_View:
         ui->titleText->setReadOnly(true);
@@ -194,6 +224,10 @@ void ActivityDialog::setupActivityField ()
         ui->deadlineEdit->setReadOnly(true);
 
         ui->descriptionText->setReadOnly(true);
+
+        /* Notes tab */
+        ui->activityNoteDeleteButton->setEnabled(false);
+        ui->activityNoteEditButton->setEnabled(false);
         break;
     default:
         /* mmm */
@@ -212,6 +246,14 @@ void ActivityDialog::updateEmployeesList ()
         qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name;
         ui->employeeCombobox->addItem(name,m_employeesList.at(row).at(0).toUInt());
     }
+}
+
+void ActivityDialog::updateNotesList (QVector<QVector<QString> > notesList)
+{
+    Q_ASSERT(isVisible());
+
+    m_notesList = notesList;
+    updateNotesList();
 }
 
 void ActivityDialog::updateNotesList ()
@@ -360,6 +402,7 @@ void ActivityDialog::apply()
 
     if (m_activity != 0)
     {
+        m_noteSelected = 0;
         close();
     }
 }
@@ -368,6 +411,9 @@ void ActivityDialog::noApply()
 {
     if (m_openType != ActivityDialog::DialogType_View)
         m_activity = 0;
+
+    m_noteSelected = 0;
+
     close();
 }
 
