@@ -44,8 +44,6 @@ public:
     void openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
     void openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
 
-    void openAddNoteActivityDialog (uint activityId);
-
     QVector<QVector<QString> > getActivitiesList (QStringList searchParams);
 
     void updateLoggedUser(Employee * const employee);
@@ -53,9 +51,10 @@ public:
 signals:
     void updatedActivitiesList(QStringList searchParams);
 
-private slots:
+public slots:
     void openEditNoteActivityDialog (uint activityNoteId);
     void openDeleteNoteActivityDialog (uint activityNoteId);
+    void openAddNoteActivityDialog (uint activityId);
 
 private:
 

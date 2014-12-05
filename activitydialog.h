@@ -75,8 +75,10 @@ public:
 signals:
     void deleteNoteButton(uint activityNoteId);
     void editNoteButton(uint activityNoteId);
+    void addNoteButton(uint activityId);
 
 private slots:
+    void addNote();
     void editNote();
     void deleteNote();
 

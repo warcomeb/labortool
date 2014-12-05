@@ -1,3 +1,7 @@
+2014-12-05 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunto il pulsante 'Add Note' nell'activity dialog e la relativa gestione.
+
 2014-12-04 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Sistemata la gestione dell'aggiornamento del dialog activity sulla base delle informazioni ricevute. Ora e' tutto incapsulato.

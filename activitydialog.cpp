@@ -64,6 +64,8 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
             this,SLOT(deleteNote()));
     connect(ui->activityNoteEditButton,SIGNAL(clicked()),
             this,SLOT(editNote()));
+    connect(ui->activityNoteAddButton,SIGNAL(clicked()),
+            this,SLOT(addNote()));
 }
 
 ActivityDialog::~ActivityDialog()
@@ -177,6 +179,7 @@ void ActivityDialog::setupActivityField ()
         /* Notes tab */
         ui->activityNoteDeleteButton->setEnabled(false);
         ui->activityNoteEditButton->setEnabled(false);
+        ui->activityNoteAddButton->setEnabled(false);
         break;
     case DialogType_Edit:
         ui->titleText->setReadOnly(false);
@@ -199,11 +202,13 @@ void ActivityDialog::setupActivityField ()
         {
             ui->activityNoteDeleteButton->setEnabled(true);
             ui->activityNoteEditButton->setEnabled(true);
+            ui->activityNoteAddButton->setEnabled(true);
         }
         else if (m_loggedUserSystemRole == Employee::Editor)
         {
             ui->activityNoteDeleteButton->setEnabled(false);
             ui->activityNoteEditButton->setEnabled(true);
+            ui->activityNoteAddButton->setEnabled(true);
         }
         else
         {
@@ -229,6 +234,7 @@ void ActivityDialog::setupActivityField ()
         /* Notes tab */
         ui->activityNoteDeleteButton->setEnabled(false);
         ui->activityNoteEditButton->setEnabled(false);
+        ui->activityNoteAddButton->setEnabled(false);
         break;
     default:
         /* mmm */
@@ -520,16 +526,24 @@ void ActivityDialog::clearNotesTab()
     qDebug() << "ActivityDialog::clearNotesTab() - Exit!";
 }
 
+void ActivityDialog::addNote()
+{
+    qDebug() << "ActivityDialog::addNote()";
+    qDebug() << "ActivityDialog::addNote() - Activity Id" << m_activity->getId();
+    emit addNoteButton(m_activity->getId());
+    qDebug() << "ActivityDialog::addNote() - Exit!";
+}
+
 void ActivityDialog::editNote()
 {
     qDebug() << "ActivityDialog::editNote()";
-
     emit editNoteButton(m_noteSelected);
+    qDebug() << "ActivityDialog::editNote() - Exit!";
 }
 
 void ActivityDialog::deleteNote()
 {
     qDebug() << "ActivityDialog::deleteNote()";
-
     emit deleteNoteButton(m_noteSelected);
+    qDebug() << "ActivityDialog::deleteNote() - Exit!";
 }

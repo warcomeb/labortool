@@ -278,6 +278,13 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="activityNoteAddButton">
+           <property name="text">
+            <string>Add</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="activityNoteEditButton">
            <property name="text">
             <string>Edit</string>

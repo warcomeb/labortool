@@ -37,6 +37,8 @@ ActivityController::ActivityController(QSqlDatabase *db)
             this,SLOT(openEditNoteActivityDialog(uint)));
     connect(m_activityDialog,SIGNAL(deleteNoteButton(uint)),
             this,SLOT(openDeleteNoteActivityDialog(uint)));
+    connect(m_activityDialog,SIGNAL(addNoteButton(uint)),
+            this,SLOT(openAddNoteActivityDialog(uint)));
 }
 
 void ActivityController::openAddActivityDialog (QVector<QVector<QString> > employeesList)
@@ -154,6 +156,11 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
         if (m_databaseWrapper->addActivityNote(note))
         {
             qDebug() << "ActivityController::openAddNoteActivityDialog() - Add activity note successful";
+            if (sender() == m_activityDialog)
+            {
+                QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
+                m_activityDialog->updateNotesList(notesList);
+            }
         }
         else
         {
