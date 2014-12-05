@@ -52,6 +52,7 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
     m_noteModel = new QStandardItemModel(1, 4);
     ui->noteTable->setModel(m_noteModel);
     ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    clearNotesTab();
     updateNotesList();
 
     connect(ui->noteTable->selectionModel(),
@@ -254,6 +255,16 @@ void ActivityDialog::updateNotesList (QVector<QVector<QString> > notesList)
 
     m_notesList = notesList;
     updateNotesList();
+
+    if (m_notesList.size() > 0)
+    {
+        m_noteSelected = m_notesList.at(0).at(0).toUInt();
+        updateNotesTab();
+    }
+    else
+    {
+        clearNotesTab();
+    }
 }
 
 void ActivityDialog::updateNotesList ()
@@ -430,14 +441,23 @@ void ActivityDialog::selectionChangedNotesTable(const QItemSelection & sel,
 {
     qDebug() << "ActivityDialog::selectionChangedNotesTable()";
 
-    bool noteFounded = false;
-
     QModelIndexList indexes = sel.indexes();
     qDebug() << "ActivityDialog::selectionChangedNotesTable() - selected number" << indexes.count();
 
     qDebug() << "ActivityDialog::selectionChangedNotesTable() - row selected" << indexes.at(0).row();
     m_noteSelected = m_noteModel->item(indexes.at(0).row(),0)->text().toUInt();
     qDebug() << "ActivityDialog::selectionChangedNotesTable() - note selected" << m_noteSelected;
+
+    updateNotesTab();
+
+    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Exit!";
+}
+
+void ActivityDialog::updateNotesTab()
+{
+    qDebug() << "ActivityDialog::updateNotesTab()!";
+
+    bool noteFounded = false;
 
     for (int i = 0; i < m_notesList.size(); ++i)
     {
@@ -472,14 +492,32 @@ void ActivityDialog::selectionChangedNotesTable(const QItemSelection & sel,
                 }
             }
 
-
             ui->dateNoteCreEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(5),"yyyy-MM-ddThh:mm:ss"));
             ui->dateNoteModEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(6),"yyyy-MM-ddThh:mm:ss"));
             break;
         }
     }
 
-    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Exit!";
+    if (!noteFounded)
+        clearNotesTab();
+
+
+    qDebug() << "ActivityDialog::updateNotesTab() - Exit!";
+}
+
+void ActivityDialog::clearNotesTab()
+{
+    qDebug() << "ActivityDialog::clearNotesTab()";
+
+    ui->textNoteEdit->setPlainText("");
+
+    ui->authorNoteCreEdit->setText("");
+    ui->authorNoteModEdit->setText("");
+
+    ui->dateNoteCreEdit->setDateTime(QDateTime::currentDateTime());
+    ui->dateNoteModEdit->setDateTime(QDateTime::currentDateTime());
+
+    qDebug() << "ActivityDialog::clearNotesTab() - Exit!";
 }
 
 void ActivityDialog::editNote()

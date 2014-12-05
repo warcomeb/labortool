@@ -16,6 +16,8 @@
 
     * Aggiunta la licenza ed il file per il log delle versioni dato che siamo prossimi alla 0.1.0.
 
+    * Aggiunta la gestione dell'eliminazione di una nota.
+
 2014-11-27 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la logica di gestione per la visualizzazione delle note. Il sistema è funzionante ma c'e' da rendere piu' ermetico il codice.

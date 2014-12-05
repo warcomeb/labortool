@@ -257,6 +257,34 @@ bool ActivityDatabase::updateNote (ActivityNote *note)
     }
 }
 
+bool ActivityDatabase::deleteNote (int id)
+{
+    qDebug() << "ActivityDatabase::deleteNote()";
+
+    QSqlQuery query(*m_database);
+    QString queryString = "DELETE FROM activitynote "
+            "WHERE ActivityNoteId=:rowid";
+
+    query.prepare(queryString);
+    query.bindValue(":rowid",QString::number(id));
+
+    qDebug() << "ActivityDatabase::deleteNote() - Bound Value 0 " << query.boundValue(0);
+
+    if (query.exec())
+    {
+        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastError();
+        qDebug() << "ActivityDatabase::deleteNote() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastError();
+        return false;
+    }
+}
+
 QVector< QVector< QString > >
 ActivityDatabase::getNotes(uint activityId)
 {

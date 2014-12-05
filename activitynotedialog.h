@@ -42,7 +42,7 @@ public:
     {
         Add,
         Edit,
-        View,
+//        View,
     } DialogType;
 
     void setOpenType (DialogType type);

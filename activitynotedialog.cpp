@@ -52,8 +52,8 @@ void ActivityNoteDialog::apply()
 {
     qDebug() << "ActivityNoteDialog::apply()";
 
-    if (m_openType != ActivityNoteDialog::View)
-        saveValues ();
+//    if (m_openType != ActivityNoteDialog::View)
+    saveValues ();
 
     if (m_activityNote != 0)
     {
@@ -65,8 +65,8 @@ void ActivityNoteDialog::noApply()
 {
     qDebug() << "ActivityNoteDialog::noApply()";
 
-    if (m_openType != ActivityNoteDialog::View)
-        m_activityNote = 0;
+//    if (m_openType != ActivityNoteDialog::View)
+    m_activityNote = 0;
     close();
 }
 
@@ -83,7 +83,8 @@ void ActivityNoteDialog::setupDialog()
         ui->textEdit->setEnabled(true);
         ui->textEdit->setPlainText("");
         break;
-    case View:
+    case Edit:
+        ui->textEdit->setEnabled(true);
         break;
     }
 

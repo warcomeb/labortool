@@ -202,7 +202,6 @@ void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
         {
             qDebug() << "ActivityController::openEditNoteActivityDialog() - Update activity note successful";
             QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
-
             m_activityDialog->updateNotesList(notesList);
         }
         else
@@ -212,6 +211,8 @@ void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
             QMessageBox::warning(0, tr("Update Activity Note Error"),
                                  tr("The activity note has not been updated! Database Error!"));
         }
+
+        delete note;
     }
 
 }
@@ -224,10 +225,49 @@ void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
     {
         /* Warning message!!! */
         QMessageBox::warning(0, tr("Delete Activity Note Error"),
-                             tr("You must select an activity note!"));
+                              tr("You must select an activity note!"));
             qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Note not selected!";
         return;
     }
+
+    ActivityNote * note = new ActivityNote;
+    if (!m_databaseWrapper->getNote(activityNoteId,note))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Delete Activity Note Error"),
+                             tr("The activity note can not be deleted! Database Error!"));
+            qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Error!";
+        return;
+    }
+
+    Q_ASSERT(m_loggedUser != 0);
+
+    QMessageBox::StandardButton reply = QMessageBox::question(m_activityDialog,
+                                            tr("Delete Activity Note"),
+                                            tr("Are you sure you want delete this note?"),
+                                            QMessageBox::Yes | QMessageBox::No,
+                                            QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        qDebug() << "ActivityController::openDeleteNoteActivityDialog() - User want delete note" << activityNoteId;
+        if (m_databaseWrapper->deleteNote(activityNoteId))
+        {
+            qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Note deleted" << activityNoteId;
+            QMessageBox::warning(0, tr("Delete Activity Note"),
+                                  tr("The activity note has been deleted!"));
+
+            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
+            m_activityDialog->updateNotesList(notesList);
+        }
+        else
+        {
+            qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Delete activity note error!";
+            QMessageBox::critical(0, tr("Delete Activity Note Error"),
+                                  tr("The activity note has not been deleted! Database Error!"));
+        }
+    }
+
+    delete note;
 }
 
 QVector<QVector<QString> >

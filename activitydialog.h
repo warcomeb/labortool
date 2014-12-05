@@ -111,6 +111,9 @@ private:
     void updateEmployeesList ();
     void updateNotesList ();
 
+    void updateNotesTab();
+    void clearNotesTab();
+
     void saveValues ();
 };
 
