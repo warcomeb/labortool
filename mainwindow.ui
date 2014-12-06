@@ -55,7 +55,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabHome">
        <attribute name="title">
@@ -118,6 +118,101 @@
            </spacer>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Search Box</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QLabel" name="searchActivityTextLabel">
+             <property name="text">
+              <string>Text</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="searchActivityText"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchActivityStatusLabel">
+             <property name="text">
+              <string>Status</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchActivityStatusCombobox"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchActivityTypeLabel">
+             <property name="text">
+              <string>Type</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchActivityTypeCombobox"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchActivityPriorityLabel">
+             <property name="text">
+              <string>Priority</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchActivityPrioriryCombobox"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="searchActivityEmployeeLabel">
+             <property name="text">
+              <string>Employee</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="searchActivityEmployeeCombobox"/>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="searchActivityResetButton">
+             <property name="text">
+              <string>Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="searchActivitytButton">
+             <property name="text">
+              <string>Search</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <widget class="QTableView" name="activityTable">

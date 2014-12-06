@@ -2,6 +2,8 @@
 
     * Cambiata la funzione setOwners di ActivityNoteDialog.
 
+    * Implementata la parte grafica della ricerca nelle attivita'.
+
 2014-12-05 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunto il pulsante 'Add Note' nell'activity dialog e la relativa gestione.
