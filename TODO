@@ -9,9 +9,6 @@ updateNotesList da chiamare come funzione del dialog che è rimasta da implement
 Per vedere chi è loggato mando una segnale che chi vuole recepisce!!!
 dalle connessioni presenti, posso chiamare i rispettivi controller che a loro volta chiamano i dialog!
 
-
-Sistemare la parte di addnoteactivity.
-
 OPEN TASK
 -------------------------------------------------------------------------------
 

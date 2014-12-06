@@ -32,7 +32,7 @@
 ActivityDialog::ActivityDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ActivityDialog),
-    m_openType(ActivityDialog::DialogType_Add),
+    m_openType(ActivityDialog::Add),
     m_noteSelected(0),
     m_loggedUserRole(Employee::Student), /* Low level permissions */
     m_loggedUserSystemRole(Employee::User)
@@ -126,7 +126,7 @@ void ActivityDialog::setSelectedActivity (Activity * activity,
     m_employeesList = employeesList;
     m_notesList = notesList;
 
-    Q_ASSERT(m_openType != ActivityDialog::DialogType_Add);
+    Q_ASSERT(m_openType != ActivityDialog::Add);
 
     updateEmployeesList();
     updateNotesList();
@@ -142,7 +142,7 @@ void ActivityDialog::prepareNewActivity (QVector<QVector<QString> > employeesLis
     m_employeesList = employeesList;
     m_notesList.clear();
 
-    Q_ASSERT(m_openType == ActivityDialog::DialogType_Add);
+    Q_ASSERT(m_openType == ActivityDialog::Add);
 
     updateEmployeesList();
     updateNotesList();
@@ -155,7 +155,7 @@ void ActivityDialog::setupActivityField ()
 {
     switch (m_openType)
     {
-    case DialogType_Add:
+    case Add:
         ui->idText->setText("0");
 
         ui->titleText->setText("");
@@ -181,7 +181,7 @@ void ActivityDialog::setupActivityField ()
         ui->activityNoteEditButton->setEnabled(false);
         ui->activityNoteAddButton->setEnabled(false);
         break;
-    case DialogType_Edit:
+    case Edit:
         ui->titleText->setReadOnly(false);
 
         ui->jobcodeText->setReadOnly(false);
@@ -216,7 +216,7 @@ void ActivityDialog::setupActivityField ()
         }
 
         break;
-    case DialogType_View:
+    case View:
         ui->titleText->setReadOnly(true);
 
         ui->jobcodeText->setReadOnly(true);
@@ -237,7 +237,7 @@ void ActivityDialog::setupActivityField ()
         ui->activityNoteAddButton->setEnabled(false);
         break;
     default:
-        /* mmm */
+        Q_ASSERT(0);
         break;
     }
 }
@@ -381,7 +381,7 @@ void ActivityDialog::saveValues ()
     }
 
     m_activity = new Activity(ui->titleText->text());
-    if (m_openType != DialogType_Add) m_activity->setId(ui->idText->text().toUInt());
+    if (m_openType != Add) m_activity->setId(ui->idText->text().toUInt());
     m_activity->setDeadline(ui->deadlineEdit->date());
     m_activity->setDescription(ui->descriptionText->toPlainText());
     m_activity->setEmployee(ui->employeeCombobox->currentIndex());
@@ -414,7 +414,7 @@ void ActivityDialog::saveValues ()
 
 void ActivityDialog::apply()
 {
-    if (m_openType != ActivityDialog::DialogType_View)
+    if (m_openType != ActivityDialog::View)
         saveValues ();
 
     if (m_activity != 0)
@@ -426,7 +426,7 @@ void ActivityDialog::apply()
 
 void ActivityDialog::noApply()
 {
-    if (m_openType != ActivityDialog::DialogType_View)
+    if (m_openType != ActivityDialog::View)
         m_activity = 0;
 
     m_noteSelected = 0;

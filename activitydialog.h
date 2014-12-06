@@ -47,10 +47,10 @@ public:
 
     typedef enum
     {
-        DialogType_Add,
-        DialogType_Edit,
-        DialogType_View,
-        DialogType_Delete,
+        Add,
+        Edit,
+        View,
+        Delete,
     } DialogType;
 
     void setOpenType (DialogType type);

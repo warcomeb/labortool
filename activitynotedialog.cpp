@@ -52,7 +52,6 @@ void ActivityNoteDialog::apply()
 {
     qDebug() << "ActivityNoteDialog::apply()";
 
-//    if (m_openType != ActivityNoteDialog::View)
     saveValues ();
 
     if (m_activityNote != 0)
@@ -65,13 +64,9 @@ void ActivityNoteDialog::noApply()
 {
     qDebug() << "ActivityNoteDialog::noApply()";
 
-//    if (m_openType != ActivityNoteDialog::View)
     m_activityNote = 0;
     close();
 }
-
-//void ActivityNoteDialog::currentAuthor
-
 
 void ActivityNoteDialog::setupDialog()
 {
@@ -137,13 +132,16 @@ void ActivityNoteDialog::setOpenType (DialogType type)
     qDebug() << "ActivityNoteDialog::setOpenType() - Exit!";
 }
 
-void ActivityNoteDialog::setOwners (Activity* activity, Employee* const author)
+void ActivityNoteDialog::prepareNewActivityNote (Activity* activity, Employee* const author)
 {
-    qDebug() << "ActivityNoteDialog::setOwners()";
+    qDebug() << "ActivityNoteDialog::prepareNewActivityNote()";
+
+    Q_ASSERT(m_openType == ActivityNoteDialog::Add);
+
     m_activity = activity;
     m_author = author;
-    qDebug() << "ActivityNoteDialog::setOwners() - Author"  << m_author->getName() << m_author->getSurname();
-    qDebug() << "ActivityNoteDialog::setOwners() - Exit!";
+
+    qDebug() << "ActivityNoteDialog::prepareNewActivityNote() - Exit!";
 }
 
 void ActivityNoteDialog::setSelectedActivityNote (ActivityNote * note, Employee* const author)

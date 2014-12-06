@@ -46,11 +46,11 @@ public:
     } DialogType;
 
     void setOpenType (DialogType type);
+
     void setSelectedActivityNote (ActivityNote * note, Employee * const author);
+    void prepareNewActivityNote (Activity* activity, Employee* const author);
 
     ActivityNote* getSavedActivityNote();
-
-    void setOwners (Activity* activity, Employee* const author);
 
 private slots:
     void apply();

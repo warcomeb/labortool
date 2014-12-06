@@ -45,7 +45,7 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
 {
     qDebug() << "ActivityController::openAddActivityDialog()";
 
-    m_activityDialog->setOpenType(ActivityDialog::DialogType_Add);
+    m_activityDialog->setOpenType(ActivityDialog::Add);
     m_activityDialog->prepareNewActivity(employeesList);
     m_activityDialog->exec();
 
@@ -84,7 +84,7 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<QVecto
 
     QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
 
-    m_activityDialog->setOpenType(ActivityDialog::DialogType_View);
+    m_activityDialog->setOpenType(ActivityDialog::View);
     m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
     m_activityDialog->exec();
 }
@@ -104,7 +104,7 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
 
     QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
 
-    m_activityDialog->setOpenType(ActivityDialog::DialogType_Edit);
+    m_activityDialog->setOpenType(ActivityDialog::Edit);
     m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
 
     m_activityDialog->exec();
@@ -146,7 +146,7 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
     Q_ASSERT(m_loggedUser != 0);
 
     m_activityNoteDialog->setOpenType(ActivityNoteDialog::Add);
-    m_activityNoteDialog->setOwners(activity,m_loggedUser);
+    m_activityNoteDialog->prepareNewActivityNote(activity,m_loggedUser);
     m_activityNoteDialog->exec();
 
     ActivityNote* note = m_activityNoteDialog->getSavedActivityNote();
