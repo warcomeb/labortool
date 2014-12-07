@@ -1,3 +1,7 @@
+2014-12-07 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Ultimata l'implementazione per effettuare la ricerca nelle attivita'.
+
 2014-12-06 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Cambiata la funzione setOwners di ActivityNoteDialog.

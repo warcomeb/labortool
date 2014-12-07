@@ -172,7 +172,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="searchActivityPrioriryCombobox"/>
+            <widget class="QComboBox" name="searchActivityPriorityCombobox"/>
            </item>
            <item>
             <widget class="QLabel" name="searchActivityEmployeeLabel">
@@ -403,6 +403,7 @@
     <bool>false</bool>
    </attribute>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>

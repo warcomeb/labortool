@@ -143,7 +143,9 @@ void MainWindow::initBasicCommand()
  * relativi gestori.
  */
 void MainWindow::initActivityTab()
-{
+{ 
+    qDebug() << "MainWindow::initActivityTab()";
+
     if (m_employeeLogged == 0)
     {
         disconnect(ui->addActivityButton,SIGNAL(clicked()),
@@ -189,10 +191,60 @@ void MainWindow::initActivityTab()
         ui->addNoteActivityButton->setEnabled(true);
     }
 
-//    connect(ui->searchActivityButton,SIGNAL(clicked()),
-//            this,SLOT(searchActivities()));
-//    connect(ui->searchActivityResetButton,SIGNAL(clicked()),
-//            this,SLOT(resetSearchActivities()));
+    connect(ui->searchActivitytButton,SIGNAL(clicked()),
+            this,SLOT(searchActivities()));
+    connect(ui->searchActivityResetButton,SIGNAL(clicked()),
+            this,SLOT(resetSearchActivities()));
+
+
+    connect(ui->searchEmployeeButton,SIGNAL(clicked()),
+            this,SLOT(searchEmployees()));
+    connect(ui->searchEmployeeResetButton,SIGNAL(clicked()),
+            this,SLOT(resetSearchEmployees()));
+
+    /* Fill search combo box */
+    qDebug() << "MainWindow::initActivityTab() - Fill search combobox";
+    ui->searchActivityStatusCombobox->clear();
+    ui->searchActivityStatusCombobox->addItem(tr("All"), -1);
+    ui->searchActivityStatusCombobox->addItem(tr("All Open"), -2);
+    ui->searchActivityStatusCombobox->addItem(tr("Not Started"), Activity::NotStarted);
+    ui->searchActivityStatusCombobox->addItem(tr("In Progress"), Activity::InProgress);
+    ui->searchActivityStatusCombobox->addItem(tr("Ended"), Activity::Ended);
+    ui->searchActivityStatusCombobox->addItem(tr("Postponed"), Activity::Postponed);
+    ui->searchActivityStatusCombobox->addItem(tr("Waiting"), Activity::Waiting);
+
+    ui->searchActivityPriorityCombobox->clear();
+    ui->searchActivityPriorityCombobox->addItem(tr("All"), -1);
+    ui->searchActivityPriorityCombobox->addItem(tr("Low"), Activity::Low);
+    ui->searchActivityPriorityCombobox->addItem(tr("Medium"), Activity::Medium);
+    ui->searchActivityPriorityCombobox->addItem(tr("High"), Activity::High);
+    ui->searchActivityPriorityCombobox->addItem(tr("Now"), Activity::Now);
+
+    ui->searchActivityTypeCombobox->clear();
+    ui->searchActivityTypeCombobox->addItem(tr("All"), -1);
+    ui->searchActivityTypeCombobox->addItem(tr("Board"), Activity::Board);
+    ui->searchActivityTypeCombobox->addItem(tr("Repair"), Activity::Repair);
+    ui->searchActivityTypeCombobox->addItem(tr("Support"), Activity::Support);
+    ui->searchActivityTypeCombobox->addItem(tr("Firmware"), Activity::Firmware);
+    ui->searchActivityTypeCombobox->addItem(tr("Production"), Activity::Production);
+
+    QStringList searchEmployeeParams;
+    QVector<QVector<QString> > employeesList =
+            m_employeeController->getEmployeesList(searchEmployeeParams);
+
+    qDebug() << "MainWindow::initActivityTab() - Fill search employee combobox";
+    ui->searchActivityEmployeeCombobox->clear();
+    ui->searchActivityEmployeeCombobox->addItem(tr("All"), -1);
+    if (employeesList.size()>0)
+    {
+        for (int row = 0; row < employeesList.size(); ++row)
+        {
+            ui->searchActivityEmployeeCombobox->addItem(employeesList.at(row).at(1) + " " +
+                                                        employeesList.at(row).at(2),
+                                                        QString(employeesList.at(row).at(0)).toUInt());
+        }
+    }
+
 
     /* Update table slots */
     connect(m_activityController,SIGNAL(updatedActivitiesList(QStringList)),
@@ -433,6 +485,10 @@ void MainWindow::updateEmployeesTable(QStringList searchParams)
             }
         }
     }
+    else
+    {
+        showStatusMessage(tr("Search Employee: no employees found!"));
+    }
 }
 
 void MainWindow::searchEmployees()
@@ -604,18 +660,85 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
             isShortDeadline = false;
         }
     }
+    else
+    {
+        showStatusMessage(tr("Search Activity: no activities found!"));
+    }
 }
 
 void MainWindow::searchActivities()
 {
     qDebug() << "MainWindow::searchActivities()";
     QStringList searchParams;
+
+    if (!ui->searchActivityText->text().isEmpty())
+    {
+        QString text = "Text%" + ui->searchActivityText->text();
+        qDebug() << "MainWindow::searchActivities() - String" << text;
+        searchParams << text;
+    }
+
+    if (ui->searchActivityPriorityCombobox->currentData().toInt() != -1)
+    {
+        QString priority = "Priority=";
+        priority.append(Activity::getPriorityString(
+            static_cast<Activity::Priority>(ui->searchActivityPriorityCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchActivities() - Priority" << priority ;
+        searchParams << priority;
+    }
+
+    if (ui->searchActivityTypeCombobox->currentData().toInt() != -1)
+    {
+        QString type = "Type=";
+        type.append(Activity::getTypeString(
+            static_cast<Activity::Type>(ui->searchActivityTypeCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchActivities() - Type" << type ;
+        searchParams << type;
+    }
+
+    if (ui->searchActivityEmployeeCombobox->currentData().toInt() > 0)
+    {
+        QString employee = "Employee=";
+        employee.append(QString::number(ui->searchActivityEmployeeCombobox->currentData().toInt()));
+        qDebug() << "MainWindow::searchActivities() - Employee" << employee ;
+        searchParams << employee;
+    }
+
+    if (ui->searchActivityStatusCombobox->currentData().toInt() > -1)
+    {
+        QString status = "Status=";
+        status.append(Activity::getStatusString(
+            static_cast<Activity::Status>(ui->searchActivityStatusCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchActivities() - Status" << status ;
+        searchParams << status;
+    }
+    else if (ui->searchActivityStatusCombobox->currentData().toInt() == -2)
+    {
+        qDebug() << "MainWindow::searchActivities() - Status" << "Status$NotStarted|InProgress|Waiting" ;
+        searchParams << "Status$NotStarted|InProgress|Waiting";
+    }
+
+    qDebug() << "MainWindow::searchActivities() - update table";
+    updateActivitiesTable(searchParams);
 }
 
 void MainWindow::resetSearchActivities()
 {
     qDebug() << "MainWindow::resetSearchActivities()";
+    QStringList searchParams;
+    searchParams << "Status$NotStarted|InProgress|Waiting";
 
+    ui->searchActivityText->setText("");
+    ui->searchActivityStatusCombobox->setCurrentIndex(0);
+    ui->searchActivityEmployeeCombobox->setCurrentIndex(0);
+    ui->searchActivityTypeCombobox->setCurrentIndex(0);
+    ui->searchActivityPriorityCombobox->setCurrentIndex(0);
+
+    qDebug() << "MainWindow::resetSearchActivities() - update table";
+    updateActivitiesTable(searchParams);
 }
 
 void MainWindow::userLogin()
@@ -763,4 +886,10 @@ void MainWindow::updateButtonStatus()
 void MainWindow::updateLoggedUser ()
 {
     m_activityController->updateLoggedUser(m_employeeLogged);
+}
+
+void MainWindow::showStatusMessage(QString message)
+{
+    qDebug() << "STATUS MESSAGE:" << message;
+    ui->statusBar->showMessage(message);
 }

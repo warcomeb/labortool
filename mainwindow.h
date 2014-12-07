@@ -46,6 +46,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void showStatusMessage(QString message);
+
 private slots:
     bool connectToDatabase ();
     bool disconnectToDatabase ();
