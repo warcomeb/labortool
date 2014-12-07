@@ -40,15 +40,18 @@ public:
 
     typedef enum
     {
-        DialogType_Add,
-        DialogType_Edit,
-        DialogType_View,
+        Add,
+        Edit,
+        View,
     } DialogType;
 
     void setOpenType (DialogType type);
     void setSelectedEmployee (Employee * employee);
 
     Employee* getSavedEmployee ();
+
+    void setLoggedUserRole(Employee::SystemRole systemRole = Employee::User,
+                           Employee::Role role = Employee::Student);
 
 private slots:
     void apply();
@@ -60,6 +63,9 @@ private:
     DialogType m_openType;
 
     Employee * m_employee;
+
+    Employee::Role m_loggedUserRole;
+    Employee::SystemRole m_loggedUserSystemRole;
 
     void fillCombobox ();
 

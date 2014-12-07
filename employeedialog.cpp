@@ -29,7 +29,10 @@
 
 EmployeeDialog::EmployeeDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::EmployeeDialog)
+    ui(new Ui::EmployeeDialog),
+    m_openType(View),
+    m_loggedUserRole(Employee::Student), /* Low level permissions */
+    m_loggedUserSystemRole(Employee::User)
 {
     ui->setupUi(this);
 
@@ -86,9 +89,11 @@ void EmployeeDialog::setOpenType (EmployeeDialog::DialogType type)
 void EmployeeDialog::setSelectedEmployee (Employee * employee)
 {
     qDebug() << "EmployeeDialog::setSelectedEmployee()";
+
+    Q_ASSERT(m_openType != EmployeeDialog::Add);
+
     m_employee = employee;
-    if (m_openType != EmployeeDialog::DialogType_Add)
-        fillEmployeeField();
+    fillEmployeeField();
 }
 
 void EmployeeDialog::setupEmployeeField ()
@@ -97,21 +102,21 @@ void EmployeeDialog::setupEmployeeField ()
 
     switch (m_openType)
     {
-    case DialogType_Add:
+    case Add:
         qDebug() << "EmployeeDialog::setupEmployeeField() - Add";
         ui->idText->setText("0");
 
         ui->nameText->setText("");
-        ui->nameText->setEnabled(true);
+        ui->nameText->setReadOnly(false);
 
         ui->surnameText->setText("");
-        ui->surnameText->setEnabled(true);
+        ui->surnameText->setReadOnly(false);
 
         ui->usernameText->setText("");
-        ui->usernameText->setEnabled(true);
+        ui->usernameText->setReadOnly(false);
 
         ui->passwordText->setText("");
-        ui->passwordText->setEnabled(true);
+        ui->passwordText->setReadOnly(false);
 
         ui->sysroleCombobox->setEnabled(true);
         ui->roleCombobox->setEnabled(true);
@@ -123,46 +128,53 @@ void EmployeeDialog::setupEmployeeField ()
         ui->companyCombobox->setCurrentIndex(0);
         ui->activeCombobox->setCurrentIndex(0);
 
-        ui->noteText->setEnabled(true);
+        ui->noteText->setReadOnly(false);
         ui->noteText->setText("");
         break;
-    case DialogType_Edit:
+    case Edit:
         qDebug() << "EmployeeDialog::setupEmployeeField() - Edit";
-        ui->nameText->setEnabled(false);
-
-        ui->surnameText->setEnabled(false);
-
-        ui->usernameText->setEnabled(true);
+        if (m_loggedUserSystemRole == Employee::Administrator)
+        {
+            ui->nameText->setReadOnly(false);
+            ui->surnameText->setReadOnly(false);
+            ui->usernameText->setReadOnly(false);
+        }
+        else
+        {
+            ui->nameText->setReadOnly(true);
+            ui->surnameText->setReadOnly(true);
+            ui->usernameText->setReadOnly(true);
+        }
 
         /* The password can be changed in other field! */
-        ui->passwordText->setEnabled(false);
+        ui->passwordText->setReadOnly(true);
 
         ui->sysroleCombobox->setEnabled(true);
         ui->roleCombobox->setEnabled(true);
         ui->companyCombobox->setEnabled(true);
         ui->activeCombobox->setEnabled(true);
 
-        ui->noteText->setEnabled(true);
+        ui->noteText->setReadOnly(false);
         break;
-    case DialogType_View:
+    case View:
         qDebug() << "EmployeeDialog::setupEmployeeField() - View";
-        ui->nameText->setEnabled(false);
+        ui->nameText->setReadOnly(true);
 
-        ui->surnameText->setEnabled(false);
+        ui->surnameText->setReadOnly(true);
 
-        ui->usernameText->setEnabled(false);
+        ui->usernameText->setReadOnly(true);
 
-        ui->passwordText->setEnabled(false);
+        ui->passwordText->setReadOnly(true);
 
         ui->sysroleCombobox->setEnabled(false);
         ui->roleCombobox->setEnabled(false);
         ui->companyCombobox->setEnabled(false);
         ui->activeCombobox->setEnabled(false);
 
-        ui->noteText->setEnabled(false);
+        ui->noteText->setReadOnly(true);
         break;
     default:
-        /* mmm */
+        Q_ASSERT(0);
         break;
     }
 }
@@ -193,7 +205,7 @@ void EmployeeDialog::saveValues ()
     m_employee = 0;
 
     QRegExp name = QRegExp(QString::fromUtf8("^[a-zA-Zèéìòàù' ]+$"));
-    QRegExp nick = QRegExp(QString::fromUtf8("[a-zA-Z0-9]{6,20}"));
+    QRegExp nick = QRegExp(QString::fromUtf8("[a-zA-Z0-9]{5,20}"));
 
     if (name.exactMatch(ui->nameText->text()))
     {
@@ -232,7 +244,7 @@ void EmployeeDialog::saveValues ()
     }
 
     /* The password can be setted only during user creation and by a specific button in a home! */
-    if (m_openType == DialogType_Add)
+    if (m_openType == Add)
     {
         if (nick.exactMatch(ui->passwordText->text()))
         {
@@ -248,9 +260,9 @@ void EmployeeDialog::saveValues ()
     }
 
     m_employee = new Employee(ui->surnameText->text(),ui->nameText->text());
-    if (m_openType != DialogType_Add) m_employee->setId(ui->idText->text().toUInt());
+    if (m_openType != Add) m_employee->setId(ui->idText->text().toUInt());
     m_employee->setUsername(ui->usernameText->text());
-    if (m_openType == DialogType_Add) m_employee->setPassword(ui->passwordText->text());
+    if (m_openType == Add) m_employee->setPassword(ui->passwordText->text());
     m_employee->setRole(static_cast<Employee::Role>(
                             ui->roleCombobox->currentData().toInt())
                         );
@@ -277,16 +289,18 @@ void EmployeeDialog::saveValues ()
 
 void EmployeeDialog::apply()
 {
-    if (m_openType != EmployeeDialog::DialogType_View)
+    if (m_openType != EmployeeDialog::View)
         saveValues ();
 
-    close();
+    if (m_employee != 0)
+        close();
 }
 
 void EmployeeDialog::noApply()
 {
-    if (m_openType != EmployeeDialog::DialogType_View)
+    if (m_openType != EmployeeDialog::View)
         m_employee = 0;
+
     close();
 }
 
@@ -296,4 +310,10 @@ Employee* EmployeeDialog::getSavedEmployee ()
         return m_employee;
     else
         return 0;
+}
+void EmployeeDialog::setLoggedUserRole(Employee::SystemRole systemRole,
+                                       Employee::Role role)
+{
+    m_loggedUserRole = role;
+    m_loggedUserSystemRole = systemRole;
 }

@@ -50,6 +50,8 @@ public:
     QVector<QVector<QString> > getEmployeesList (EmployeesListType type);
     QVector<QVector<QString> > getEmployeesList (QStringList searchParams);
 
+    void updateLoggedUser(Employee * const employee);
+
 signals:
     void updatedEmployeesList(QStringList searchParams);
 
@@ -58,8 +60,8 @@ private:
     /* View panel */
     EmployeeDialog * m_employeeDialog;
 
-    /* Employees list */
-    QVector<Employee*> m_employees;
+    /* Logged employee */
+    Employee * m_loggedUser;
 
     /* Employee wrapper for database */
     EmployeeDatabase * m_databaseWrapper;

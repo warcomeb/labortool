@@ -2,6 +2,8 @@
 
     * Ultimata l'implementazione per effettuare la ricerca nelle attivita'.
 
+    * Alcuni fix generici sia nelle classi Activity che in quelle Employee.
+
 2014-12-06 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Cambiata la funzione setOwners di ActivityNoteDialog.

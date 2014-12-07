@@ -2,39 +2,42 @@ Task:       ProgressiveNumber.Status.Developers
 Status:     O=Open|P=InProgress|C=Closed
 Developers: A=Marco
 
-LastNumber: 6
-
-updateNotesList da chiamare come funzione del dialog che è rimasta da implementare!
-
-Per vedere chi è loggato mando una segnale che chi vuole recepisce!!!
-dalle connessioni presenti, posso chiamare i rispettivi controller che a loro volta chiamano i dialog!
+LastNumber: 9
 
 OPEN TASK
 -------------------------------------------------------------------------------
 
-2.O.A
-Complatere l'update dei dati dell'utente dentro al wrapper per il database.
-
-3.O.A
-Aggiungere il parsing di scelte multiple all'interno di un parametro nei dati del dipendente.
-Aggiungere il parsing del comando $.
-
 6.O.A
 Aggiungere trace delle attivita' di ogni singolo utente una volta che fa il login.
+
+7.O.A
+Non si e' ancora deciso se implmenetare il delete delle attivita'.
+
+8.O.A
+Aggiungere il cambio della password dalla schermata generale.
+
+9.O.A
+Aggiungere il cambio dei nomi sei pulsanti in base a come si apre ogni dialog.
 
 IN PROGRESS TASK
 -------------------------------------------------------------------------------
 
-1.P.A
-Aggiungere un colore alla linea delle attività.
-Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre arancioni.
-
-5.P.A
-Aggiungere disabilitazione di alcune funzionalità in base ai privilegi assegnati all'utente.
-
+3.P.A
+Aggiungere il parsing di scelte multiple all'interno di un parametro nei dati del dipendente.
+Aggiungere il parsing del comando $.
 
 CLOSED TASK
 -------------------------------------------------------------------------------
 
 4.C.A
 Aggiungere messaggio di errore in caso di login fallito
+
+1.C.A
+Aggiungere un colore alla linea delle attività.
+Se queste sono ad una settimana dalla scadenza diventano rosse, mentre a tre arancioni.
+
+5.C.A
+Aggiungere disabilitazione di alcune funzionalità in base ai privilegi assegnati all'utente.
+
+2.C.A
+Complatere l'update dei dati dell'utente dentro al wrapper per il database.

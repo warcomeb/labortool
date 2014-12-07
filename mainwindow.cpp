@@ -44,7 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     m_employeeLogged(0),
     m_employeeSelected(0),
-    m_activitySelected(0)
+    m_activitySelected(0),
+    m_isInitEmployeeTab(false),
+    m_isInitActivityTab(false)
 {
     ui->setupUi(this);
 
@@ -146,50 +148,27 @@ void MainWindow::initActivityTab()
 { 
     qDebug() << "MainWindow::initActivityTab()";
 
-    if (m_employeeLogged == 0)
-    {
-        disconnect(ui->addActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->addActivityButton->setEnabled(false);
+    Q_ASSERT(!m_isInitActivityTab);
 
-        connect(ui->viewActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->viewActivityButton->setEnabled(true);
+    disconnect(ui->addActivityButton,SIGNAL(clicked()),
+            this,SLOT(openActivityDialog()));
+    ui->addActivityButton->setEnabled(false);
 
-        disconnect(ui->editActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->editActivityButton->setEnabled(false);
+    connect(ui->viewActivityButton,SIGNAL(clicked()),
+            this,SLOT(openActivityDialog()));
+    ui->viewActivityButton->setEnabled(true);
 
-//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
-//                this,SLOT(openActivityDialog()));
-        ui->deleteActivityButton->setEnabled(false);
+    disconnect(ui->editActivityButton,SIGNAL(clicked()),
+            this,SLOT(openActivityDialog()));
+    ui->editActivityButton->setEnabled(false);
 
-        disconnect(ui->addNoteActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->addNoteActivityButton->setEnabled(false);
-    }
-    else
-    {
-        connect(ui->addActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->addActivityButton->setEnabled(true);
+    //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
+    //                this,SLOT(openActivityDialog()));
+    ui->deleteActivityButton->setEnabled(false);
 
-        connect(ui->viewActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->viewActivityButton->setEnabled(true);
-
-        connect(ui->editActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->editActivityButton->setEnabled(true);
-
-//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
-//                this,SLOT(openActivityDialog()));
-        ui->deleteActivityButton->setEnabled(false);
-
-        connect(ui->addNoteActivityButton,SIGNAL(clicked()),
-                this,SLOT(openActivityDialog()));
-        ui->addNoteActivityButton->setEnabled(true);
-    }
+    disconnect(ui->addNoteActivityButton,SIGNAL(clicked()),
+            this,SLOT(openActivityDialog()));
+    ui->addNoteActivityButton->setEnabled(false);
 
     connect(ui->searchActivitytButton,SIGNAL(clicked()),
             this,SLOT(searchActivities()));
@@ -274,53 +253,20 @@ void MainWindow::initActivityTab()
  */
 void MainWindow::initEmployeeTab()
 {
-    if (m_employeeLogged == 0)
-    {
-        disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
-                this,SLOT(openEmployeeDialog()));
-        ui->addEmployeeButton->setEnabled(false);
+    Q_ASSERT(!m_isInitEmployeeTab);
 
-        connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-                this,SLOT(openEmployeeDialog()));
-        ui->viewEmployeeButton->setEnabled(true);
+    disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
+               this,SLOT(openEmployeeDialog()));
+    ui->addEmployeeButton->setEnabled(false);
 
-        disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
-                this,SLOT(openEmployeeDialog()));
-        ui->editEmployeeButton->setEnabled(false);
-    }
-    else
-    {
-        switch (m_employeeLogged->getSystemRole())
-        {
-        case Employee::Editor:
-            disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
-            ui->addEmployeeButton->setEnabled(false);
+    connect(ui->viewEmployeeButton,SIGNAL(clicked()),
+            this,SLOT(openEmployeeDialog()));
+    ui->viewEmployeeButton->setEnabled(true);
 
-            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
-            ui->viewEmployeeButton->setEnabled(true);
+    disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
+               this,SLOT(openEmployeeDialog()));
+    ui->editEmployeeButton->setEnabled(false);
 
-            disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
-            ui->editEmployeeButton->setEnabled(false);
-            break;
-
-        case Employee::Administrator:
-            connect(ui->addEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
-            ui->addEmployeeButton->setEnabled(true);
-
-            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
-            ui->viewEmployeeButton->setEnabled(true);
-
-            connect(ui->editEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
-            ui->editEmployeeButton->setEnabled(true);
-            break;
-        }
-    }
 
     connect(ui->searchEmployeeButton,SIGNAL(clicked()),
             this,SLOT(searchEmployees()));
@@ -364,6 +310,8 @@ void MainWindow::initEmployeeTab()
     QStringList searchParams;
     searchParams << "Active=Yes";
     updateEmployeesTable(searchParams);
+
+    m_isInitEmployeeTab = true;
 }
 
 /**
@@ -792,15 +740,16 @@ void MainWindow::loggedUser(Employee *employee)
 
 void MainWindow::updateButtonStatus()
 {
+    qDebug() << "MainWindow::updateButtonStatus()";
     if (m_employeeLogged == 0)
     {
+        qDebug() << "MainWindow::updateButtonStatus() - No logged!";
+
         /* Activity tab buttons */
         disconnect(ui->addActivityButton,SIGNAL(clicked()),
                 this,SLOT(openActivityDialog()));
         ui->addActivityButton->setEnabled(false);
 
-//        connect(ui->viewActivityButton,SIGNAL(clicked()),
-//                this,SLOT(openActivityDialog()));
         ui->viewActivityButton->setEnabled(true);
 
         disconnect(ui->editActivityButton,SIGNAL(clicked()),
@@ -820,8 +769,6 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openEmployeeDialog()));
         ui->addEmployeeButton->setEnabled(false);
 
-        connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-                this,SLOT(openEmployeeDialog()));
         ui->viewEmployeeButton->setEnabled(true);
 
         disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
@@ -830,12 +777,11 @@ void MainWindow::updateButtonStatus()
     }
     else
     {
+        qDebug() << "MainWindow::updateButtonStatus() - Logged!";
         connect(ui->addActivityButton,SIGNAL(clicked()),
                 this,SLOT(openActivityDialog()));
         ui->addActivityButton->setEnabled(true);
 
-//        connect(ui->viewActivityButton,SIGNAL(clicked()),
-//                this,SLOT(openActivityDialog()));
         ui->viewActivityButton->setEnabled(true);
 
         connect(ui->editActivityButton,SIGNAL(clicked()),
@@ -853,12 +799,11 @@ void MainWindow::updateButtonStatus()
         switch (m_employeeLogged->getSystemRole())
         {
         case Employee::Editor:
+            qDebug() << "MainWindow::updateButtonStatus() - Logged Editor!";
             disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
                     this,SLOT(openEmployeeDialog()));
             ui->addEmployeeButton->setEnabled(false);
 
-            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
             ui->viewEmployeeButton->setEnabled(true);
 
             disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
@@ -867,25 +812,29 @@ void MainWindow::updateButtonStatus()
             break;
 
         case Employee::Administrator:
+            qDebug() << "MainWindow::updateButtonStatus() - Logged Admin!";
             connect(ui->addEmployeeButton,SIGNAL(clicked()),
                     this,SLOT(openEmployeeDialog()));
             ui->addEmployeeButton->setEnabled(true);
 
-            connect(ui->viewEmployeeButton,SIGNAL(clicked()),
-                    this,SLOT(openEmployeeDialog()));
             ui->viewEmployeeButton->setEnabled(true);
 
             connect(ui->editEmployeeButton,SIGNAL(clicked()),
                     this,SLOT(openEmployeeDialog()));
             ui->editEmployeeButton->setEnabled(true);
             break;
+        default:
+            /* Nothing to do! */
+            break;
         }
     }
+    qDebug() << "MainWindow::updateButtonStatus() - Exit!";
 }
 
 void MainWindow::updateLoggedUser ()
 {
     m_activityController->updateLoggedUser(m_employeeLogged);
+    m_employeeController->updateLoggedUser(m_employeeLogged);
 }
 
 void MainWindow::showStatusMessage(QString message)

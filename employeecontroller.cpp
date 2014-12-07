@@ -24,7 +24,8 @@
 #include <QDebug>
 #include <QMessageBox>
 
-EmployeeController::EmployeeController(QSqlDatabase* db)
+EmployeeController::EmployeeController(QSqlDatabase* db):
+    m_loggedUser(0)
 {
     m_database = db;
 
@@ -37,7 +38,7 @@ void EmployeeController::openAddEmployeeDialog ()
 {
     qDebug() << "EmployeeController::openAddEmployeeDialog()";
 
-    m_employeeDialog->setOpenType(EmployeeDialog::DialogType_Add);
+    m_employeeDialog->setOpenType(EmployeeDialog::Add);
     m_employeeDialog->exec();
 
     Employee * employee = m_employeeDialog->getSavedEmployee();
@@ -64,6 +65,13 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
 {
     qDebug() << "EmployeeController::openViewEmployeeDialog()";
 
+    if (employeeId <= 0)
+    {
+        QMessageBox::warning(0, tr("View Employee Error"),
+                             tr("You must select an employee!"));
+        return;
+    }
+
     Employee * employee = new Employee;
     if (!m_databaseWrapper->getEmployee(employeeId,employee))
     {
@@ -72,7 +80,7 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
         return;
     }
 
-    m_employeeDialog->setOpenType(EmployeeDialog::DialogType_View);
+    m_employeeDialog->setOpenType(EmployeeDialog::View);
     m_employeeDialog->setSelectedEmployee(employee);
 
     m_employeeDialog->exec();
@@ -82,6 +90,13 @@ void EmployeeController::openEditEmployeeDialog (int employeeId)
 {
     qDebug() << "EmployeeController::openEditEmployeeDialog()";
 
+    if (employeeId <= 0)
+    {
+        QMessageBox::warning(0, tr("Edit Employee Error"),
+                             tr("You must select an employee!"));
+        return;
+    }
+
     Employee * employee = new Employee;
     if (!m_databaseWrapper->getEmployee(employeeId,employee))
     {
@@ -90,7 +105,7 @@ void EmployeeController::openEditEmployeeDialog (int employeeId)
         return;
     }
 
-    m_employeeDialog->setOpenType(EmployeeDialog::DialogType_Edit);
+    m_employeeDialog->setOpenType(EmployeeDialog::Edit);
     m_employeeDialog->setSelectedEmployee(employee);
 
     m_employeeDialog->exec();
@@ -139,3 +154,22 @@ EmployeeController::getEmployeesList (QStringList searchParams)
     return m_databaseWrapper->searchEmployees(searchParams);
 }
 
+void EmployeeController::updateLoggedUser(Employee* const employee)
+{
+    qDebug() << "EmployeeController::updateLoggedUser()";
+
+    m_loggedUser = employee;
+
+    if (m_loggedUser != 0)
+    {
+        qDebug() << "EmployeeController::updateLoggedUser() - User" << m_loggedUser->getName() << m_loggedUser->getSurname();
+        m_employeeDialog->setLoggedUserRole(m_loggedUser->getSystemRole(),
+                                            m_loggedUser->getRole());
+    }
+    else
+    {
+        /* Low level permission! */
+        m_employeeDialog->setLoggedUserRole();
+    }
+    qDebug() << "EmployeeController::updateLoggedUser() - Exit!";
+}

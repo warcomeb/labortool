@@ -150,15 +150,36 @@ bool EmployeeDatabase::updateEmployee (Employee* employee)
 
     QSqlQuery query(*m_database);
     QString queryString = "UPDATE employee SET "
-            "EmployeeUsername=:user "
+            "EmployeeName=:name ,"
+            "EmployeeSurname=:surname ,"
+            "EmployeeUsername=:user ,"
+            "EmployeeNote=:note ,"
+            "EmployeeRole=:role ,"
+            "EmployeeSysRole=:sysrole ,"
+            "EmployeeCompany=:company ,"
+            "EmployeeActive=:active "
             "WHERE EmployeeId=:rowid";
 
     query.prepare(queryString);
+    query.bindValue(":name",employee->getName());
+    query.bindValue(":surname",employee->getSurname());
     query.bindValue(":user",employee->getUsername());
+    query.bindValue(":note",employee->getNote());
+    query.bindValue(":role",Employee::getRoleString(employee->getRole()));
+    query.bindValue(":sysrole",Employee::getSystemRoleString(employee->getSystemRole()));
+    query.bindValue(":company",Employee::getCompanyString(employee->getCompany()));
+    query.bindValue(":active",Employee::getActiveStatusString(employee->getActiveStatus()));
     query.bindValue(":rowid",QString::number(employee->getId()));
 
     qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 0 " << query.boundValue(0);
     qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 1 " << query.boundValue(1);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 2 " << query.boundValue(2);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 3 " << query.boundValue(3);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 4 " << query.boundValue(4);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 5 " << query.boundValue(5);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 6 " << query.boundValue(6);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 7 " << query.boundValue(7);
+    qDebug() << "EmployeeDatabase::updateEmployee() - Bound Value 8 " << query.boundValue(8);
 
     if (query.exec())
     {

@@ -137,7 +137,7 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
     if (!m_databaseWrapper->getActivity(activityId,activity))
     {
         /* Warning message!!! */
-        QMessageBox::critical(0, tr("Add Activity Note Error"),
+        QMessageBox::warning(0, tr("Add Activity Note Error"),
                              tr("You must select an activity!"));
             qDebug() << "ActivityController::openAddNoteActivityDialog() - Exit!";
         return;
@@ -290,10 +290,10 @@ void ActivityController::updateLoggedUser(Employee* const employee)
     qDebug() << "ActivityController::updateLoggedUser()";
 
     m_loggedUser = employee;
-    qDebug() << "ActivityController::updateLoggedUser() - User" << m_loggedUser->getName() << m_loggedUser->getSurname();
 
     if (m_loggedUser != 0)
     {
+        qDebug() << "ActivityController::updateLoggedUser() - User" << m_loggedUser->getName() << m_loggedUser->getSurname();
         m_activityDialog->setLoggedUserRole(m_loggedUser->getSystemRole(),
                                             m_loggedUser->getRole());
     }

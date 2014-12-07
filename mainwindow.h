@@ -93,6 +93,9 @@ private:
     QStandardItemModel * m_activityModel;
     uint m_activitySelected;
 
+    bool m_isInitEmployeeTab;
+    bool m_isInitActivityTab;
+
     void initBasicCommand();
 
     /* Initialize signals and slots into tabs */
