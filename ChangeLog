@@ -2,6 +2,8 @@
 
     * Aggiungere il cambio dei nomi dei pulsanti in base a come si apre ogni dialog.
 
+    * Aggiungere il parsing del comando $ nella ricerca dei dipendenti.
+
 2014-12-07 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Ultimata l'implementazione per effettuare la ricerca nelle attivita'.

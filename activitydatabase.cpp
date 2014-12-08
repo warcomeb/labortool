@@ -388,7 +388,8 @@ ActivityDatabase::searchActivities(QStringList searchParams)
                     qDebug() << "ActivityDatabase::searchActivities() - Param is correct";
                     queryString.append(
                         "( ActivityTitle LIKE '%" + searchParam.at(1) + "%' OR " +
-                        "ActivityDescription LIKE '%" + searchParam.at(1) + "%') "
+                        "ActivityDescription LIKE '%" + searchParam.at(1) + "%' OR " +
+                        "ActivityWorkCode LIKE '%" + searchParam.at(1) + "%') "
                     );
                 }
                 else

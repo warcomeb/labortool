@@ -252,6 +252,33 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
                 }
 
             }
+            else if (searchParams.at(i).indexOf('$') != -1)
+            {
+                QStringList searchParam = searchParams.at(i).split('$');
+                if (searchParam.size() == 2)
+                {
+                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
+                    qDebug() << "EmployeeDatabase::searchEmployees()" << searchParam;
+                    QStringList searchComboParams = searchParam.at(1).split('|');
+                    queryString.append("( ");
+                    for (int j = 0; j < searchComboParams.size(); ++j)
+                    {
+                        queryString.append(DB_FIELD_SUFFIX +
+                                           searchParam.at(0) +  "='" +
+                                           searchComboParams.at(i) + "' ");
+
+                        if (j+1 == searchComboParams.size())
+                            queryString.append(") ");
+                        else
+                            queryString.append("OR ");
+                    }
+                }
+                else
+                {
+                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+                    return employeesList;
+                }
+            }
             else
             {
                 qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";

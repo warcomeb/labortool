@@ -20,9 +20,7 @@ Aggiungere il cambio della password dalla schermata generale.
 IN PROGRESS TASK
 -------------------------------------------------------------------------------
 
-3.P.A
-Aggiungere il parsing di scelte multiple all'interno di un parametro nei dati del dipendente.
-Aggiungere il parsing del comando $.
+
 
 CLOSED TASK
 -------------------------------------------------------------------------------
@@ -42,3 +40,7 @@ Complatere l'update dei dati dell'utente dentro al wrapper per il database.
 
 9.C.A
 Aggiungere il cambio dei nomi sei pulsanti in base a come si apre ogni dialog.
+
+3.C.A
+Aggiungere il parsing di scelte multiple all'interno di un parametro nei dati del dipendente.
+Aggiungere il parsing del comando $.
