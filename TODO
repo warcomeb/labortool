@@ -16,8 +16,6 @@ Non si e' ancora deciso se implmenetare il delete delle attivita'.
 8.O.A
 Aggiungere il cambio della password dalla schermata generale.
 
-9.O.A
-Aggiungere il cambio dei nomi sei pulsanti in base a come si apre ogni dialog.
 
 IN PROGRESS TASK
 -------------------------------------------------------------------------------
@@ -41,3 +39,6 @@ Aggiungere disabilitazione di alcune funzionalità in base ai privilegi assegnat
 
 2.C.A
 Complatere l'update dei dati dell'utente dentro al wrapper per il database.
+
+9.C.A
+Aggiungere il cambio dei nomi sei pulsanti in base a come si apre ogni dialog.

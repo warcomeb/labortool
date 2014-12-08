@@ -130,6 +130,11 @@ void EmployeeDialog::setupEmployeeField ()
 
         ui->noteText->setReadOnly(false);
         ui->noteText->setText("");
+
+        ui->saveButton->show();
+        ui->saveButton->setText(tr("Save"));
+        ui->cancelButton->show();
+        ui->cancelButton->setText(tr("Cancel"));
         break;
     case Edit:
         qDebug() << "EmployeeDialog::setupEmployeeField() - Edit";
@@ -155,6 +160,11 @@ void EmployeeDialog::setupEmployeeField ()
         ui->activeCombobox->setEnabled(true);
 
         ui->noteText->setReadOnly(false);
+
+        ui->saveButton->show();
+        ui->saveButton->setText(tr("Save"));
+        ui->cancelButton->show();
+        ui->cancelButton->setText(tr("Cancel"));
         break;
     case View:
         qDebug() << "EmployeeDialog::setupEmployeeField() - View";
@@ -172,6 +182,10 @@ void EmployeeDialog::setupEmployeeField ()
         ui->activeCombobox->setEnabled(false);
 
         ui->noteText->setReadOnly(true);
+
+        ui->saveButton->hide();
+        ui->cancelButton->show();
+        ui->cancelButton->setText(tr("Close"));
         break;
     default:
         Q_ASSERT(0);

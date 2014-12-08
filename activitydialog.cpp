@@ -180,6 +180,11 @@ void ActivityDialog::setupActivityField ()
         ui->activityNoteDeleteButton->setEnabled(false);
         ui->activityNoteEditButton->setEnabled(false);
         ui->activityNoteAddButton->setEnabled(false);
+
+        ui->saveButton->show();
+        ui->saveButton->setText(tr("Save"));
+        ui->cancelButton->show();
+        ui->cancelButton->setText(tr("Cancel"));
         break;
     case Edit:
         ui->titleText->setReadOnly(false);
@@ -215,6 +220,10 @@ void ActivityDialog::setupActivityField ()
             Q_ASSERT(0);
         }
 
+        ui->saveButton->show();
+        ui->saveButton->setText(tr("Save"));
+        ui->cancelButton->show();
+        ui->cancelButton->setText(tr("Cancel"));
         break;
     case View:
         ui->titleText->setReadOnly(true);
@@ -235,6 +244,10 @@ void ActivityDialog::setupActivityField ()
         ui->activityNoteDeleteButton->setEnabled(false);
         ui->activityNoteEditButton->setEnabled(false);
         ui->activityNoteAddButton->setEnabled(false);
+
+        ui->saveButton->hide();
+        ui->cancelButton->show();
+        ui->cancelButton->setText(tr("Close"));
         break;
     default:
         Q_ASSERT(0);
