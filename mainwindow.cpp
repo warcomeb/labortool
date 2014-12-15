@@ -53,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(QString(PROJECT_NAME) + " v." + QString(PROJECT_VERSION));
     setFocusPolicy(Qt::StrongFocus);
 
+    readConfigurationFile();
+
     initBasicCommand();
 
     connectToDatabase();
@@ -87,9 +89,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::readConfigurationFile()
+{
+    qDebug() << "MainWindow::readConfigurationFile()";
+    m_configuration = new QSettings("config/config.ini", QSettings::IniFormat);
+}
+
 void MainWindow::updateSelectedTab (int index)
 {
-    qDebug() << "Selected Tab:" << index;
+    qDebug() << "MainWindow::updateSelectedTab() - Selected tab:" <<  index;
 
     switch (index)
     {
@@ -104,24 +112,25 @@ void MainWindow::updateSelectedTab (int index)
 
 bool MainWindow::connectToDatabase ()
 {
+    qDebug() << "MainWindow::connectToDatabase()";
 
-    /* FIXME: Questi sono tutti dati da correggere da file di configurazione! */
-    m_database = QSqlDatabase::addDatabase( DB_TYPE );
-    m_database.setDatabaseName( DB_NAME );
-    m_database.setUserName( DB_USER );
-    m_database.setPassword( DB_PASS );
-    m_database.setHostName( DB_HOST );
-    m_database.setPort( DB_PORT );
+    m_database = QSqlDatabase::addDatabase( m_configuration->value("database/type").toString() );
+    m_database.setDatabaseName( m_configuration->value("database/name").toString() );
+    m_database.setUserName( m_configuration->value("database/username").toString() );
+    m_database.setPassword( m_configuration->value("database/password").toString() );
+    m_database.setHostName( m_configuration->value("database/host").toString() );
+    m_database.setPort( m_configuration->value("database/port").toUInt() );
+
     /* FIXME: questa stringa non può andare bene, deve essere universale!!! */
     //m_database.setConnectOptions("UNIX_SOCKET=/Applications/mampstack-5.4.26-0/mysql/tmp/mysql.sock");
 
     if ( !m_database.open() )
     {
-        qDebug() << "Database not connected!";
+        qDebug() << "MainWindow::connectToDatabase() - Database not connected!";
         qDebug() << m_database.lastError();
         return false;
     }
-    qDebug() << "Database connected!";
+    qDebug() << "MainWindow::connectToDatabase() - Database connected!";
     return true;
 }
 

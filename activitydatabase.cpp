@@ -351,7 +351,6 @@ ActivityDatabase::searchActivities(QStringList searchParams)
                     qDebug() << "ActivityDatabase::searchActivities() - Param is not correct";
                     return activitiesList;
                 }
-
             }
             else if (searchParams.at(i).indexOf('$') != -1)
             {

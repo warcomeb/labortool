@@ -1,3 +1,7 @@
+2014-12-15 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Implementata la lettura dei dati del database dal file ini.
+
 2014-12-08 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiungere il cambio dei nomi dei pulsanti in base a come si apre ogni dialog.

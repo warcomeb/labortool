@@ -78,6 +78,8 @@ signals:
 private:
     Ui::MainWindow *ui;
 
+    QSettings *m_configuration;
+
     QSqlDatabase m_database;
 
     Employee * m_employeeLogged;
@@ -95,6 +97,8 @@ private:
 
     bool m_isInitEmployeeTab;
     bool m_isInitActivityTab;
+
+    void readConfigurationFile();
 
     void initBasicCommand();
 
