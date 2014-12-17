@@ -114,7 +114,7 @@ bool MainWindow::connectToDatabase ()
 {
     qDebug() << "MainWindow::connectToDatabase()";
 
-    m_database = QSqlDatabase::addDatabase( m_configuration->value("database/type").toString() );
+    m_database = QSqlDatabase::addDatabase( DB_TYPE );
     m_database.setDatabaseName( m_configuration->value("database/name").toString() );
     m_database.setUserName( m_configuration->value("database/username").toString() );
     m_database.setPassword( m_configuration->value("database/password").toString() );
@@ -145,6 +145,10 @@ void MainWindow::initBasicCommand()
 
     /* We want to show the welcome tab! */
     ui->tabWidget->setCurrentIndex(0);
+
+    m_preferencesDialog = new PreferencesDialog;
+    connect(ui->actionPreferences,SIGNAL(triggered()),
+            this,SLOT(managePreferences()));
 }
 
 /**
@@ -850,4 +854,11 @@ void MainWindow::showStatusMessage(QString message)
 {
     qDebug() << "STATUS MESSAGE:" << message;
     ui->statusBar->showMessage(message);
+}
+
+void MainWindow::managePreferences()
+{
+    qDebug() << "MainWindow::managePreferences()";
+    m_preferencesDialog->exec();
+    qDebug() << "MainWindow::managePreferences() - Exit!";
 }

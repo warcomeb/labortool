@@ -34,6 +34,8 @@
 
 #include "logindialog.h"
 
+#include "preferencesdialog.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -72,6 +74,9 @@ private slots:
     void loggedUser (Employee*);
     void updateLoggedUser ();
 
+    /* Menu slots */
+    void managePreferences();
+
 signals:
     void changedLoggedUser();
 
@@ -97,6 +102,9 @@ private:
 
     bool m_isInitEmployeeTab;
     bool m_isInitActivityTab;
+
+    /* Menu dialogs */
+    PreferencesDialog * m_preferencesDialog;
 
     void readConfigurationFile();
 
