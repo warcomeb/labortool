@@ -1,3 +1,11 @@
+2015-01-07 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Corretta il salvataggio dell'utente corretto nelle attivita'.
+
+2015-01-05 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Rilasciata versione 0.1.0
+
 2014-12-17 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunto il dialog per la gestione di piu' file di configurazione. WiP!

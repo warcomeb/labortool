@@ -263,8 +263,9 @@ void ActivityDialog::updateEmployeesList ()
     for (int row = 0; row < m_employeesList.size(); ++row)
     {
         QString name = m_employeesList.at(row).at(1) + " " + m_employeesList.at(row).at(2);
-        qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name;
-        ui->employeeCombobox->addItem(name,m_employeesList.at(row).at(0).toUInt());
+        uint id = m_employeesList.at(row).at(0).toUInt();
+        qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name  << "Id" << id;
+        ui->employeeCombobox->addItem(name,id);
     }
 }
 
@@ -397,7 +398,7 @@ void ActivityDialog::saveValues ()
     if (m_openType != Add) m_activity->setId(ui->idText->text().toUInt());
     m_activity->setDeadline(ui->deadlineEdit->date());
     m_activity->setDescription(ui->descriptionText->toPlainText());
-    m_activity->setEmployee(ui->employeeCombobox->currentIndex());
+    m_activity->setEmployee(qvariant_cast<uint>(ui->employeeCombobox->itemData(ui->employeeCombobox->currentIndex())));
     m_activity->setWorkCode(ui->jobcodeText->text());
 
     m_activity->setPriority(
