@@ -2,7 +2,7 @@ Task:       ProgressiveNumber.Status.Developers
 Status:     O=Open|P=InProgress|C=Closed
 Developers: A=Marco
 
-LastNumber: 9
+LastNumber: 10
 
 OPEN TASK
 -------------------------------------------------------------------------------
@@ -16,6 +16,8 @@ Non si e' ancora deciso se implmenetare il delete delle attivita'.
 8.O.A
 Aggiungere il cambio della password dalla schermata generale.
 
+10.O.A
+Nelle tabelle i nomi composti degli enum, vanno corretti e visualizzati separati.
 
 IN PROGRESS TASK
 -------------------------------------------------------------------------------
