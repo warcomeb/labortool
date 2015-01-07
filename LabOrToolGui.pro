@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     logindialog.cpp \
     logincontroller.cpp \
     activitynotedialog.cpp \
-    preferencesdialog.cpp
+    preferencesdialog.cpp \
+    preferences.cpp
 
 HEADERS  += mainwindow.h \
     metadata.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     logindialog.h \
     logincontroller.h \
     activitynotedialog.h \
-    preferencesdialog.h
+    preferencesdialog.h \
+    preferences.h
 
 FORMS    += mainwindow.ui \
     activitydialog.ui \

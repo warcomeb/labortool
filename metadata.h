@@ -1,6 +1,6 @@
 /******************************************************************************
  * LabOrTool - Laboratory Organization Tool
- * Copyright (C) 2014 Marco Giammarini
+ * Copyright (C) 2014-2015 Marco Giammarini
  *
  * Author(s):
  *  Marco Giammarini <m.giammarini@warcomeb.it>
@@ -34,7 +34,7 @@
 /* Project informations */
 #define PROJECT_NAME         "LabOrTool"
 #define PROJECT_VERSION      "0.1.0"
-#define COPYRIGHT_YEAR       "2014"
-#define RELEASE_DATE         "July 22, 2014"
+#define COPYRIGHT_YEAR       "2015"
+#define RELEASE_DATE         "January 05, 2015"
 
 #endif // METADATA_H

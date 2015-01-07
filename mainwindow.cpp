@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initBasicCommand();
 
-    connectToDatabase();
+//    connectToDatabase();
 
     /* Initialize each controller */
     m_employeeController = new EmployeeController(&m_database);
@@ -92,7 +92,32 @@ MainWindow::~MainWindow()
 void MainWindow::readConfigurationFile()
 {
     qDebug() << "MainWindow::readConfigurationFile()";
-    m_configuration = new QSettings("config/config.ini", QSettings::IniFormat);
+
+    if (m_configurationGeneral)
+    {
+        m_configurationGeneral = new QSettings("config/config.ini", QSettings::IniFormat);
+        connectToDatabase();
+    }
+    else
+    {
+        qDebug() << "MainWindow::readConfigurationFile() - Configuration file just loaded!";
+    }
+
+//    QString specificFileName = m_configurationGeneral->value("loadedfile").toString();
+
+//    if (!specificFileName.isEmpty())
+//    {
+//        qDebug() << "MainWindow::readConfigurationFile() - Loaded file:" << specificFileName;
+
+//        m_configurationSpecific = new QSettings(specificFileName, QSettings::IniFormat);
+//        connectToDatabase();
+
+//        /* TODO: update tabelle */
+//    }
+//    else
+//    {
+//        qDebug() << "MainWindow::readConfigurationFile() - There isn't loaded file!";
+//    }
 }
 
 void MainWindow::updateSelectedTab (int index)
@@ -115,11 +140,11 @@ bool MainWindow::connectToDatabase ()
     qDebug() << "MainWindow::connectToDatabase()";
 
     m_database = QSqlDatabase::addDatabase( DB_TYPE );
-    m_database.setDatabaseName( m_configuration->value("database/name").toString() );
-    m_database.setUserName( m_configuration->value("database/username").toString() );
-    m_database.setPassword( m_configuration->value("database/password").toString() );
-    m_database.setHostName( m_configuration->value("database/host").toString() );
-    m_database.setPort( m_configuration->value("database/port").toUInt() );
+    m_database.setDatabaseName( m_configurationGeneral->value("database/name").toString() );
+    m_database.setUserName( m_configurationGeneral->value("database/username").toString() );
+    m_database.setPassword( m_configurationGeneral->value("database/password").toString() );
+    m_database.setHostName( m_configurationGeneral->value("database/host").toString() );
+    m_database.setPort( m_configurationGeneral->value("database/port").toUInt() );
 
     /* FIXME: questa stringa non può andare bene, deve essere universale!!! */
     //m_database.setConnectOptions("UNIX_SOCKET=/Applications/mampstack-5.4.26-0/mysql/tmp/mysql.sock");
@@ -861,4 +886,15 @@ void MainWindow::managePreferences()
     qDebug() << "MainWindow::managePreferences()";
     m_preferencesDialog->exec();
     qDebug() << "MainWindow::managePreferences() - Exit!";
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    qDebug() << "MainWindow::closeEvent()";
+//    if (userReallyWantsToQuit()) {
+//        writeSettings();
+//        event->accept();
+//    } else {
+//        event->ignore();
+//    }
 }

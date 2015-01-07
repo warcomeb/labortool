@@ -80,10 +80,14 @@ private slots:
 signals:
     void changedLoggedUser();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     Ui::MainWindow *ui;
 
-    QSettings *m_configuration;
+    QSettings *m_configurationGeneral;
+    QSettings *m_configurationSpecific;
 
     QSqlDatabase m_database;
 
