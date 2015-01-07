@@ -265,7 +265,7 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
                     {
                         queryString.append(DB_FIELD_SUFFIX +
                                            searchParam.at(0) +  "='" +
-                                           searchComboParams.at(i) + "' ");
+                                           searchComboParams.at(j) + "' ");
 
                         if (j+1 == searchComboParams.size())
                             queryString.append(") ");
