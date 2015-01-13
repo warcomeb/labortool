@@ -1,3 +1,7 @@
+2015-01-13 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunta la classe Production, modello per la gestione delle produzioni.
+
 2015-01-07 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Corretta la visualizzazione delle attivita' e dei collaboratori con scelte multiple.
