@@ -51,7 +51,7 @@ public:
     QString getDescription () const { return m_description; }
     QString getWorkCode () const { return m_workCode; }
 
-    QString setOutputCode () const { return m_outputCode; }
+    QString getOutputCode () const { return m_outputCode; }
 
     uint getEmployee () const { return m_assignedEmployee; }
 

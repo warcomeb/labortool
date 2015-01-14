@@ -1,3 +1,7 @@
+2015-01-14 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunta la classe ProductionDatabase ed iniziata l'implementazione di alcune funzioni.
+
 2015-01-13 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la classe Production, modello per la gestione delle produzioni.
