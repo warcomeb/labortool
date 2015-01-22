@@ -44,11 +44,9 @@ public:
 //    bool getNote (int id, ProductionNote *note);
 //    bool updateNote (ProductionNote *note);
 //    bool deleteNote (int id);
-//    QVector< QVector< QString > > getNotes(uint productionId);
 //    QVector< ProductionNote > getNotes (uint productionId);
 
-//    QVector< QVector< QString > > searchProductions (QStringList searchParams);
-    QVector< Production > searchProductions (QStringList searchParams);
+    QVector<Production*> searchProductions (QStringList searchParams);
 
 private:
 

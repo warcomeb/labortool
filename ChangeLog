@@ -1,3 +1,7 @@
+2015-01-22 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Ultimata la classe ProductionDatabase anche se le funzioni relative alle note sono commentate per permettere la compilazione.
+
 2015-01-14 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la classe ProductionDatabase ed iniziata l'implementazione di alcune funzioni.
