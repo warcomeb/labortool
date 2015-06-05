@@ -1,3 +1,11 @@
+2015-06-04 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Aggiunta la gestione delle note di produzione con creazione della classe madre Note
+
+    * Aggiornate le funzioni di gestione delle note nelle altre classi
+
+    * Ultimate le funzioni della classe ProductionDatabase
+
 2015-01-22 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Ultimata la classe ProductionDatabase anche se le funzioni relative alle note sono commentate per permettere la compilazione.

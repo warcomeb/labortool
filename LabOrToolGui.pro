@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     preferencesdialog.cpp \
     preferences.cpp \
     production.cpp \
-    productiondatabase.cpp
+    productiondatabase.cpp \
+    note.cpp \
+    productionnote.cpp
 
 HEADERS  += mainwindow.h \
     metadata.h \
@@ -48,7 +50,9 @@ HEADERS  += mainwindow.h \
     preferencesdialog.h \
     preferences.h \
     production.h \
-    productiondatabase.h
+    productiondatabase.h \
+    note.h \
+    productionnote.h
 
 FORMS    += mainwindow.ui \
     activitydialog.ui \

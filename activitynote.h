@@ -4,16 +4,18 @@
 #include <QString>
 #include <QDateTime>
 
-#include "activity.h"
-#include "employee.h"
+#include "note.h"
 
-class ActivityNote
+#include "activity.h"
+
+class ActivityNote:
+        public Note
 {
 public:
     ActivityNote(QString text, Activity* activity, Employee* author);
     ActivityNote();
 
-    uint getId () const { return m_id; }
+/*    uint getId () const { return m_id; }
     uint getActivityId () const { return m_activityId; }
 
     QString getText() const {return m_text; }
@@ -50,7 +52,7 @@ private:
     uint m_modificationEmployee;
 
     QDateTime m_creationDate;
-    QDateTime m_modificationDate;
+    QDateTime m_modificationDate;*/
 };
 
 #endif // ACTIVITYNOTE_H

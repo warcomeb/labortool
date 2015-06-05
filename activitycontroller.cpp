@@ -158,7 +158,7 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
             qDebug() << "ActivityController::openAddNoteActivityDialog() - Add activity note successful";
             if (sender() == m_activityDialog)
             {
-                QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
+                QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getParentId());
                 m_activityDialog->updateNotesList(notesList);
             }
         }
@@ -208,7 +208,7 @@ void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
         if (m_databaseWrapper->updateNote(note))
         {
             qDebug() << "ActivityController::openEditNoteActivityDialog() - Update activity note successful";
-            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
+            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getParentId());
             m_activityDialog->updateNotesList(notesList);
         }
         else
@@ -263,7 +263,7 @@ void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
             QMessageBox::warning(0, tr("Delete Activity Note"),
                                   tr("The activity note has been deleted!"));
 
-            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getActivityId());
+            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getParentId());
             m_activityDialog->updateNotesList(notesList);
         }
         else

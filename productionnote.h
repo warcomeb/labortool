@@ -19,38 +19,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  ******************************************************************************/
 
-#ifndef PRODUCTIONDATABASE_H
-#define PRODUCTIONDATABASE_H
+#ifndef PRODUCTIONNOTE_H
+#define PRODUCTIONNOTE_H
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QVector>
-#include <QDebug>
-#include <QString>
+#include "note.h"
 
 #include "production.h"
-#include "productionnote.h"
 
-class ProductionDatabase
+#include <QString>
+
+class ProductionNote :
+        public Note
 {
 public:
-    ProductionDatabase(QSqlDatabase * db);
-
-    bool addProduction (Production* production);
-    bool updateProduction (Production* production);
-    bool getProduction (int id, Production* production);
-
-    bool addProductionNote (ProductionNote *note);
-    bool getNote (int id, ProductionNote *note);
-    bool updateNote (ProductionNote *note);
-    bool deleteNote (int id);
-    QVector< ProductionNote > getNotes (uint productionId);
-
-    QVector<Production*> searchProductions (QStringList searchParams);
-
-private:
-
-    QSqlDatabase * m_database;
+    ProductionNote(QString text, Production* production, Employee* author);
+    ProductionNote();
 };
 
-#endif // PRODUCTIONDATABASE_H
+#endif // PRODUCTIONNOTE_H

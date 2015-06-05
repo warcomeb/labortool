@@ -2,23 +2,30 @@
 
 ActivityNote::ActivityNote(QString text, Activity* activity, Employee* author)
 {
-    m_id = 0;
+    setId(0);
+    setParentId(activity->getId());
+    setText(text);
 
-    m_activityId = activity->getId();
+    setCreationInformation(author->getId(),QDateTime::currentDateTime());
+    setModificationInformation(author->getId(),QDateTime::currentDateTime());
+/*    m_id = 0;
+
+    m_parentId = activity->getId();
 
     m_text = text;
 
     m_creationEmployee = m_modificationEmployee = author->getId();
     m_creationDate = m_modificationDate = QDateTime::currentDateTime();
+*/
 }
 
 ActivityNote::ActivityNote()
 {
-    m_id = 0;
-    m_text = "";
+    setId(0);
+    setText("");
 }
 
-void ActivityNote::setId (uint id)
+/*void ActivityNote::setId (uint id)
 {
     m_id = id;
 }
@@ -80,3 +87,4 @@ void ActivityNote::setText(QString text)
 {
     m_text = text;
 }
+*/

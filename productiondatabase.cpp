@@ -143,164 +143,166 @@ bool ProductionDatabase::updateProduction(Production *production)
     }
 }
 
-//bool ProductionDatabase::addProductionNote (ProductionNote* note)
-//{
-//    qDebug() << "ProductionDatabase::addProductionNote()";
+bool ProductionDatabase::addProductionNote (ProductionNote* note)
+{
+    qDebug() << "ProductionDatabase::addProductionNote()";
 
-//    QSqlQuery query(*m_database);
-//    QString queryString = "INSERT INTO productionnote "
-//                          "(ProductionNoteActivity, ProductionNoteText, "
-//                          "ProductionNoteEmployeeCreation, ProductionNoteDateCreation, "
-//                          "ProductionNoteEmployeeModification, ProductionNoteDateModification) "
-//                          "VALUES (?, ?, ?, ?, ?, ?)";
+    QSqlQuery query(*m_database);
+    QString queryString = "INSERT INTO productionnote "
+                          "(ProductionNoteActivity, ProductionNoteText, "
+                          "ProductionNoteEmployeeCreation, ProductionNoteDateCreation, "
+                          "ProductionNoteEmployeeModification, ProductionNoteDateModification) "
+                          "VALUES (?, ?, ?, ?, ?, ?)";
 
-//    query.prepare(queryString);
-//    query.bindValue(0,note->getProductionId());
-//    query.bindValue(1,note->getText());
-//    query.bindValue(2,note->getCreationEmployee());
-//    query.bindValue(3,note->getCreationDate().toString("yyyy-MM-dd hh:mm:ss"));
-//    query.bindValue(4,note->getModificationEmployee());
-//    query.bindValue(5,note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
+    query.prepare(queryString);
+    query.bindValue(0,note->getParentId());
+    query.bindValue(1,note->getText());
+    query.bindValue(2,note->getCreationEmployee());
+    query.bindValue(3,note->getCreationDate().toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(4,note->getModificationEmployee());
+    query.bindValue(5,note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
 
-//    qDebug() << "ProductionDatabase::addProductionNote() - " << query.lastQuery();
+    qDebug() << "ProductionDatabase::addProductionNote() - " << query.lastQuery();
 
-//    if (query.exec())
-//    {
-//        qDebug() << "ProductionDatabase::addProductionNote() - Query successful";
-//        return true;
-//    }
-//    else
-//    {
-//        qDebug() << "ProductionDatabase::addProductionNote() - "<< query.lastError();
-//        return false;
-//    }
-//}
+    if (query.exec())
+    {
+        qDebug() << "ProductionDatabase::addProductionNote() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ProductionDatabase::addProductionNote() - "<< query.lastError();
+        return false;
+    }
+}
 
-//bool ProductionDatabase::getNote (int id, ProductionNote *note)
-//{
-//    qDebug() << "ProductionDatabase::getNote()";
+bool ProductionDatabase::getNote (int id, ProductionNote *note)
+{
+    qDebug() << "ProductionDatabase::getNote()";
 
-//    QString queryString = "SELECT * FROM productionnote WHERE ProductionNoteId='" +
-//            QString::number(id) + "'";
+    QString queryString = "SELECT * FROM productionnote WHERE ProductionNoteId='" +
+            QString::number(id) + "'";
 
-//    qDebug() << "ProductionDatabase::getNote() - Final search string: " << queryString;
-//    QSqlQuery query( queryString, *m_database);
+    qDebug() << "ProductionDatabase::getNote() - Final search string: " << queryString;
+    QSqlQuery query( queryString, *m_database);
 
-//    if (query.size() != 1)
-//    {
-//        qDebug() << "ProductionDatabase::getNote() - database problems!";
-//        return false;
-//    }
+    if (query.size() != 1)
+    {
+        qDebug() << "ProductionDatabase::getNote() - database problems!";
+        return false;
+    }
 
-//    /* Read record! */
-//    qDebug() << "ProductionDatabase::getNote() - read record";
-//    query.next();
+    /* Read record! */
+    qDebug() << "ProductionDatabase::getNote() - read record";
+    query.next();
 
-//    note->setId(id);
-//    note->setProductionId(query.value(1).toString().toUInt());
-//    note->setText(query.value(2).toString());
-//    note->setCreationInformation(query.value(3).toString().toUInt(),
-//                                 query.value(5).toString());
-//    note->setModificationInformation(query.value(4).toString().toUInt(),
-//                                     query.value(6).toString());
+    note->setId(id);
+    note->setParentId(query.value(1).toString().toUInt());
+    note->setText(query.value(2).toString());
+    note->setCreationInformation(query.value(3).toString().toUInt(),
+                                 query.value(5).toString());
+    note->setModificationInformation(query.value(4).toString().toUInt(),
+                                     query.value(6).toString());
 
-//    qDebug() << "ProductionDatabase::getNote() - note" << id;
-//    return true;
-//}
+    qDebug() << "ProductionDatabase::getNote() - note" << id;
+    return true;
+}
 
-//bool ProductionDatabase::updateNote (ProductionNote *note)
-//{
-//    qDebug() << "ProductionDatabase::updateNote()";
+bool ProductionDatabase::updateNote (ProductionNote *note)
+{
+    qDebug() << "ProductionDatabase::updateNote()";
 
-//    QSqlQuery query(*m_database);
-//    QString queryString = "UPDATE productionnote SET "
-//            "ProductionNoteText=:text ,"
-//            "ProductionNoteEmployeeModification=:modauthor ,"
-//            "ProductionNoteDateModification=:moddate "
-//            "WHERE ProductionNoteId=:rowid";
+    QSqlQuery query(*m_database);
+    QString queryString = "UPDATE productionnote SET "
+            "ProductionNoteText=:text ,"
+            "ProductionNoteEmployeeModification=:modauthor ,"
+            "ProductionNoteDateModification=:moddate "
+            "WHERE ProductionNoteId=:rowid";
 
-//    query.prepare(queryString);
-//    query.bindValue(":text",note->getText());
-//    query.bindValue(":modauthor",QString::number(note->getModificationEmployee()));
-//    query.bindValue(":moddate",note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
-//    query.bindValue(":rowid",QString::number(note->getId()));
+    query.prepare(queryString);
+    query.bindValue(":text",note->getText());
+    query.bindValue(":modauthor",QString::number(note->getModificationEmployee()));
+    query.bindValue(":moddate",note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
+    query.bindValue(":rowid",QString::number(note->getId()));
 
-//    qDebug() << "ProductionDatabase::updateNote() - Bound Value 0 " << query.boundValue(0);
-//    qDebug() << "ProductionDatabase::updateNote() - Bound Value 1 " << query.boundValue(1);
-//    qDebug() << "ProductionDatabase::updateNote() - Bound Value 2 " << query.boundValue(2);
-//    qDebug() << "ProductionDatabase::updateNote() - Bound Value 3 " << query.boundValue(3);
+    qDebug() << "ProductionDatabase::updateNote() - Bound Value 0 " << query.boundValue(0);
+    qDebug() << "ProductionDatabase::updateNote() - Bound Value 1 " << query.boundValue(1);
+    qDebug() << "ProductionDatabase::updateNote() - Bound Value 2 " << query.boundValue(2);
+    qDebug() << "ProductionDatabase::updateNote() - Bound Value 3 " << query.boundValue(3);
 
-//    if (query.exec())
-//    {
-//        qDebug() << "ProductionDatabase::updateNote() - " << query.lastQuery();
-//        qDebug() << "ProductionDatabase::updateNote() - " << query.lastError();
-//        qDebug() << "ProductionDatabase::updateNote() - Query successful";
-//        return true;
-//    }
-//    else
-//    {
-//        qDebug() << "ProductionDatabase::updateNote() - " << query.lastQuery();
-//        qDebug() << "ProductionDatabase::updateNote() - " << query.lastError();
-//        return false;
-//    }
-//}
+    if (query.exec())
+    {
+        qDebug() << "ProductionDatabase::updateNote() - " << query.lastQuery();
+        qDebug() << "ProductionDatabase::updateNote() - " << query.lastError();
+        qDebug() << "ProductionDatabase::updateNote() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ProductionDatabase::updateNote() - " << query.lastQuery();
+        qDebug() << "ProductionDatabase::updateNote() - " << query.lastError();
+        return false;
+    }
+}
 
-//bool ActivityDatabase::deleteNote (int id)
-//{
-//    qDebug() << "ProductionDatabase::deleteNote()";
+bool ProductionDatabase::deleteNote (int id)
+{
+    qDebug() << "ProductionDatabase::deleteNote()";
 
-//    QSqlQuery query(*m_database);
-//    QString queryString = "DELETE FROM productionnote "
-//            "WHERE ProductionNoteId=:rowid";
+    QSqlQuery query(*m_database);
+    QString queryString = "DELETE FROM productionnote "
+            "WHERE ProductionNoteId=:rowid";
 
-//    query.prepare(queryString);
-//    query.bindValue(":rowid",QString::number(id));
+    query.prepare(queryString);
+    query.bindValue(":rowid",QString::number(id));
 
-//    qDebug() << "ProductionDatabase::deleteNote() - Bound Value 0 " << query.boundValue(0);
+    qDebug() << "ProductionDatabase::deleteNote() - Bound Value 0 " << query.boundValue(0);
 
-//    if (query.exec())
-//    {
-//        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastQuery();
-//        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastError();
-//        qDebug() << "ProductionDatabase::deleteNote() - Query successful";
-//        return true;
-//    }
-//    else
-//    {
-//        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastQuery();
-//        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastError();
-//        return false;
-//    }
-//}
+    if (query.exec())
+    {
+        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastQuery();
+        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastError();
+        qDebug() << "ProductionDatabase::deleteNote() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastQuery();
+        qDebug() << "ProductionDatabase::deleteNote() - " << query.lastError();
+        return false;
+    }
+}
 
-//QVector< ProductionNote >
-//ProductionDatabase::getNotes(uint productionId)
-//{
-//    qDebug() << "ProductionDatabase::getNotes()";
+QVector< ProductionNote >
+ProductionDatabase::getNotes(uint productionId)
+{
+    qDebug() << "ProductionDatabase::getNotes()";
 
-//    QVector< ProductionNote > notesList;
+    QVector< ProductionNote > notesList;
 
-//    QString queryString = "SELECT * FROM productionnote WHERE ProductionNoteProduction='" +
-//            QString::number(productionId) + "' ORDER BY ProductionNoteDateCreation DESC";
+    QString queryString = "SELECT * FROM productionnote WHERE ProductionNoteProduction='" +
+            QString::number(productionId) + "' ORDER BY ProductionNoteDateCreation DESC";
 
-//    qDebug() << "ProductionDatabase::getNotes() - Final search string: " << queryString;
+    qDebug() << "ProductionDatabase::getNotes() - Final search string: " << queryString;
 
-//    QSqlQuery query( queryString, *m_database);
-//    while (query.next())
-//    {
-//        ProductionNote note;
-//        note.setId(query.value(0).toUInt()); // Id
-//        note.setProductionId(query.value(1).toUint()); // Production
-//        note.setText(query.value(2).toString()); // Text
-//        note.setCreationInformation(query.value(3).toUint(),query.value(5).toString()); // EmployeeCreation,DateCreation
-//        note.setModificationInformation(query.value(4).toUInt(),query.value(6).toString()); // EmployeeModification,DateModification
+    QSqlQuery query( queryString, *m_database);
+    while (query.next())
+    {
+        ProductionNote note;
+        note.setId(query.value(0).toUInt()); // Id
+        note.setParentId(query.value(1).toUInt()); // Production
+        note.setText(query.value(2).toString()); // Text
+        note.setCreationInformation(query.value(3).toUInt(),
+                                    query.value(5).toString()); // EmployeeCreation,DateCreation
+        note.setModificationInformation(query.value(4).toUInt(),
+                                        query.value(6).toString()); // EmployeeModification,DateModification
 
-//        notesList.append(note);
-//    }
+        notesList.append(note);
+    }
 
 //    qDebug() << "ProductionDatabase::getNotes() - Final list" << notesList;
-//    return notesList;
-//}
+    return notesList;
+}
 
 QVector<Production*>
 ProductionDatabase::searchProductions(QStringList searchParams)

@@ -167,7 +167,7 @@ bool ActivityDatabase::addActivityNote (ActivityNote* note)
                           "VALUES (?, ?, ?, ?, ?, ?)";
 
     query.prepare(queryString);
-    query.bindValue(0,note->getActivityId());
+    query.bindValue(0,note->getParentId());
     query.bindValue(1,note->getText());
     query.bindValue(2,note->getCreationEmployee());
     query.bindValue(3,note->getCreationDate().toString("yyyy-MM-dd hh:mm:ss"));
@@ -209,7 +209,7 @@ bool ActivityDatabase::getNote (int id, ActivityNote *note)
     query.next();
 
     note->setId(id);
-    note->setActivityId(query.value(1).toString().toUInt());
+    note->setParentId(query.value(1).toString().toUInt());
     note->setText(query.value(2).toString());
     note->setCreationInformation(query.value(3).toString().toUInt(),
                                  query.value(5).toString());
