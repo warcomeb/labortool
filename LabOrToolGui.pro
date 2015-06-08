@@ -31,7 +31,9 @@ SOURCES += main.cpp\
     production.cpp \
     productiondatabase.cpp \
     note.cpp \
-    productionnote.cpp
+    productionnote.cpp \
+    productioncontroller.cpp \
+    productiondialog.cpp
 
 HEADERS  += mainwindow.h \
     metadata.h \
@@ -52,14 +54,17 @@ HEADERS  += mainwindow.h \
     production.h \
     productiondatabase.h \
     note.h \
-    productionnote.h
+    productionnote.h \
+    productioncontroller.h \
+    productiondialog.h
 
 FORMS    += mainwindow.ui \
     activitydialog.ui \
     employeedialog.ui \
     logindialog.ui \
     activitynotedialog.ui \
-    preferencesdialog.ui
+    preferencesdialog.ui \
+    productiondialog.ui
 
 OTHER_FILES += \
     ChangeLog \

@@ -150,7 +150,6 @@ void ActivityDialog::prepareNewActivity (QVector<QVector<QString> > employeesLis
     qDebug() << "ActivityDialog::prepareNewActivity() - Exit!";
 }
 
-
 void ActivityDialog::setupActivityField ()
 {
     switch (m_openType)

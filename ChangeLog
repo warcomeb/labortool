@@ -1,3 +1,7 @@
+2015-06-08 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Continua lo sviluppo della grafica di gestione delle produzione in particolare il dialog per l'inserimento/modifica/visualizzazione di una produzione.
+
 2015-06-04 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la gestione delle note di produzione con creazione della classe madre Note
