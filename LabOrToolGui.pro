@@ -16,7 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     employee.cpp \
     activity.cpp \
-    activitynote.cpp \
     activitydatabase.cpp \
     activitycontroller.cpp \
     activitydialog.cpp \
@@ -25,21 +24,20 @@ SOURCES += main.cpp\
     employeedatabase.cpp \
     logindialog.cpp \
     logincontroller.cpp \
-    activitynotedialog.cpp \
     preferencesdialog.cpp \
     preferences.cpp \
     production.cpp \
     productiondatabase.cpp \
     note.cpp \
-    productionnote.cpp \
     productioncontroller.cpp \
-    productiondialog.cpp
+    productiondialog.cpp \
+    notedatabase.cpp \
+    notedialog.cpp
 
 HEADERS  += mainwindow.h \
     metadata.h \
     employee.h \
     activity.h \
-    activitynote.h \
     activitydatabase.h \
     activitycontroller.h \
     activitydialog.h \
@@ -48,21 +46,21 @@ HEADERS  += mainwindow.h \
     employeedatabase.h \
     logindialog.h \
     logincontroller.h \
-    activitynotedialog.h \
     preferencesdialog.h \
     preferences.h \
     production.h \
     productiondatabase.h \
     note.h \
-    productionnote.h \
     productioncontroller.h \
-    productiondialog.h
+    productiondialog.h \
+    notedatabase.h \
+    notedialog.h
 
 FORMS    += mainwindow.ui \
     activitydialog.ui \
     employeedialog.ui \
     logindialog.ui \
-    activitynotedialog.ui \
+    notedialog.ui \
     preferencesdialog.ui \
     productiondialog.ui
 

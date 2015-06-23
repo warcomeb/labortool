@@ -1,6 +1,6 @@
 /******************************************************************************
  * LabOrTool - Laboratory Organization Tool
- * Copyright (C) 2014-2015 Marco Giammarini
+ * Copyright (C) 2015 Marco Giammarini
  *
  * Author(s):
  *  Marco Giammarini <m.giammarini@warcomeb.it>
@@ -19,21 +19,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  ******************************************************************************/
 
-#ifndef PRODUCTIONNOTE_H
-#define PRODUCTIONNOTE_H
+#ifndef NOTEDATABASE_H
+#define NOTEDATABASE_H
+
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QVector>
+#include <QDebug>
+#include <QString>
 
 #include "note.h"
 
-#include "production.h"
-
-#include <QString>
-
-class ProductionNote :
-        public Note
+class NoteDatabase
 {
 public:
-    ProductionNote(QString text, Production* production, Employee* author);
-    ProductionNote();
+    NoteDatabase(QSqlDatabase *db);
+
+    bool addNote (Note *note);
+    bool getNote (int id, Note *note);
+    bool updateNote (Note *note);
+    bool deleteNote (int id);
+    QVector<Note *> getNotes(uint parentId, Note::ParentType type);
+
+private:
+
+    QSqlDatabase * m_database;
 };
 
-#endif // PRODUCTIONNOTE_H
+#endif // NOTEDATABASE_H

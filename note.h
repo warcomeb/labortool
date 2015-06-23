@@ -22,18 +22,33 @@
 #ifndef NOTE_H
 #define NOTE_H
 
+#include <QObject>
+#include <QMetaEnum>
+
 #include <QString>
 #include <QDateTime>
 
 #include "employee.h"
 
-class Note
+class Note : public QObject
 {
+    Q_OBJECT
+    Q_ENUMS(ParentType)
+    Q_PROPERTY(ParentType parentType READ getParentType WRITE setParentType)
+
 public:
+    typedef enum
+    {
+        Activity    = 0,
+        Production  = 1,
+    } ParentType;
+
     Note();
+    Note(QString text, uint parentId, ParentType type, Employee* author);
 
     uint getId () const { return m_id; }
     uint getParentId () const { return m_parentId; }
+    ParentType getParentType () const { return m_parentType; }
 
     QString getText() const {return m_text; }
 
@@ -44,7 +59,10 @@ public:
     uint getModificationEmployee () const { return m_modificationEmployee; }
 
     void setId (uint id);
+
     void setParentId (uint id);
+    void setParentType (ParentType type);
+    void setParentType (QString type);
 
     void setCreationInformation (Employee * const author, QDateTime date);
     void setCreationInformation (Employee* const author, QString date);
@@ -58,10 +76,15 @@ public:
 
     void setText(QString text);
 
+    static QString getParentTypeString (ParentType value);
+
+    QString toString();
+
 private:
     uint m_id;
 
     uint m_parentId;
+    ParentType m_parentType;
 
     QString m_text;
 

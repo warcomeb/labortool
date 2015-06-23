@@ -31,7 +31,8 @@
 #include "productiondialog.h"
 #include "productiondatabase.h"
 
-//#include "productionnotedialog.h"
+#include "notedatabase.h"
+#include "notedialog.h"
 
 
 class ProductionController: public QObject
@@ -42,35 +43,36 @@ public:
     ProductionController(QSqlDatabase* db);
 
     void openAddProductionDialog (QVector<Employee*> employeesList);
-//    void openEditProductionDialog (uint productionId, QVector<QVector<QString> > employeesList);
-//    void openViewProductionDialog (uint productionId, QVector<QVector<QString> > employeesList);
-//    void openDeleteProductionDialog (uint productionId);
+    void openEditProductionDialog (uint productionId, QVector<Employee*> employeesList);
+    void openViewProductionDialog (uint productionId, QVector<Employee*> employeesList);
+    void openDeleteProductionDialog (uint productionId);
 
-//    QVector<QVector<QString> > getActivitiesList (QStringList searchParams);
+    QVector<Production*> getProductionsList (QStringList searchParams);
 
     void updateLoggedUser(Employee * const employee);
 
 signals:
     void updatedProductionsList(QStringList searchParams);
 
-//public slots:
-//    void openEditNoteProductionDialog (uint productionNoteId);
-//    void openDeleteNoteProductionDialog (uint productionNoteId);
-//    void openAddNoteProductionDialog (uint productionId);
+public slots:
+    void openEditNoteProductionDialog (uint productionNoteId);
+    void openDeleteNoteProductionDialog (uint productionNoteId);
+    void openAddNoteProductionDialog (uint productionId);
 
 private:
 
     /* View panel */
     ProductionDialog * m_productionDialog;
 
-    /* Production note pannel */
-//    ProductionNoteDialog * m_productionNoteDialog;
+    /* Note pannel */
+    NoteDialog * m_noteDialog;
 
     /* Productions list */
     QVector<Production> m_activities;
 
     /* Production wrapper for database */
     ProductionDatabase * m_databaseWrapper;
+    NoteDatabase * m_databaseNoteWrapper;
     QSqlDatabase * m_database;
 
     /* Logged user */

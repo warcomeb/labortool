@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabData">
       <attribute name="title">
@@ -260,6 +260,9 @@
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
          </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -338,13 +341,27 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>titleText</tabstop>
+  <tabstop>idText</tabstop>
+  <tabstop>jobcodeText</tabstop>
   <tabstop>typeCombobox</tabstop>
+  <tabstop>priorityCombobox</tabstop>
   <tabstop>employeeCombobox</tabstop>
   <tabstop>statusCombobox</tabstop>
   <tabstop>deadlineEdit</tabstop>
+  <tabstop>descriptionText</tabstop>
   <tabstop>saveButton</tabstop>
   <tabstop>cancelButton</tabstop>
+  <tabstop>activityNoteAddButton</tabstop>
+  <tabstop>authorNoteCreEdit</tabstop>
+  <tabstop>dateNoteCreEdit</tabstop>
+  <tabstop>authorNoteModEdit</tabstop>
+  <tabstop>dateNoteModEdit</tabstop>
+  <tabstop>textNoteEdit</tabstop>
+  <tabstop>noteTable</tabstop>
+  <tabstop>activityNoteEditButton</tabstop>
+  <tabstop>activityNoteDeleteButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

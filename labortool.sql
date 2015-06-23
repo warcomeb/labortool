@@ -23,6 +23,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `production`
+--
+
+CREATE TABLE IF NOT EXISTS `production` (
+`ProductionId` int(11) NOT NULL,
+  `ProductionTitle` varchar(100) NOT NULL,
+  `ProductionDescription` text NOT NULL,
+  `ProductionWorkCode` varchar(12) NOT NULL,
+  `ProductionOutputCode` varchar(7) NOT NULL,
+  `ProductionStatus` enum('NotStarted','InProgress','Ended','Postponed','Waiting') NOT NULL,
+  `ProductionEmployee` int(11) NOT NULL,
+  `ProductionSupplier` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `activity`
 --
 
@@ -68,6 +85,12 @@ ALTER TABLE `activity`
  ADD PRIMARY KEY (`ActivityId`), ADD UNIQUE KEY `ActivityId` (`ActivityId`);
 
 --
+-- Indexes for table `production`
+--
+ALTER TABLE `production`
+ ADD PRIMARY KEY (`ProductionId`), ADD UNIQUE KEY `ProductionId` (`ProductionId`);
+
+--
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
@@ -76,6 +99,12 @@ ALTER TABLE `employee`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `production`
+--
+ALTER TABLE `production`
+MODIFY `ProductionId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `activity`

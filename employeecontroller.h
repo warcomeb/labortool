@@ -47,8 +47,8 @@ public:
     void openEditEmployeeDialog (int employeeId);
     void openViewEmployeeDialog (int employeeId);
 
-    QVector<QVector<QString> > getEmployeesList (EmployeesListType type);
-    QVector<QVector<QString> > getEmployeesList (QStringList searchParams);
+    QVector<Employee*> getEmployeesList (EmployeesListType type);
+    QVector<Employee*> getEmployeesList (QStringList searchParams);
 
     void updateLoggedUser(Employee * const employee);
 

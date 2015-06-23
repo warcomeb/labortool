@@ -1,3 +1,13 @@
+2015-06-23 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Ultimato lo sviluppo della gestione delle produzione.
+
+    * Uniformata la creazione delle note, rendendolo un database unico.
+
+    * Durante l'interrograzione del database, il tipo di ritorno all'interno di un vettore è un oggetto della classe e non qualcosa di derivato.
+
+    * Uniformata la gestione delle attività come per le produzioni.
+
 2015-06-08 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Continua lo sviluppo della grafica di gestione delle produzione in particolare il dialog per l'inserimento/modifica/visualizzazione di una produzione.

@@ -29,7 +29,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabData">
       <attribute name="title">
@@ -42,7 +42,7 @@
        <item row="1" column="4">
         <widget class="QLabel" name="jobcodeLabel">
          <property name="text">
-          <string>Work order:</string>
+          <string>Work order</string>
          </property>
         </widget>
        </item>
@@ -56,7 +56,7 @@
        <item row="1" column="6">
         <widget class="QLabel" name="outputLabel">
          <property name="text">
-          <string>Output Code:</string>
+          <string>Output Code</string>
          </property>
         </widget>
        </item>
@@ -116,7 +116,21 @@
         <widget class="QPlainTextEdit" name="descriptionText"/>
        </item>
        <item row="1" column="7">
-        <widget class="QLineEdit" name="outputText"/>
+        <widget class="QLineEdit" name="outputText">
+         <property name="maxLength">
+          <number>7</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
+        <widget class="QLabel" name="supplierLabel">
+         <property name="text">
+          <string>Supplier</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="7">
+        <widget class="QComboBox" name="supplierCombobox"/>
        </item>
       </layout>
      </widget>
@@ -229,6 +243,9 @@
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
          </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -306,6 +323,28 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>titleText</tabstop>
+  <tabstop>idText</tabstop>
+  <tabstop>jobcodeText</tabstop>
+  <tabstop>outputText</tabstop>
+  <tabstop>employeeCombobox</tabstop>
+  <tabstop>statusCombobox</tabstop>
+  <tabstop>supplierCombobox</tabstop>
+  <tabstop>descriptionText</tabstop>
+  <tabstop>saveButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>productionNoteAddButton</tabstop>
+  <tabstop>authorNoteCreEdit</tabstop>
+  <tabstop>dateNoteCreEdit</tabstop>
+  <tabstop>authorNoteModEdit</tabstop>
+  <tabstop>dateNoteModEdit</tabstop>
+  <tabstop>textNoteEdit</tabstop>
+  <tabstop>noteTable</tabstop>
+  <tabstop>productionNoteEditButton</tabstop>
+  <tabstop>productionNoteDeleteButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

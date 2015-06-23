@@ -33,7 +33,7 @@
 
 /* Project informations */
 #define PROJECT_NAME         "LabOrTool"
-#define PROJECT_VERSION      "0.1.2"
+#define PROJECT_VERSION      "0.2.0"
 #define COPYRIGHT_YEAR       "2015"
 #define RELEASE_DATE         "January 07, 2015"
 

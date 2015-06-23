@@ -33,6 +33,8 @@
 
 #include "employee.h"
 
+#include "note.h"
+
 namespace Ui {
 class ActivityDialog;
 }
@@ -56,9 +58,9 @@ public:
     void setOpenType (DialogType type);
 
     void setSelectedActivity (Activity * activity,
-                              QVector<QVector<QString> > employeesList,
-                              QVector<QVector<QString> > notesList);
-    void prepareNewActivity (QVector<QVector<QString> > employeesList);
+                              QVector<Employee *> employeesList,
+                              QVector<Note *> notesList);
+    void prepareNewActivity (QVector<Employee*> employeesList);
 
     void setLoggedUserRole(Employee::SystemRole systemRole = Employee::User,
                            Employee::Role role = Employee::Student);
@@ -70,7 +72,7 @@ public:
      * @brief updateNotesList
      * @param notesList
      */
-    void updateNotesList (QVector<QVector<QString> > notesList);
+    void updateNotesList (QVector<Note *> notesList);
 
 signals:
     void deleteNoteButton(uint activityNoteId);
@@ -87,6 +89,8 @@ private slots:
 
     void selectionChangedNotesTable(const QItemSelection & sel,const QItemSelection & des);
 
+    void keyPressEvent(QKeyEvent *e);
+
 private:
     Ui::ActivityDialog *ui;
 
@@ -98,8 +102,8 @@ private:
     QStandardItemModel * m_noteModel;
     uint m_noteSelected;
 
-    QVector<QVector<QString> > m_employeesList;
-    QVector<QVector<QString> > m_notesList;
+    QVector<Employee *> m_employeesList;
+    QVector<Note *> m_notesList;
 
     Employee::Role m_loggedUserRole;
     Employee::SystemRole m_loggedUserSystemRole;

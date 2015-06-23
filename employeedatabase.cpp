@@ -196,13 +196,134 @@ bool EmployeeDatabase::updateEmployee (Employee* employee)
     }
 }
 
+///* TODO: Encoding dei caratteri particolari. */
+//QVector< QVector< QString > >
+//EmployeeDatabase::searchEmployees(QStringList searchParams)
+//{
+//    qDebug() << "EmployeeDatabase::searchEmployees()";
+
+//    QVector<QVector<QString> > employeesList;
+//    QString queryString = "SELECT EmployeeId, EmployeeSurname, EmployeeName, "
+//                          "EmployeeUsername, EmployeeRole FROM employee ";
+
+//    if (searchParams.size()>0)
+//    {
+//        qDebug() << "EmployeeDatabase::searchEmployees() - Search param list is not empty";
+
+//        queryString.append("WHERE ( ");
+//        for (int i = 0; i < searchParams.size(); ++i)
+//        {
+//            qDebug() << "EmployeeDatabase::searchEmployees() - Param:" << searchParams.at(i);
+
+//            if (searchParams.at(i).indexOf('=') != -1)
+//            {
+//                QStringList searchParam = searchParams.at(i).split('=');
+//                if (searchParam.size() == 2)
+//                {
+//                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
+//                    queryString.append(DB_FIELD_SUFFIX +
+//                                       searchParam.at(0) + "='" +
+//                                       searchParam.at(1) + "' ");
+//                }
+//                else
+//                {
+//                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+//                    return employeesList;
+//                }
+
+//            }
+//            else if (searchParams.at(i).indexOf('%') != -1)
+//            {
+//                QStringList searchParam = searchParams.at(i).split('%');
+//                if (searchParam.size() == 2)
+//                {
+//                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
+//                    queryString.append(
+//                        "( EmployeeName LIKE '%" + searchParam.at(1) + "%' OR " +
+//                        "EmployeeSurname LIKE '%" + searchParam.at(1) + "%' OR " +
+//                        "EmployeeUsername LIKE '%" + searchParam.at(1) + "%' OR " +
+//                        "EmployeeNote LIKE '%" + searchParam.at(1) + "%') "
+//                    );
+//                }
+//                else
+//                {
+//                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+//                    return employeesList;
+//                }
+
+//            }
+//            else if (searchParams.at(i).indexOf('$') != -1)
+//            {
+//                QStringList searchParam = searchParams.at(i).split('$');
+//                if (searchParam.size() == 2)
+//                {
+//                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
+//                    qDebug() << "EmployeeDatabase::searchEmployees()" << searchParam;
+//                    QStringList searchComboParams = searchParam.at(1).split('|');
+//                    queryString.append("( ");
+//                    for (int j = 0; j < searchComboParams.size(); ++j)
+//                    {
+//                        queryString.append(DB_FIELD_SUFFIX +
+//                                           searchParam.at(0) +  "='" +
+//                                           searchComboParams.at(j) + "' ");
+
+//                        if (j+1 == searchComboParams.size())
+//                            queryString.append(") ");
+//                        else
+//                            queryString.append("OR ");
+//                    }
+//                }
+//                else
+//                {
+//                    qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+//                    return employeesList;
+//                }
+//            }
+//            else
+//            {
+//                qDebug() << "EmployeeDatabase::searchEmployees() - Param is not correct";
+//                return employeesList;
+//            }
+
+//            if (i+1 == searchParams.size())
+//                queryString.append(") ");
+//            else
+//                queryString.append(" AND ");
+//        }
+//    }
+//    queryString.append("ORDER BY EmployeeSurname ASC");
+
+//    qDebug() << "EmployeeDatabase::searchEmployees() - Final search string: " << queryString;
+
+//    QSqlQuery query( queryString, *m_database);
+//    qDebug() << "EmployeeDatabase::searchEmployees() - Query executed!";
+//    while (query.next())
+//    {
+//        qDebug() << "EmployeeDatabase::searchEmployees() - Query result...";
+//        QVector<QString> employee;
+//        employee.append(query.value(0).toString()); // Id
+//        employee.append(query.value(1).toString()); // Surname
+//        employee.append(query.value(2).toString()); // Name
+//        employee.append(query.value(3).toString()); // Username
+//        employee.append(query.value(4).toString()); // Role
+
+//        qDebug() << "EmployeeDatabase::searchEmployees() - query to vector ok!";
+
+//        employeesList.append(employee);
+//        qDebug() << "EmployeeDatabase::searchEmployees() - vector added!";
+//    }
+
+//    qDebug() << "EmployeeDatabase::searchEmployees() - Final list" << employeesList;
+//    return employeesList;
+//}
+
 /* TODO: Encoding dei caratteri particolari. */
-QVector< QVector< QString > >
+QVector<Employee*>
 EmployeeDatabase::searchEmployees(QStringList searchParams)
 {
     qDebug() << "EmployeeDatabase::searchEmployees()";
 
-    QVector<QVector<QString> > employeesList;
+    QVector<Employee*> employeesList;
     QString queryString = "SELECT EmployeeId, EmployeeSurname, EmployeeName, "
                           "EmployeeUsername, EmployeeRole FROM employee ";
 
@@ -222,7 +343,7 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
                 {
                     qDebug() << "EmployeeDatabase::searchEmployees() - Param is correct";
                     queryString.append(DB_FIELD_SUFFIX +
-                                       searchParam.at(0) +  "='" +
+                                       searchParam.at(0) + "='" +
                                        searchParam.at(1) + "' ");
                 }
                 else
@@ -295,22 +416,18 @@ EmployeeDatabase::searchEmployees(QStringList searchParams)
 
     qDebug() << "EmployeeDatabase::searchEmployees() - Final search string: " << queryString;
 
-    QSqlQuery query( queryString, *m_database);
+    QSqlQuery query(queryString, *m_database);
     qDebug() << "EmployeeDatabase::searchEmployees() - Query executed!";
     while (query.next())
     {
-        qDebug() << "EmployeeDatabase::searchEmployees() - Query result...";
-        QVector<QString> employee;
-        employee.append(query.value(0).toString()); // Id
-        employee.append(query.value(1).toString()); // Surname
-        employee.append(query.value(2).toString()); // Name
-        employee.append(query.value(3).toString()); // Username
-        employee.append(query.value(4).toString()); // Role
-
-        qDebug() << "EmployeeDatabase::searchEmployees() - query to vector ok!";
+        Employee* employee = new Employee;
+        employee->setId(query.value(0).toUInt());
+        employee->setSurname(query.value(1).toString());
+        employee->setName(query.value(2).toString());
+        employee->setUsername(query.value(3).toString());
+        employee->setRole(query.value(4).toString());
 
         employeesList.append(employee);
-        qDebug() << "EmployeeDatabase::searchEmployees() - vector added!";
     }
 
     qDebug() << "EmployeeDatabase::searchEmployees() - Final list" << employeesList;

@@ -41,7 +41,7 @@ public:
 
     bool getEmployeeByLogin(QString username, QString password, Employee* employee);
 
-    QVector< QVector< QString > > searchEmployees(QStringList searchParams);
+    QVector<Employee*> searchEmployees(QStringList searchParams);
 
 private:
 

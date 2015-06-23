@@ -30,6 +30,7 @@
 
 #include "activitycontroller.h"
 #include "employeecontroller.h"
+#include "productioncontroller.h"
 #include "logincontroller.h"
 
 #include "logindialog.h"
@@ -57,6 +58,7 @@ private slots:
     void updateSelectedTab (int index);
 
     void openActivityDialog ();
+    void openProductionDialog ();
     void openEmployeeDialog ();
 
     void selectionChangedEmployeesTable (const QItemSelection & sel, const QItemSelection & des);
@@ -68,6 +70,11 @@ private slots:
     void updateActivitiesTable (QStringList searchParams);
     void searchActivities ();
     void resetSearchActivities ();
+
+    void selectionChangedProductionsTable (const QItemSelection & sel, const QItemSelection & des);
+    void updateProductionsTable (QStringList searchParams);
+    void searchProductions ();
+    void resetSearchProductions ();
 
     void userLogin ();
     void userLogout ();
@@ -96,6 +103,7 @@ private:
     /* Controllers list */
     ActivityController * m_activityController;
     EmployeeController * m_employeeController;
+    ProductionController * m_productionController;
     LoginController * m_loginController;
 
     /* Models */
@@ -103,9 +111,12 @@ private:
     uint m_employeeSelected;
     QStandardItemModel * m_activityModel;
     uint m_activitySelected;
+    QStandardItemModel * m_productionModel;
+    uint m_productionSelected;
 
     bool m_isInitEmployeeTab;
     bool m_isInitActivityTab;
+    bool m_isInitProductionTab;
 
     /* Menu dialogs */
     PreferencesDialog * m_preferencesDialog;
@@ -116,10 +127,15 @@ private:
 
     /* Initialize signals and slots into tabs */
     void initActivityTab();
+    void initProductionTab();
     void initEmployeeTab();
 
     void updateButtonStatus();
 
+    static QColor m_colorWarning;
+    static QColor m_colorDanger;
+    static QColor m_colorEnded;
+    static QColor m_colorNoProblem;
 };
 
 #endif // MAINWINDOW_H

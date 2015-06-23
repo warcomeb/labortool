@@ -21,9 +21,27 @@
 
 #include "note.h"
 
+#include <QDebug>
+
+Note::Note(QString text, uint parentId, ParentType type, Employee* author)
+{
+    setId(0);
+
+    setParentId(parentId);
+    setParentType(type);
+
+    setText(text);
+
+    setCreationInformation(author->getId(),QDateTime::currentDateTime());
+    setModificationInformation(author->getId(),QDateTime::currentDateTime());
+}
+
 Note::Note()
 {
+    setId(0);
+    setText("");
 }
+
 
 void Note::setId (uint id)
 {
@@ -33,6 +51,32 @@ void Note::setId (uint id)
 void Note::setParentId (uint id)
 {
     m_parentId = id;
+}
+
+void Note::setParentType (ParentType type)
+{
+    m_parentType = type;
+}
+
+void Note::setParentType (QString type)
+{
+    qDebug() << "Note::setParentType()";
+    QByteArray bytearray = type.toLocal8Bit();
+    qDebug() << "Note::setParentType - string value" << type;
+
+    int value = Note::staticMetaObject.enumerator(
+                 Note::staticMetaObject.indexOfEnumerator("ParentType")).
+                 keysToValue(bytearray.data());
+
+    qDebug() << "Note::setParentType() - value" << value;
+    m_parentType = static_cast<Note::ParentType>(value);
+}
+
+QString Note::getParentTypeString (ParentType type)
+{
+    return Note::staticMetaObject.enumerator(
+                Note::staticMetaObject.indexOfEnumerator("ParentType")).
+                valueToKey(type);
 }
 
 void Note::setCreationInformation (Employee* const author, QDateTime date)
@@ -86,4 +130,13 @@ void Note::setModificationInformation (uint authorId, QString date)
 void Note::setText(QString text)
 {
     m_text = text;
+}
+
+QString Note::toString()
+{
+    return "Note(Parent:" + QString::number(m_parentId) +
+              ", Text:" + m_text +
+              ", Creation Employee:" + QString::number(m_creationEmployee) +
+              ", Creation Date:" + m_creationDate.toString("yyyy-MM-dd hh:mm:ss") +
+            ")";
 }

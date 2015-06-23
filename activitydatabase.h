@@ -29,7 +29,7 @@
 #include <QString>
 
 #include "activity.h"
-#include "activitynote.h"
+#include "note.h"
 
 class ActivityDatabase
 {
@@ -40,15 +40,7 @@ public:
     bool updateActivity (Activity* activity);
     bool getActivity (int id, Activity* activity);
 
-    bool addActivityNote (ActivityNote *note);
-    bool getNote (int id, ActivityNote *note);
-    bool updateNote (ActivityNote *note);
-    bool deleteNote (int id);
-    QVector< QVector< QString > > getNotes(uint activityId);
-
-
-    QVector< QVector< QString > > searchActivities(QStringList searchParams);
-
+    QVector<Activity*> searchActivities(QStringList searchParams);
 
 private:
 

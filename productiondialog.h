@@ -31,7 +31,7 @@
 #include <QItemSelection>
 
 #include "production.h"
-#include "productionnote.h"
+#include "note.h"
 
 #include "employee.h"
 
@@ -57,9 +57,9 @@ public:
 
     void setOpenType (DialogType type);
 
-//    void setSelectedActivity (Activity * activity,
-//                              QVector<QVector<QString> > employeesList,
-//                              QVector<QVector<QString> > notesList);
+    void setSelectedProduction (Production * production,
+                                QVector<Employee *> employeesList,
+                                QVector<Note *> notesList);
     void prepareNewProduction (QVector<Employee*> employeesList);
 
     void setLoggedUserRole(Employee::SystemRole systemRole = Employee::User,
@@ -72,12 +72,12 @@ public:
      * @brief updateNotesList
      * @param notesList
      */
-    void updateNotesList (QVector<ProductionNote*> notesList);
+    void updateNotesList (QVector<Note *> notesList);
 
 signals:
-    void deleteNoteButton(uint activityNoteId);
-    void editNoteButton(uint activityNoteId);
-    void addNoteButton(uint activityId);
+    void deleteNoteButton(uint noteId);
+    void editNoteButton(uint noteId);
+    void addNoteButton(uint parentId);
 
 private slots:
     void addNote();
@@ -102,15 +102,15 @@ private:
     QStandardItemModel * m_noteModel;
     uint m_noteSelected;
 
-    QVector<Employee*> m_employeesList;
-    QVector<ProductionNote*> m_notesList;
+    QVector<Employee *> m_employeesList;
+    QVector<Note *> m_notesList;
 
     Employee::Role m_loggedUserRole;
     Employee::SystemRole m_loggedUserSystemRole;
 
     void fillCombobox ();
 
-    void setupProductionField ();
+    void setupField ();
     void fillProductionFields ();
     void fillEmployeeField ();
 

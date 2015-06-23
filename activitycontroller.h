@@ -31,7 +31,8 @@
 #include "activitydialog.h"
 #include "activitydatabase.h"
 
-#include "activitynotedialog.h"
+#include "notedatabase.h"
+#include "notedialog.h"
 
 class ActivityController: public QObject
 {
@@ -40,11 +41,11 @@ class ActivityController: public QObject
 public:
     ActivityController(QSqlDatabase* db);
 
-    void openAddActivityDialog (QVector<QVector<QString> > employeesList);
-    void openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
-    void openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList);
+    void openAddActivityDialog (QVector<Employee*> employeesList);
+    void openEditActivityDialog (uint activityId, QVector<Employee*> employeesList);
+    void openViewActivityDialog (uint activityId, QVector<Employee*> employeesList);
 
-    QVector<QVector<QString> > getActivitiesList (QStringList searchParams);
+    QVector<Activity *> getActivitiesList(QStringList searchParams);
 
     void updateLoggedUser(Employee * const employee);
 
@@ -62,13 +63,14 @@ private:
     ActivityDialog * m_activityDialog;
 
     /* Activity note pannel */
-    ActivityNoteDialog * m_activityNoteDialog;
+    NoteDialog * m_noteDialog;
 
     /* Activities list */
     QVector<Activity> m_activities;
 
     /* Activity wrapper for database */
     ActivityDatabase * m_databaseWrapper;
+    NoteDatabase * m_databaseNoteWrapper;
     QSqlDatabase * m_database;
 
     /* Logged user */

@@ -36,8 +36,13 @@
 
 #define MAINWINDOW_TAB_HOME         0
 #define MAINWINDOW_TAB_ACTIVITY     1
-#define MAINWINDOW_TAB_EMPLOYEE     2
+#define MAINWINDOW_TAB_PRODUCTION   2
+#define MAINWINDOW_TAB_EMPLOYEE     3
 
+QColor MainWindow::m_colorWarning   = QColor::fromRgb(255,255,0,150);
+QColor MainWindow::m_colorDanger    = QColor::fromRgb(255,0,0,150);
+QColor MainWindow::m_colorEnded     = QColor::fromRgb(0,255,0,150);
+QColor MainWindow::m_colorNoProblem = QColor::fromRgb(255,255,255,0);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -45,8 +50,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_employeeLogged(0),
     m_employeeSelected(0),
     m_activitySelected(0),
+    m_productionSelected(0),
     m_isInitEmployeeTab(false),
-    m_isInitActivityTab(false)
+    m_isInitActivityTab(false),
+    m_isInitProductionTab(false)
 {
     ui->setupUi(this);
 
@@ -64,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     initEmployeeTab();
     m_activityController = new ActivityController(&m_database);
     initActivityTab();
+    m_productionController = new ProductionController(&m_database);
+    initProductionTab();
 
     m_loginController = new LoginController(&m_database);
 
@@ -129,6 +138,8 @@ void MainWindow::updateSelectedTab (int index)
     case MAINWINDOW_TAB_HOME:
         break;
     case MAINWINDOW_TAB_ACTIVITY:
+        break;
+    case MAINWINDOW_TAB_PRODUCTION:
         break;
     case MAINWINDOW_TAB_EMPLOYEE:
         break;
@@ -246,7 +257,7 @@ void MainWindow::initActivityTab()
     ui->searchActivityTypeCombobox->addItem(tr("Production"), Activity::Production);
 
     QStringList searchEmployeeParams;
-    QVector<QVector<QString> > employeesList =
+    QVector<Employee*> employeesList =
             m_employeeController->getEmployeesList(searchEmployeeParams);
 
     qDebug() << "MainWindow::initActivityTab() - Fill search employee combobox";
@@ -256,9 +267,9 @@ void MainWindow::initActivityTab()
     {
         for (int row = 0; row < employeesList.size(); ++row)
         {
-            ui->searchActivityEmployeeCombobox->addItem(employeesList.at(row).at(1) + " " +
-                                                        employeesList.at(row).at(2),
-                                                        QString(employeesList.at(row).at(0)).toUInt());
+            ui->searchActivityEmployeeCombobox->addItem((employeesList.at(row))->getSurname() + " " +
+                                                        (employeesList.at(row))->getName(),
+                                                        (employeesList.at(row))->getId());
         }
     }
 
@@ -281,6 +292,93 @@ void MainWindow::initActivityTab()
     QStringList searchParams;
     searchParams << "Status$NotStarted|InProgress|Waiting";
     updateActivitiesTable(searchParams);
+}
+
+/**
+ * @brief MainWindow::initProductionTab
+ *
+ * Questo metodo collega tutti i segnali del tab production ai
+ * relativi gestori.
+ */
+void MainWindow::initProductionTab()
+{
+    qDebug() << "MainWindow::initProductionTab()";
+
+    Q_ASSERT(!m_isInitProductionTab);
+
+    disconnect(ui->addProductionButton,SIGNAL(clicked()),
+            this,SLOT(openProductionDialog()));
+    ui->addProductionButton->setEnabled(false);
+
+    connect(ui->viewProductionButton,SIGNAL(clicked()),
+            this,SLOT(openProductionDialog()));
+    ui->viewProductionButton->setEnabled(true);
+
+    disconnect(ui->editProductionButton,SIGNAL(clicked()),
+            this,SLOT(openProductionDialog()));
+    ui->editProductionButton->setEnabled(false);
+
+    //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
+    //                this,SLOT(openActivityDialog()));
+    ui->deleteProductionButton->setEnabled(false);
+
+    disconnect(ui->addNoteProductionButton,SIGNAL(clicked()),
+            this,SLOT(openProductionDialog()));
+    ui->addNoteProductionButton->setEnabled(false);
+
+    connect(ui->searchProductionButton,SIGNAL(clicked()),
+            this,SLOT(searchProductions()));
+    connect(ui->searchProductionResetButton,SIGNAL(clicked()),
+            this,SLOT(resetSearchProductions()));
+
+    /* Fill search combo box */
+    qDebug() << "MainWindow::initProductionTab() - Fill search combobox";
+    ui->searchProductionStatusCombobox->clear();
+    ui->searchProductionStatusCombobox->addItem(tr("All"), -1);
+    ui->searchProductionStatusCombobox->addItem(tr("All Open"), -2);
+    ui->searchProductionStatusCombobox->addItem(tr("Not Started"), Activity::NotStarted);
+    ui->searchProductionStatusCombobox->addItem(tr("In Progress"), Activity::InProgress);
+    ui->searchProductionStatusCombobox->addItem(tr("Ended"), Activity::Ended);
+    ui->searchProductionStatusCombobox->addItem(tr("Postponed"), Activity::Postponed);
+    ui->searchProductionStatusCombobox->addItem(tr("Waiting"), Activity::Waiting);
+
+    QStringList searchEmployeeParams;
+    QVector<Employee*> employeesList =
+            m_employeeController->getEmployeesList(searchEmployeeParams);
+
+    qDebug() << "MainWindow::initProductionTab() - Fill search employee combobox";
+    ui->searchProductionEmployeeCombobox->clear();
+    ui->searchProductionEmployeeCombobox->addItem(tr("All"), -1);
+    if (employeesList.size()>0)
+    {
+        for (int row = 0; row < employeesList.size(); ++row)
+        {
+            ui->searchProductionEmployeeCombobox->addItem((employeesList.at(row))->getSurname() + " " +
+                                                          (employeesList.at(row))->getName(),
+                                                          (employeesList.at(row))->getId());
+        }
+    }
+
+
+
+    /* Update table slots */
+    connect(m_productionController,SIGNAL(updatedProductionsList(QStringList)),
+            this,SLOT(updateProductionsTable(QStringList)));
+
+    /* Startup table! */
+    m_productionModel = new QStandardItemModel(1, 7);
+    ui->productionTable->setModel(m_productionModel);
+    ui->productionTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    connect(ui->productionTable->selectionModel(),
+            SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
+            this,
+            SLOT(selectionChangedProductionsTable(const QItemSelection &, const QItemSelection &)));
+
+
+    QStringList searchParams;
+    searchParams << "Status$NotStarted|InProgress|Waiting";
+    updateProductionsTable(searchParams);
 }
 
 /**
@@ -364,7 +462,7 @@ void MainWindow::openActivityDialog()
 {
     qDebug() << "MainWindow::openActivityDialog()";
     QStringList searchParams;
-    QVector<QVector<QString> > employeesList;
+    QVector<Employee*> employeesList;
 
     if (sender() == ui->addActivityButton)
     {
@@ -394,6 +492,51 @@ void MainWindow::openActivityDialog()
         Q_ASSERT(m_employeeLogged != 0);
 
         m_activityController->openAddNoteActivityDialog(m_activitySelected);
+    }
+}
+
+/**
+ * @brief MainWindow::openProductionDialog
+ *
+ * Questo slot permette di aprire la finestra di
+ * editing delle produzioni, configurandola in base al
+ * pulsante che ne ha richiesto l'aperura: add, edit,
+ * view e delete.
+ */
+void MainWindow::openProductionDialog()
+{
+    qDebug() << "MainWindow::openProductionDialog()";
+    QStringList searchParams;
+    QVector<Employee*> employeesList;
+
+    if (sender() == ui->addProductionButton)
+    {
+        searchParams << "Active=Yes";
+        employeesList = m_employeeController->getEmployeesList(searchParams);
+
+        m_productionController->openAddProductionDialog(employeesList);
+    }
+    else if (sender() == ui->viewProductionButton)
+    {
+        employeesList = m_employeeController->getEmployeesList(searchParams);
+
+        m_productionController->openViewProductionDialog(m_productionSelected,employeesList);
+    }
+    else if (sender() == ui->editProductionButton)
+    {
+        employeesList = m_employeeController->getEmployeesList(searchParams);
+
+        m_productionController->openEditProductionDialog(m_productionSelected,employeesList);
+    }
+    else if (sender() == ui->deleteProductionButton)
+    {
+        /* TODO */
+    }
+    else if (sender() == ui->addNoteProductionButton)
+    {
+        Q_ASSERT(m_employeeLogged != 0);
+
+        m_productionController->openAddNoteProductionDialog(m_productionSelected);
     }
 }
 
@@ -456,7 +599,7 @@ void MainWindow::updateEmployeesTable(QStringList searchParams)
     m_employeeModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Username"));
     m_employeeModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Role"));
 
-    QVector<QVector<QString> > employeesList =
+    QVector<Employee*> employeesList =
             m_employeeController->getEmployeesList(searchParams);
 
     qDebug() << "MainWindow::updateEmployeesTable() - Employees size:" << employeesList.size();
@@ -464,11 +607,23 @@ void MainWindow::updateEmployeesTable(QStringList searchParams)
     {
         for (int row = 0; row < employeesList.size(); ++row)
         {
-            for (int column = 0; column < 5; ++column)
-            {
-                QStandardItem *item = new QStandardItem(employeesList.at(row).at(column));
-                m_employeeModel->setItem(row, column, item);
-            }
+            QStandardItem *item;
+
+            item = new QStandardItem(QString::number(employeesList.at(row)->getId()));
+            m_employeeModel->setItem(row,0,item);
+
+            item = new QStandardItem(employeesList.at(row)->getSurname());
+            m_employeeModel->setItem(row,1,item);
+
+            item = new QStandardItem(employeesList.at(row)->getName());
+            m_employeeModel->setItem(row,2,item);
+
+            item = new QStandardItem(employeesList.at(row)->getUsername());
+            m_employeeModel->setItem(row,3,item);
+
+            item = new QStandardItem(Employee::getRoleString(
+                                         employeesList.at(row)->getRole()));
+            m_employeeModel->setItem(row,4,item);
         }
     }
     else
@@ -545,13 +700,6 @@ void MainWindow::selectionChangedActivitiesTable(const QItemSelection & sel,
     QModelIndexList indexes = sel.indexes();
     qDebug() << "MainWindow::selectionChangedActivitiesTable() - selected number" << indexes.count();
 
-//    if (indexes.count() != 1 )
-//    {
-//        m_activitySelected = -1;
-//        qDebug() << "MainWindow::selectionChangedActivitiesTable() - Too many items selected";
-//        return;
-//    }
-
     qDebug() << "MainWindow::selectionChangedActivitiesTable() - row selected" << indexes.at(0).row();
     m_activitySelected = m_activityModel->item(indexes.at(0).row(),0)->text().toInt();
 }
@@ -567,6 +715,8 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
     bool isMediumDeadline = false;
     qDebug() << "MainWindow::updateActivitiesTable() - medium deadline" << mediumDeadline;
 
+    QColor usedColor;
+
     m_activityModel->clear();
     m_activityModel->setColumnCount(7);
 //    m_activityModel->sort(1,Qt::AscendingOrder);
@@ -579,7 +729,7 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
     m_activityModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Status"));
     m_activityModel->setHeaderData(6, Qt::Horizontal, QObject::tr("Type"));
 
-    QVector<QVector<QString> > activitiesList =
+    QVector<Activity*> activitiesList =
             m_activityController->getActivitiesList(searchParams);
 
     qDebug() << "MainWindow::updateActivitiesTable() - Activities size:" << activitiesList.size();
@@ -588,59 +738,86 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
         /* Get the employees list */
         QStringList employeesSearchParams;
         employeesSearchParams << "Active=Yes";
-        QVector<QVector<QString> > employeesList =
+        QVector<Employee*> employeesList =
                 m_employeeController->getEmployeesList(employeesSearchParams);
         qDebug() << "MainWindow::updateActivitiesTable() - Employees size:" << employeesList.size();
 
-
         for (int row = 0; row < activitiesList.size(); ++row)
         {
-            qDebug() << "MainWindow::updateActivitiesTable() - db deadline" << activitiesList.at(row).at(7);
-            QDate deadline = QDate::fromString(activitiesList.at(row).at(7),"yyyy-MM-dd");
-            qDebug() << "MainWindow::updateActivitiesTable() - deadline" << deadline;
+            qDebug() << "MainWindow::updateActivitiesTable() - db deadline" << activitiesList.at(row)->getDeadline();
+            QDate deadline = activitiesList.at(row)->getDeadline();
 
-            if (deadline < shortDeadline)
+            if (activitiesList.at(row)->getStatus() == Activity::Ended)
             {
-                isShortDeadline = true;
+                qDebug() << "MainWindow::updateActivitiesTable() - Ended!";
+                usedColor = m_colorEnded;
+            }
+            else if (deadline < shortDeadline)
+            {
+//                isShortDeadline = true;
+                usedColor = m_colorDanger;
                 qDebug() << "MainWindow::updateActivitiesTable() - less than 7 days!";
             }
             else if (deadline < mediumDeadline)
             {
-                isMediumDeadline = true;
+//                isMediumDeadline = true;
+                usedColor = m_colorWarning;
                 qDebug() << "MainWindow::updateActivitiesTable() - less then 21 days!";
             }
-
-            for (int column = 0; column < 7; ++column)
+            else
             {
-                QStandardItem *item;
-
-                if (column == 3) // Employee
-                {
-                    uint employeeId = activitiesList.at(row).at(column).toUInt();
-                    for (int i = 0; i < employeesList.size(); ++i)
-                    {
-                        uint searchEmployeeId = employeesList.at(i).at(0).toUInt();
-                        if (employeeId == searchEmployeeId)
-                        {
-                            item = new QStandardItem(
-                                employeesList.at(i).at(1) + " " + employeesList.at(i).at(2)
-                            );
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    item = new QStandardItem(activitiesList.at(row).at(column));
-                }
-
-                if (isShortDeadline)
-                    item->setBackground(QBrush(Qt::red));
-                else if (isMediumDeadline)
-                    item->setBackground(QBrush(Qt::yellow));
-
-                m_activityModel->setItem(row, column, item);
+                usedColor = m_colorNoProblem;
             }
+
+            QStandardItem *item;
+
+            /* ID */
+            item = new QStandardItem(QString::number(activitiesList.at(row)->getId()));
+            m_activityModel->setItem(row,0,item);
+            item->setBackground(QBrush(usedColor));
+
+            /* Title */
+            item = new QStandardItem((activitiesList.at(row))->getTitle());
+            m_activityModel->setItem(row,1,item);
+            item->setBackground(QBrush(usedColor));
+
+            /* Work Order */
+            item = new QStandardItem((activitiesList.at(row))->getWorkCode());
+            m_activityModel->setItem(row,2,item);
+            item->setBackground(QBrush(usedColor));
+
+            uint employeeId = activitiesList.at(row)->getEmployee();
+            for (int i = 0; i < employeesList.size(); ++i)
+            {
+                uint searchEmployeeId = (employeesList.at(i))->getId();
+                if (employeeId == searchEmployeeId)
+                {
+                    item = new QStandardItem(
+                        employeesList.at(i)->getSurname() + " " + employeesList.at(i)->getName()
+                    );
+                    break;
+                }
+            }
+            m_activityModel->setItem(row,3,item);
+            item->setBackground(QBrush(usedColor));
+
+            /* Priority */
+            item = new QStandardItem(Activity::getPriorityString(
+                                         (activitiesList.at(row))->getPriority()));
+            m_activityModel->setItem(row,4,item);
+            item->setBackground(QBrush(usedColor));
+
+            /* Status */
+            item = new QStandardItem(Activity::getStatusString(
+                                         (activitiesList.at(row))->getStatus()));
+            m_activityModel->setItem(row,5,item);
+            item->setBackground(QBrush(usedColor));
+
+            /* Type */
+            item = new QStandardItem(Activity::getTypeString(
+                                         (activitiesList.at(row))->getType()));
+            m_activityModel->setItem(row,6,item);
+            item->setBackground(QBrush(usedColor));
 
             isMediumDeadline = false;
             isShortDeadline = false;
@@ -727,6 +904,160 @@ void MainWindow::resetSearchActivities()
     updateActivitiesTable(searchParams);
 }
 
+void MainWindow::selectionChangedProductionsTable(const QItemSelection & sel,
+                                                  const QItemSelection & des)
+{
+    qDebug() << "MainWindow::selectionChangedProductionsTable()";
+    QModelIndexList indexes = sel.indexes();
+    qDebug() << "MainWindow::selectionChangedProductionsTable() - selected number" << indexes.count();
+
+    qDebug() << "MainWindow::selectionChangedProductionsTable() - row selected" << indexes.at(0).row();
+    m_productionSelected = m_productionModel->item(indexes.at(0).row(),0)->text().toInt();
+}
+
+void MainWindow::updateProductionsTable(QStringList searchParams)
+{
+    qDebug() << "MainWindow::updateProductionsTable()";
+
+    m_productionModel->clear();
+    m_productionModel->setColumnCount(7);
+//    m_productionModel->sort(1,Qt::AscendingOrder);
+
+    m_productionModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    m_productionModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Title"));
+    m_productionModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Work Order"));
+    m_productionModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Output Code"));
+    m_productionModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Employee"));
+    m_productionModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Status"));
+    m_productionModel->setHeaderData(6, Qt::Horizontal, QObject::tr("Supplier"));
+
+    QVector<Production*> productionsList =
+            m_productionController->getProductionsList(searchParams);
+
+    qDebug() << "MainWindow::updateProductionsTable() - Productions size:" << productionsList.size();
+    if (productionsList.size()>0)
+    {
+        /* Get the employees list */
+        QStringList employeesSearchParams;
+        employeesSearchParams << "Active=Yes";
+        QVector<Employee*> employeesList =
+                m_employeeController->getEmployeesList(employeesSearchParams);
+        qDebug() << "MainWindow::productionsList() - Employees size:" << employeesList.size();
+
+
+        for (int row = 0; row < productionsList.size(); ++row)
+        {
+            QStandardItem *item;
+
+            /* ID */
+            item = new QStandardItem(QString::number(productionsList.at(row)->getId()));
+            m_productionModel->setItem(row,0,item);
+
+            /* Title */
+            item = new QStandardItem((productionsList.at(row))->getTitle());
+            m_productionModel->setItem(row,1,item);
+
+            /* Work Order */
+            item = new QStandardItem((productionsList.at(row))->getWorkCode());
+            m_productionModel->setItem(row,2,item);
+
+            /* Output Code */
+            item = new QStandardItem((productionsList.at(row))->getOutputCode());
+            m_productionModel->setItem(row,3,item);
+
+            uint employeeId = (productionsList.at(row))->getEmployee();
+            for (int i = 0; i < employeesList.size(); ++i)
+            {
+                uint searchEmployeeId = (employeesList.at(i))->getId();
+                if (employeeId == searchEmployeeId)
+                {
+                    item = new QStandardItem(
+                        employeesList.at(i)->getSurname() + " " + employeesList.at(i)->getName()
+                    );
+                    break;
+                }
+            }
+            m_productionModel->setItem(row,4,item);
+
+            /* Status */
+            item = new QStandardItem(Production::getStatusString(
+                                         (productionsList.at(row))->getStatus()));
+            m_productionModel->setItem(row,5,item);
+
+            /* TODO: Supplier */
+            item = new QStandardItem("-");
+            m_productionModel->setItem(row,6,item);
+        }
+    }
+    else
+    {
+        showStatusMessage(tr("Search Production: no items found!"));
+    }
+}
+
+void MainWindow::searchProductions()
+{
+    qDebug() << "MainWindow::searchProductions()";
+    QStringList searchParams;
+
+    if (!ui->searchProductionText->text().isEmpty())
+    {
+        QString text = "Text%" + ui->searchProductionText->text();
+        qDebug() << "MainWindow::searchProductions() - String" << text;
+        searchParams << text;
+    }
+
+/* TODO!!! */
+//    if (ui->searchProductionSupplierCombobox->currentData().toInt() != -1)
+//    {
+//        QString supplier = "Supplier=";
+
+//        qDebug() << "MainWindow::searchProductions() - Supplier" << supplier ;
+//        searchParams << supplier;
+//    }
+
+    if (ui->searchProductionEmployeeCombobox->currentData().toInt() > 0)
+    {
+        QString employee = "Employee=";
+        employee.append(QString::number(ui->searchProductionEmployeeCombobox->currentData().toInt()));
+        qDebug() << "MainWindow::searchProductions() - Employee" << employee ;
+        searchParams << employee;
+    }
+
+    if (ui->searchProductionStatusCombobox->currentData().toInt() > -1)
+    {
+        QString status = "Status=";
+        status.append(Production::getStatusString(
+            static_cast<Production::Status>(ui->searchProductionStatusCombobox->currentData().toInt()))
+        );
+        qDebug() << "MainWindow::searchProductions() - Status" << status ;
+        searchParams << status;
+    }
+    else if (ui->searchProductionStatusCombobox->currentData().toInt() == -2)
+    {
+        qDebug() << "MainWindow::searchProductions() - Status" << "Status$NotStarted|InProgress|Waiting" ;
+        searchParams << "Status$NotStarted|InProgress|Waiting";
+    }
+
+    qDebug() << "MainWindow::searchProductions() - update table";
+    updateProductionsTable(searchParams);
+}
+
+void MainWindow::resetSearchProductions()
+{
+    qDebug() << "MainWindow::resetSearchProductions()";
+    QStringList searchParams;
+    searchParams << "Status$NotStarted|InProgress|Waiting";
+
+    ui->searchProductionText->setText("");
+    ui->searchProductionStatusCombobox->setCurrentIndex(0);
+    ui->searchProductionEmployeeCombobox->setCurrentIndex(0);
+    ui->searchProductionSupplierCombobox->setCurrentIndex(0);
+
+    qDebug() << "MainWindow::resetSearchProductions() - update table";
+    updateProductionsTable(searchParams);
+}
+
 void MainWindow::userLogin()
 {
     qDebug() << "MainWindow::userLogin()";
@@ -802,6 +1133,25 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openActivityDialog()));
         ui->addNoteActivityButton->setEnabled(false);
 
+        /* Production tab buttons */
+        disconnect(ui->addProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
+        ui->addProductionButton->setEnabled(false);
+
+        ui->viewProductionButton->setEnabled(true);
+
+        disconnect(ui->editProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
+        ui->editProductionButton->setEnabled(false);
+
+//        connect(ui->deleteProductionButton,SIGNAL(clicked()),
+//                this,SLOT(openProductionDialog()));
+        ui->deleteProductionButton->setEnabled(false);
+
+        disconnect(ui->addNoteProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
+        ui->addNoteProductionButton->setEnabled(false);
+
         /* Employee tab buttons */
         disconnect(ui->addEmployeeButton,SIGNAL(clicked()),
                 this,SLOT(openEmployeeDialog()));
@@ -833,6 +1183,25 @@ void MainWindow::updateButtonStatus()
         connect(ui->addNoteActivityButton,SIGNAL(clicked()),
                 this,SLOT(openActivityDialog()));
         ui->addNoteActivityButton->setEnabled(true);
+
+        /* Production tab buttons */
+        connect(ui->addProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
+        ui->addProductionButton->setEnabled(true);
+
+        ui->viewProductionButton->setEnabled(true);
+
+        connect(ui->editProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
+        ui->editProductionButton->setEnabled(true);
+
+//        connect(ui->deleteProductionButton,SIGNAL(clicked()),
+//                this,SLOT(openProductionDialog()));
+        ui->deleteProductionButton->setEnabled(false);
+
+        connect(ui->addNoteProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
+        ui->addNoteProductionButton->setEnabled(true);
 
         switch (m_employeeLogged->getSystemRole())
         {
@@ -872,6 +1241,7 @@ void MainWindow::updateButtonStatus()
 void MainWindow::updateLoggedUser ()
 {
     m_activityController->updateLoggedUser(m_employeeLogged);
+    m_productionController->updateLoggedUser(m_employeeLogged);
     m_employeeController->updateLoggedUser(m_employeeLogged);
 }
 

@@ -117,8 +117,8 @@ void ActivityDialog::setOpenType (ActivityDialog::DialogType type)
 }
 
 void ActivityDialog::setSelectedActivity (Activity * activity,
-                                          QVector<QVector<QString> > employeesList,
-                                          QVector<QVector<QString> > notesList)
+                                          QVector<Employee*> employeesList,
+                                          QVector<Note *> notesList)
 {
     qDebug() << "ActivityDialog::setSelectedActivity()";
 
@@ -129,13 +129,14 @@ void ActivityDialog::setSelectedActivity (Activity * activity,
     Q_ASSERT(m_openType != ActivityDialog::Add);
 
     updateEmployeesList();
+    clearNotesTab();
     updateNotesList();
     fillActivityFields();
 
     qDebug() << "ActivityDialog::setSelectedActivity() - Exit!";
 }
 
-void ActivityDialog::prepareNewActivity (QVector<QVector<QString> > employeesList)
+void ActivityDialog::prepareNewActivity (QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityDialog::prepareNewActivity()";
 
@@ -146,6 +147,8 @@ void ActivityDialog::prepareNewActivity (QVector<QVector<QString> > employeesLis
 
     updateEmployeesList();
     updateNotesList();
+
+    clearNotesTab();
 
     qDebug() << "ActivityDialog::prepareNewActivity() - Exit!";
 }
@@ -261,14 +264,14 @@ void ActivityDialog::updateEmployeesList ()
     ui->employeeCombobox->clear();
     for (int row = 0; row < m_employeesList.size(); ++row)
     {
-        QString name = m_employeesList.at(row).at(1) + " " + m_employeesList.at(row).at(2);
-        uint id = m_employeesList.at(row).at(0).toUInt();
+        QString name = (m_employeesList.at(row))->getSurname() + " " + (m_employeesList.at(row))->getName();
+        uint id = (m_employeesList.at(row))->getId();
         qDebug() << "ActivityDialog::updateEmployeesList() - employee:" << name  << "Id" << id;
         ui->employeeCombobox->addItem(name,id);
     }
 }
 
-void ActivityDialog::updateNotesList (QVector<QVector<QString> > notesList)
+void ActivityDialog::updateNotesList (QVector<Note *> notesList)
 {
     Q_ASSERT(isVisible());
 
@@ -277,7 +280,7 @@ void ActivityDialog::updateNotesList (QVector<QVector<QString> > notesList)
 
     if (m_notesList.size() > 0)
     {
-        m_noteSelected = m_notesList.at(0).at(0).toUInt();
+        m_noteSelected = m_notesList.at(0)->getId();
         updateNotesTab();
     }
     else
@@ -300,6 +303,7 @@ void ActivityDialog::updateNotesList ()
     m_noteModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Text"));
 
     qDebug() << "ActivityDialog::updateNotesList() - Notes size:" << m_notesList.size();
+    qDebug() << "ActivityDialog::updateNotesList() - Notes " << m_notesList;
 
     if (m_notesList.size()>0)
     {
@@ -307,28 +311,27 @@ void ActivityDialog::updateNotesList ()
         {
             QStandardItem *item;
 
-            item = new QStandardItem(m_notesList.at(row).at(0));
+            item = new QStandardItem(QString::number(m_notesList.at(row)->getId()));
             m_noteModel->setItem(row, 0, item);
 
-            qDebug() << "ActivityDialog::updateNotesList() - Note creation:" << m_notesList.at(row).at(5);
-            qDebug() << "ActivityDialog::updateNotesList() - Note creation conversion:" <<
-                QDateTime::fromString(m_notesList.at(row).at(5),"yyyy-MM-ddThh:mm:ss");
+            qDebug() << "ActivityDialog::updateNotesList() - Note creation:" << m_notesList.at(row)->getCreationDate();
             item = new QStandardItem(
-                QDateTime::fromString(m_notesList.at(row).at(5),"yyyy-MM-ddThh:mm:ss").toString("dd.MM.yyyy hh:mm:ss"));
+                (m_notesList.at(row)->getCreationDate()).toString("yyyy-MM-dd hh:mm:ss"));
             m_noteModel->setItem(row, 1, item);
 
-            uint author = m_notesList.at(row).at(3).toUInt();
+            uint author = m_notesList.at(row)->getCreationEmployee();
             for (int i = 0; i < m_employeesList.size(); ++i)
             {
-                if (author == m_employeesList.at(i).at(0).toUInt())
+                if (author == (m_employeesList.at(i))->getId())
                 {
-                    item = new QStandardItem(m_employeesList.at(i).at(1) + " " + m_employeesList.at(i).at(2));
+                    item = new QStandardItem(m_employeesList.at(i)->getSurname() + " " +
+                                             m_employeesList.at(i)->getName());
                     break;
                 }
             }
             m_noteModel->setItem(row, 2, item);
 
-            item = new QStandardItem(m_notesList.at(row).at(2));
+            item = new QStandardItem(m_notesList.at(row)->getText());
             m_noteModel->setItem(row, 3, item);
         }
     }
@@ -480,39 +483,43 @@ void ActivityDialog::updateNotesTab()
 
     for (int i = 0; i < m_notesList.size(); ++i)
     {
-        if (m_noteSelected == m_notesList.at(i).at(0).toUInt())
+        if (m_noteSelected == m_notesList.at(i)->getId())
         {
             noteFounded = true;
             qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note founded!";
 
-            ui->textNoteEdit->setPlainText(m_notesList.at(i).at(2));
+            ui->textNoteEdit->setPlainText(m_notesList.at(i)->getText());
 
-            uint creationAuthor = m_notesList.at(i).at(3).toUInt();
+            uint creationAuthor = m_notesList.at(i)->getCreationEmployee();
             for (int j = 0; j < m_employeesList.size(); ++j)
             {
-                if (creationAuthor == m_employeesList.at(j).at(0).toUInt())
+                if (creationAuthor == m_employeesList.at(j)->getId())
                 {
-                    ui->authorNoteCreEdit->setText(m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2));
+                    ui->authorNoteCreEdit->setText(m_employeesList.at(j)->getSurname() + " " +
+                                                   m_employeesList.at(j)->getName());
                     qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note creation author" <<
-                                m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2);
+                                m_employeesList.at(j)->getSurname() + " " +
+                                m_employeesList.at(j)->getName();
                     break;
                 }
             }
 
-            uint modificatioAuthor = m_notesList.at(i).at(4).toUInt();
+            uint modificatioAuthor = m_notesList.at(i)->getModificationEmployee();
             for (int j = 0; j < m_employeesList.size(); ++j)
             {
-                if (modificatioAuthor == m_employeesList.at(j).at(0).toUInt())
+                if (modificatioAuthor == m_employeesList.at(j)->getId())
                 {
-                    ui->authorNoteModEdit->setText(m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2));
+                    ui->authorNoteModEdit->setText(m_employeesList.at(j)->getSurname() + " " +
+                                                   m_employeesList.at(j)->getName());
                     qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note modification author" <<
-                                m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2);
+                                m_employeesList.at(j)->getSurname() + " " +
+                                m_employeesList.at(j)->getName();
                     break;
                 }
             }
 
-            ui->dateNoteCreEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(5),"yyyy-MM-ddThh:mm:ss"));
-            ui->dateNoteModEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(6),"yyyy-MM-ddThh:mm:ss"));
+            ui->dateNoteCreEdit->setDateTime(m_notesList.at(i)->getCreationDate());
+            ui->dateNoteModEdit->setDateTime(m_notesList.at(i)->getModificationDate());
             break;
         }
     }
@@ -559,4 +566,9 @@ void ActivityDialog::deleteNote()
     qDebug() << "ActivityDialog::deleteNote()";
     emit deleteNoteButton(m_noteSelected);
     qDebug() << "ActivityDialog::deleteNote() - Exit!";
+}
+
+void ActivityDialog::keyPressEvent(QKeyEvent* e)
+{
+    if(e->key() == Qt::Key_Escape) noApply();
 }

@@ -29,7 +29,6 @@
 #include <QString>
 
 #include "production.h"
-#include "productionnote.h"
 
 class ProductionDatabase
 {
@@ -39,12 +38,6 @@ public:
     bool addProduction (Production* production);
     bool updateProduction (Production* production);
     bool getProduction (int id, Production* production);
-
-    bool addProductionNote (ProductionNote *note);
-    bool getNote (int id, ProductionNote *note);
-    bool updateNote (ProductionNote *note);
-    bool deleteNote (int id);
-    QVector< ProductionNote > getNotes (uint productionId);
 
     QVector<Production*> searchProductions (QStringList searchParams);
 

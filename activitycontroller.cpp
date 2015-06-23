@@ -29,9 +29,10 @@ ActivityController::ActivityController(QSqlDatabase *db)
     m_database = db;
 
     m_activityDialog = new ActivityDialog;
-    m_activityNoteDialog = new ActivityNoteDialog;
+    m_noteDialog = new NoteDialog;
 
     m_databaseWrapper = new ActivityDatabase (m_database);
+    m_databaseNoteWrapper = new NoteDatabase (m_database);
 
     connect(m_activityDialog,SIGNAL(editNoteButton(uint)),
             this,SLOT(openEditNoteActivityDialog(uint)));
@@ -41,7 +42,7 @@ ActivityController::ActivityController(QSqlDatabase *db)
             this,SLOT(openAddNoteActivityDialog(uint)));
 }
 
-void ActivityController::openAddActivityDialog (QVector<QVector<QString> > employeesList)
+void ActivityController::openAddActivityDialog (QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openAddActivityDialog()";
 
@@ -69,7 +70,7 @@ void ActivityController::openAddActivityDialog (QVector<QVector<QString> > emplo
     }
 }
 
-void ActivityController::openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
+void ActivityController::openViewActivityDialog (uint activityId, QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openViewActivityDialog()";
 
@@ -82,14 +83,14 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<QVecto
         return;
     }
 
-    QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
+    QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(activityId,Note::Activity);
 
     m_activityDialog->setOpenType(ActivityDialog::View);
     m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
     m_activityDialog->exec();
 }
 
-void ActivityController::openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
+void ActivityController::openEditActivityDialog (uint activityId, QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openEditActivityDialog()";
 
@@ -102,7 +103,7 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<QVecto
         return;
     }
 
-    QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
+    QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(activityId,Note::Activity);
 
     m_activityDialog->setOpenType(ActivityDialog::Edit);
     m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
@@ -145,20 +146,21 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
 
     Q_ASSERT(m_loggedUser != 0);
 
-    m_activityNoteDialog->setOpenType(ActivityNoteDialog::Add);
-    m_activityNoteDialog->prepareNewActivityNote(activity,m_loggedUser);
-    m_activityNoteDialog->exec();
+    m_noteDialog->setOpenType(NoteDialog::Add);
+    m_noteDialog->setParentType(Note::Activity);
+    m_noteDialog->prepareNewNote(activity->getId(),m_loggedUser);
+    m_noteDialog->exec();
 
-    ActivityNote* note = m_activityNoteDialog->getSavedActivityNote();
+    Note* note = m_noteDialog->getSavedNote();
     if (note)
     {
         qDebug() << "ActivityController::openAddNoteActivityDialog() - Note not empty";
-        if (m_databaseWrapper->addActivityNote(note))
+        if (m_databaseNoteWrapper->addNote(note))
         {
-            qDebug() << "ActivityController::openAddNoteActivityDialog() - Add activity note successful";
+            qDebug() << "ActivityController::openAddNoteActivityDialog() - Add note successful";
             if (sender() == m_activityDialog)
             {
-                QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getParentId());
+                QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(note->getParentId(),Note::Activity);
                 m_activityDialog->updateNotesList(notesList);
             }
         }
@@ -166,7 +168,7 @@ void ActivityController::openAddNoteActivityDialog (uint activityId)
         {
             /* Warning message!!! */
             qDebug() << "ActivityController::openAddNoteActivityDialog() - Add activity note error!";
-            QMessageBox::warning(0, tr("Add Activity Note Error"),
+            QMessageBox::warning(0, tr("Add Note Error"),
                                  tr("The activity note has not been added! Database Error!"));
         }
     }
@@ -180,43 +182,43 @@ void ActivityController::openEditNoteActivityDialog (uint activityNoteId)
     if (activityNoteId == 0)
     {
         /* Warning message!!! */
-        QMessageBox::warning(0, tr("Edit Activity Note Error"),
-                             tr("You must select an activity note!"));
+        QMessageBox::warning(0, tr("Edit Note Error"),
+                             tr("You must select a note!"));
             qDebug() << "ActivityController::openEditNoteActivityDialog() - Note not selected!";
         return;
     }
 
-    ActivityNote * note = new ActivityNote;
-    if (!m_databaseWrapper->getNote(activityNoteId,note))
+    Note * note = new Note;
+    if (!m_databaseNoteWrapper->getNote(activityNoteId,note))
     {
         /* Warning message!!! */
-        QMessageBox::critical(0, tr("Edit Activity Note Error"),
-                             tr("The activity note can not be edited! Database Error!"));
+        QMessageBox::critical(0, tr("Edit Note Error"),
+                             tr("The note can not be edited! Database Error!"));
             qDebug() << "ActivityController::openEditNoteActivityDialog() - Error!";
         return;
     }
 
     Q_ASSERT(m_loggedUser != 0);
 
-    m_activityNoteDialog->setOpenType(ActivityNoteDialog::Edit);
-    m_activityNoteDialog->setSelectedActivityNote(note,m_loggedUser);
-    m_activityNoteDialog->exec();
+    m_noteDialog->setOpenType(NoteDialog::Edit);
+    m_noteDialog->setSelectedNote(note,m_loggedUser);
+    m_noteDialog->exec();
 
-    note = m_activityNoteDialog->getSavedActivityNote();
+    note = m_noteDialog->getSavedNote();
     if (note)
     {
-        if (m_databaseWrapper->updateNote(note))
+        if (m_databaseNoteWrapper->updateNote(note))
         {
             qDebug() << "ActivityController::openEditNoteActivityDialog() - Update activity note successful";
-            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getParentId());
+            QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(note->getParentId(),Note::Activity);
             m_activityDialog->updateNotesList(notesList);
         }
         else
         {
             /* Warning message!!! */
             qDebug() << "ActivityController::openEditNoteActivityDialog() - Update activity note error!";
-            QMessageBox::warning(0, tr("Update Activity Note Error"),
-                                 tr("The activity note has not been updated! Database Error!"));
+            QMessageBox::warning(0, tr("Update Note Error"),
+                                 tr("The note has not been updated! Database Error!"));
         }
 
         delete note;
@@ -231,18 +233,18 @@ void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
     if (activityNoteId == 0)
     {
         /* Warning message!!! */
-        QMessageBox::warning(0, tr("Delete Activity Note Error"),
-                              tr("You must select an activity note!"));
+        QMessageBox::warning(0, tr("Delete Note Error"),
+                              tr("You must select a note!"));
             qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Note not selected!";
         return;
     }
 
-    ActivityNote * note = new ActivityNote;
-    if (!m_databaseWrapper->getNote(activityNoteId,note))
+    Note * note = new Note;
+    if (!m_databaseNoteWrapper->getNote(activityNoteId,note))
     {
         /* Warning message!!! */
-        QMessageBox::critical(0, tr("Delete Activity Note Error"),
-                             tr("The activity note can not be deleted! Database Error!"));
+        QMessageBox::critical(0, tr("Delete Note Error"),
+                             tr("The note can not be deleted! Database Error!"));
             qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Error!";
         return;
     }
@@ -250,34 +252,34 @@ void ActivityController::openDeleteNoteActivityDialog (uint activityNoteId)
     Q_ASSERT(m_loggedUser != 0);
 
     QMessageBox::StandardButton reply = QMessageBox::question(m_activityDialog,
-                                            tr("Delete Activity Note"),
+                                            tr("Delete Note"),
                                             tr("Are you sure you want delete this note?"),
                                             QMessageBox::Yes | QMessageBox::No,
                                             QMessageBox::No);
     if (reply == QMessageBox::Yes)
     {
         qDebug() << "ActivityController::openDeleteNoteActivityDialog() - User want delete note" << activityNoteId;
-        if (m_databaseWrapper->deleteNote(activityNoteId))
+        if (m_databaseNoteWrapper->deleteNote(activityNoteId))
         {
             qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Note deleted" << activityNoteId;
-            QMessageBox::warning(0, tr("Delete Activity Note"),
-                                  tr("The activity note has been deleted!"));
+            QMessageBox::warning(0, tr("Delete Note"),
+                                  tr("The note has been deleted!"));
 
-            QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(note->getParentId());
+            QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(note->getParentId(),Note::Activity);
             m_activityDialog->updateNotesList(notesList);
         }
         else
         {
             qDebug() << "ActivityController::openDeleteNoteActivityDialog() - Delete activity note error!";
-            QMessageBox::critical(0, tr("Delete Activity Note Error"),
-                                  tr("The activity note has not been deleted! Database Error!"));
+            QMessageBox::critical(0, tr("Delete Note Error"),
+                                  tr("The note has not been deleted! Database Error!"));
         }
     }
 
     delete note;
 }
 
-QVector<QVector<QString> >
+QVector<Activity*>
 ActivityController::getActivitiesList (QStringList searchParams)
 {
     qDebug() << "ActivityController::getActivitiesList(QStringList)";

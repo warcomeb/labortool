@@ -44,33 +44,43 @@ ProductionDialog::ProductionDialog(QWidget *parent) :
     connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(apply()));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(noApply()));
 
-//    fillCombobox();
+    fillCombobox();
 
-//    setupActivityField();
+    setupField();
 
-//    /* Startup note table! */
-//    m_noteModel = new QStandardItemModel(1, 4);
-//    ui->noteTable->setModel(m_noteModel);
-//    ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-//    clearNotesTab();
-//    updateNotesList();
+    /* Startup note table! */
+    m_noteModel = new QStandardItemModel(1, 4);
+    ui->noteTable->setModel(m_noteModel);
+    ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    clearNotesTab();
+    updateNotesList();
 
-//    connect(ui->noteTable->selectionModel(),
-//            SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
-//            this,
-//            SLOT(selectionChangedNotesTable(const QItemSelection &, const QItemSelection &)));
+    connect(ui->noteTable->selectionModel(),
+            SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
+            this,
+            SLOT(selectionChangedNotesTable(const QItemSelection &, const QItemSelection &)));
 
-//    connect(ui->activityNoteDeleteButton,SIGNAL(clicked()),
-//            this,SLOT(deleteNote()));
-//    connect(ui->activityNoteEditButton,SIGNAL(clicked()),
-//            this,SLOT(editNote()));
-//    connect(ui->activityNoteAddButton,SIGNAL(clicked()),
-//            this,SLOT(addNote()));
+    connect(ui->productionNoteDeleteButton,SIGNAL(clicked()),
+            this,SLOT(deleteNote()));
+    connect(ui->productionNoteEditButton,SIGNAL(clicked()),
+            this,SLOT(editNote()));
+    connect(ui->productionNoteAddButton,SIGNAL(clicked()),
+            this,SLOT(addNote()));
 }
 
 ProductionDialog::~ProductionDialog()
 {
+    if (m_production)
+        delete m_production;
+
     delete ui;
+}
+
+void ProductionDialog::setLoggedUserRole(Employee::SystemRole systemRole,
+                                         Employee::Role role)
+{
+    m_loggedUserRole = role;
+    m_loggedUserSystemRole = systemRole;
 }
 
 void ProductionDialog::fillCombobox ()
@@ -90,74 +100,27 @@ void ProductionDialog::setOpenType (ProductionDialog::DialogType type)
     ui->tabWidget->setCurrentIndex(0);
 
     m_openType = type;
-    setupProductionField();
+    setupField();
 }
 
-void ProductionDialog::setLoggedUserRole(Employee::SystemRole systemRole,
-                                         Employee::Role role)
+void ProductionDialog::setSelectedProduction (Production * production,
+                                              QVector<Employee*> employeesList,
+                                              QVector<Note *> notesList)
 {
-    m_loggedUserRole = role;
-    m_loggedUserSystemRole = systemRole;
-}
+    qDebug() << "ProductionDialog::setSelectedProduction()";
 
-void ProductionDialog::saveValues ()
-{
-//    qDebug() << "ActivityDialog::saveValues()";
-//    m_activity = 0;
+    m_production = production;
+    m_employeesList = employeesList;
+    m_notesList = notesList;
 
-//    QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
+    Q_ASSERT(m_openType != ProductionDialog::Add);
 
+    updateEmployeesList();
+    clearNotesTab();
+    updateNotesList();
+    fillProductionFields();
 
-//    if (ui->titleText->text().isEmpty())
-//    {
-//        qDebug() << "ActivityDialog::saveValues() - Title is empty";
-//        QMessageBox::critical(this, tr("Error"),
-//            tr("Activity title is empty!"));
-//        return;
-//    }
-
-//    if (workCode.exactMatch(ui->jobcodeText->text()))
-//    {
-//        qDebug() << "ActivityDialog::saveValues() - Job Code correct:" << ui->jobcodeText->text();
-//    }
-//    else
-//    {
-//        qDebug() << "ActivityDialog::saveValues() - Job Code not correct:" << ui->jobcodeText->text();
-//        QMessageBox::critical(this, tr("Error"),
-//            tr("Job Code not correct!"));
-//        return;
-//    }
-
-//    m_activity = new Activity(ui->titleText->text());
-//    if (m_openType != Add) m_activity->setId(ui->idText->text().toUInt());
-//    m_activity->setDeadline(ui->deadlineEdit->date());
-//    m_activity->setDescription(ui->descriptionText->toPlainText());
-//    m_activity->setEmployee(qvariant_cast<uint>(ui->employeeCombobox->itemData(ui->employeeCombobox->currentIndex())));
-//    m_activity->setWorkCode(ui->jobcodeText->text());
-
-//    m_activity->setPriority(
-//        static_cast<Activity::Priority>(
-//            ui->priorityCombobox->currentData().toInt()
-//        )
-//    );
-//    qDebug() << "ActivityDialog::saveValues() - Priority:" << static_cast<Activity::Priority>(
-//        ui->priorityCombobox->currentData().toInt());
-
-//    m_activity->setType(
-//        static_cast<Activity::Type>(
-//            ui->typeCombobox->currentData().toInt()
-//        )
-//    );
-//    qDebug() << "ActivityDialog::saveValues() - Type:" << static_cast<Activity::Type>(
-//        ui->typeCombobox->currentData().toInt());
-
-//    m_activity->setStatus(
-//        static_cast<Activity::Status>(
-//            ui->statusCombobox->currentData().toInt()
-//        )
-//    );
-//    qDebug() << "ActivityDialog::saveValues() - Status:" << static_cast<Activity::Status>(
-//        ui->statusCombobox->currentData().toInt());
+    qDebug() << "ProductionDialog::setSelectedProduction() - Exit!";
 }
 
 void ProductionDialog::prepareNewProduction (QVector<Employee*> employeesList)
@@ -177,7 +140,7 @@ void ProductionDialog::prepareNewProduction (QVector<Employee*> employeesList)
     qDebug() << "ProductionDialog::prepareNewProduction() - Exit!";
 }
 
-void ProductionDialog::setupProductionField ()
+void ProductionDialog::setupField ()
 {
     switch (m_openType)
     {
@@ -196,6 +159,7 @@ void ProductionDialog::setupProductionField ()
         ui->statusCombobox->setEnabled(true);
 
         ui->employeeCombobox->setEnabled(true);
+        ui->supplierCombobox->setEnabled(true);
 
         ui->descriptionText->setReadOnly(false);
         ui->descriptionText->setPlainText("");
@@ -220,6 +184,7 @@ void ProductionDialog::setupProductionField ()
         ui->statusCombobox->setEnabled(true);
 
         ui->employeeCombobox->setEnabled(true);
+        ui->supplierCombobox->setEnabled(true);
 
         ui->descriptionText->setReadOnly(false);
 
@@ -257,6 +222,7 @@ void ProductionDialog::setupProductionField ()
         ui->statusCombobox->setEnabled(false);
 
         ui->employeeCombobox->setEnabled(false);
+        ui->supplierCombobox->setEnabled(false);
 
         ui->descriptionText->setReadOnly(true);
 
@@ -289,7 +255,7 @@ void ProductionDialog::updateEmployeesList ()
     }
 }
 
-void ProductionDialog::updateNotesList (QVector<ProductionNote*> notesList)
+void ProductionDialog::updateNotesList (QVector<Note*> notesList)
 {
     Q_ASSERT(isVisible());
 
@@ -321,43 +287,125 @@ void ProductionDialog::updateNotesList ()
     m_noteModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Text"));
 
     qDebug() << "ProductionDialog::updateNotesList() - Notes size:" << m_notesList.size();
+    qDebug() << "ProductionDialog::updateNotesList() - Notes " << m_notesList;
 
-//    if (m_notesList.size()>0)
-//    {
-//        for (int row = 0; row < m_notesList.size(); ++row)
-//        {
-//            QStandardItem *item;
+    if (m_notesList.size()>0)
+    {
+        for (int row = 0; row < m_notesList.size(); ++row)
+        {
+            QStandardItem *item;
 
-//            item = new QStandardItem(m_notesList.at(row).at(0));
-//            m_noteModel->setItem(row, 0, item);
+            item = new QStandardItem(QString::number(m_notesList.at(row)->getId()));
+            m_noteModel->setItem(row, 0, item);
 
-//            qDebug() << "ActivityDialog::updateNotesList() - Note creation:" << m_notesList.at(row).at(5);
-//            qDebug() << "ActivityDialog::updateNotesList() - Note creation conversion:" <<
-//                QDateTime::fromString(m_notesList.at(row).at(5),"yyyy-MM-ddThh:mm:ss");
-//            item = new QStandardItem(
-//                QDateTime::fromString(m_notesList.at(row).at(5),"yyyy-MM-ddThh:mm:ss").toString("dd.MM.yyyy hh:mm:ss"));
-//            m_noteModel->setItem(row, 1, item);
+            qDebug() << "ProductionDialog::updateNotesList() - Note creation:" << m_notesList.at(row)->getCreationDate();
+            item = new QStandardItem(
+                m_notesList.at(row)->getCreationDate().toString("yyyy-MM-dd hh:mm:ss"));
+            m_noteModel->setItem(row, 1, item);
 
-//            uint author = m_notesList.at(row).at(3).toUInt();
-//            for (int i = 0; i < m_employeesList.size(); ++i)
-//            {
-//                if (author == m_employeesList.at(i).at(0).toUInt())
-//                {
-//                    item = new QStandardItem(m_employeesList.at(i).at(1) + " " + m_employeesList.at(i).at(2));
-//                    break;
-//                }
-//            }
-//            m_noteModel->setItem(row, 2, item);
+            uint author = m_notesList.at(row)->getCreationEmployee();
+            for (int i = 0; i < m_employeesList.size(); ++i)
+            {
+                if (author == m_employeesList.at(i)->getId())
+                {
+                    item = new QStandardItem(m_employeesList.at(i)->getSurname() + " " +
+                                             m_employeesList.at(i)->getName());
+                    break;
+                }
+            }
+            m_noteModel->setItem(row, 2, item);
 
-//            item = new QStandardItem(m_notesList.at(row).at(2));
-//            m_noteModel->setItem(row, 3, item);
-//        }
-//    }
+            item = new QStandardItem(m_notesList.at(row)->getText());
+            m_noteModel->setItem(row, 3, item);
+        }
+    }
 }
 
-void ProductionDialog::keyPressEvent(QKeyEvent* e)
+void ProductionDialog::fillProductionFields ()
 {
-    if(e->key() != Qt::Key_Escape) noApply();
+    qDebug() << "ProductionDialog::fillProductionFields()";
+
+    ui->idText->setText(QString::number(m_production->getId()));
+    ui->titleText->setText(m_production->getTitle());
+    ui->descriptionText->setPlainText(m_production->getDescription());
+    ui->jobcodeText->setText(m_production->getWorkCode());
+    ui->outputText->setText(m_production->getOutputCode());
+
+    ui->statusCombobox->setCurrentIndex(m_production->getStatus());
+    qDebug() << "ProductionDialog::fillProductionFields() - status" << m_production->getStatus();
+
+    qDebug() << "ProductionDialog::fillProductionFields() - count employee" << ui->employeeCombobox->count();
+    for (int i  = 0; i <  ui->employeeCombobox->count(); ++i)
+    {
+        qDebug() << "ProductionDialog::fillProductionFields() - employee combobox" <<
+                    ui->employeeCombobox->itemData(i);
+        uint employeeId = qvariant_cast<uint>(ui->employeeCombobox->itemData(i));
+        qDebug() << "ProductionDialog::fillProductionFields() - Test employee" << employeeId;
+        if (employeeId == m_production->getEmployee())
+        {
+            qDebug() << "ProductionDialog::fillProductionFields() - employee" << employeeId;
+            ui->employeeCombobox->setCurrentIndex(i);
+            break;
+        }
+    }
+}
+
+void ProductionDialog::saveValues ()
+{
+    qDebug() << "ProductionDialog::saveValues()";
+    m_production = 0;
+
+    QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
+    QRegExp outputCode = QRegExp(QString::fromUtf8("^[X0-9]{7}$"));
+
+    if (ui->titleText->text().isEmpty())
+    {
+        qDebug() << "ProductionDialog::saveValues() - Title is empty";
+        QMessageBox::critical(this, tr("Error"),
+            tr("Production title is empty!"));
+        return;
+    }
+
+    if (workCode.exactMatch(ui->jobcodeText->text()))
+    {
+        qDebug() << "ProductionDialog::saveValues() - Job Code correct:" << ui->jobcodeText->text();
+    }
+    else
+    {
+        qDebug() << "ProductionDialog::saveValues() - Job Code not correct:" << ui->jobcodeText->text();
+        QMessageBox::critical(this, tr("Error"),
+            tr("Work Code not correct!"));
+        return;
+    }
+
+    if (outputCode.exactMatch(ui->outputText->text()))
+    {
+        qDebug() << "ProductionDialog::saveValues() - Output Code correct:" << ui->outputText->text();
+    }
+    else
+    {
+        qDebug() << "ProductionDialog::saveValues() - Output Code not correct:" << ui->outputText->text();
+        QMessageBox::critical(this, tr("Error"),
+            tr("Output Code not correct!"));
+        return;
+    }
+
+    m_production = new Production(ui->titleText->text());
+    if (m_openType != Add) m_production->setId(ui->idText->text().toUInt());
+    m_production->setDescription(ui->descriptionText->toPlainText());
+    m_production->setEmployee(qvariant_cast<uint>(ui->employeeCombobox->itemData(ui->employeeCombobox->currentIndex())));
+    m_production->setWorkCode(ui->jobcodeText->text());
+    m_production->setOutputCode(ui->outputText->text());
+
+    m_production->setStatus(
+        static_cast<Production::Status>(
+            ui->statusCombobox->currentData().toInt()
+        )
+    );
+    qDebug() << "ProductionDialog::saveValues() - Status:" << static_cast<Production::Status>(
+        ui->statusCombobox->currentData().toInt());
+
+    /* TODO: Supplier!! */
 }
 
 void ProductionDialog::apply()
@@ -395,65 +443,69 @@ void ProductionDialog::selectionChangedNotesTable(const QItemSelection & sel,
 {
     qDebug() << "ProductionDialog::selectionChangedNotesTable()";
 
-//    QModelIndexList indexes = sel.indexes();
-//    qDebug() << "ProductionDialog::selectionChangedNotesTable() - selected number" << indexes.count();
+    QModelIndexList indexes = sel.indexes();
+    qDebug() << "ProductionDialog::selectionChangedNotesTable() - selected number" << indexes.count();
 
-//    qDebug() << "ProductionDialog::selectionChangedNotesTable() - row selected" << indexes.at(0).row();
-//    m_noteSelected = m_noteModel->item(indexes.at(0).row(),0)->text().toUInt();
-//    qDebug() << "ProductionDialog::selectionChangedNotesTable() - note selected" << m_noteSelected;
+    qDebug() << "ProductionDialog::selectionChangedNotesTable() - row selected" << indexes.at(0).row();
+    m_noteSelected = m_noteModel->item(indexes.at(0).row(),0)->text().toUInt();
+    qDebug() << "ProductionDialog::selectionChangedNotesTable() - note selected" << m_noteSelected;
 
-//    updateNotesTab();
+    updateNotesTab();
 
-//    qDebug() << "ProductionDialog::selectionChangedNotesTable() - Exit!";
+    qDebug() << "ProductionDialog::selectionChangedNotesTable() - Exit!";
 }
 
 void ProductionDialog::updateNotesTab()
 {
     qDebug() << "ProductionDialog::updateNotesTab()!";
 
-//    bool noteFounded = false;
+    bool noteFounded = false;
 
-//    for (int i = 0; i < m_notesList.size(); ++i)
-//    {
-//        if (m_noteSelected == m_notesList.at(i).at(0).toUInt())
-//        {
-//            noteFounded = true;
-//            qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note founded!";
+    for (int i = 0; i < m_notesList.size(); ++i)
+    {
+        if (m_noteSelected == m_notesList.at(i)->getId())
+        {
+            noteFounded = true;
+            qDebug() << "ProductionDialog::selectionChangedNotesTable() - Note founded!";
 
-//            ui->textNoteEdit->setPlainText(m_notesList.at(i).at(2));
+            ui->textNoteEdit->setPlainText(m_notesList.at(i)->getText());
 
-//            uint creationAuthor = m_notesList.at(i).at(3).toUInt();
-//            for (int j = 0; j < m_employeesList.size(); ++j)
-//            {
-//                if (creationAuthor == m_employeesList.at(j).at(0).toUInt())
-//                {
-//                    ui->authorNoteCreEdit->setText(m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2));
-//                    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note creation author" <<
-//                                m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2);
-//                    break;
-//                }
-//            }
+            uint creationAuthor = m_notesList.at(i)->getCreationEmployee();
+            for (int j = 0; j < m_employeesList.size(); ++j)
+            {
+                if (creationAuthor == m_employeesList.at(j)->getId())
+                {
+                    ui->authorNoteCreEdit->setText(m_employeesList.at(j)->getSurname() + " " +
+                                                   m_employeesList.at(j)->getName());
+                    qDebug() << "ProductionDialog::selectionChangedNotesTable() - Note creation author" <<
+                                m_employeesList.at(j)->getSurname() + " " +
+                                m_employeesList.at(j)->getName();
+                    break;
+                }
+            }
 
-//            uint modificatioAuthor = m_notesList.at(i).at(4).toUInt();
-//            for (int j = 0; j < m_employeesList.size(); ++j)
-//            {
-//                if (modificatioAuthor == m_employeesList.at(j).at(0).toUInt())
-//                {
-//                    ui->authorNoteModEdit->setText(m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2));
-//                    qDebug() << "ActivityDialog::selectionChangedNotesTable() - Note modification author" <<
-//                                m_employeesList.at(j).at(1) + " " + m_employeesList.at(j).at(2);
-//                    break;
-//                }
-//            }
+            uint modificatioAuthor = m_notesList.at(i)->getModificationEmployee();
+            for (int j = 0; j < m_employeesList.size(); ++j)
+            {
+                if (modificatioAuthor == m_employeesList.at(j)->getId())
+                {
+                    ui->authorNoteModEdit->setText(m_employeesList.at(j)->getSurname() + " " +
+                                                   m_employeesList.at(j)->getName());
+                    qDebug() << "ProductionDialog::selectionChangedNotesTable() - Note modification author" <<
+                                m_employeesList.at(j)->getSurname() + " " +
+                                m_employeesList.at(j)->getName();
+                    break;
+                }
+            }
 
-//            ui->dateNoteCreEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(5),"yyyy-MM-ddThh:mm:ss"));
-//            ui->dateNoteModEdit->setDateTime(QDateTime::fromString(m_notesList.at(i).at(6),"yyyy-MM-ddThh:mm:ss"));
-//            break;
-//        }
-//    }
+            ui->dateNoteCreEdit->setDateTime(m_notesList.at(i)->getCreationDate());
+            ui->dateNoteModEdit->setDateTime(m_notesList.at(i)->getModificationDate());
+            break;
+        }
+    }
 
-//    if (!noteFounded)
-//        clearNotesTab();
+    if (!noteFounded)
+        clearNotesTab();
 
     qDebug() << "ProductionDialog::updateNotesTab() - Exit!";
 }
@@ -493,4 +545,10 @@ void ProductionDialog::deleteNote()
     qDebug() << "ProductionDialog::deleteNote()";
     emit deleteNoteButton(m_noteSelected);
     qDebug() << "ProductionDialog::deleteNote() - Exit!";
+}
+
+void ProductionDialog::keyPressEvent(QKeyEvent* e)
+{
+    qDebug() << "ProductionDialog::keyPressEvent()";
+    if(e->key() == Qt::Key_Escape) noApply();
 }

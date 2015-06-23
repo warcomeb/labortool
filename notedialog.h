@@ -19,24 +19,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  ******************************************************************************/
 
-#ifndef ACTIVITYNOTEDIALOG_H
-#define ACTIVITYNOTEDIALOG_H
+#ifndef NOTEDIALOG_H
+#define NOTEDIALOG_H
 
-#include "activitynote.h"
+#include "note.h"
 
 #include <QDialog>
 
 namespace Ui {
-class ActivityNoteDialog;
+class NoteDialog;
 }
 
-class ActivityNoteDialog : public QDialog
+class NoteDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ActivityNoteDialog(QWidget *parent = 0);
-    ~ActivityNoteDialog();
+    explicit NoteDialog(QWidget *parent = 0);
+    ~NoteDialog();
 
     typedef enum
     {
@@ -46,24 +46,26 @@ public:
     } DialogType;
 
     void setOpenType (DialogType type);
+    void setParentType (Note::ParentType type);
 
-    void setSelectedActivityNote (ActivityNote * note, Employee * const author);
-    void prepareNewActivityNote (Activity* activity, Employee* const author);
+    void setSelectedNote (Note * note, Employee * const author);
+    void prepareNewNote (uint parentId, Employee* const author);
 
-    ActivityNote* getSavedActivityNote();
+    Note* getSavedNote();
 
 private slots:
     void apply();
     void noApply();
 
 private:
-    Ui::ActivityNoteDialog *ui;
+    Ui::NoteDialog *ui;
 
     DialogType m_openType;
 
-    ActivityNote * m_activityNote;
+    Note * m_note;
 
-    Activity * m_activity;
+    uint m_parentId;
+    Note::ParentType m_parentType;
     Employee * m_author;
 
     void setupDialog ();
@@ -72,4 +74,4 @@ private:
     void fillNoteField();
 };
 
-#endif // ACTIVITYNOTEDIALOG_H
+#endif // NOTEDIALOG_H

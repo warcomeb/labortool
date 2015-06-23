@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * LabOrTool - Laboratory Organization Tool
  * Copyright (C) 2015 Marco Giammarini
@@ -29,9 +30,10 @@ ProductionController::ProductionController(QSqlDatabase *db)
     m_database = db;
 
     m_productionDialog = new ProductionDialog;
-//    m_productionNoteDialog = new ProductionNoteDialog;
+    m_noteDialog = new NoteDialog;
 
     m_databaseWrapper = new ProductionDatabase (m_database);
+    m_databaseNoteWrapper = new NoteDatabase (m_database);
 
     connect(m_productionDialog,SIGNAL(editNoteButton(uint)),
             this,SLOT(openEditNoteProductionDialog(uint)));
@@ -69,65 +71,221 @@ void ProductionController::openAddProductionDialog (QVector<Employee*> employees
     }
 }
 
-//void ProductionController::openViewActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
-//{
-//    qDebug() << "ProductionController::openViewActivityDialog()";
+void ProductionController::openViewProductionDialog (uint productionId, QVector<Employee*> employeesList)
+{
+    qDebug() << "ProductionController::openViewProductionDialog()";
 
-//    Activity * activity = new Activity;
-//    if (!m_databaseWrapper->getActivity(activityId,activity))
-//    {
-//        QMessageBox::warning(0, tr("View Activity Error"),
-//                             tr("The activity can not be displayed! Database Error!"));
-//        qDebug() << "ActivityController::openViewActivityDialog() - Database Error!";
-//        return;
-//    }
+    Production * production = new Production;
+    if (!m_databaseWrapper->getProduction(productionId,production))
+    {
+        QMessageBox::warning(0, tr("View Production Error"),
+                             tr("The production can not be displayed! Database Error!"));
+        qDebug() << "ActivityController::openViewProductionDialog() - Database Error!";
+        return;
+    }
 
-//    QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
+    QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(productionId,Note::Production);
 
-//    m_activityDialog->setOpenType(ActivityDialog::View);
-//    m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
-//    m_activityDialog->exec();
-//}
+    m_productionDialog->setOpenType(ProductionDialog::View);
+    m_productionDialog->setSelectedProduction(production,employeesList,notesList);
+    m_productionDialog->exec();
+}
 
-//void ProductionController::openEditActivityDialog (uint activityId, QVector<QVector<QString> > employeesList)
-//{
-//    qDebug() << "ProductionController::openEditActivityDialog()";
+void ProductionController::openEditProductionDialog (uint productionId, QVector<Employee*> employeesList)
+{
+    qDebug() << "ProductionController::openEditProductionDialog()";
 
-//    Activity * activity = new Activity;
-//    if (!m_databaseWrapper->getActivity(activityId,activity))
-//    {
-//        QMessageBox::warning(0, tr("Edit Activity Error"),
-//                             tr("The activity can not be edited! Database Error!"));
-//        qDebug() << "ProductionController::openEditActivityDialog() - Database Error!";
-//        return;
-//    }
+    Production * production = new Production;
+    if (!m_databaseWrapper->getProduction(productionId,production))
+    {
+        QMessageBox::warning(0, tr("Edit Production Error"),
+                             tr("The production can not be edited! Database Error!"));
+        qDebug() << "ProductionController::openEditProductionDialog() - Database Error!";
+        return;
+    }
 
-//    QVector<QVector<QString> > notesList = m_databaseWrapper->getNotes(activityId);
+    QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(productionId,Note::Production);
 
-//    m_activityDialog->setOpenType(ActivityDialog::Edit);
-//    m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
+    m_productionDialog->setOpenType(ProductionDialog::Edit);
+    m_productionDialog->setSelectedProduction(production,employeesList,notesList);
 
-//    m_activityDialog->exec();
+    m_productionDialog->exec();
 
-//    activity = m_activityDialog->getSavedActivity();
-//    if (activity)
-//    {
-//        if (m_databaseWrapper->updateActivity(activity))
-//        {
-//            qDebug() << "ProductionController::openEditActivityDialog() - Update activity successful";
-//            QStringList searchParams;
-//            searchParams << "Status$NotStarted|InProgress|Waiting";
-//            emit updatedActivitiesList(searchParams);
-//        }
-//        else
-//        {
-//            /* Warning message!!! */
-//            qDebug() << "ProductionController::openEditActivityDialog() - Update activity error!";
-//            QMessageBox::warning(0, tr("Update Activity Error"),
-//                                 tr("The activity has not been updated! Database Error!"));
-//        }
-//    }
-//}
+    production = m_productionDialog->getSavedProduction();
+    if (production)
+    {
+        if (m_databaseWrapper->updateProduction(production))
+        {
+            qDebug() << "ProductionController::openEditProductionDialog() - Update production successful";
+            QStringList searchParams;
+            searchParams << "Status$NotStarted|InProgress|Waiting";
+            emit updatedProductionsList(searchParams);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ProductionController::openEditProductionDialog() - Update production error!";
+            QMessageBox::warning(0, tr("Update Production Error"),
+                                 tr("The production has not been updated! Database Error!"));
+        }
+    }
+}
+
+void ProductionController::openAddNoteProductionDialog (uint productionId)
+{
+    qDebug() << "ProductionController::openAddNoteProductionDialog()";
+
+    Production * production = new Production;
+    if (!m_databaseWrapper->getProduction(productionId,production))
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Add Production Note Error"),
+                             tr("You must select a production!"));
+            qDebug() << "ProductionController::openAddNoteProductionDialog() - Exit!";
+        return;
+    }
+
+    Q_ASSERT(m_loggedUser != 0);
+
+    m_noteDialog->setOpenType(NoteDialog::Add);
+    m_noteDialog->setParentType(Note::Production);
+    m_noteDialog->prepareNewNote(production->getId(),m_loggedUser);
+    m_noteDialog->exec();
+
+    Note* note = m_noteDialog->getSavedNote();
+    if (note)
+    {
+        qDebug() << "ProductionController::openAddNoteProductionDialog() - Note not empty";
+        if (m_databaseNoteWrapper->addNote(note))
+        {
+            qDebug() << "ProductionController::openAddNoteProductionDialog() - Add note successful";
+            if (sender() == m_productionDialog)
+            {
+                QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(note->getParentId(),Note::Production);
+                m_productionDialog->updateNotesList(notesList);
+            }
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ProductionController::openAddNoteProductionDialog() - Add production note error!";
+            QMessageBox::warning(0, tr("Add Note Error"),
+                                 tr("The note has not been added! Database Error!"));
+        }
+    }
+    qDebug() << "ProductionController::openAddNoteActivityDialog() - Exit!";
+}
+
+void ProductionController::openEditNoteProductionDialog (uint productionNoteId)
+{
+    qDebug() << "ProductionController::openEditNoteProductionDialog()";
+
+    if (productionNoteId == 0)
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Edit Note Error"),
+                             tr("You must select a note!"));
+            qDebug() << "ProductionController::openEditNoteProductionDialog() - Note not selected!";
+        return;
+    }
+
+    Note * note = new Note;
+    if (!m_databaseNoteWrapper->getNote(productionNoteId,note))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Edit Note Error"),
+                             tr("The note can not be edited! Database Error!"));
+            qDebug() << "ProductionController::openEditNoteProductionDialog() - Error!";
+        return;
+    }
+
+    Q_ASSERT(m_loggedUser != 0);
+
+    m_noteDialog->setOpenType(NoteDialog::Edit);
+    m_noteDialog->setSelectedNote(note,m_loggedUser);
+    m_noteDialog->exec();
+
+    note = m_noteDialog->getSavedNote();
+    if (note)
+    {
+        if (m_databaseNoteWrapper->updateNote(note))
+        {
+            qDebug() << "ProductionController::openEditNoteActivityDialog() - Update activity note successful";
+            QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(note->getParentId(),Note::Production);
+            m_productionDialog->updateNotesList(notesList);
+        }
+        else
+        {
+            /* Warning message!!! */
+            qDebug() << "ProductionController::openEditNoteProductionDialog() - Update note error!";
+            QMessageBox::warning(0, tr("Update Note Error"),
+                                 tr("The note has not been updated! Database Error!"));
+        }
+
+        delete note;
+    }
+}
+
+void ProductionController::openDeleteNoteProductionDialog (uint productionNoteId)
+{
+    qDebug() << "ProductionController::openDeleteNoteProductionDialog()";
+
+    if (productionNoteId == 0)
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Delete Note Error"),
+                              tr("You must select a note!"));
+            qDebug() << "ProductionController::openDeleteNoteProductionDialog() - Note not selected!";
+        return;
+    }
+
+    Note * note = new Note;
+    if (!m_databaseNoteWrapper->getNote(productionNoteId,note))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Delete Note Error"),
+                             tr("The note can not be deleted! Database Error!"));
+        qDebug() << "ProductionController::openDeleteNoteProductionDialog() - Error!";
+        return;
+    }
+
+    Q_ASSERT(m_loggedUser != 0);
+
+    QMessageBox::StandardButton reply = QMessageBox::question(m_productionDialog,
+                                            tr("Delete Note"),
+                                            tr("Are you sure you want delete this note?"),
+                                            QMessageBox::Yes | QMessageBox::No,
+                                            QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        qDebug() << "ProductionController::openDeleteNoteProductionDialog() - User want delete note" << productionNoteId;
+        if (m_databaseNoteWrapper->deleteNote(productionNoteId))
+        {
+            qDebug() << "ProductionController::openDeleteNoteProductionDialog() - Note deleted" << productionNoteId;
+            QMessageBox::warning(0, tr("Delete Note"),
+                                  tr("The note has been deleted!"));
+
+            QVector<Note*> notesList = m_databaseNoteWrapper->getNotes(note->getParentId(),Note::Production);
+            m_productionDialog->updateNotesList(notesList);
+        }
+        else
+        {
+            qDebug() << "ProductionController::openDeleteNoteProductionDialog() - Delete note error!";
+            QMessageBox::critical(0, tr("Delete Note Error"),
+                                  tr("The note has not been deleted! Database Error!"));
+        }
+    }
+
+    delete note;
+}
+
+QVector<Production*>
+ProductionController::getProductionsList (QStringList searchParams)
+{
+    qDebug() << "ProductionController::getProductionsList(QStringList)";
+
+    return m_databaseWrapper->searchProductions(searchParams);
+}
 
 void ProductionController::updateLoggedUser(Employee* const employee)
 {

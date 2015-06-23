@@ -98,13 +98,9 @@ public:
     void setStatus (QString status);
     void setPriority (QString priority);
 
-//    void addNote (ActivityNote* note);
-//    void deleteNote (ActivityNote* note);
-//    QVector<ActivityNote*> getNotes ();
-
-    void addAttachment (QString attachment);
-    void deleteAttachment (uint attachment);
-    QMap<uint,QString> getAttachments ();
+//    void addAttachment (QString attachment);
+//    void deleteAttachment (uint attachment);
+//    QMap<uint,QString> getAttachments ();
 
     static QString getTypeString (Type value);
     static QString getStatusString (Status value);

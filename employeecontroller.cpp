@@ -130,7 +130,7 @@ void EmployeeController::openEditEmployeeDialog (int employeeId)
     }
 }
 
-QVector<QVector<QString> >
+QVector<Employee*>
 EmployeeController::getEmployeesList (EmployeeController::EmployeesListType type)
 {
     qDebug() << "EmployeeController::getEmployeesList(EmployeesListType)";
@@ -146,7 +146,7 @@ EmployeeController::getEmployeesList (EmployeeController::EmployeesListType type
 }
 
 
-QVector<QVector<QString> >
+QVector<Employee*>
 EmployeeController::getEmployeesList (QStringList searchParams)
 {
     qDebug() << "EmployeeController::getEmployeesList(QStringList)";
