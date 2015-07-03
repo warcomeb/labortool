@@ -2,6 +2,8 @@
 
     * Aggiunto il delete delle attivita'.
 
+    * Corretta la dimensione delle varie colonne sulla base dei contenuti.
+
 2015-06-23 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Ultimato lo sviluppo della gestione delle produzione.
