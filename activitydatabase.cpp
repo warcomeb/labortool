@@ -154,167 +154,33 @@ bool ActivityDatabase::updateActivity (Activity *activity)
     }
 }
 
+bool ActivityDatabase::deleteActivity (int id)
+{
+    qDebug() << "ActivityDatabase::deleteActivity()";
 
-//bool ActivityDatabase::addActivityNote (ActivityNote* note)
-//{
-//    qDebug() << "ActivityDatabase::addActivityNote()";
+    QSqlQuery query(*m_database);
+    QString queryString = "DELETE FROM activity "
+            "WHERE ActivityId=:rowid";
 
-//    QSqlQuery query(*m_database);
-//    QString queryString = "INSERT INTO activitynote "
-//                          "(ActivityNoteActivity, ActivityNoteText, "
-//                          "ActivityNoteEmployeeCreation, ActivityNoteDateCreation, "
-//                          "ActivityNoteEmployeeModification, ActivityNoteDateModification) "
-//                          "VALUES (?, ?, ?, ?, ?, ?)";
+    query.prepare(queryString);
+    query.bindValue(":rowid",QString::number(id));
 
-//    query.prepare(queryString);
-//    query.bindValue(0,note->getParentId());
-//    query.bindValue(1,note->getText());
-//    query.bindValue(2,note->getCreationEmployee());
-//    query.bindValue(3,note->getCreationDate().toString("yyyy-MM-dd hh:mm:ss"));
-//    query.bindValue(4,note->getModificationEmployee());
-//    query.bindValue(5,note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
+    qDebug() << "ActivityDatabase::deleteActivity() - Bound Value 0 " << query.boundValue(0);
 
-//    qDebug() << "ActivityDatabase::addActivity() - " << query.lastQuery();
-
-//    if (query.exec())
-//    {
-//        qDebug() << "ActivityDatabase::addActivityNote() - Query successful";
-//        return true;
-//    }
-//    else
-//    {
-//        qDebug() << "ActivityDatabase::addActivityNote() - "<< query.lastError();
-//        return false;
-//    }
-//}
-
-//bool ActivityDatabase::getNote (int id, ActivityNote *note)
-//{
-//    qDebug() << "ActivityDatabase::getNote()";
-
-//    QString queryString = "SELECT * FROM activitynote WHERE ActivityNoteId='" +
-//            QString::number(id) + "'";
-
-//    qDebug() << "ActivityDatabase::getNote() - Final search string: " << queryString;
-//    QSqlQuery query( queryString, *m_database);
-
-//    if (query.size() != 1)
-//    {
-//        qDebug() << "ActivityDatabase::getNote() - database problems!";
-//        return false;
-//    }
-
-//    /* Read record! */
-//    qDebug() << "ActivityDatabase::getNote() - read record";
-//    query.next();
-
-//    note->setId(id);
-//    note->setParentId(query.value(1).toString().toUInt());
-//    note->setText(query.value(2).toString());
-//    note->setCreationInformation(query.value(3).toString().toUInt(),
-//                                 query.value(5).toString());
-//    note->setModificationInformation(query.value(4).toString().toUInt(),
-//                                     query.value(6).toString());
-
-//    qDebug() << "ActivityDatabase::getNote() - note" << id;
-//    return true;
-//}
-
-//bool ActivityDatabase::updateNote (ActivityNote *note)
-//{
-//    qDebug() << "ActivityDatabase::updateNote()";
-
-//    QSqlQuery query(*m_database);
-//    QString queryString = "UPDATE activitynote SET "
-//            "ActivityNoteText=:text ,"
-//            "ActivityNoteEmployeeModification=:modauthor ,"
-//            "ActivityNoteDateModification=:moddate "
-//            "WHERE ActivityNoteId=:rowid";
-
-//    query.prepare(queryString);
-//    query.bindValue(":text",note->getText());
-//    query.bindValue(":modauthor",QString::number(note->getModificationEmployee()));
-//    query.bindValue(":moddate",note->getModificationDate().toString("yyyy-MM-dd hh:mm:ss"));
-//    query.bindValue(":rowid",QString::number(note->getId()));
-
-//    qDebug() << "ActivityDatabase::updateNote() - Bound Value 0 " << query.boundValue(0);
-//    qDebug() << "ActivityDatabase::updateNote() - Bound Value 1 " << query.boundValue(1);
-//    qDebug() << "ActivityDatabase::updateNote() - Bound Value 2 " << query.boundValue(2);
-//    qDebug() << "ActivityDatabase::updateNote() - Bound Value 3 " << query.boundValue(3);
-
-//    if (query.exec())
-//    {
-//        qDebug() << "ActivityDatabase::updateNote() - " << query.lastQuery();
-//        qDebug() << "ActivityDatabase::updateNote() - " << query.lastError();
-//        qDebug() << "ActivityDatabase::updateNote() - Query successful";
-//        return true;
-//    }
-//    else
-//    {
-//        qDebug() << "ActivityDatabase::updateNote() - " << query.lastQuery();
-//        qDebug() << "ActivityDatabase::updateNote() - " << query.lastError();
-//        return false;
-//    }
-//}
-
-//bool ActivityDatabase::deleteNote (int id)
-//{
-//    qDebug() << "ActivityDatabase::deleteNote()";
-
-//    QSqlQuery query(*m_database);
-//    QString queryString = "DELETE FROM activitynote "
-//            "WHERE ActivityNoteId=:rowid";
-
-//    query.prepare(queryString);
-//    query.bindValue(":rowid",QString::number(id));
-
-//    qDebug() << "ActivityDatabase::deleteNote() - Bound Value 0 " << query.boundValue(0);
-
-//    if (query.exec())
-//    {
-//        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastQuery();
-//        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastError();
-//        qDebug() << "ActivityDatabase::deleteNote() - Query successful";
-//        return true;
-//    }
-//    else
-//    {
-//        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastQuery();
-//        qDebug() << "ActivityDatabase::deleteNote() - " << query.lastError();
-//        return false;
-//    }
-//}
-
-//QVector< QVector< QString > >
-//ActivityDatabase::getNotes(uint activityId)
-//{
-//    qDebug() << "ActivityDatabase::getNotes()";
-
-//    QVector<QVector<QString> > notesList;
-
-//    QString queryString = "SELECT * FROM activitynote WHERE ActivityNoteActivity='" +
-//            QString::number(activityId) + "' ORDER BY ActivityNoteDateCreation DESC";
-
-//    qDebug() << "ActivityDatabase::getNotes() - Final search string: " << queryString;
-
-//    QSqlQuery query( queryString, *m_database);
-//    while (query.next())
-//    {
-//        QVector<QString> note;
-//        note.append(query.value(0).toString()); // Id
-//        note.append(query.value(1).toString()); // Activity
-//        note.append(query.value(2).toString()); // Text
-//        note.append(query.value(3).toString()); // EmployeeCreation
-//        note.append(query.value(4).toString()); // EmployeeModification
-//        note.append(query.value(5).toString()); // DateCreation
-//        note.append(query.value(6).toString()); // DateModification
-
-//        notesList.append(note);
-//    }
-
-//    qDebug() << "ActivityDatabase::getNotes() - Final list" << notesList;
-//    return notesList;
-//}
+    if (query.exec())
+    {
+        qDebug() << "ActivityDatabase::deleteActivity() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::deleteActivity() - " << query.lastError();
+        qDebug() << "ActivityDatabase::deleteActivity() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ActivityDatabase::deleteActivity() - " << query.lastQuery();
+        qDebug() << "ActivityDatabase::deleteActivity() - " << query.lastError();
+        return false;
+    }
+}
 
 QVector<Activity *> ActivityDatabase::searchActivities(QStringList searchParams)
 {

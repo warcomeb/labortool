@@ -211,8 +211,8 @@ void MainWindow::initActivityTab()
             this,SLOT(openActivityDialog()));
     ui->editActivityButton->setEnabled(false);
 
-    //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
-    //                this,SLOT(openActivityDialog()));
+    disconnect(ui->deleteActivityButton,SIGNAL(clicked()),
+               this,SLOT(openActivityDialog()));
     ui->deleteActivityButton->setEnabled(false);
 
     disconnect(ui->addNoteActivityButton,SIGNAL(clicked()),
@@ -485,7 +485,7 @@ void MainWindow::openActivityDialog()
     }
     else if (sender() == ui->deleteActivityButton)
     {
-        /* TODO */
+        m_activityController->openDeleteActivityDialog(m_activitySelected);
     }
     else if (sender() == ui->addNoteActivityButton)
     {
@@ -1125,8 +1125,8 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openActivityDialog()));
         ui->editActivityButton->setEnabled(false);
 
-//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
-//                this,SLOT(openActivityDialog()));
+        disconnect(ui->deleteActivityButton,SIGNAL(clicked()),
+                this,SLOT(openActivityDialog()));
         ui->deleteActivityButton->setEnabled(false);
 
         disconnect(ui->addNoteActivityButton,SIGNAL(clicked()),
@@ -1176,10 +1176,6 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openActivityDialog()));
         ui->editActivityButton->setEnabled(true);
 
-//        connect(ui->deleteActivityButton,SIGNAL(clicked()),
-//                this,SLOT(openActivityDialog()));
-        ui->deleteActivityButton->setEnabled(false);
-
         connect(ui->addNoteActivityButton,SIGNAL(clicked()),
                 this,SLOT(openActivityDialog()));
         ui->addNoteActivityButton->setEnabled(true);
@@ -1216,6 +1212,11 @@ void MainWindow::updateButtonStatus()
             disconnect(ui->editEmployeeButton,SIGNAL(clicked()),
                     this,SLOT(openEmployeeDialog()));
             ui->editEmployeeButton->setEnabled(false);
+
+            disconnect(ui->deleteActivityButton,SIGNAL(clicked()),
+                    this,SLOT(openActivityDialog()));
+            ui->deleteActivityButton->setEnabled(false);
+
             break;
 
         case Employee::Administrator:
@@ -1229,6 +1230,11 @@ void MainWindow::updateButtonStatus()
             connect(ui->editEmployeeButton,SIGNAL(clicked()),
                     this,SLOT(openEmployeeDialog()));
             ui->editEmployeeButton->setEnabled(true);
+
+            connect(ui->deleteActivityButton,SIGNAL(clicked()),
+                    this,SLOT(openActivityDialog()));
+            ui->deleteActivityButton->setEnabled(true);
+
             break;
         default:
             /* Nothing to do! */

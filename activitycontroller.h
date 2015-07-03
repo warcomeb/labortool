@@ -44,6 +44,7 @@ public:
     void openAddActivityDialog (QVector<Employee*> employeesList);
     void openEditActivityDialog (uint activityId, QVector<Employee*> employeesList);
     void openViewActivityDialog (uint activityId, QVector<Employee*> employeesList);
+    void openDeleteActivityDialog (uint activityId);
 
     QVector<Activity *> getActivitiesList(QStringList searchParams);
 

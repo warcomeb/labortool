@@ -130,6 +130,60 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<Employ
     }
 }
 
+void ActivityController::openDeleteActivityDialog (uint activityId)
+{
+    qDebug() << "ActivityController::openDeleteActivityDialog()";
+
+    if (activityId == 0)
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Delete Error"),
+                              tr("You must select an activity!"));
+            qDebug() << "ActivityController::openDeleteActivityDialog() - Acttivity not selected!";
+        return;
+    }
+
+    Activity * activity = new Activity;
+    if (!m_databaseWrapper->getActivity(activityId,activity))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Delete Error"),
+                             tr("The activity can not be deleted! Database Error!"));
+            qDebug() << "ActivityController::openDeleteActivityDialog() - Error!";
+        return;
+    }
+
+    Q_ASSERT((m_loggedUser != 0) && (m_loggedUser->getSystemRole() == Employee::Administrator));
+
+    QMessageBox::StandardButton reply = QMessageBox::question(m_activityDialog,
+                                            tr("Delete Activity"),
+                                            tr("Are you sure you want delete this activity?"),
+                                            QMessageBox::Yes | QMessageBox::No,
+                                            QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        qDebug() << "ActivityController::openDeleteActivityDialog() - User want delete activity" << activityId;
+        if (m_databaseWrapper->deleteActivity(activityId))
+        {
+            qDebug() << "ActivityController::openDeleteActivityDialog() - activity deleted" << activityId;
+            QMessageBox::warning(0, tr("Delete Activity"),
+                                  tr("The activity has been deleted!"));
+
+            QStringList searchParams;
+            searchParams << "Status$NotStarted|InProgress|Waiting";
+            emit updatedActivitiesList(searchParams);
+        }
+        else
+        {
+            qDebug() << "ActivityController::openDeleteActivityDialog() - Delete activity error!";
+            QMessageBox::critical(0, tr("Delete Error"),
+                                  tr("The activity has not been deleted! Database Error!"));
+        }
+    }
+
+    delete activity;
+}
+
 void ActivityController::openAddNoteActivityDialog (uint activityId)
 {
     qDebug() << "ActivityController::openAddNoteActivityDialog()";

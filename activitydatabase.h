@@ -39,6 +39,7 @@ public:
     bool addActivity (Activity* activity);
     bool updateActivity (Activity* activity);
     bool getActivity (int id, Activity* activity);
+    bool deleteActivity (int id);
 
     QVector<Activity*> searchActivities(QStringList searchParams);
 
