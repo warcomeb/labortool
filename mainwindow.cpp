@@ -281,7 +281,7 @@ void MainWindow::initActivityTab()
     /* Startup table! */
     m_activityModel = new QStandardItemModel(1, 7);
     ui->activityTable->setModel(m_activityModel);
-    ui->activityTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->activityTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(ui->activityTable->selectionModel(),
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
@@ -368,7 +368,7 @@ void MainWindow::initProductionTab()
     /* Startup table! */
     m_productionModel = new QStandardItemModel(1, 7);
     ui->productionTable->setModel(m_productionModel);
-    ui->productionTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->productionTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(ui->productionTable->selectionModel(),
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
@@ -436,7 +436,7 @@ void MainWindow::initEmployeeTab()
     /* Startup table! */
     m_employeeModel = new QStandardItemModel(1, 5);
     ui->employeeTable->setModel(m_employeeModel);
-    ui->employeeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->employeeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(ui->employeeTable->selectionModel(),
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),

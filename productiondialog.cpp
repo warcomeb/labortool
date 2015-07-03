@@ -51,7 +51,7 @@ ProductionDialog::ProductionDialog(QWidget *parent) :
     /* Startup note table! */
     m_noteModel = new QStandardItemModel(1, 4);
     ui->noteTable->setModel(m_noteModel);
-    ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->noteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     clearNotesTab();
     updateNotesList();
 
