@@ -33,18 +33,24 @@ ActivityController::ActivityController(QSqlDatabase *db)
 
     m_databaseWrapper = new ActivityDatabase (m_database);
     m_databaseNoteWrapper = new NoteDatabase (m_database);
+}
 
-    connect(m_activityDialog,SIGNAL(editNoteButton(uint)),
-            this,SLOT(openEditNoteActivityDialog(uint)));
-    connect(m_activityDialog,SIGNAL(deleteNoteButton(uint)),
-            this,SLOT(openDeleteNoteActivityDialog(uint)));
-    connect(m_activityDialog,SIGNAL(addNoteButton(uint)),
-            this,SLOT(openAddNoteActivityDialog(uint)));
+ActivityController::~ActivityController()
+{
+    if (m_activityDialog != 0)
+        delete m_activityDialog;
+
+    if (m_noteDialog != 0)
+        delete m_noteDialog;
 }
 
 void ActivityController::openAddActivityDialog (QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openAddActivityDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_activityDialog != 0) delete m_activityDialog;
+    m_activityDialog = new ActivityDialog;
 
     m_activityDialog->setOpenType(ActivityDialog::Add);
     m_activityDialog->prepareNewActivity(employeesList);
@@ -68,11 +74,17 @@ void ActivityController::openAddActivityDialog (QVector<Employee*> employeesList
                                  tr("The activity has not been added! Database Error!"));
         }
     }
+
+    delete activity;
 }
 
 void ActivityController::openViewActivityDialog (uint activityId, QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openViewActivityDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_activityDialog != 0) delete m_activityDialog;
+    m_activityDialog = new ActivityDialog;
 
     Activity * activity = new Activity;
     if (!m_databaseWrapper->getActivity(activityId,activity))
@@ -80,6 +92,8 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<Employ
         QMessageBox::warning(0, tr("View Activity Error"),
                              tr("The activity can not be displayed! Database Error!"));
         qDebug() << "ActivityController::openViewActivityDialog() - Database Error!";
+
+        delete activity;
         return;
     }
 
@@ -88,11 +102,24 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<Employ
     m_activityDialog->setOpenType(ActivityDialog::View);
     m_activityDialog->setSelectedActivity(activity,employeesList,notesList);
     m_activityDialog->exec();
+
+    delete activity;
 }
 
 void ActivityController::openEditActivityDialog (uint activityId, QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openEditActivityDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_activityDialog != 0) delete m_activityDialog;
+    m_activityDialog = new ActivityDialog;
+    // Add connection for dialog!
+    connect(m_activityDialog,SIGNAL(editNoteButton(uint)),
+            this,SLOT(openEditNoteActivityDialog(uint)));
+    connect(m_activityDialog,SIGNAL(deleteNoteButton(uint)),
+            this,SLOT(openDeleteNoteActivityDialog(uint)));
+    connect(m_activityDialog,SIGNAL(addNoteButton(uint)),
+            this,SLOT(openAddNoteActivityDialog(uint)));
 
     Activity * activity = new Activity;
     if (!m_databaseWrapper->getActivity(activityId,activity))
@@ -100,6 +127,7 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<Employ
         QMessageBox::warning(0, tr("Edit Activity Error"),
                              tr("The activity can not be edited! Database Error!"));
         qDebug() << "ActivityController::openEditActivityDialog() - Database Error!";
+        delete activity;
         return;
     }
 
@@ -128,6 +156,8 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<Employ
                                  tr("The activity has not been updated! Database Error!"));
         }
     }
+
+    delete activity;
 }
 
 void ActivityController::openDeleteActivityDialog (uint activityId)

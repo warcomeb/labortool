@@ -34,18 +34,15 @@ ProductionController::ProductionController(QSqlDatabase *db)
 
     m_databaseWrapper = new ProductionDatabase (m_database);
     m_databaseNoteWrapper = new NoteDatabase (m_database);
-
-    connect(m_productionDialog,SIGNAL(editNoteButton(uint)),
-            this,SLOT(openEditNoteProductionDialog(uint)));
-    connect(m_productionDialog,SIGNAL(deleteNoteButton(uint)),
-            this,SLOT(openDeleteNoteProductionDialog(uint)));
-    connect(m_productionDialog,SIGNAL(addNoteButton(uint)),
-            this,SLOT(openAddNoteProductionDialog(uint)));
 }
 
 void ProductionController::openAddProductionDialog (QVector<Employee*> employeesList)
 {
     qDebug() << "ProductionController::openAddProductionDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_productionDialog != 0) delete m_productionDialog;
+    m_productionDialog = new ProductionDialog;
 
     m_productionDialog->setOpenType(ProductionDialog::Add);
     m_productionDialog->prepareNewProduction(employeesList);
@@ -69,11 +66,17 @@ void ProductionController::openAddProductionDialog (QVector<Employee*> employees
                                  tr("The production has not been added! Database Error!"));
         }
     }
+
+    delete production;
 }
 
 void ProductionController::openViewProductionDialog (uint productionId, QVector<Employee*> employeesList)
 {
     qDebug() << "ProductionController::openViewProductionDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_productionDialog != 0) delete m_productionDialog;
+    m_productionDialog = new ProductionDialog;
 
     Production * production = new Production;
     if (!m_databaseWrapper->getProduction(productionId,production))
@@ -81,6 +84,8 @@ void ProductionController::openViewProductionDialog (uint productionId, QVector<
         QMessageBox::warning(0, tr("View Production Error"),
                              tr("The production can not be displayed! Database Error!"));
         qDebug() << "ActivityController::openViewProductionDialog() - Database Error!";
+
+        delete production;
         return;
     }
 
@@ -89,11 +94,24 @@ void ProductionController::openViewProductionDialog (uint productionId, QVector<
     m_productionDialog->setOpenType(ProductionDialog::View);
     m_productionDialog->setSelectedProduction(production,employeesList,notesList);
     m_productionDialog->exec();
+
+    delete production;
 }
 
 void ProductionController::openEditProductionDialog (uint productionId, QVector<Employee*> employeesList)
 {
     qDebug() << "ProductionController::openEditProductionDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_productionDialog != 0) delete m_productionDialog;
+    m_productionDialog = new ProductionDialog;
+    // Add connection for dialog!
+    connect(m_productionDialog,SIGNAL(editNoteButton(uint)),
+            this,SLOT(openEditNoteProductionDialog(uint)));
+    connect(m_productionDialog,SIGNAL(deleteNoteButton(uint)),
+            this,SLOT(openDeleteNoteProductionDialog(uint)));
+    connect(m_productionDialog,SIGNAL(addNoteButton(uint)),
+            this,SLOT(openAddNoteProductionDialog(uint)));
 
     Production * production = new Production;
     if (!m_databaseWrapper->getProduction(productionId,production))
@@ -101,6 +119,7 @@ void ProductionController::openEditProductionDialog (uint productionId, QVector<
         QMessageBox::warning(0, tr("Edit Production Error"),
                              tr("The production can not be edited! Database Error!"));
         qDebug() << "ProductionController::openEditProductionDialog() - Database Error!";
+        delete production;
         return;
     }
 
@@ -129,6 +148,8 @@ void ProductionController::openEditProductionDialog (uint productionId, QVector<
                                  tr("The production has not been updated! Database Error!"));
         }
     }
+
+    delete production;
 }
 
 void ProductionController::openAddNoteProductionDialog (uint productionId)

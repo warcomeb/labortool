@@ -70,4 +70,14 @@ OTHER_FILES += \
     TODO \
     README \
     labortool.sql \
-    VersionLog
+    VersionLog \
+    languages/LabOrTool_en.ts \
+    languages/LabOrTool_it.ts \
+    languages/LabOrTool_en.qm \
+    languages/LabOrTool_it.qm
+
+RESOURCES += \
+    labortool.qrc
+
+TRANSLATIONS = languages/LabOrTool_en.ts \
+    languages/LabOrTool_it.ts

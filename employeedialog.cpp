@@ -48,8 +48,8 @@ EmployeeDialog::EmployeeDialog(QWidget *parent) :
 
 EmployeeDialog::~EmployeeDialog()
 {
-    if (m_employee)
-        delete m_employee;
+//    if (m_employee)
+//        delete m_employee;
 
     delete ui;
 }

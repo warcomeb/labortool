@@ -1,1 +1,8 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/language">
+        <file alias="de">images/languages/de.png</file>
+        <file alias="en">images/languages/en.png</file>
+        <file alias="fr">images/languages/fr.png</file>
+        <file alias="it">images/languages/it.png</file>
+    </qresource>
+</RCC>

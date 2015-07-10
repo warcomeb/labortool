@@ -70,8 +70,8 @@ ProductionDialog::ProductionDialog(QWidget *parent) :
 
 ProductionDialog::~ProductionDialog()
 {
-    if (m_production)
-        delete m_production;
+//    if (m_production)
+//        delete m_production;
 
     delete ui;
 }

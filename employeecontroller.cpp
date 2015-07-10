@@ -38,6 +38,10 @@ void EmployeeController::openAddEmployeeDialog ()
 {
     qDebug() << "EmployeeController::openAddEmployeeDialog()";
 
+    // Delete the dialog to update the language!
+    if (m_employeeDialog != 0) delete m_employeeDialog;
+    m_employeeDialog = new EmployeeDialog;
+
     m_employeeDialog->setOpenType(EmployeeDialog::Add);
     m_employeeDialog->exec();
 
@@ -59,11 +63,17 @@ void EmployeeController::openAddEmployeeDialog ()
                                  tr("The employee has not been added! Database Error!"));
         }
     }
+
+    delete employee;
 }
 
 void EmployeeController::openViewEmployeeDialog (int employeeId)
 {
     qDebug() << "EmployeeController::openViewEmployeeDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_employeeDialog != 0) delete m_employeeDialog;
+    m_employeeDialog = new EmployeeDialog;
 
     if (employeeId <= 0)
     {
@@ -77,6 +87,8 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
     {
         QMessageBox::warning(0, tr("View Employee Error"),
                              tr("The employee can not be displayed! Database Error!"));
+
+        delete employee;
         return;
     }
 
@@ -84,11 +96,17 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
     m_employeeDialog->setSelectedEmployee(employee);
 
     m_employeeDialog->exec();
+
+    delete employee;
 }
 
 void EmployeeController::openEditEmployeeDialog (int employeeId)
 {
     qDebug() << "EmployeeController::openEditEmployeeDialog()";
+
+    // Delete the dialog to update the language!
+    if (m_employeeDialog != 0) delete m_employeeDialog;
+    m_employeeDialog = new EmployeeDialog;
 
     if (employeeId <= 0)
     {
@@ -102,6 +120,8 @@ void EmployeeController::openEditEmployeeDialog (int employeeId)
     {
         QMessageBox::warning(0, tr("Edit Employee Error"),
                              tr("The employee can not be edited!\n Database Error!"));
+
+        delete employee;
         return;
     }
 
@@ -128,6 +148,7 @@ void EmployeeController::openEditEmployeeDialog (int employeeId)
                                  tr("The employee has not been updated! Database Error!"));
         }
     }
+    delete employee;
 }
 
 QVector<Employee*>

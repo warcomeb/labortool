@@ -40,6 +40,7 @@ class ActivityController: public QObject
 
 public:
     ActivityController(QSqlDatabase* db);
+    ~ActivityController();
 
     void openAddActivityDialog (QVector<Employee*> employeesList);
     void openEditActivityDialog (uint activityId, QVector<Employee*> employeesList);

@@ -62,6 +62,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     readConfigurationFile();
 
+    createLanguageMenu();
+
     initBasicCommand();
 
 //    connectToDatabase();
@@ -1273,4 +1275,113 @@ void MainWindow::closeEvent(QCloseEvent *event)
 //    } else {
 //        event->ignore();
 //    }
+}
+
+void MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+{
+    // remove the old translator
+    qApp->removeTranslator(&translator);
+
+    // load the new translator
+    if(translator.load(filename))
+        qApp->installTranslator(&translator);
+}
+
+void MainWindow::loadLanguage(const QString& language)
+{
+    qDebug() << "MainWindow::loadLanguage()";
+    if(m_currentLanguage != language)
+    {
+        m_currentLanguage = language;
+        QLocale locale = QLocale(m_currentLanguage);
+        QLocale::setDefault(locale);
+        QString languageName = QLocale::languageToString(locale.language());
+        switchTranslator(m_translator, QString("%1/LabOrTool_%2.qm").arg(m_langPath).arg(language));
+        switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(language));
+        showStatusMessage(tr("Current Language changed to %1").arg(languageName));
+    }
+}
+
+void MainWindow::languageChanged(QAction* action)
+{
+    if(0 != action)
+    {
+        // load the language dependant on the action content
+        loadLanguage(action->data().toString());
+    }
+}
+
+void MainWindow::createLanguageMenu()
+{
+    qDebug() << "MainWindow::createLanguageMenu()";
+    QActionGroup* langGroup = new QActionGroup(ui->menuLanguage);
+    langGroup->setExclusive(true);
+
+    connect(langGroup, SIGNAL (triggered(QAction *)),
+            this, SLOT (languageChanged(QAction *)));
+
+    // format systems language
+    QString defaultLocale = QLocale::system().name(); // e.g. "de_DE"
+    defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
+
+    m_langPath = QApplication::applicationDirPath();
+    m_langPath.append("/languages");
+    qDebug() << "MainWindow::createLanguageMenu() - Dir" << m_langPath ;
+    QDir dir(m_langPath);
+    QStringList fileNames = dir.entryList(QStringList("LabOrTool_*.qm"));
+    qDebug() << "MainWindow::createLanguageMenu() - Files" << fileNames ;
+
+    for (int i = 0; i < fileNames.size(); ++i)
+    {
+        // get locale extracted by filename
+        QString locale;
+        locale = fileNames[i]; // "LabOrTool_de.qm"
+        locale.truncate(locale.lastIndexOf('.')); // "LabOrTool_de"
+        locale.remove(0, locale.indexOf('_') + 1); // "de"
+
+        QString lang = QLocale::languageToString(QLocale(locale).language());
+        QIcon ico(QString(":language/%1").arg(locale));
+
+        QAction *action = new QAction(ico, lang, this);
+        action->setCheckable(true);
+        action->setData(locale);
+
+        ui->menuLanguage->addAction(action);
+        langGroup->addAction(action);
+
+        // set default translators and language checked
+        if (defaultLocale == locale)
+        {
+            action->setChecked(true);
+            loadLanguage(locale);
+        }
+    }
+}
+
+void MainWindow::changeEvent(QEvent* event)
+{
+    qDebug() << "MainWindow::changeEvent()";
+    if(0 != event)
+    {
+        switch(event->type())
+        {
+        // this event is send if a translator is loaded
+        case QEvent::LanguageChange:
+            ui->retranslateUi(this);
+            break;
+
+        // this event is send, if the system, language changes
+        case QEvent::LocaleChange:
+            {
+            QString locale = QLocale::system().name();
+            locale.truncate(locale.lastIndexOf('_'));
+            loadLanguage(locale);
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
+    QMainWindow::changeEvent(event);
 }

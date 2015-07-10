@@ -70,8 +70,8 @@ ActivityDialog::ActivityDialog(QWidget *parent) :
 
 ActivityDialog::~ActivityDialog()
 {
-    if (m_activity)
-        delete m_activity;
+//    if (m_activity)
+//        delete m_activity;
 
     delete ui;
 }

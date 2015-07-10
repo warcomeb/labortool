@@ -4,156 +4,156 @@
 <context>
     <name>ActivityController</name>
     <message>
-        <location filename="../activitycontroller.cpp" line="67"/>
+        <location filename="../activitycontroller.cpp" line="73"/>
         <source>Add Activity Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="68"/>
+        <location filename="../activitycontroller.cpp" line="74"/>
         <source>The activity has not been added! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="80"/>
+        <location filename="../activitycontroller.cpp" line="92"/>
         <source>View Activity Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="81"/>
+        <location filename="../activitycontroller.cpp" line="93"/>
         <source>The activity can not be displayed! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="100"/>
+        <location filename="../activitycontroller.cpp" line="127"/>
         <source>Edit Activity Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="101"/>
+        <location filename="../activitycontroller.cpp" line="128"/>
         <source>The activity can not be edited! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="127"/>
+        <location filename="../activitycontroller.cpp" line="155"/>
         <source>Update Activity Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="128"/>
+        <location filename="../activitycontroller.cpp" line="156"/>
         <source>The activity has not been updated! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="140"/>
-        <location filename="../activitycontroller.cpp" line="150"/>
-        <location filename="../activitycontroller.cpp" line="179"/>
+        <location filename="../activitycontroller.cpp" line="170"/>
+        <location filename="../activitycontroller.cpp" line="180"/>
+        <location filename="../activitycontroller.cpp" line="209"/>
         <source>Delete Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="141"/>
-        <location filename="../activitycontroller.cpp" line="196"/>
+        <location filename="../activitycontroller.cpp" line="171"/>
+        <location filename="../activitycontroller.cpp" line="226"/>
         <source>You must select an activity!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="151"/>
+        <location filename="../activitycontroller.cpp" line="181"/>
         <source>The activity can not be deleted! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="159"/>
-        <location filename="../activitycontroller.cpp" line="169"/>
+        <location filename="../activitycontroller.cpp" line="189"/>
+        <location filename="../activitycontroller.cpp" line="199"/>
         <source>Delete Activity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="160"/>
+        <location filename="../activitycontroller.cpp" line="190"/>
         <source>Are you sure you want delete this activity?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="170"/>
+        <location filename="../activitycontroller.cpp" line="200"/>
         <source>The activity has been deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="180"/>
+        <location filename="../activitycontroller.cpp" line="210"/>
         <source>The activity has not been deleted! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="195"/>
+        <location filename="../activitycontroller.cpp" line="225"/>
         <source>Add Activity Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="225"/>
+        <location filename="../activitycontroller.cpp" line="255"/>
         <source>Add Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="226"/>
+        <location filename="../activitycontroller.cpp" line="256"/>
         <source>The activity note has not been added! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="239"/>
-        <location filename="../activitycontroller.cpp" line="249"/>
+        <location filename="../activitycontroller.cpp" line="269"/>
+        <location filename="../activitycontroller.cpp" line="279"/>
         <source>Edit Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="240"/>
-        <location filename="../activitycontroller.cpp" line="291"/>
+        <location filename="../activitycontroller.cpp" line="270"/>
+        <location filename="../activitycontroller.cpp" line="321"/>
         <source>You must select a note!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="250"/>
+        <location filename="../activitycontroller.cpp" line="280"/>
         <source>The note can not be edited! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="274"/>
+        <location filename="../activitycontroller.cpp" line="304"/>
         <source>Update Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="275"/>
+        <location filename="../activitycontroller.cpp" line="305"/>
         <source>The note has not been updated! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="290"/>
-        <location filename="../activitycontroller.cpp" line="300"/>
-        <location filename="../activitycontroller.cpp" line="328"/>
+        <location filename="../activitycontroller.cpp" line="320"/>
+        <location filename="../activitycontroller.cpp" line="330"/>
+        <location filename="../activitycontroller.cpp" line="358"/>
         <source>Delete Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="301"/>
+        <location filename="../activitycontroller.cpp" line="331"/>
         <source>The note can not be deleted! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="309"/>
-        <location filename="../activitycontroller.cpp" line="319"/>
+        <location filename="../activitycontroller.cpp" line="339"/>
+        <location filename="../activitycontroller.cpp" line="349"/>
         <source>Delete Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="310"/>
+        <location filename="../activitycontroller.cpp" line="340"/>
         <source>Are you sure you want delete this note?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="320"/>
+        <location filename="../activitycontroller.cpp" line="350"/>
         <source>The note has been deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../activitycontroller.cpp" line="329"/>
+        <location filename="../activitycontroller.cpp" line="359"/>
         <source>The note has not been deleted! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -660,7 +660,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="49"/>
-        <location filename="../mainwindow.cpp" line="1077"/>
+        <location filename="../mainwindow.cpp" line="1079"/>
         <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
@@ -760,7 +760,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="240"/>
-        <location filename="../mainwindow.cpp" line="257"/>
+        <location filename="../mainwindow.cpp" line="259"/>
         <source>Production</source>
         <translation type="unfinished"></translation>
     </message>
@@ -815,177 +815,177 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
-        <location filename="../mainwindow.cpp" line="1073"/>
+        <location filename="../mainwindow.cpp" line="182"/>
+        <location filename="../mainwindow.cpp" line="1075"/>
         <source>Welcome unknown User!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="236"/>
-        <location filename="../mainwindow.cpp" line="245"/>
-        <location filename="../mainwindow.cpp" line="252"/>
-        <location filename="../mainwindow.cpp" line="265"/>
-        <location filename="../mainwindow.cpp" line="337"/>
-        <location filename="../mainwindow.cpp" line="351"/>
-        <location filename="../mainwindow.cpp" line="414"/>
-        <location filename="../mainwindow.cpp" line="422"/>
-        <location filename="../mainwindow.cpp" line="428"/>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="237"/>
-        <location filename="../mainwindow.cpp" line="338"/>
-        <source>All Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.cpp" line="238"/>
+        <location filename="../mainwindow.cpp" line="247"/>
+        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="267"/>
         <location filename="../mainwindow.cpp" line="339"/>
-        <source>Not Started</source>
+        <location filename="../mainwindow.cpp" line="353"/>
+        <location filename="../mainwindow.cpp" line="416"/>
+        <location filename="../mainwindow.cpp" line="424"/>
+        <location filename="../mainwindow.cpp" line="430"/>
+        <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="239"/>
         <location filename="../mainwindow.cpp" line="340"/>
-        <source>In Progress</source>
+        <source>All Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="240"/>
         <location filename="../mainwindow.cpp" line="341"/>
-        <source>Ended</source>
+        <source>Not Started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="241"/>
         <location filename="../mainwindow.cpp" line="342"/>
-        <source>Postponed</source>
+        <source>In Progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="242"/>
         <location filename="../mainwindow.cpp" line="343"/>
+        <source>Ended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="243"/>
+        <location filename="../mainwindow.cpp" line="344"/>
+        <source>Postponed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="244"/>
+        <location filename="../mainwindow.cpp" line="345"/>
         <source>Waiting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="246"/>
+        <location filename="../mainwindow.cpp" line="248"/>
         <source>Low</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="247"/>
+        <location filename="../mainwindow.cpp" line="249"/>
         <source>Medium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="248"/>
+        <location filename="../mainwindow.cpp" line="250"/>
         <source>High</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="249"/>
+        <location filename="../mainwindow.cpp" line="251"/>
         <source>Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="253"/>
+        <location filename="../mainwindow.cpp" line="255"/>
         <source>Board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="256"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="255"/>
+        <location filename="../mainwindow.cpp" line="257"/>
         <source>Support</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="256"/>
+        <location filename="../mainwindow.cpp" line="258"/>
         <source>Firmware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="415"/>
+        <location filename="../mainwindow.cpp" line="417"/>
         <source>Coordinator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="416"/>
+        <location filename="../mainwindow.cpp" line="418"/>
         <source>Senior Designer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="417"/>
+        <location filename="../mainwindow.cpp" line="419"/>
         <source>Designer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="418"/>
+        <location filename="../mainwindow.cpp" line="420"/>
         <source>Technician</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="419"/>
+        <location filename="../mainwindow.cpp" line="421"/>
         <source>Student</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="423"/>
+        <location filename="../mainwindow.cpp" line="425"/>
         <source>AEA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="424"/>
+        <location filename="../mainwindow.cpp" line="426"/>
         <source>General Impianti</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="425"/>
+        <location filename="../mainwindow.cpp" line="427"/>
         <source>Extern</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="429"/>
+        <location filename="../mainwindow.cpp" line="431"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="432"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="631"/>
+        <location filename="../mainwindow.cpp" line="633"/>
         <source>Search Employee: no employees found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="828"/>
+        <location filename="../mainwindow.cpp" line="830"/>
         <source>Search Activity: no activities found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="994"/>
+        <location filename="../mainwindow.cpp" line="996"/>
         <source>Search Production: no items found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1095"/>
+        <location filename="../mainwindow.cpp" line="1097"/>
         <source>Welcome </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1099"/>
+        <location filename="../mainwindow.cpp" line="1101"/>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1299"/>
+        <location filename="../mainwindow.cpp" line="1301"/>
         <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1079,122 +1079,122 @@
 <context>
     <name>ProductionController</name>
     <message>
-        <location filename="../productioncontroller.cpp" line="68"/>
+        <location filename="../productioncontroller.cpp" line="65"/>
         <source>Add Production Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="69"/>
+        <location filename="../productioncontroller.cpp" line="66"/>
         <source>The production has not been added! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="81"/>
+        <location filename="../productioncontroller.cpp" line="84"/>
         <source>View Production Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="82"/>
+        <location filename="../productioncontroller.cpp" line="85"/>
         <source>The production can not be displayed! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="101"/>
+        <location filename="../productioncontroller.cpp" line="119"/>
         <source>Edit Production Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="102"/>
+        <location filename="../productioncontroller.cpp" line="120"/>
         <source>The production can not be edited! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="128"/>
+        <location filename="../productioncontroller.cpp" line="147"/>
         <source>Update Production Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="129"/>
+        <location filename="../productioncontroller.cpp" line="148"/>
         <source>The production has not been updated! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="142"/>
+        <location filename="../productioncontroller.cpp" line="163"/>
         <source>Add Production Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="143"/>
+        <location filename="../productioncontroller.cpp" line="164"/>
         <source>You must select a production!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="172"/>
+        <location filename="../productioncontroller.cpp" line="193"/>
         <source>Add Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="173"/>
+        <location filename="../productioncontroller.cpp" line="194"/>
         <source>The note has not been added! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="186"/>
-        <location filename="../productioncontroller.cpp" line="196"/>
+        <location filename="../productioncontroller.cpp" line="207"/>
+        <location filename="../productioncontroller.cpp" line="217"/>
         <source>Edit Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="187"/>
-        <location filename="../productioncontroller.cpp" line="237"/>
+        <location filename="../productioncontroller.cpp" line="208"/>
+        <location filename="../productioncontroller.cpp" line="258"/>
         <source>You must select a note!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="197"/>
+        <location filename="../productioncontroller.cpp" line="218"/>
         <source>The note can not be edited! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="221"/>
+        <location filename="../productioncontroller.cpp" line="242"/>
         <source>Update Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="222"/>
+        <location filename="../productioncontroller.cpp" line="243"/>
         <source>The note has not been updated! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="236"/>
-        <location filename="../productioncontroller.cpp" line="246"/>
-        <location filename="../productioncontroller.cpp" line="274"/>
+        <location filename="../productioncontroller.cpp" line="257"/>
+        <location filename="../productioncontroller.cpp" line="267"/>
+        <location filename="../productioncontroller.cpp" line="295"/>
         <source>Delete Note Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="247"/>
+        <location filename="../productioncontroller.cpp" line="268"/>
         <source>The note can not be deleted! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="255"/>
-        <location filename="../productioncontroller.cpp" line="265"/>
+        <location filename="../productioncontroller.cpp" line="276"/>
+        <location filename="../productioncontroller.cpp" line="286"/>
         <source>Delete Note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="256"/>
+        <location filename="../productioncontroller.cpp" line="277"/>
         <source>Are you sure you want delete this note?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="266"/>
+        <location filename="../productioncontroller.cpp" line="287"/>
         <source>The note has been deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../productioncontroller.cpp" line="275"/>
+        <location filename="../productioncontroller.cpp" line="296"/>
         <source>The note has not been deleted! Database Error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1367,9 +1367,9 @@
     <name>QObject</name>
     <message>
         <location filename="../activitydialog.cpp" line="300"/>
-        <location filename="../mainwindow.cpp" line="596"/>
-        <location filename="../mainwindow.cpp" line="724"/>
-        <location filename="../mainwindow.cpp" line="926"/>
+        <location filename="../mainwindow.cpp" line="598"/>
+        <location filename="../mainwindow.cpp" line="726"/>
+        <location filename="../mainwindow.cpp" line="928"/>
         <location filename="../productiondialog.cpp" line="284"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
@@ -1393,66 +1393,66 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="597"/>
+        <location filename="../mainwindow.cpp" line="599"/>
         <source>Surname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="598"/>
+        <location filename="../mainwindow.cpp" line="600"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="599"/>
+        <location filename="../mainwindow.cpp" line="601"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="600"/>
+        <location filename="../mainwindow.cpp" line="602"/>
         <source>Role</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="725"/>
-        <location filename="../mainwindow.cpp" line="927"/>
+        <location filename="../mainwindow.cpp" line="727"/>
+        <location filename="../mainwindow.cpp" line="929"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="726"/>
-        <location filename="../mainwindow.cpp" line="928"/>
+        <location filename="../mainwindow.cpp" line="728"/>
+        <location filename="../mainwindow.cpp" line="930"/>
         <source>Work Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="727"/>
-        <location filename="../mainwindow.cpp" line="930"/>
+        <location filename="../mainwindow.cpp" line="729"/>
+        <location filename="../mainwindow.cpp" line="932"/>
         <source>Employee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="728"/>
+        <location filename="../mainwindow.cpp" line="730"/>
         <source>Priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="729"/>
-        <location filename="../mainwindow.cpp" line="931"/>
+        <location filename="../mainwindow.cpp" line="731"/>
+        <location filename="../mainwindow.cpp" line="933"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="730"/>
+        <location filename="../mainwindow.cpp" line="732"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="929"/>
+        <location filename="../mainwindow.cpp" line="931"/>
         <source>Output Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="932"/>
+        <location filename="../mainwindow.cpp" line="934"/>
         <source>Supplier</source>
         <translation type="unfinished"></translation>
     </message>

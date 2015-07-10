@@ -84,11 +84,14 @@ private slots:
     /* Menu slots */
     void managePreferences();
 
+    void languageChanged(QAction* action);
+
 signals:
     void changedLoggedUser();
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void changeEvent(QEvent*);
 
 private:
     Ui::MainWindow *ui;
@@ -118,6 +121,11 @@ private:
     bool m_isInitActivityTab;
     bool m_isInitProductionTab;
 
+    QString m_langPath;
+    QString m_currentLanguage;
+    QTranslator m_translator;
+    QTranslator m_translatorQt;
+
     /* Menu dialogs */
     PreferencesDialog * m_preferencesDialog;
 
@@ -131,6 +139,12 @@ private:
     void initEmployeeTab();
 
     void updateButtonStatus();
+
+    void createLanguageMenu();
+    // loads a language by the given language shortcur (e.g. de, en)
+    void loadLanguage(const QString& language);
+    void switchTranslator(QTranslator& translator, const QString& filename);
+
 
     static QColor m_colorWarning;
     static QColor m_colorDanger;
