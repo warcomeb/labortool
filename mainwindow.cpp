@@ -320,8 +320,8 @@ void MainWindow::initProductionTab()
             this,SLOT(openProductionDialog()));
     ui->editProductionButton->setEnabled(false);
 
-    //        connect(ui->deleteActivityButton,SIGNAL(clicked()),
-    //                this,SLOT(openActivityDialog()));
+    disconnect(ui->deleteProductionButton,SIGNAL(clicked()),
+            this,SLOT(openProductionDialog()));
     ui->deleteProductionButton->setEnabled(false);
 
     disconnect(ui->addNoteProductionButton,SIGNAL(clicked()),
@@ -532,7 +532,7 @@ void MainWindow::openProductionDialog()
     }
     else if (sender() == ui->deleteProductionButton)
     {
-        /* TODO */
+        m_productionController->openDeleteProductionDialog(m_productionSelected);
     }
     else if (sender() == ui->addNoteProductionButton)
     {
@@ -1146,8 +1146,8 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openProductionDialog()));
         ui->editProductionButton->setEnabled(false);
 
-//        connect(ui->deleteProductionButton,SIGNAL(clicked()),
-//                this,SLOT(openProductionDialog()));
+        disconnect(ui->deleteProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
         ui->deleteProductionButton->setEnabled(false);
 
         disconnect(ui->addNoteProductionButton,SIGNAL(clicked()),
@@ -1193,8 +1193,8 @@ void MainWindow::updateButtonStatus()
                 this,SLOT(openProductionDialog()));
         ui->editProductionButton->setEnabled(true);
 
-//        connect(ui->deleteProductionButton,SIGNAL(clicked()),
-//                this,SLOT(openProductionDialog()));
+        disconnect(ui->deleteProductionButton,SIGNAL(clicked()),
+                this,SLOT(openProductionDialog()));
         ui->deleteProductionButton->setEnabled(false);
 
         connect(ui->addNoteProductionButton,SIGNAL(clicked()),
@@ -1219,6 +1219,10 @@ void MainWindow::updateButtonStatus()
                     this,SLOT(openActivityDialog()));
             ui->deleteActivityButton->setEnabled(false);
 
+            disconnect(ui->deleteProductionButton,SIGNAL(clicked()),
+                    this,SLOT(openProductionDialog()));
+            ui->deleteProductionButton->setEnabled(false);
+
             break;
 
         case Employee::Administrator:
@@ -1236,6 +1240,10 @@ void MainWindow::updateButtonStatus()
             connect(ui->deleteActivityButton,SIGNAL(clicked()),
                     this,SLOT(openActivityDialog()));
             ui->deleteActivityButton->setEnabled(true);
+
+            connect(ui->deleteProductionButton,SIGNAL(clicked()),
+                    this,SLOT(openProductionDialog()));
+            ui->deleteProductionButton->setEnabled(true);
 
             break;
         default:
