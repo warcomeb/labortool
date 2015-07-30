@@ -368,7 +368,7 @@ void MainWindow::initProductionTab()
             this,SLOT(updateProductionsTable(QStringList)));
 
     /* Startup table! */
-    m_productionModel = new QStandardItemModel(1, 7);
+    m_productionModel = new QStandardItemModel(1, 8);
     ui->productionTable->setModel(m_productionModel);
     ui->productionTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
@@ -532,7 +532,7 @@ void MainWindow::openProductionDialog()
     }
     else if (sender() == ui->deleteProductionButton)
     {
-        m_productionController->openDeleteProductionDialog(m_productionSelected);
+//        m_productionController->openDeleteProductionDialog(m_productionSelected);
     }
     else if (sender() == ui->addNoteProductionButton)
     {
@@ -922,16 +922,17 @@ void MainWindow::updateProductionsTable(QStringList searchParams)
     qDebug() << "MainWindow::updateProductionsTable()";
 
     m_productionModel->clear();
-    m_productionModel->setColumnCount(7);
+    m_productionModel->setColumnCount(8);
 //    m_productionModel->sort(1,Qt::AscendingOrder);
 
     m_productionModel->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
-    m_productionModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Title"));
-    m_productionModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Work Order"));
-    m_productionModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Output Code"));
-    m_productionModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Employee"));
-    m_productionModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Status"));
-    m_productionModel->setHeaderData(6, Qt::Horizontal, QObject::tr("Supplier"));
+    m_productionModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Board Name"));
+    m_productionModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Quantity"));
+    m_productionModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Work Order"));
+    m_productionModel->setHeaderData(4, Qt::Horizontal, QObject::tr("Output Code"));
+    m_productionModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Employee"));
+    m_productionModel->setHeaderData(6, Qt::Horizontal, QObject::tr("Status"));
+    m_productionModel->setHeaderData(7, Qt::Horizontal, QObject::tr("Supplier"));
 
     QVector<Production*> productionsList =
             m_productionController->getProductionsList(searchParams);
@@ -955,17 +956,21 @@ void MainWindow::updateProductionsTable(QStringList searchParams)
             item = new QStandardItem(QString::number(productionsList.at(row)->getId()));
             m_productionModel->setItem(row,0,item);
 
-            /* Title */
-            item = new QStandardItem((productionsList.at(row))->getTitle());
+            /* Board Name */
+            item = new QStandardItem((productionsList.at(row))->getBoardName());
             m_productionModel->setItem(row,1,item);
+
+            /* Quantity */
+            item = new QStandardItem(QString::number(productionsList.at(row)->getQuantity()));
+            m_productionModel->setItem(row,2,item);
 
             /* Work Order */
             item = new QStandardItem((productionsList.at(row))->getWorkCode());
-            m_productionModel->setItem(row,2,item);
+            m_productionModel->setItem(row,3,item);
 
             /* Output Code */
             item = new QStandardItem((productionsList.at(row))->getOutputCode());
-            m_productionModel->setItem(row,3,item);
+            m_productionModel->setItem(row,4,item);
 
             uint employeeId = (productionsList.at(row))->getEmployee();
             for (int i = 0; i < employeesList.size(); ++i)
@@ -979,16 +984,16 @@ void MainWindow::updateProductionsTable(QStringList searchParams)
                     break;
                 }
             }
-            m_productionModel->setItem(row,4,item);
+            m_productionModel->setItem(row,5,item);
 
             /* Status */
             item = new QStandardItem(Production::getStatusString(
                                          (productionsList.at(row))->getStatus()));
-            m_productionModel->setItem(row,5,item);
+            m_productionModel->setItem(row,6,item);
 
             /* TODO: Supplier */
             item = new QStandardItem("-");
-            m_productionModel->setItem(row,6,item);
+            m_productionModel->setItem(row,7,item);
         }
     }
     else
@@ -1376,6 +1381,7 @@ void MainWindow::changeEvent(QEvent* event)
         // this event is send if a translator is loaded
         case QEvent::LanguageChange:
             ui->retranslateUi(this);
+            m_activityController->translateUi();
             break;
 
         // this event is send, if the system, language changes

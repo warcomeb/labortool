@@ -147,8 +147,11 @@ void ProductionDialog::setupField ()
     case Add:
         ui->idText->setText("0");
 
-        ui->titleText->setText("");
-        ui->titleText->setReadOnly(false);
+        ui->boardNameText->setText("");
+        ui->boardNameText->setReadOnly(false);
+
+        ui->quantityText->setValue(1);
+        ui->quantityText->setReadOnly(false);
 
         ui->jobcodeText->setText("");
         ui->jobcodeText->setReadOnly(false);
@@ -164,6 +167,9 @@ void ProductionDialog::setupField ()
         ui->descriptionText->setReadOnly(false);
         ui->descriptionText->setPlainText("");
 
+        ui->deadlineEdit->setReadOnly(false);
+        ui->deadlineEdit->setDateTime(QDateTime::currentDateTime());
+
         /* Notes tab */
         ui->productionNoteDeleteButton->setEnabled(false);
         ui->productionNoteEditButton->setEnabled(false);
@@ -175,11 +181,15 @@ void ProductionDialog::setupField ()
         ui->cancelButton->setText(tr("Cancel"));
         break;
     case Edit:
-        ui->titleText->setReadOnly(false);
+        ui->boardNameText->setReadOnly(false);
+
+        ui->quantityText->setReadOnly(false);
 
         ui->jobcodeText->setReadOnly(false);
 
         ui->outputText->setReadOnly(false);
+
+        ui->deadlineEdit->setReadOnly(false);
 
         ui->statusCombobox->setEnabled(true);
 
@@ -213,7 +223,9 @@ void ProductionDialog::setupField ()
         ui->cancelButton->setText(tr("Cancel"));
         break;
     case View:
-        ui->titleText->setReadOnly(true);
+        ui->boardNameText->setReadOnly(true);
+
+        ui->quantityText->setReadOnly(true);
 
         ui->jobcodeText->setReadOnly(true);
 
@@ -223,6 +235,8 @@ void ProductionDialog::setupField ()
 
         ui->employeeCombobox->setEnabled(false);
         ui->supplierCombobox->setEnabled(false);
+
+        ui->deadlineEdit->setReadOnly(true);
 
         ui->descriptionText->setReadOnly(true);
 
@@ -326,10 +340,13 @@ void ProductionDialog::fillProductionFields ()
     qDebug() << "ProductionDialog::fillProductionFields()";
 
     ui->idText->setText(QString::number(m_production->getId()));
-    ui->titleText->setText(m_production->getTitle());
+    ui->boardNameText->setText(m_production->getBoardName());
+    ui->quantityText->setValue(m_production->getQuantity());
     ui->descriptionText->setPlainText(m_production->getDescription());
     ui->jobcodeText->setText(m_production->getWorkCode());
     ui->outputText->setText(m_production->getOutputCode());
+    ui->deadlineEdit->setDate(m_production->getDeadline());
+     qDebug() << "********" << m_production->getDeadline();
 
     ui->statusCombobox->setCurrentIndex(m_production->getStatus());
     qDebug() << "ProductionDialog::fillProductionFields() - status" << m_production->getStatus();
@@ -358,11 +375,11 @@ void ProductionDialog::saveValues ()
     QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
     QRegExp outputCode = QRegExp(QString::fromUtf8("^[X0-9]{7}$"));
 
-    if (ui->titleText->text().isEmpty())
+    if (ui->boardNameText->text().isEmpty())
     {
-        qDebug() << "ProductionDialog::saveValues() - Title is empty";
+        qDebug() << "ProductionDialog::saveValues() - Board name is empty";
         QMessageBox::critical(this, tr("Error"),
-            tr("Production title is empty!"));
+            tr("Production board name is empty!"));
         return;
     }
 
@@ -390,12 +407,14 @@ void ProductionDialog::saveValues ()
         return;
     }
 
-    m_production = new Production(ui->titleText->text());
+    m_production = new Production(ui->boardNameText->text());
     if (m_openType != Add) m_production->setId(ui->idText->text().toUInt());
+    m_production->setQuantity(ui->quantityText->value());
     m_production->setDescription(ui->descriptionText->toPlainText());
     m_production->setEmployee(qvariant_cast<uint>(ui->employeeCombobox->itemData(ui->employeeCombobox->currentIndex())));
     m_production->setWorkCode(ui->jobcodeText->text());
     m_production->setOutputCode(ui->outputText->text());
+    m_production->setDeadline(ui->deadlineEdit->date());
 
     m_production->setStatus(
         static_cast<Production::Status>(

@@ -25,6 +25,7 @@
 #include <QObject>
 
 #include <QString>
+#include <QDate>
 
 class Production : public QObject
 {
@@ -33,7 +34,7 @@ class Production : public QObject
     Q_PROPERTY(Status status READ getStatus WRITE setStatus)
 
 public:
-    Production(QString title);
+    Production(QString boardName);
     Production();
 
     typedef enum
@@ -47,23 +48,28 @@ public:
 
     uint getId () const { return m_id; }
 
-    QString getTitle () const { return m_title; }
+    QString getBoardName () const { return m_boardName; }
     QString getDescription () const { return m_description; }
     QString getWorkCode () const { return m_workCode; }
-
+    uint getQuantity () const { return m_quantity; }
     QString getOutputCode () const { return m_outputCode; }
 
     uint getEmployee () const { return m_assignedEmployee; }
 
     Status getStatus () const { return m_status; }
+    QDate getDeadline () const { return m_deadline; }
 
     void setId (uint id);
 
-    void setTitle (QString title);
+    void setBoardName (QString title);
     void setDescription (QString description);
     void setWorkCode (QString code);
+    void setQuantity (uint quantity);
 
     void setOutputCode (QString code);
+
+    void setDeadline (QDate deadline);
+    void setDeadline (QString deadline);
 
     void setEmployee (uint employee);
 
@@ -75,11 +81,14 @@ public:
 private:
     uint m_id;
 
-    QString m_title;
+    QString m_boardName;
     QString m_description;
     QString m_workCode;
+    uint m_quantity;
 
     QString m_outputCode;
+
+    QDate m_deadline;
 
     uint m_assignedEmployee;
 

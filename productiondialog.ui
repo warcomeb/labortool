@@ -46,20 +46,6 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QLineEdit" name="idText">
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="6">
-        <widget class="QLabel" name="outputLabel">
-         <property name="text">
-          <string>Output Code</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="5">
         <widget class="QLineEdit" name="jobcodeText">
          <property name="maxLength">
@@ -77,31 +63,10 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3" colspan="5">
-        <widget class="QLineEdit" name="titleText">
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="1">
         <widget class="QLabel" name="employeeLabel">
          <property name="text">
           <string>Employee</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="idLabel">
-         <property name="text">
-          <string>Id</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="titleLabel">
-         <property name="text">
-          <string>Title</string>
          </property>
         </widget>
        </item>
@@ -115,13 +80,6 @@
        <item row="3" column="3" colspan="5">
         <widget class="QPlainTextEdit" name="descriptionText"/>
        </item>
-       <item row="1" column="7">
-        <widget class="QLineEdit" name="outputText">
-         <property name="maxLength">
-          <number>7</number>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="6">
         <widget class="QLabel" name="supplierLabel">
          <property name="text">
@@ -131,6 +89,86 @@
        </item>
        <item row="2" column="7">
         <widget class="QComboBox" name="supplierCombobox"/>
+       </item>
+       <item row="0" column="6">
+        <widget class="QLabel" name="quantityLabel">
+         <property name="text">
+          <string>Quantity</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QLineEdit" name="boardNameText">
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="boardNameLabel">
+         <property name="text">
+          <string>Board Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="idText">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="idLabel">
+         <property name="text">
+          <string>Id</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QSpinBox" name="quantityText">
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="outputLabel">
+         <property name="text">
+          <string>Output Code</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="outputText">
+         <property name="maxLength">
+          <number>7</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <widget class="QDateEdit" name="deadlineEdit">
+         <property name="dateTime">
+          <datetime>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>0</second>
+           <year>2015</year>
+           <month>1</month>
+           <day>1</day>
+          </datetime>
+         </property>
+         <property name="displayFormat">
+          <string>dd.MM.yyyy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QLabel" name="deadlineLabel">
+         <property name="text">
+          <string>Deadline</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -325,10 +363,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>titleText</tabstop>
-  <tabstop>idText</tabstop>
   <tabstop>jobcodeText</tabstop>
-  <tabstop>outputText</tabstop>
   <tabstop>employeeCombobox</tabstop>
   <tabstop>statusCombobox</tabstop>
   <tabstop>supplierCombobox</tabstop>

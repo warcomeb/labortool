@@ -37,17 +37,20 @@ bool ProductionDatabase::addProduction (Production* production)
 
     QSqlQuery query(*m_database);
     QString queryString = "INSERT INTO production "
-                          "(ProductionTitle, ProductionDescription, ProductionWorkCode, "
-                          "ProductionOutputCode, ProductionEmployee, ProductionStatus) "
-                          "VALUES (?, ?, ?, ?, ?, ?)";
+                          "(ProductionBoardName, ProductionQuantity, ProductionDescription, "
+                          "ProductionWorkCode, ProductionOutputCode, ProductionDeadline, "
+                          "ProductionEmployee, ProductionStatus) "
+                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     query.prepare(queryString);
-    query.bindValue(0,production->getTitle());
-    query.bindValue(1,production->getDescription());
-    query.bindValue(2,production->getWorkCode());
-    query.bindValue(3,production->getOutputCode());
-    query.bindValue(4,production->getEmployee());
-    query.bindValue(5,Production::getStatusString(production->getStatus()));
+    query.bindValue(0,production->getBoardName());
+    query.bindValue(1,production->getQuantity());
+    query.bindValue(2,production->getDescription());
+    query.bindValue(3,production->getWorkCode());
+    query.bindValue(4,production->getOutputCode());
+    query.bindValue(5,production->getDeadline().toString("yyyy-MM-dd"));
+    query.bindValue(6,production->getEmployee());
+    query.bindValue(7,Production::getStatusString(production->getStatus()));
 
     qDebug() << "ProductionDatabase::addProduction() - " << query.lastQuery();
 
@@ -85,16 +88,17 @@ bool ProductionDatabase::getProduction (int id, Production *production)
 
     /* TODO */
     production->setId(id);
-    production->setTitle(query.value(1).toString());
-    production->setDescription(query.value(2).toString());
-    production->setWorkCode(query.value(3).toString());
-    production->setOutputCode(query.value(4).toString());
-    production->setEmployee(query.value(6).toString().toUInt());
-    production->setStatus(query.value(5).toString());
+    production->setBoardName(query.value(1).toString());
+    production->setQuantity(query.value(2).toString().toUInt());
+    production->setDescription(query.value(3).toString());
+    production->setWorkCode(query.value(4).toString());
+    production->setOutputCode(query.value(5).toString());
+    production->setDeadline(query.value(6).toString());
+    production->setStatus(query.value(7).toString());
+    production->setEmployee(query.value(8).toString().toUInt());
 
     qDebug() << "ProductionDatabase::getProduction() - production" << id <<
-                query.value(3).toString() << query.value(1).toString() <<
-                query.value(6).toString();
+                query.value(1).toString() << query.value(2).toString();
     return true;
 }
 
@@ -104,30 +108,26 @@ bool ProductionDatabase::updateProduction(Production *production)
 
     QSqlQuery query(*m_database);
     QString queryString = "UPDATE production SET "
-            "ProductionTitle=:title ,"
+            "ProductionBoardName=:name ,"
+            "ProductionQuantity=:qta ,"
             "ProductionDescription=:desc ,"
             "ProductionWorkCode=:code ,"
             "ProductionOutputCode=:output ,"
+            "ProductionDeadline=:deadline ,"
             "ProductionEmployee=:employee ,"
             "ProductionStatus=:status "
             "WHERE ProductionId=:rowid";
 
     query.prepare(queryString);
-    query.bindValue(":title",production->getTitle());
+    query.bindValue(":name",production->getBoardName());
+    query.bindValue(":qta",QString::number(production->getQuantity()));
     query.bindValue(":desc",production->getDescription());
     query.bindValue(":code",production->getWorkCode());
     query.bindValue(":output",production->getOutputCode());
+    query.bindValue(":deadline",production->getDeadline().toString("yyyy-MM-dd"));
     query.bindValue(":employee",QString::number(production->getEmployee()));
     query.bindValue(":status",QString(Production::getStatusString(production->getStatus())));
     query.bindValue(":rowid",QString::number(production->getId()));
-
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 0 " << query.boundValue(0);
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 1 " << query.boundValue(1);
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 2 " << query.boundValue(2);
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 3 " << query.boundValue(3);
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 4 " << query.boundValue(4);
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 5 " << query.boundValue(5);
-    qDebug() << "ProductionDatabase::updateProduction() - Bound Value 6 " << query.boundValue(6);
 
     if (query.exec())
     {
@@ -151,9 +151,7 @@ ProductionDatabase::searchProductions(QStringList searchParams)
 
     QVector<Production*> productionList;
 
-    QString queryString = "SELECT ProductionId, ProductionTitle, ProductionDescription, "
-                          "ProductionWorkCode, ProductionOutputCode, ProductionEmployee, "
-                          "ProductionStatus FROM production ";
+    QString queryString = "SELECT * FROM production ";
 
     if (searchParams.size()>0)
     {
@@ -214,7 +212,7 @@ ProductionDatabase::searchProductions(QStringList searchParams)
                 {
                     qDebug() << "ProductionDatabase::searchProductions() - Param is correct";
                     queryString.append(
-                        "( ProductionTitle LIKE '%" + searchParam.at(1) + "%' OR " +
+                        "( ProductionBoardName LIKE '%" + searchParam.at(1) + "%' OR " +
                         "ProductionDescription LIKE '%" + searchParam.at(1) + "%' OR " +
                         "ProductionOutputCode LIKE '%" + searchParam.at(1) + "%' OR " +
                         "ProductionWorkCode LIKE '%" + searchParam.at(1) + "%') "
@@ -248,12 +246,14 @@ ProductionDatabase::searchProductions(QStringList searchParams)
     {
         Production * production = new Production;
         production->setId(query.value(0).toUInt());
-        production->setTitle(query.value(1).toString());
-        production->setDescription(query.value(2).toString());
-        production->setWorkCode(query.value(3).toString());
-        production->setOutputCode(query.value(4).toString());
-        production->setEmployee(query.value(5).toUInt());
-        production->setStatus(query.value(6).toString());
+        production->setBoardName(query.value(1).toString());
+        production->setQuantity(query.value(2).toString().toUInt());
+        production->setDescription(query.value(3).toString());
+        production->setWorkCode(query.value(4).toString());
+        production->setOutputCode(query.value(5).toString());
+        production->setDeadline(query.value(6).toString());
+        production->setStatus(query.value(7).toString());
+        production->setEmployee(query.value(8).toString().toUInt());
 
         productionList.append(production);
     }

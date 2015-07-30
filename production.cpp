@@ -24,10 +24,11 @@
 #include <QDebug>
 #include <QMetaEnum>
 
-Production::Production(QString title):
+Production::Production(QString boardName):
     m_assignedEmployee(0)
 {
-    m_title = title;
+    m_boardName = boardName;
+    m_quantity = 0;
 }
 
 Production::Production():
@@ -40,9 +41,14 @@ void Production::setId (uint id)
     m_id = id;
 }
 
-void Production::setTitle (QString title)
+void Production::setBoardName (QString boardName)
 {
-    m_title = title;
+    m_boardName = boardName;
+}
+
+void Production::setQuantity (uint quantity)
+{
+    m_quantity = quantity;
 }
 
 void Production::setDescription (QString description)
@@ -68,6 +74,16 @@ void Production::setEmployee (uint employee)
 void Production::setStatus (Status status)
 {
     m_status = status;
+}
+
+void Production::setDeadline (QDate deadline)
+{
+    m_deadline = deadline;
+}
+
+void Production::setDeadline (QString deadline)
+{
+    m_deadline = QDate::fromString(deadline,"yyyy-MM-dd");
 }
 
 void Production::setStatus (QString status)
