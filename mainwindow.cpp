@@ -1381,7 +1381,11 @@ void MainWindow::changeEvent(QEvent* event)
         // this event is send if a translator is loaded
         case QEvent::LanguageChange:
             ui->retranslateUi(this);
+
             m_activityController->translateUi();
+            m_productionController->translateUi();
+            m_employeeController->translateUi();
+
             break;
 
         // this event is send, if the system, language changes

@@ -42,6 +42,7 @@ public:
     } EmployeesListType;
 
     EmployeeController(QSqlDatabase* db);
+    ~EmployeeController();
 
     void openAddEmployeeDialog ();
     void openEditEmployeeDialog (int employeeId);
@@ -51,6 +52,8 @@ public:
     QVector<Employee*> getEmployeesList (QStringList searchParams);
 
     void updateLoggedUser(Employee * const employee);
+
+    void translateUi();
 
 signals:
     void updatedEmployeesList(QStringList searchParams);

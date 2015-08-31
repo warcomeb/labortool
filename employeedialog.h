@@ -53,6 +53,8 @@ public:
     void setLoggedUserRole(Employee::SystemRole systemRole = Employee::User,
                            Employee::Role role = Employee::Student);
 
+    void translateUi();
+
 private slots:
     void apply();
     void noApply();

@@ -54,6 +54,11 @@ EmployeeDialog::~EmployeeDialog()
     delete ui;
 }
 
+void EmployeeDialog::translateUi()
+{
+    ui->retranslateUi(this);
+}
+
 void EmployeeDialog::fillCombobox ()
 {
     ui->roleCombobox->clear();

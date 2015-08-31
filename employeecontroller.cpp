@@ -34,13 +34,20 @@ EmployeeController::EmployeeController(QSqlDatabase* db):
     m_databaseWrapper = new EmployeeDatabase (m_database);
 }
 
+EmployeeController::~EmployeeController()
+{
+    if (m_employeeDialog != 0)
+        delete m_employeeDialog;
+}
+
+void EmployeeController::translateUi()
+{
+    m_employeeDialog->translateUi();
+}
+
 void EmployeeController::openAddEmployeeDialog ()
 {
     qDebug() << "EmployeeController::openAddEmployeeDialog()";
-
-    // Delete the dialog to update the language!
-    if (m_employeeDialog != 0) delete m_employeeDialog;
-    m_employeeDialog = new EmployeeDialog;
 
     m_employeeDialog->setOpenType(EmployeeDialog::Add);
     m_employeeDialog->exec();
@@ -71,10 +78,6 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
 {
     qDebug() << "EmployeeController::openViewEmployeeDialog()";
 
-    // Delete the dialog to update the language!
-    if (m_employeeDialog != 0) delete m_employeeDialog;
-    m_employeeDialog = new EmployeeDialog;
-
     if (employeeId <= 0)
     {
         QMessageBox::warning(0, tr("View Employee Error"),
@@ -103,10 +106,6 @@ void EmployeeController::openViewEmployeeDialog (int employeeId)
 void EmployeeController::openEditEmployeeDialog (int employeeId)
 {
     qDebug() << "EmployeeController::openEditEmployeeDialog()";
-
-    // Delete the dialog to update the language!
-    if (m_employeeDialog != 0) delete m_employeeDialog;
-    m_employeeDialog = new EmployeeDialog;
 
     if (employeeId <= 0)
     {
