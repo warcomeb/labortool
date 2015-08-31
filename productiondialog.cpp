@@ -76,6 +76,11 @@ ProductionDialog::~ProductionDialog()
     delete ui;
 }
 
+void ProductionDialog::translateUi()
+{
+    ui->retranslateUi(this);
+}
+
 void ProductionDialog::setLoggedUserRole(Employee::SystemRole systemRole,
                                          Employee::Role role)
 {

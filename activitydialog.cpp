@@ -76,6 +76,11 @@ ActivityDialog::~ActivityDialog()
     delete ui;
 }
 
+void ActivityDialog::translateUi()
+{
+    ui->retranslateUi(this);
+}
+
 void ActivityDialog::setLoggedUserRole(Employee::SystemRole systemRole,
                                        Employee::Role role)
 {

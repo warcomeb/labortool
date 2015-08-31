@@ -41,6 +41,7 @@ class ProductionController: public QObject
 
 public:
     ProductionController(QSqlDatabase* db);
+    ~ProductionController();
 
     void openAddProductionDialog (QVector<Employee*> employeesList);
     void openEditProductionDialog (uint productionId, QVector<Employee*> employeesList);
@@ -50,6 +51,8 @@ public:
     QVector<Production*> getProductionsList (QStringList searchParams);
 
     void updateLoggedUser(Employee * const employee);
+
+    void translateUi();
 
 signals:
     void updatedProductionsList(QStringList searchParams);

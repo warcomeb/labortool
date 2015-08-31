@@ -53,6 +53,8 @@ public:
 
     Note* getSavedNote();
 
+    void translateUi();
+
 private slots:
     void apply();
     void noApply();

@@ -51,6 +51,8 @@ public:
 
     void updateLoggedUser(Employee * const employee);
 
+    void translateUi();
+
 signals:
     void updatedActivitiesList(QStringList searchParams);
 

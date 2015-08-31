@@ -74,6 +74,8 @@ public:
      */
     void updateNotesList (QVector<Note *> notesList);
 
+    void translateUi();
+
 signals:
     void deleteNoteButton(uint noteId);
     void editNoteButton(uint noteId);

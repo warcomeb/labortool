@@ -44,13 +44,14 @@ ActivityController::~ActivityController()
         delete m_noteDialog;
 }
 
+void ActivityController::translateUi()
+{
+    m_activityDialog->translateUi();
+}
+
 void ActivityController::openAddActivityDialog (QVector<Employee*> employeesList)
 {
     qDebug() << "ActivityController::openAddActivityDialog()";
-
-    // Delete the dialog to update the language!
-    if (m_activityDialog != 0) delete m_activityDialog;
-    m_activityDialog = new ActivityDialog;
 
     m_activityDialog->setOpenType(ActivityDialog::Add);
     m_activityDialog->prepareNewActivity(employeesList);
@@ -82,10 +83,6 @@ void ActivityController::openViewActivityDialog (uint activityId, QVector<Employ
 {
     qDebug() << "ActivityController::openViewActivityDialog()";
 
-    // Delete the dialog to update the language!
-    if (m_activityDialog != 0) delete m_activityDialog;
-    m_activityDialog = new ActivityDialog;
-
     Activity * activity = new Activity;
     if (!m_databaseWrapper->getActivity(activityId,activity))
     {
@@ -110,9 +107,6 @@ void ActivityController::openEditActivityDialog (uint activityId, QVector<Employ
 {
     qDebug() << "ActivityController::openEditActivityDialog()";
 
-    // Delete the dialog to update the language!
-    if (m_activityDialog != 0) delete m_activityDialog;
-    m_activityDialog = new ActivityDialog;
     // Add connection for dialog!
     connect(m_activityDialog,SIGNAL(editNoteButton(uint)),
             this,SLOT(openEditNoteActivityDialog(uint)));

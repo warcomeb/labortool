@@ -36,13 +36,24 @@ ProductionController::ProductionController(QSqlDatabase *db)
     m_databaseNoteWrapper = new NoteDatabase (m_database);
 }
 
+ProductionController::~ProductionController()
+{
+    if (m_productionDialog != 0)
+        delete m_productionDialog;
+
+    if (m_noteDialog != 0)
+        delete m_noteDialog;
+}
+
+void ProductionController::translateUi()
+{
+    m_productionDialog->translateUi();
+    m_noteDialog->translateUi();
+}
+
 void ProductionController::openAddProductionDialog (QVector<Employee*> employeesList)
 {
     qDebug() << "ProductionController::openAddProductionDialog()";
-
-    // Delete the dialog to update the language!
-    if (m_productionDialog != 0) delete m_productionDialog;
-    m_productionDialog = new ProductionDialog;
 
     m_productionDialog->setOpenType(ProductionDialog::Add);
     m_productionDialog->prepareNewProduction(employeesList);
@@ -74,10 +85,6 @@ void ProductionController::openViewProductionDialog (uint productionId, QVector<
 {
     qDebug() << "ProductionController::openViewProductionDialog()";
 
-    // Delete the dialog to update the language!
-    if (m_productionDialog != 0) delete m_productionDialog;
-    m_productionDialog = new ProductionDialog;
-
     Production * production = new Production;
     if (!m_databaseWrapper->getProduction(productionId,production))
     {
@@ -102,9 +109,6 @@ void ProductionController::openEditProductionDialog (uint productionId, QVector<
 {
     qDebug() << "ProductionController::openEditProductionDialog()";
 
-    // Delete the dialog to update the language!
-    if (m_productionDialog != 0) delete m_productionDialog;
-    m_productionDialog = new ProductionDialog;
     // Add connection for dialog!
     connect(m_productionDialog,SIGNAL(editNoteButton(uint)),
             this,SLOT(openEditNoteProductionDialog(uint)));

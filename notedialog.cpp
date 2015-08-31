@@ -49,6 +49,12 @@ NoteDialog::~NoteDialog()
     delete ui;
 }
 
+void NoteDialog::translateUi()
+{
+    ui->retranslateUi(this);
+}
+
+
 void NoteDialog::apply()
 {
     qDebug() << "NoteDialog::apply()";
