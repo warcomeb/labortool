@@ -177,6 +177,63 @@ void ProductionController::openEditProductionDialog (uint productionId, QVector<
     delete production;
 }
 
+void ProductionController::openDeleteProductionDialog (uint productionId)
+{
+    qDebug() << "ProductionController::openDeleteProductionDialog()";
+
+    if (productionId == 0)
+    {
+        /* Warning message!!! */
+        QMessageBox::warning(0, tr("Delete Error"),
+                              tr("You must select a production!"));
+            qDebug() << "ProductionController::openDeleteProductionDialog() - Production not selected!";
+        return;
+    }
+
+    Production * production = new Production;
+    if (!m_databaseWrapper->getProduction(productionId,production))
+    {
+        /* Warning message!!! */
+        QMessageBox::critical(0, tr("Delete Error"),
+                             tr("The production can not be deleted! Database Error!"));
+            qDebug() << "ProductionController::openDeleteProductionDialog() - Error!";
+        return;
+    }
+
+    Q_ASSERT((m_loggedUser != 0) && (m_loggedUser->getSystemRole() == Employee::Administrator));
+
+    QMessageBox::StandardButton reply = QMessageBox::question(m_productionDialog,
+                                            tr("Delete Production"),
+                                            tr("Are you sure you want delete this production?"),
+                                            QMessageBox::Yes | QMessageBox::No,
+                                            QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        qDebug() << "ProductionController::openDeleteProductionDialog() - User want delete activity" << productionId;
+        uint activityId = production->getActivityId();
+        if (m_databaseWrapper->deleteProduction(productionId))
+        {
+            m_databaseActivityWrapper->deleteActivity(activityId);
+
+            qDebug() << "ProductionController::openDeleteProductionDialog() - production deleted" << productionId;
+            QMessageBox::warning(0, tr("Delete Production"),
+                                  tr("The production has been deleted!"));
+
+            QStringList searchParams;
+            searchParams << "Status$NotStarted|InProgress|Waiting";
+            emit updatedProductionsList(searchParams);
+        }
+        else
+        {
+            qDebug() << "ProductionController::openDeleteProductionDialog() - Delete activity error!";
+            QMessageBox::critical(0, tr("Delete Error"),
+                                  tr("The production has not been deleted! Database Error!"));
+        }
+    }
+
+    delete production;
+}
+
 void ProductionController::openAddNoteProductionDialog (uint productionId)
 {
     qDebug() << "ProductionController::openAddNoteProductionDialog()";

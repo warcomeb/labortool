@@ -38,6 +38,7 @@ public:
     bool addProduction (Production* production);
     bool updateProduction (Production* production);
     bool getProduction (int id, Production* production);
+    bool deleteProduction (int id);
 
     QVector<Production*> searchProductions (QStringList searchParams);
 

@@ -28,11 +28,6 @@
 #include <QMessageBox>
 
 #define DB_TYPE "QMYSQL"
-#define DB_NAME "labortool"
-#define DB_USER "root"
-#define DB_PASS "scossa"
-#define DB_HOST "localhost"
-#define DB_PORT 3306
 
 #define MAINWINDOW_TAB_HOME         0
 #define MAINWINDOW_TAB_ACTIVITY     1
@@ -366,6 +361,8 @@ void MainWindow::initProductionTab()
     /* Update table slots */
     connect(m_productionController,SIGNAL(updatedProductionsList(QStringList)),
             this,SLOT(updateProductionsTable(QStringList)));
+    connect(m_productionController,SIGNAL(updatedProductionsList(QStringList)),
+            this,SLOT(updateActivitiesTable(QStringList)));
 
     /* Startup table! */
     m_productionModel = new QStandardItemModel(1, 8);
@@ -532,7 +529,7 @@ void MainWindow::openProductionDialog()
     }
     else if (sender() == ui->deleteProductionButton)
     {
-//        m_productionController->openDeleteProductionDialog(m_productionSelected);
+        m_productionController->openDeleteProductionDialog(m_productionSelected);
     }
     else if (sender() == ui->addNoteProductionButton)
     {

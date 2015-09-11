@@ -145,6 +145,34 @@ bool ProductionDatabase::updateProduction(Production *production)
     }
 }
 
+bool ProductionDatabase::deleteProduction (int id)
+{
+    qDebug() << "ProductionDatabase::deleteProduction()";
+
+    QSqlQuery query(*m_database);
+    QString queryString = "DELETE FROM production "
+            "WHERE ProductionId=:rowid";
+
+    query.prepare(queryString);
+    query.bindValue(":rowid",QString::number(id));
+
+    qDebug() << "ProductionDatabase::deleteProduction() - Bound Value 0 " << query.boundValue(0);
+
+    if (query.exec())
+    {
+        qDebug() << "ProductionDatabase::deleteProduction() - " << query.lastQuery();
+        qDebug() << "ProductionDatabase::deleteProduction() - " << query.lastError();
+        qDebug() << "ProductionDatabase::deleteProduction() - Query successful";
+        return true;
+    }
+    else
+    {
+        qDebug() << "ProductionDatabase::deleteProduction() - " << query.lastQuery();
+        qDebug() << "ProductionDatabase::deleteProduction() - " << query.lastError();
+        return false;
+    }
+}
+
 QVector<Production*>
 ProductionDatabase::searchProductions(QStringList searchParams)
 {

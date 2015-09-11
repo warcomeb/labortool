@@ -29,7 +29,6 @@
 #include <QString>
 
 #include "activity.h"
-#include "note.h"
 
 class ActivityDatabase
 {
