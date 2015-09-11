@@ -106,3 +106,8 @@ QString Production::getStatusString (Status value)
                 Production::staticMetaObject.indexOfEnumerator("Status")).
                 valueToKey(value);
 }
+
+void Production::setActivityId (uint activityId)
+{
+    m_activityId = activityId;
+}

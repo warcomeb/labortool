@@ -59,6 +59,8 @@ public:
     Status getStatus () const { return m_status; }
     QDate getDeadline () const { return m_deadline; }
 
+    uint getActivityId () const { return m_activityId; }
+
     void setId (uint id);
 
     void setBoardName (QString title);
@@ -78,6 +80,8 @@ public:
 
     static QString getStatusString (Status value);
 
+    void setActivityId (uint activityId);
+
 private:
     uint m_id;
 
@@ -93,6 +97,8 @@ private:
     uint m_assignedEmployee;
 
     Status m_status;
+
+    uint m_activityId;
 };
 
 #endif // PRODUCTION_H

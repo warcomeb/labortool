@@ -31,6 +31,9 @@
 #include "productiondialog.h"
 #include "productiondatabase.h"
 
+#include "activity.h"
+#include "activitydatabase.h"
+
 #include "notedatabase.h"
 #include "notedialog.h"
 
@@ -64,6 +67,10 @@ public slots:
 
 private:
 
+    void convertProductionToActivity(Production* production, Activity* activity);
+    void updateActivityFromProduction(Production* production, Activity* activity);
+
+
     /* View panel */
     ProductionDialog * m_productionDialog;
 
@@ -75,6 +82,7 @@ private:
 
     /* Production wrapper for database */
     ProductionDatabase * m_databaseWrapper;
+    ActivityDatabase * m_databaseActivityWrapper;
     NoteDatabase * m_databaseNoteWrapper;
     QSqlDatabase * m_database;
 

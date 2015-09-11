@@ -54,16 +54,14 @@ bool ActivityDatabase::addActivity (Activity* activity)
 
     qDebug() << "ActivityDatabase::addActivity() - " << query.lastQuery();
 
-    if (query.exec())
-    {
-        qDebug() << "ActivityDatabase::addActivity() - Query successful";
-        return true;
-    }
-    else
+    if (!query.exec())
     {
         qDebug() << "ActivityDatabase::addActivity() - "<< query.lastError();
         return false;
     }
+    qDebug() << "ActivityDatabase::addActivity() - Query successful";
+    activity->setId(query.lastInsertId().toUInt());
+    return true;
 }
 
 bool ActivityDatabase::getActivity (int id, Activity *activity)

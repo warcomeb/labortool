@@ -54,16 +54,14 @@ bool ProductionDatabase::addProduction (Production* production)
 
     qDebug() << "ProductionDatabase::addProduction() - " << query.lastQuery();
 
-    if (query.exec())
-    {
-        qDebug() << "ProductionDatabase::addProduction() - Query successful";
-        return true;
-    }
-    else
+    if (!query.exec())
     {
         qDebug() << "ProductionDatabase::addProduction() - "<< query.lastError();
         return false;
     }
+    qDebug() << "ProductionDatabase::addProduction() - Query successful";
+    production->setId(query.lastInsertId().toUInt());
+    return true;
 }
 
 bool ProductionDatabase::getProduction (int id, Production *production)
@@ -96,6 +94,7 @@ bool ProductionDatabase::getProduction (int id, Production *production)
     production->setDeadline(query.value(6).toString());
     production->setStatus(query.value(7).toString());
     production->setEmployee(query.value(8).toString().toUInt());
+    production->setActivityId(query.value(10).toString().toUInt());
 
     qDebug() << "ProductionDatabase::getProduction() - production" << id <<
                 query.value(1).toString() << query.value(2).toString();
@@ -115,7 +114,8 @@ bool ProductionDatabase::updateProduction(Production *production)
             "ProductionOutputCode=:output ,"
             "ProductionDeadline=:deadline ,"
             "ProductionEmployee=:employee ,"
-            "ProductionStatus=:status "
+            "ProductionStatus=:status ,"
+            "ProductionActivityId=:activityid "
             "WHERE ProductionId=:rowid";
 
     query.prepare(queryString);
@@ -127,6 +127,7 @@ bool ProductionDatabase::updateProduction(Production *production)
     query.bindValue(":deadline",production->getDeadline().toString("yyyy-MM-dd"));
     query.bindValue(":employee",QString::number(production->getEmployee()));
     query.bindValue(":status",QString(Production::getStatusString(production->getStatus())));
+    query.bindValue(":activityid",QString::number(production->getActivityId()));
     query.bindValue(":rowid",QString::number(production->getId()));
 
     if (query.exec())

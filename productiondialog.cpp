@@ -351,7 +351,6 @@ void ProductionDialog::fillProductionFields ()
     ui->jobcodeText->setText(m_production->getWorkCode());
     ui->outputText->setText(m_production->getOutputCode());
     ui->deadlineEdit->setDate(m_production->getDeadline());
-     qDebug() << "********" << m_production->getDeadline();
 
     ui->statusCombobox->setCurrentIndex(m_production->getStatus());
     qDebug() << "ProductionDialog::fillProductionFields() - status" << m_production->getStatus();
@@ -375,7 +374,6 @@ void ProductionDialog::fillProductionFields ()
 void ProductionDialog::saveValues ()
 {
     qDebug() << "ProductionDialog::saveValues()";
-    m_production = 0;
 
     QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
     QRegExp outputCode = QRegExp(QString::fromUtf8("^[X0-9]{7}$"));
@@ -412,8 +410,18 @@ void ProductionDialog::saveValues ()
         return;
     }
 
-    m_production = new Production(ui->boardNameText->text());
+    if (m_openType == Add)
+    {
+        m_production = 0;
+        m_production = new Production(ui->boardNameText->text());
+    }
+    else
+    {
+        m_production->setBoardName(ui->boardNameText->text());
+    }
+
     if (m_openType != Add) m_production->setId(ui->idText->text().toUInt());
+
     m_production->setQuantity(ui->quantityText->value());
     m_production->setDescription(ui->descriptionText->toPlainText());
     m_production->setEmployee(qvariant_cast<uint>(ui->employeeCombobox->itemData(ui->employeeCombobox->currentIndex())));
@@ -426,8 +434,6 @@ void ProductionDialog::saveValues ()
             ui->statusCombobox->currentData().toInt()
         )
     );
-    qDebug() << "ProductionDialog::saveValues() - Status:" << static_cast<Production::Status>(
-        ui->statusCombobox->currentData().toInt());
 
     /* TODO: Supplier!! */
 }

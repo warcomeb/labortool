@@ -25,6 +25,8 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#define PRODUCTION_TAG      "[Production]"
+
 ProductionController::ProductionController(QSqlDatabase *db)
 {
     m_database = db;
@@ -34,6 +36,8 @@ ProductionController::ProductionController(QSqlDatabase *db)
 
     m_databaseWrapper = new ProductionDatabase (m_database);
     m_databaseNoteWrapper = new NoteDatabase (m_database);
+
+    m_databaseActivityWrapper = new ActivityDatabase (m_database);
 }
 
 ProductionController::~ProductionController()
@@ -64,6 +68,17 @@ void ProductionController::openAddProductionDialog (QVector<Employee*> employees
     {
         if (m_databaseWrapper->addProduction(production))
         {
+            // create a new activity bounded with production
+            Activity* activity = new Activity;
+            convertProductionToActivity(production,activity);
+            if (m_databaseActivityWrapper->addActivity(activity))
+            {
+                production->setActivityId(activity->getId());
+                m_databaseWrapper->updateProduction(production);
+            }
+
+            if (activity) delete activity;
+
             qDebug() << "ProductionController::openAddProductionDialog() - Add production successful";
             QStringList searchParams;
             searchParams << "Status$NotStarted|InProgress|Waiting";
@@ -139,6 +154,12 @@ void ProductionController::openEditProductionDialog (uint productionId, QVector<
     {
         if (m_databaseWrapper->updateProduction(production))
         {
+            Activity* activity = new Activity;
+            m_databaseActivityWrapper->getActivity(production->getActivityId(),activity);
+            updateActivityFromProduction(production,activity);
+
+            m_databaseActivityWrapper->updateActivity(activity);
+
             qDebug() << "ProductionController::openEditProductionDialog() - Update production successful";
             QStringList searchParams;
             searchParams << "Status$NotStarted|InProgress|Waiting";
@@ -330,4 +351,42 @@ void ProductionController::updateLoggedUser(Employee* const employee)
         m_productionDialog->setLoggedUserRole();
     }
     qDebug() << "ProductionController::updateLoggedUser() - Exit";
+}
+
+void
+ProductionController::convertProductionToActivity(Production* production, Activity* activity)
+{
+    qDebug() << "ProductionController::convertProductionToActivity()";
+
+    QString activityTitle = tr(PRODUCTION_TAG) + " Nr. " + QString::number(production->getQuantity()) +
+                                                 " " + production->getBoardName() +
+                                                 ", " + production->getOutputCode();
+    qDebug() << "ProductionController::convertProductionToActivity() - Title" << activityTitle;
+    activity->setTitle(activityTitle);
+    activity->setDescription(production->getDescription());
+    activity->setWorkCode(production->getWorkCode());
+
+    activity->setEmployee(production->getEmployee());
+    activity->setDeadline(production->getDeadline());
+
+    activity->setType(Activity::Production);
+    activity->setStatus((Activity::Status)production->getStatus());
+    activity->setPriority(Activity::Medium);
+}
+
+void
+ProductionController::updateActivityFromProduction(Production* production, Activity* activity)
+{
+    QString activityTitle = tr(PRODUCTION_TAG) + " Nr. " + QString::number(production->getQuantity()) +
+                                                 " " + production->getBoardName() +
+                                                 ", " + production->getOutputCode();
+    qDebug() << "ProductionController::updateActivityFromProduction() - Title" << activityTitle;
+    activity->setTitle(activityTitle);
+    activity->setDescription(production->getDescription());
+    activity->setWorkCode(production->getWorkCode());
+
+    activity->setEmployee(production->getEmployee());
+    activity->setDeadline(production->getDeadline());
+
+    activity->setStatus((Activity::Status)production->getStatus());
 }
