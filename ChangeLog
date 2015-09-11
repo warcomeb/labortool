@@ -4,6 +4,8 @@
 
     * Implementata eliminazione di una produzione.
 
+    * Corretto bug #14, abilitatando tutti gli utenti durante la visualizzazione delle tabelle.
+
 2015-09-10 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la generazione di una attività dalla creazione di una produzione (WiP: l'activityId della produzione non viene aggiornato quando passa dentro al dialog).

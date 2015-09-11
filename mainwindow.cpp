@@ -736,7 +736,6 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
     {
         /* Get the employees list */
         QStringList employeesSearchParams;
-        employeesSearchParams << "Active=Yes";
         QVector<Employee*> employeesList =
                 m_employeeController->getEmployeesList(employeesSearchParams);
         qDebug() << "MainWindow::updateActivitiesTable() - Employees size:" << employeesList.size();
@@ -753,13 +752,11 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
             }
             else if (deadline < shortDeadline)
             {
-//                isShortDeadline = true;
                 usedColor = m_colorDanger;
                 qDebug() << "MainWindow::updateActivitiesTable() - less than 7 days!";
             }
             else if (deadline < mediumDeadline)
             {
-//                isMediumDeadline = true;
                 usedColor = m_colorWarning;
                 qDebug() << "MainWindow::updateActivitiesTable() - less then 21 days!";
             }
@@ -939,7 +936,6 @@ void MainWindow::updateProductionsTable(QStringList searchParams)
     {
         /* Get the employees list */
         QStringList employeesSearchParams;
-        employeesSearchParams << "Active=Yes";
         QVector<Employee*> employeesList =
                 m_employeeController->getEmployeesList(employeesSearchParams);
         qDebug() << "MainWindow::productionsList() - Employees size:" << employeesList.size();
