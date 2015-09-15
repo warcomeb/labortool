@@ -79,6 +79,7 @@ public:
     void setStatus (QString status);
 
     static QString getStatusString (Status value);
+    static QString getFormattedStatusString (Status value);
 
     void setActivityId (uint activityId);
 

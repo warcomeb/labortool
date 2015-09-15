@@ -107,6 +107,25 @@ QString Production::getStatusString (Status value)
                 valueToKey(value);
 }
 
+QString Production::getFormattedStatusString (Production::Status value)
+{
+    switch (value)
+    {
+    case NotStarted:
+        return QString(tr("Not Started"));
+    case InProgress:
+        return QString(tr("In Progress"));
+    case Ended:
+        return QString(tr("Ended"));
+    case Postponed:
+        return QString(tr("Postponed"));
+    case Waiting:
+        return QString(tr("Waiting"));
+    default:
+        Q_ASSERT(0);
+    }
+}
+
 void Production::setActivityId (uint activityId)
 {
     m_activityId = activityId;

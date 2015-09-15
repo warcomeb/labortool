@@ -134,6 +134,25 @@ QString Activity::getStatusString (Activity::Status value)
                 valueToKey(value);
 }
 
+QString Activity::getFormattedStatusString (Activity::Status value)
+{
+    switch (value)
+    {
+    case NotStarted:
+        return QString(tr("Not Started"));
+    case InProgress:
+        return QString(tr("In Progress"));
+    case Ended:
+        return QString(tr("Ended"));
+    case Postponed:
+        return QString(tr("Postponed"));
+    case Waiting:
+        return QString(tr("Waiting"));
+    default:
+        Q_ASSERT(0);
+    }
+}
+
 QString Activity::getTypeString (Activity::Type value)
 {
     return Activity::staticMetaObject.enumerator(

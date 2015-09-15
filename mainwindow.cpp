@@ -804,7 +804,7 @@ void MainWindow::updateActivitiesTable(QStringList searchParams)
             item->setBackground(QBrush(usedColor));
 
             /* Status */
-            item = new QStandardItem(Activity::getStatusString(
+            item = new QStandardItem(Activity::getFormattedStatusString(
                                          (activitiesList.at(row))->getStatus()));
             m_activityModel->setItem(row,5,item);
             item->setBackground(QBrush(usedColor));
@@ -980,7 +980,7 @@ void MainWindow::updateProductionsTable(QStringList searchParams)
             m_productionModel->setItem(row,5,item);
 
             /* Status */
-            item = new QStandardItem(Production::getStatusString(
+            item = new QStandardItem(Production::getFormattedStatusString(
                                          (productionsList.at(row))->getStatus()));
             m_productionModel->setItem(row,6,item);
 

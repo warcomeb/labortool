@@ -104,6 +104,7 @@ public:
 
     static QString getTypeString (Type value);
     static QString getStatusString (Status value);
+    static QString getFormattedStatusString (Status value);
     static QString getPriorityString (Priority value);
 
 private:
