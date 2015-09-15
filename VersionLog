@@ -1,3 +1,17 @@
+LabOrTool 0.2.0 [2015-09-15]
+-------------------------------------------------------------------------------
+
+ * Aggiunto multilinga con traduzione in Italiano.
+ * Ottimizzata la gestione dei collaboratori.
+ * Ottimizzata la gestione delle attività.
+ * Aggiunta la gestione delle produzioni.
+ * Implmentato il cambio di colore delle attività completate.
+ * Fix dei seguenti bug:
+    #1 abilitazione pulsante ESC
+    #6 pulizia dello spazio dedicato alle note dopo la chiusura di una finestra
+    #11 salvataggio occasionale di una nota due volte
+    #12 formattazione della stringa di stato nelle tabelle
+
 LabOrTool 0.1.2 [2015-01-07]
 -------------------------------------------------------------------------------
 

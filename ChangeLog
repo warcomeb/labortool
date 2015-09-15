@@ -4,6 +4,8 @@
 
     * Aggiornato tutta la traduzione in italiano, closes #13
 
+    * Rilasciata versione 0.2.0
+
 2015-09-11 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Aggiunta la generazione di una attività dalla creazione di una produzione (Fixed: l'activityId della produzione non viene aggiornato quando passa dentro al dialog).
