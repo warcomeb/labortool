@@ -127,6 +127,9 @@
        </item>
        <item row="0" column="7">
         <widget class="QSpinBox" name="quantityText">
+         <property name="maximum">
+          <number>9999</number>
+         </property>
          <property name="value">
           <number>1</number>
          </property>
@@ -142,7 +145,7 @@
        <item row="1" column="3">
         <widget class="QLineEdit" name="outputText">
          <property name="maxLength">
-          <number>7</number>
+          <number>20</number>
          </property>
         </widget>
        </item>

@@ -1,5 +1,11 @@
 2015-09-15 Marco Giammarini <m.giammarini@warcomeb.it>
 
+    * Tolta la limitazione del numero di pezzi nella produzione, closes #19
+
+    * Tolta la limitazione ed il blocco dei caratteri nel codice di uscita (reso generico), closes #18
+
+2015-09-15 Marco Giammarini <m.giammarini@warcomeb.it>
+
     * Corretta la visualizzazione delle stringhe di stato nella tabella produzioni e attività, closes #12
 
     * Aggiornato tutta la traduzione in italiano, closes #13

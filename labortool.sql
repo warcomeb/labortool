@@ -28,13 +28,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `production` (
 `ProductionId` int(11) NOT NULL,
-  `ProductionTitle` varchar(100) NOT NULL,
+  `ProductionBoardName` varchar(100) NOT NULL,
+  `ProductionQuantity` int(5) NOT NULL,
   `ProductionDescription` text NOT NULL,
   `ProductionWorkCode` varchar(12) NOT NULL,
-  `ProductionOutputCode` varchar(7) NOT NULL,
+  `ProductionOutputCode` varchar(20) NOT NULL,
+  `ProductionDeadline` date NOT NULL,
   `ProductionStatus` enum('NotStarted','InProgress','Ended','Postponed','Waiting') NOT NULL,
   `ProductionEmployee` int(11) NOT NULL,
-  `ProductionSupplier` int(11) NOT NULL
+  `ProductionSupplier` int(11) NOT NULL,
+  `ProductionActivityId` int(12) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------

@@ -376,7 +376,6 @@ void ProductionDialog::saveValues ()
     qDebug() << "ProductionDialog::saveValues()";
 
     QRegExp workCode = QRegExp(QString::fromUtf8("^[A-Z0-9-]{12}$"));
-    QRegExp outputCode = QRegExp(QString::fromUtf8("^[X0-9]{7}$"));
 
     if (ui->boardNameText->text().isEmpty())
     {
@@ -398,7 +397,7 @@ void ProductionDialog::saveValues ()
         return;
     }
 
-    if (outputCode.exactMatch(ui->outputText->text()))
+    if (!ui->outputText->text().isEmpty())
     {
         qDebug() << "ProductionDialog::saveValues() - Output Code correct:" << ui->outputText->text();
     }
