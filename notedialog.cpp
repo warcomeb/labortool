@@ -176,3 +176,8 @@ void NoteDialog::fillNoteField()
     ui->textEdit->setPlainText(m_note->getText());
     qDebug() << "NoteDialog::fillNoteField() - Exit";
 }
+
+void NoteDialog::keyPressEvent(QKeyEvent* e)
+{
+    if(e->key() == Qt::Key_Escape) noApply();
+}

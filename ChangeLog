@@ -1,4 +1,8 @@
-2015-09-15 Marco Giammarini <m.giammarini@warcomeb.it>
+2015-09-24 Marco Giammarini <m.giammarini@warcomeb.it>
+
+    * Corretto il bug relativo all'apertura multipla del dialog delle note quando si premeva esc.
+
+2015-09-23 Marco Giammarini <m.giammarini@warcomeb.it>
 
     * Tolta la limitazione del numero di pezzi nella produzione, closes #19
 

@@ -59,6 +59,8 @@ private slots:
     void apply();
     void noApply();
 
+    void keyPressEvent(QKeyEvent *e);
+
 private:
     Ui::NoteDialog *ui;
 
