@@ -1,3 +1,12 @@
+LabOrTool 0.2.1 [2015-09-15]
+-------------------------------------------------------------------------------
+
+ * Fix dei seguenti bug:
+    #18 Tolta la limitazione ed il blocco dei caratteri nel codice di uscita (reso generico)
+    #19 Tolta la limitazione del numero di pezzi nella produzione
+    Corretto il bug relativo all'apertura multipla del dialog delle note quando si premeva esc.
+
+
 LabOrTool 0.2.0 [2015-09-15]
 -------------------------------------------------------------------------------
 
