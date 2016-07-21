@@ -1,0 +1,1 @@
+//# sourceMappingURL=manufacturer.class.js.map
