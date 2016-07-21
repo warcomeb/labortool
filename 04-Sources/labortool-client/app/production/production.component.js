@@ -9,21 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var navbar_component_1 = require('./navbar/navbar.component');
-var AppComponent = (function () {
-    function AppComponent() {
+var ProductionComponent = (function () {
+    function ProductionComponent() {
     }
-    AppComponent = __decorate([
+    ProductionComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, navbar_component_1.NavbarComponent]
+            selector: 'my-production',
+            templateUrl: 'app/production/production.component.html',
+            styleUrls: ['app/production/production.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], ProductionComponent);
+    return ProductionComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.ProductionComponent = ProductionComponent;
+//# sourceMappingURL=production.component.js.map

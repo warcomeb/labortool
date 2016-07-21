@@ -9,21 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var navbar_component_1 = require('./navbar/navbar.component');
-var AppComponent = (function () {
-    function AppComponent() {
+var SearchActivityComponent = (function () {
+    function SearchActivityComponent() {
     }
-    AppComponent = __decorate([
+    SearchActivityComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, navbar_component_1.NavbarComponent]
+            selector: 'my-search-activity',
+            templateUrl: 'app/search/activity/search.activity.component.html',
+            styleUrls: ['app/search/activity/search.activity.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], SearchActivityComponent);
+    return SearchActivityComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.SearchActivityComponent = SearchActivityComponent;
+//# sourceMappingURL=search.activity.component.js.map

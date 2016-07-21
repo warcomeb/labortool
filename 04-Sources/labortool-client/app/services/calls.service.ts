@@ -5,6 +5,7 @@ import {HostComponent} from '../configs/host.component';
 
 @Injectable()
 export class CallsService {
+    public numeroID: number = 0;
     private actionURL: string;
     private headers: Headers;
 
@@ -16,9 +17,19 @@ export class CallsService {
         this.headers.append('Accept', 'application/json');
     }
 
+    /* Get calls */
     public GetAll = (): Observable<Response> => {
         return this._http.get(this.actionURL);
     }
+
+    public GetAllActivity = (): Observable<Response> => {
+        return this._http.get(this.actionURL + '/activity');
+    }
+
+    public GetActivity = (): Observable<Response> => {
+        return this._http.get(this.actionURL + '/activity/?id=' + this.numeroID);
+    }
+
     
     // mai provata
     public GetSingle = (id: number): Observable<Response> => {

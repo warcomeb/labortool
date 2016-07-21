@@ -9,21 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var navbar_component_1 = require('./navbar/navbar.component');
-var AppComponent = (function () {
-    function AppComponent() {
+var MemoryService = (function () {
+    function MemoryService() {
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, navbar_component_1.NavbarComponent]
-        }), 
+    MemoryService.prototype.setValue = function (val) {
+        this.ServerActivity = val;
+    };
+    MemoryService.prototype.getValue = function (val) {
+        return this.val;
+    };
+    MemoryService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], MemoryService);
+    return MemoryService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.MemoryService = MemoryService;
+//# sourceMappingURL=memory.service.js.map

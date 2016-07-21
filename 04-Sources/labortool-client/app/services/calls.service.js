@@ -16,8 +16,16 @@ var CallsService = (function () {
         var _this = this;
         this._http = _http;
         this._host = _host;
+        this.numeroID = 0;
+        /* Get calls */
         this.GetAll = function () {
             return _this._http.get(_this.actionURL);
+        };
+        this.GetAllActivity = function () {
+            return _this._http.get(_this.actionURL + '/activity');
+        };
+        this.GetActivity = function () {
+            return _this._http.get(_this.actionURL + '/activity/?id=' + _this.numeroID);
         };
         // mai provata
         this.GetSingle = function (id) {
