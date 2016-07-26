@@ -11,8 +11,8 @@ export class MemoryService {
         this.ServerActivity = val;
     }
 
-    getValue(val) {
+   /*getValue(val) {
         return this.val;
-    }
+    }*/
 
 }

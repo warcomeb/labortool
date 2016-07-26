@@ -15,9 +15,6 @@ var MemoryService = (function () {
     MemoryService.prototype.setValue = function (val) {
         this.ServerActivity = val;
     };
-    MemoryService.prototype.getValue = function (val) {
-        return this.val;
-    };
     MemoryService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

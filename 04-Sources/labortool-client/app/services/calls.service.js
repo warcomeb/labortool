@@ -25,16 +25,21 @@ var CallsService = (function () {
             return _this._http.get(_this.actionURL + '/activity');
         };
         this.GetActivity = function () {
-            return _this._http.get(_this.actionURL + '/activity/?id=' + _this.numeroID);
+            return _this._http.get(_this.actionURL + '/activity/' + _this.numeroID);
         };
         // mai provata
         this.GetSingle = function (id) {
             return _this._http.get(_this.actionURL + id);
         };
         // mai provata
+        /* Post Calls */
         this.POST = function (itemName) {
             var toAdd = JSON.stringify({ ItemName: itemName });
             return _this._http.post(_this.actionURL, toAdd, { headers: _this.headers });
+        };
+        this.PostAnActivity = function (itemName) {
+            var toAdd = JSON.stringify({ ItemName: itemName });
+            return _this._http.post(_this.actionURL + '/activity', toAdd, { headers: _this.headers });
         };
         this.PUT = function (itemToUpdate) {
             return _this._http.put(_this.actionURL, JSON.stringify(itemToUpdate), { headers: _this.headers });

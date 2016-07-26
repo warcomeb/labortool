@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {HostComponent} from '../configs/host.component';
+import {ClassActivity} from '../classes/activity.class';
 
 @Injectable()
 export class CallsService {
@@ -27,7 +28,7 @@ export class CallsService {
     }
 
     public GetActivity = (): Observable<Response> => {
-        return this._http.get(this.actionURL + '/activity/?id=' + this.numeroID);
+        return this._http.get(this.actionURL + '/activity/' + this.numeroID);
     }
 
     
@@ -37,9 +38,15 @@ export class CallsService {
     }
     
     // mai provata
+    /* Post Calls */
     public POST = (itemName: string): Observable<Response> => {
         var toAdd = JSON.stringify({ItemName: itemName});
         return this._http.post(this.actionURL, toAdd, {headers: this.headers});
+    }
+
+    public PostAnActivity = (itemName: ClassActivity): Observable<Response> => {
+        var toAdd = JSON.stringify({ItemName: itemName});
+        return this._http.post(this.actionURL + '/activity', toAdd, {headers: this.headers});
     }
 
     public PUT = (itemToUpdate: string): Observable<Response> => {
