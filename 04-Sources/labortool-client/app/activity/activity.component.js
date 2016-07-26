@@ -9,23 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var calls_service_1 = require('../services/calls.service');
 var memory_service_1 = require('../services/memory.service');
 var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
 var search_activity_component_1 = require('../search/activity/search.activity.component');
+var add_button_component_1 = require('../button/add.button.component');
 var ActivityComponent = (function () {
     function ActivityComponent(_callsService, _memoryService) {
         this._callsService = _callsService;
         this._memoryService = _memoryService;
     }
-    Object.defineProperty(ActivityComponent.prototype, "val", {
-        set: function (val) {
-            val = this.serverActivitys[0];
-            return this._memoryService.getValue();
-        },
-        enumerable: true,
-        configurable: true
-    });
+    /*set val(val) {
+        val = this.serverActivitys[0];
+        return this._memoryService.getValue();
+    }*/
     ActivityComponent.prototype.ngOnInit = function () {
         this.getActivitys();
     };
@@ -41,7 +39,7 @@ var ActivityComponent = (function () {
             templateUrl: 'app/activity/activity.component.html',
             styleUrls: ['app/activity/activity.component.css'],
             providers: [calls_service_1.CallsService],
-            directives: [breadcrumbs_component_1.BreadcrumbsComponent, search_activity_component_1.SearchActivityComponent]
+            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_activity_component_1.SearchActivityComponent, add_button_component_1.AddButtonComponent]
         }), 
         __metadata('design:paramtypes', [calls_service_1.CallsService, memory_service_1.MemoryService])
     ], ActivityComponent);

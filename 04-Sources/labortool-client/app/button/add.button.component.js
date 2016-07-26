@@ -9,16 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var HostComponent = (function () {
-    function HostComponent() {
-        //public serverURL = "http://localhost:5000";
-        this.serverURL = "http://ovwakfenek.localtunnel.me:5000";
+var AddButtonComponent = (function () {
+    function AddButtonComponent() {
     }
-    HostComponent = __decorate([
-        core_1.Injectable(), 
+    AddButtonComponent = __decorate([
+        core_1.Component({
+            selector: 'my-add-button',
+            templateUrl: 'app/button/add.button.component.html',
+            styleUrls: ['app/button/add.button.component.css']
+        }), 
         __metadata('design:paramtypes', [])
-    ], HostComponent);
-    return HostComponent;
+    ], AddButtonComponent);
+    return AddButtonComponent;
 }());
-exports.HostComponent = HostComponent;
-//# sourceMappingURL=host.component.js.map
+exports.AddButtonComponent = AddButtonComponent;
+//# sourceMappingURL=add.button.component.js.map
