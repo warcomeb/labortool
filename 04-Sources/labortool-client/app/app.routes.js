@@ -6,6 +6,7 @@ var production_component_1 = require('./production/production.component');
 var project_component_1 = require('./project/project.component');
 var inventory_component_1 = require('./inventory/inventory.component');
 var about_component_1 = require('./about/about.component');
+var add_activity_component_1 = require('./add/activity/add.activity.component');
 var routes = [
     {
         path: '',
@@ -14,6 +15,10 @@ var routes = [
     {
         path: 'activity',
         component: activity_component_1.ActivityComponent
+    },
+    {
+        path: 'activity/add',
+        component: add_activity_component_1.AddActivityComponent
     },
     {
         path: 'production',

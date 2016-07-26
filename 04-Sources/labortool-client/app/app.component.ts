@@ -1,7 +1,6 @@
 import {Component, Directive} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 import {NavbarComponent} from './navbar/navbar.component';
-import {} from './breadcrumbs/breadcrumbs.';
 
 @Component({
     selector: 'my-app',

@@ -5,6 +5,7 @@ import {ProductionComponent} from './production/production.component';
 import {ProjectComponent} from './project/project.component';
 import {InventoryComponent} from './inventory/inventory.component';
 import {AboutComponent} from './about/about.component';
+import {AddActivityComponent} from './add/activity/add.activity.component';
 
 const routes: RouterConfig = [
     {
@@ -14,6 +15,10 @@ const routes: RouterConfig = [
     {
         path: 'activity',
         component: ActivityComponent
+    },
+    {
+        path: 'activity/add',
+        component: AddActivityComponent
     },
     {
         path: 'production',
