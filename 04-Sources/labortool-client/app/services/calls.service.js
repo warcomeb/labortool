@@ -41,6 +41,10 @@ var CallsService = (function () {
             var toAdd = JSON.stringify({ ItemName: itemName });
             return _this._http.post(_this.actionURL + '/activity', toAdd, { headers: _this.headers });
         };
+        this.PostAProduction = function (itemName) {
+            var toAdd = JSON.stringify({ ItemName: itemName });
+            return _this._http.post(_this.actionURL + '/production', toAdd, { headers: _this.headers });
+        };
         this.PUT = function (itemToUpdate) {
             return _this._http.put(_this.actionURL, JSON.stringify(itemToUpdate), { headers: _this.headers });
         };

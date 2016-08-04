@@ -9,23 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
-var search_component_1 = require('../search/project/search.component');
-var add_button_component_1 = require('../button/project/add.button.component');
-var ProjectComponent = (function () {
-    function ProjectComponent() {
+var SearchProductionComponent = (function () {
+    function SearchProductionComponent() {
     }
-    ProjectComponent = __decorate([
+    SearchProductionComponent = __decorate([
         core_1.Component({
-            selector: 'component-project',
-            templateUrl: 'app/project/project.component.html',
-            styleUrls: ['app/project/project.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchProjComponent, add_button_component_1.AddBtnProjComponent]
+            selector: 'search-component-prod',
+            templateUrl: './app/search/search.component.html',
+            styleUrls: ['./app/search/search.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], ProjectComponent);
-    return ProjectComponent;
+    ], SearchProductionComponent);
+    return SearchProductionComponent;
 }());
-exports.ProjectComponent = ProjectComponent;
-//# sourceMappingURL=project.component.js.map
+exports.SearchProductionComponent = SearchProductionComponent;
+//# sourceMappingURL=search.production.component.js.map

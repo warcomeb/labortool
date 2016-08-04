@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'my-search-activity',
-    templateUrl: 'app/search/activity/search.activity.component.html',
-    styleUrls: ['app/search/activity/search.activity.component.css']
+    selector: 'search-component-acti',
+    templateUrl: 'app/search/search.component.html',
+    styleUrls: ['app/search/search.component.css']
 })
 
 export class SearchActivityComponent {

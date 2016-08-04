@@ -9,6 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
+var search_production_component_1 = require('../search/production/search.production.component');
+var add_button_component_1 = require('../button/production/add.button.component');
 var ProductionComponent = (function () {
     function ProductionComponent() {
     }
@@ -16,7 +20,8 @@ var ProductionComponent = (function () {
         core_1.Component({
             selector: 'my-production',
             templateUrl: 'app/production/production.component.html',
-            styleUrls: ['app/production/production.component.css']
+            styleUrls: ['app/production/production.component.css'],
+            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_production_component_1.SearchProductionComponent, add_button_component_1.AddBtnProdComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], ProductionComponent);

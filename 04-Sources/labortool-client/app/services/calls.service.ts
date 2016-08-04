@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {HostComponent} from '../configs/host.component';
-import {ClassActivity} from '../classes/activity.class';
+import {ActivityClass, ProductionClass} from '../classes/classes';
 
 @Injectable()
 export class CallsService {
@@ -44,9 +44,14 @@ export class CallsService {
         return this._http.post(this.actionURL, toAdd, {headers: this.headers});
     }
 
-    public PostAnActivity = (itemName: ClassActivity): Observable<Response> => {
+    public PostAnActivity = (itemName: ActivityClass): Observable<Response> => {
         var toAdd = JSON.stringify({ItemName: itemName});
         return this._http.post(this.actionURL + '/activity', toAdd, {headers: this.headers});
+    }
+
+    public PostAProduction = (itemName: ProductionClass): Observable<Response> => {
+        var toAdd = JSON.stringify({ItemName: itemName});
+        return this._http.post(this.actionURL + '/production', toAdd, {headers: this.headers});
     }
 
     public PUT = (itemToUpdate: string): Observable<Response> => {
