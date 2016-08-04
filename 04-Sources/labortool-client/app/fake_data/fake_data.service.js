@@ -9,18 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var HomeComponent = (function () {
-    function HomeComponent() {
+var Fake_DataService = (function () {
+    function Fake_DataService() {
+        this.MyActivity = [
+            { Id: 1, Title: 'prova', Description: 'prova1', WorkCode: '1234', Deadline: new Date(2016, 0, 0), Priority: 3, Status: 5, Type: 3, Employee: 1, Editable: 1, Notes: 'sadadsa' }
+        ];
     }
-    HomeComponent = __decorate([
-        core_1.Component({
-            selector: 'my-home',
-            templateUrl: 'app/home/home.component.html',
-            styleUrls: ['app/home/home.component.css'],
-        }), 
+    Fake_DataService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], HomeComponent);
-    return HomeComponent;
+    ], Fake_DataService);
+    return Fake_DataService;
 }());
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+exports.Fake_DataService = Fake_DataService;
+//# sourceMappingURL=fake_data.service.js.map

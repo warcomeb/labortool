@@ -9,18 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var HomeComponent = (function () {
-    function HomeComponent() {
+var AddBtnProjComponent = (function () {
+    function AddBtnProjComponent() {
+        this.nome = 'Add new project!';
     }
-    HomeComponent = __decorate([
+    AddBtnProjComponent = __decorate([
         core_1.Component({
-            selector: 'my-home',
-            templateUrl: 'app/home/home.component.html',
-            styleUrls: ['app/home/home.component.css'],
+            selector: 'add-btn-proj',
+            templateUrl: 'app/button/add.button.component.html',
+            styleUrls: ['app/button/add.button.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], HomeComponent);
-    return HomeComponent;
+    ], AddBtnProjComponent);
+    return AddBtnProjComponent;
 }());
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+exports.AddBtnProjComponent = AddBtnProjComponent;
+;
+//# sourceMappingURL=add.button.component.js.map

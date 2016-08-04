@@ -9,18 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var HomeComponent = (function () {
-    function HomeComponent() {
+var AddBtnProdComponent = (function () {
+    function AddBtnProdComponent() {
+        this.nome = 'Add new production!';
     }
-    HomeComponent = __decorate([
+    AddBtnProdComponent = __decorate([
         core_1.Component({
-            selector: 'my-home',
-            templateUrl: 'app/home/home.component.html',
-            styleUrls: ['app/home/home.component.css'],
+            selector: 'add-btn-prod',
+            templateUrl: 'app/button/add.button.component.html',
+            styleUrls: ['app/button/add.button.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], HomeComponent);
-    return HomeComponent;
+    ], AddBtnProdComponent);
+    return AddBtnProdComponent;
 }());
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+exports.AddBtnProdComponent = AddBtnProdComponent;
+;
+//# sourceMappingURL=add.button.component.js.map
