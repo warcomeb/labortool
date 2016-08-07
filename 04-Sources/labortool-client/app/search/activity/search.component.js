@@ -9,18 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var SearchProjComponent = (function () {
-    function SearchProjComponent() {
+var SearchActiComponent = (function () {
+    function SearchActiComponent() {
     }
-    SearchProjComponent = __decorate([
+    SearchActiComponent = __decorate([
         core_1.Component({
-            selector: 'search-proj-component',
-            templateUrl: 'app/search/project/search.component.html',
+            selector: 'search-acti-component',
+            templateUrl: 'app/search/activity/search.component.html',
             styleUrls: ['app/search/search.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], SearchProjComponent);
-    return SearchProjComponent;
+    ], SearchActiComponent);
+    return SearchActiComponent;
 }());
-exports.SearchProjComponent = SearchProjComponent;
+exports.SearchActiComponent = SearchActiComponent;
 //# sourceMappingURL=search.component.js.map

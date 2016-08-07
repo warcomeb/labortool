@@ -18,17 +18,17 @@ var project_component_1 = require('./project/project.component');
 var inventory_component_1 = require('./inventory/inventory.component');
 var about_component_1 = require('./about/about.component');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(router) {
+        this.router = router;
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
             templateUrl: 'app/app.component.html',
             styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, navbar_component_1.NavbarComponent, home_component_1.HomeComponent, activity_component_1.ActivityComponent, production_component_1.ProductionComponent, project_component_1.ProjectComponent, inventory_component_1.InventoryComponent, about_component_1.AboutComponent],
-            precompile: [home_component_1.HomeComponent, activity_component_1.ActivityComponent, production_component_1.ProductionComponent, project_component_1.ProjectComponent, inventory_component_1.InventoryComponent, about_component_1.AboutComponent]
+            directives: [router_1.ROUTER_DIRECTIVES, navbar_component_1.NavbarComponent, home_component_1.HomeComponent, activity_component_1.ActivityComponent, production_component_1.ProductionComponent, project_component_1.ProjectComponent, inventory_component_1.InventoryComponent, about_component_1.AboutComponent]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);
     return AppComponent;
 }());

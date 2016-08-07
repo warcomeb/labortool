@@ -9,18 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var SearchProjComponent = (function () {
-    function SearchProjComponent() {
+var MemoryDataService = (function () {
+    function MemoryDataService() {
+        this.iD = 0;
     }
-    SearchProjComponent = __decorate([
-        core_1.Component({
-            selector: 'search-proj-component',
-            templateUrl: 'app/search/project/search.component.html',
-            styleUrls: ['app/search/search.component.css']
-        }), 
+    MemoryDataService.prototype.setID = function (id) {
+        this.iD = id;
+    };
+    MemoryDataService.prototype.getID = function () {
+        return this.iD;
+    };
+    MemoryDataService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], SearchProjComponent);
-    return SearchProjComponent;
+    ], MemoryDataService);
+    return MemoryDataService;
 }());
-exports.SearchProjComponent = SearchProjComponent;
-//# sourceMappingURL=search.component.js.map
+exports.MemoryDataService = MemoryDataService;
+//# sourceMappingURL=memory.data.service.js.map

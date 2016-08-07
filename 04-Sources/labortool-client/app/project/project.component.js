@@ -21,7 +21,7 @@ var ProjectComponent = (function () {
             selector: 'component-project',
             templateUrl: 'app/project/project.component.html',
             styleUrls: ['app/project/project.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchProjComponent, add_button_component_1.AddBtnProjComponent]
+            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchProjComponent, add_button_component_1.AddProjBtnComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], ProjectComponent);
