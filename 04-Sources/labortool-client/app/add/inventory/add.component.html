@@ -1,0 +1,162 @@
+<div class="container-fluid">
+    <div class="row text-center">
+        <h1>Add new component!</h1>
+    </div>
+
+    <div class="row">
+        <dl class="dl-horizontal center-block">
+            <dt>Name</dt>
+            <dd>
+                <label class="sr-only center-block">Name</label>
+                <input #newName class="form-control center-block" placeholder="Name" [(ngModel)]="ClientComponent.Name">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Manufacturer Name</dt>
+            <dd>
+                <label class="sr-only center-block">Manufacturer Name</label>
+                <input #newManufacturerName class="form-control center-block" placeholder="Manufacturer Name" [(ngModel)]="ClientComponent.ManufacturerName">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Manufacturer WebSite</dt>
+            <dd>
+                <label class="sr-only center-block">Manufacturer WebSite</label>
+                <input #newManufacturerWebSite class="form-control center-block" placeholder="Manufacturer WebSite" [(ngModel)]="ClientComponent.ManufacturerWebSite">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Part Number</dt>
+            <dd>
+                <label class="sr-only center-block">Part Number</label>
+                <input #newPartNumber class="form-control center-block" placeholder="Part Number" [(ngModel)]="ClientComponent.PartNumber">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Distributor Name</dt>
+            <dd>
+                <label class="sr-only center-block">Distributor Name</label>
+                <input #newDistributorName class="form-control center-block" placeholder="Distributor Name" [(ngModel)]="ClientComponent.DistributorName">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Distributor WebSite</dt>
+            <dd>
+                <label class="sr-only center-block">Distributor WebSite</label>
+                <input #newDistributorWebSite class="form-control center-block" placeholder="Distributor WebSite" [(ngModel)]="ClientComponent.DistributorWebSite">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Distributor Code</dt>
+            <dd>
+                <label class="sr-only center-block">Distributor Code</label>
+                <input #newDistributorCode class="form-control center-block" placeholder="Distributor Code" [(ngModel)]="ClientComponent.DistributorCode">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Price</dt>
+            <dd>
+                <label class="sr-only" for="exampleInputAmount">Price (in euros)</label>
+                <div class="input-group">
+                    <div class="input-group-addon">€</div>
+                    <input #newPrice type="text" class="form-control center-block" placeholder="Price" [(ngModel)]="ClientComponent.Price">
+                </div>
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Code</dt>
+            <dd>
+                <label class="sr-only center-block">Code</label>
+                <input #newCode class="form-control center-block" placeholder="Code" [(ngModel)]="ClientComponent.Code">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Position</dt>
+            <dd>
+                <label class="sr-only center-block">Position</label>
+                <input #newPosition class="form-control center-block" placeholder="Position" [(ngModel)]="ClientComponent.LocationPosition">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Container</dt>
+            <dd>
+                <label class="sr-only center-block">Container</label>
+                <input #newContainer class="form-control center-block" placeholder="Container" [(ngModel)]="ClientComponent.LocationContainer">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Sub Container</dt>
+            <dd>
+                <label class="sr-only center-block">Sub Container</label>
+                <input #newSubContainer class="form-control center-block" placeholder="Sub Container" [(ngModel)]="ClientComponent.LocationSubContainer">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Datasheet Link</dt>
+            <dd>
+                <label class="sr-only center-block">Datasheet Link</label>
+                <input #newDatasheet class="form-control center-block" placeholder="Datasheet Link" [(ngModel)]="ClientComponent.Datasheet">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Footprint Name</dt>
+            <dd>
+                <label class="sr-only center-block">Footprint Name</label>
+                <input #newFootprintName class="form-control center-block" placeholder="Footprint Name" [(ngModel)]="ClientComponent.FootprintName">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Footprint Link</dt>
+            <dd>
+                <label class="sr-only center-block">Footprint Link</label>
+                <input #newFootprintLink class="form-control center-block" placeholder="Footprint Link" [(ngModel)]="ClientComponent.FootprintLink">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Category Name</dt>
+            <dd>
+                <label class="sr-only center-block">Category Name</label>
+                <input #newCategoryName class="form-control center-block" placeholder="Category Name" [(ngModel)]="ClientComponent.CategoryName">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Category Note</dt>
+            <dd>
+                <label class="sr-only center-block">Category Note</label>
+                <input #newCategoryNote class="form-control center-block" placeholder="Category Note" [(ngModel)]="ClientComponent.CategoryNote">
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal center-block">
+            <dt>Note</dt>
+            <dd>
+                <label class="sr-only center-block">Note</label>
+                <textarea #newCategoryNote class="form-control center-block" rows="3" placeholder="Note" [(ngModel)]="ClientComponent.CategoryNote"></textarea>
+            </dd>
+        </dl>
+
+    </div>
+    <div *ngIf="ID == 0" class="row margin-top">
+        <button type="submit" class="btn btn-default center-block" (click)="postComponent()">Add</button>
+    </div>
+    <div *ngIf="ID > 0" class="row margin-top">
+        <button type="submit" class="btn btn-default center-block" (click)="putComponent(ID)">Edit</button>
+    </div>
+
+</div>

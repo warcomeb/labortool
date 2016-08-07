@@ -12,25 +12,23 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var calls_service_1 = require('../services/calls.service');
 var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
-var search_activity_component_1 = require('../search/activity/search.activity.component');
+var search_component_1 = require('../search/activity/search.component');
 var add_button_component_1 = require('../button/activity/add.button.component');
-var fake_data_service_1 = require('../fake_data/fake_data.service');
+var memory_data_service_1 = require('../services/memory.data.service');
 var ActivityComponent = (function () {
-    function ActivityComponent(_callsService, _memoryService) {
+    function ActivityComponent(router, _callsService, _memoryDataService) {
+        this.router = router;
         this._callsService = _callsService;
-        this._memoryService = _memoryService;
+        this._memoryDataService = _memoryDataService;
     }
-    /*set val(val) {
-        val = this.serverActivitys[0];
-        return this._memoryService.getValue();
-    }*/
     ActivityComponent.prototype.ngOnInit = function () {
         this.getActivitys();
     };
     ActivityComponent.prototype.getActivitys = function () {
-        this.serverActivitys = this._memoryService.MyActivity;
+        var _this = this;
+        //this.serverActivitys = this._memoryService.MyActivity;
         this._callsService.GetAllActivity().subscribe(function (activity) {
-            //this.serverActivitys = activity.json();
+            _this.serverActivitys = activity.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getActivitys complete!'); });
     };
     ActivityComponent = __decorate([
@@ -38,10 +36,10 @@ var ActivityComponent = (function () {
             selector: 'my-activity',
             templateUrl: 'app/activity/activity.component.html',
             styleUrls: ['app/activity/activity.component.css'],
-            providers: [calls_service_1.CallsService, fake_data_service_1.Fake_DataService],
-            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_activity_component_1.SearchActivityComponent, add_button_component_1.AddBtnActiComponent]
+            providers: [calls_service_1.CallsService],
+            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchActiComponent, add_button_component_1.AddActiBtnComponent]
         }), 
-        __metadata('design:paramtypes', [calls_service_1.CallsService, fake_data_service_1.Fake_DataService])
+        __metadata('design:paramtypes', [router_1.Router, calls_service_1.CallsService, memory_data_service_1.MemoryDataService])
     ], ActivityComponent);
     return ActivityComponent;
 }());

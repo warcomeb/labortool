@@ -9,20 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AddBtnActiComponent = (function () {
-    function AddBtnActiComponent() {
-        this.nome = 'Add new activity!';
+var router_1 = require('@angular/router');
+var AddActiBtnComponent = (function () {
+    function AddActiBtnComponent(router) {
+        this.router = router;
     }
-    AddBtnActiComponent = __decorate([
+    AddActiBtnComponent = __decorate([
         core_1.Component({
-            selector: 'add-btn-acti',
-            templateUrl: 'app/button/add.button.component.html',
-            styleUrls: ['app/button/add.button.component.css']
+            selector: 'add-acti-btn',
+            templateUrl: 'app/button/activity/add.button.component.html',
+            styleUrls: ['app/button/add.button.component.css'],
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [])
-    ], AddBtnActiComponent);
-    return AddBtnActiComponent;
+        __metadata('design:paramtypes', [router_1.Router])
+    ], AddActiBtnComponent);
+    return AddActiBtnComponent;
 }());
-exports.AddBtnActiComponent = AddBtnActiComponent;
+exports.AddActiBtnComponent = AddActiBtnComponent;
 ;
 //# sourceMappingURL=add.button.component.js.map

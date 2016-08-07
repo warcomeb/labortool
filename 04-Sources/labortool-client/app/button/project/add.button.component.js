@@ -9,20 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AddBtnProjComponent = (function () {
-    function AddBtnProjComponent() {
-        this.nome = 'Add new project!';
+var AddProjBtnComponent = (function () {
+    function AddProjBtnComponent() {
     }
-    AddBtnProjComponent = __decorate([
+    AddProjBtnComponent = __decorate([
         core_1.Component({
-            selector: 'add-btn-proj',
-            templateUrl: 'app/button/add.button.component.html',
+            selector: 'add-proj-btn',
+            templateUrl: 'app/button/project/add.button.component.html',
             styleUrls: ['app/button/add.button.component.css']
         }), 
         __metadata('design:paramtypes', [])
-    ], AddBtnProjComponent);
-    return AddBtnProjComponent;
+    ], AddProjBtnComponent);
+    return AddProjBtnComponent;
 }());
-exports.AddBtnProjComponent = AddBtnProjComponent;
+exports.AddProjBtnComponent = AddProjBtnComponent;
 ;
 //# sourceMappingURL=add.button.component.js.map

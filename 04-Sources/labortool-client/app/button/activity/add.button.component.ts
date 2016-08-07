@@ -1,11 +1,13 @@
 import {Component} from '@angular/core';
+import {ROUTER_DIRECTIVES, Router} from '@angular/router';
 
 @Component({
-    selector: 'add-btn-acti',
-    templateUrl: 'app/button/add.button.component.html',
-    styleUrls: ['app/button/add.button.component.css']
+    selector: 'add-acti-btn',
+    templateUrl: 'app/button/activity/add.button.component.html',
+    styleUrls: ['app/button/add.button.component.css'],
+    directives: [ROUTER_DIRECTIVES]
 })
 
-export class AddBtnActiComponent {
-    public nome:string = 'Add new activity!';
+export class AddActiBtnComponent {
+    constructor(private router: Router) {}
 };

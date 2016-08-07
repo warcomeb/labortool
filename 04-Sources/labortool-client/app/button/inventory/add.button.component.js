@@ -9,19 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AddProdBtnComponent = (function () {
-    function AddProdBtnComponent() {
+var router_1 = require('@angular/router');
+var AddInveBtnComponent = (function () {
+    function AddInveBtnComponent(router) {
+        this.router = router;
     }
-    AddProdBtnComponent = __decorate([
+    AddInveBtnComponent = __decorate([
         core_1.Component({
-            selector: 'add-prod-btn',
-            templateUrl: 'app/button/production/add.button.component.html',
-            styleUrls: ['app/button/add.button.component.css']
+            selector: 'add-inve-btn',
+            templateUrl: 'app/button/inventory/add.button.component.html',
+            styleUrls: ['app/button/add.button.component.css'],
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [])
-    ], AddProdBtnComponent);
-    return AddProdBtnComponent;
+        __metadata('design:paramtypes', [router_1.Router])
+    ], AddInveBtnComponent);
+    return AddInveBtnComponent;
 }());
-exports.AddProdBtnComponent = AddProdBtnComponent;
+exports.AddInveBtnComponent = AddInveBtnComponent;
 ;
 //# sourceMappingURL=add.button.component.js.map
