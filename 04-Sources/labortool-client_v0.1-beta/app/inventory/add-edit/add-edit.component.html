@@ -1,0 +1,160 @@
+<div class="container-fluid">
+    <h1 class="text-center">Add new component!</h1>
+    <br>
+    <dl class="dl-horizontal center-block">
+        <dt>Name</dt>
+        <dd>
+            <label class="sr-only center-block">Name</label>
+            <input #newName class="form-control center-block" placeholder="Name" [value]="ClientComponent.Name">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Manufacturer Name</dt>
+        <dd>
+            <label class="sr-only center-block">Manufacturer Name</label>
+            <input #newManufacturerName class="form-control center-block" placeholder="Manufacturer Name" [value]="ClientComponent.ManufacturerName">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Manufacturer WebSite</dt>
+        <dd>
+            <label class="sr-only center-block">Manufacturer WebSite</label>
+            <input #newManufacturerWebSite class="form-control center-block" placeholder="Manufacturer WebSite" [value]="ClientComponent.ManufacturerWebSite">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Part Number</dt>
+        <dd>
+            <label class="sr-only center-block">Part Number</label>
+            <input #newPartNumber class="form-control center-block" placeholder="Part Number" [value]="ClientComponent.PartNumber">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Distributor Name</dt>
+        <dd>
+            <label class="sr-only center-block">Distributor Name</label>
+            <input #newDistributorName class="form-control center-block" placeholder="Distributor Name" [value]="ClientComponent.DistributorName">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Distributor WebSite</dt>
+        <dd>
+            <label class="sr-only center-block">Distributor WebSite</label>
+            <input #newDistributorWebSite class="form-control center-block" placeholder="Distributor WebSite" [value]="ClientComponent.DistributorWebSite">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Distributor Code</dt>
+        <dd>
+            <label class="sr-only center-block">Distributor Code</label>
+            <input #newDistributorCode class="form-control center-block" placeholder="Distributor Code" [value]="ClientComponent.DistributorCode">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Price</dt>
+        <dd>
+            <label class="sr-only" for="exampleInputAmount">Price (in euros)</label>
+            <div class="input-group">
+                <div class="input-group-addon">€</div>
+                <input #newPrice type="text" class="form-control center-block" placeholder="Price" [value]="ClientComponent.Price">
+            </div>
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Code</dt>
+        <dd>
+            <label class="sr-only center-block">Code</label>
+            <input #newCode class="form-control center-block" placeholder="Code" [value]="ClientComponent.Code">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Position</dt>
+        <dd>
+            <label class="sr-only center-block">Position</label>
+            <input #newPosition class="form-control center-block" placeholder="Position" [value]="ClientComponent.LocationPosition">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Container</dt>
+        <dd>
+            <label class="sr-only center-block">Container</label>
+            <input #newContainer class="form-control center-block" placeholder="Container" [value]="ClientComponent.LocationContainer">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Sub Container</dt>
+        <dd>
+            <label class="sr-only center-block">Sub Container</label>
+            <input #newSubContainer class="form-control center-block" placeholder="Sub Container" [value]="ClientComponent.LocationSubContainer">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Datasheet Link</dt>
+        <dd>
+            <label class="sr-only center-block">Datasheet Link</label>
+            <input #newDatasheet class="form-control center-block" placeholder="Datasheet Link" [value]="ClientComponent.Datasheet">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Footprint Name</dt>
+        <dd>
+            <label class="sr-only center-block">Footprint Name</label>
+            <input #newFootprintName class="form-control center-block" placeholder="Footprint Name" [value]="ClientComponent.FootprintName">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Footprint Link</dt>
+        <dd>
+            <label class="sr-only center-block">Footprint Link</label>
+            <input #newFootprintLink class="form-control center-block" placeholder="Footprint Link" [value]="ClientComponent.FootprintLink">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Category Name</dt>
+        <dd>
+            <label class="sr-only center-block">Category Name</label>
+            <input #newCategoryName class="form-control center-block" placeholder="Category Name" [value]="ClientComponent.CategoryName">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Category Note</dt>
+        <dd>
+            <label class="sr-only center-block">Category Note</label>
+            <input #newCategoryNote class="form-control center-block" placeholder="Category Note" [value]="ClientComponent.CategoryNote">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Note</dt>
+        <dd>
+            <label class="sr-only center-block">Note</label>
+            <textarea #newCategoryNote class="form-control center-block" rows="3" placeholder="Note" [value]="ClientComponent.CategoryNote"></textarea>
+        </dd>
+    </dl>
+    <br>
+    <div *ngIf="ID == 0">
+        <button type="submit" class="btn btn-default center-block" (click)="postComponent(); onSelect()">Add</button>
+    </div>
+    <div *ngIf="ID > 0">
+        <button type="submit" class="btn btn-default center-block" (click)="putComponent(ID); onSelect()">Edit</button>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
