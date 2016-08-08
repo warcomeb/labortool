@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <h1 class="text-center">Add new activity!</h1>
+    <br>
+    <dl class="dl-horizontal center-block">
+        <dt>Name</dt>
+        <dd>
+            <label class="sr-only center-block">Name</label>
+            <input #newName class="form-control center-block" placeholder="Name" [value]="ClientActivity.Name">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Description</dt>
+        <dd>
+            <label class="sr-only center-block">Description</label>
+            <input #newDescription class="form-control center-block" placeholder="Description" [value]="ClientActivity.Description">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>WorkCode</dt>
+        <dd>
+            <label class="sr-only center-block">WorkCode</label>
+            <input #newWorkCode class="form-control center-block" placeholder="WorkCode" [value]="ClientActivity.WorkCode">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Deadline</dt>
+        <dd>
+            <label class="sr-only center-block">Deadline</label>
+            <input #newDeadline class="form-control center-block" placeholder="Deadline" [value]="ClientActivity.Deadline">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Priority</dt>
+        <dd>
+            <label class="sr-only center-block">Priority</label>
+            <input #newPriority class="form-control center-block" placeholder="Priority" [value]="ClientActivity.Priority">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Status</dt>
+        <dd>
+            <label class="sr-only center-block">Status</label>
+            <input #newStatus class="form-control center-block" placeholder="Status" [value]="ClientActivity.Status">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Type</dt>
+        <dd>
+            <label class="sr-only" for="exampleInputAmount">Type</label>
+            <div class="input-group">
+                <input #newType type="text" class="form-control center-block" placeholder="Type" [value]="ClientActivity.Type">
+            </div>
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Employee</dt>
+        <dd>
+            <label class="sr-only center-block">Employee</label>
+            <input #newEmployee class="form-control center-block" placeholder="Employee" [value]="ClientActivity.Employee">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Editable</dt>
+        <dd>
+            <label class="sr-only center-block">Editable</label>
+            <input #newEditable class="form-control center-block" placeholder="Editable" [value]="ClientActivity.Editable">
+        </dd>
+    </dl>
+
+    <dl class="dl-horizontal center-block">
+        <dt>Note</dt>
+        <dd>
+            <label class="sr-only center-block">Note</label>
+            <textarea #newCategoryNote class="form-control center-block" rows="3" placeholder="Note" [value]="ClientActivity.Notes"></textarea>
+        </dd>
+    </dl>
+    <br>
+    <div *ngIf="ID == 0">
+        <button type="submit" class="btn btn-default center-block" (click)="postComponent(); onSelect()">Add</button>
+    </div>
+    <div *ngIf="ID > 0">
+        <button type="submit" class="btn btn-default center-block" (click)="putComponent(ID); onSelect()">Edit</button>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
