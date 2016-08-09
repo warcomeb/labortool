@@ -18,7 +18,6 @@ var AddEditComponent = (function () {
         this.router = router;
         this.calls = calls;
         this.data = data;
-        this.ID = 0;
         this.ServerComponent = {
             Id: 0,
             Name: "N/D",
@@ -40,49 +39,34 @@ var AddEditComponent = (function () {
             CategoryNote: "N/D",
             Note: "N/D"
         };
-        this.ClientComponent = {
-            Id: 0,
-            Name: "N/D",
-            ManufacturerName: "N/D",
-            ManufacturerWebSite: "N/D",
-            PartNumber: 0,
-            DistributorName: "N/D",
-            DistributorWebSite: "N/D",
-            DistributorCode: "N/D",
-            Price: 0.00,
-            Code: "N/D",
-            LocationPosition: "N/D",
-            LocationContainer: "N/D",
-            LocationSubContainer: "N/D",
-            Datasheet: "N/D",
-            FootprintName: "N/D",
-            FootprintLink: "N/D",
-            CategoryName: "N/D",
-            CategoryNote: "N/D",
-            Note: "N/D"
-        };
-        this.ID = data.getID();
     }
     AddEditComponent.prototype.ngOnInit = function () {
-        if (this.ID > 0) {
-            this.getSingleComponent(this.ID);
-        }
+        var _this = this;
+        this.sub = this.route.params.subscribe(function (params) {
+            var id = +params['id']; // (+) converts string 'id' to a number
+            _this.getSingleComponent(id);
+        });
+    };
+    AddEditComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
     };
     AddEditComponent.prototype.getSingleComponent = function (id) {
         var _this = this;
         this.calls.GetSingleComponent(id).subscribe(function (data) {
             _this.ServerComponent = data.json();
-        }, function (error) { return console.log(error); }, function () { return console.log(_this.ID); });
+        }, function (error) { return console.log(error); }, function () { return console.log('getSingleComponent complete!'); });
     };
     AddEditComponent.prototype.postComponent = function () {
         this.calls.PostComponent(this.ClientComponent).subscribe(function (data) { return console.log(data); }, function (error) { return console.log(error); }, function () { return console.log('postComponent complete!'); });
     };
-    AddEditComponent.prototype.putComponent = function (id) {
-        this.calls.PutComponent(this.ClientComponent).subscribe(function (data) { return console.log(data); }, function (error) { return console.log(error); }, function () { return console.log('putComponent complete!'); });
-        this.data.setID(0);
+    AddEditComponent.prototype.putComponent = function (comp) {
+        this.calls.PutComponent(comp).subscribe(function (data) { return console.log(data); }, function (error) { return console.log(error); }, function () { return console.log('putComponent complete!'); });
     };
-    AddEditComponent.prototype.onSelect = function () {
+    AddEditComponent.prototype.goToInventory = function () {
         this.router.navigate(['/inventory']);
+    };
+    AddEditComponent.prototype.goToView = function (comp) {
+        this.router.navigate(['/inventory', comp.Id]);
     };
     AddEditComponent = __decorate([
         core_1.Component({

@@ -39,8 +39,14 @@ var InventoryComponent = (function () {
             _this.ServerComponents = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllComponent complete!'); });
     }; // fine getAllComponent
-    InventoryComponent.prototype.onSelect = function () {
+    InventoryComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/add']);
+    };
+    InventoryComponent.prototype.goToEdit = function () {
+        this.router.navigate(['/inventory/edit']);
+    };
+    InventoryComponent.prototype.goToView = function (comp) {
+        this.router.navigate(['/inventory/view', comp.Id]);
     };
     InventoryComponent = __decorate([
         core_1.Component({

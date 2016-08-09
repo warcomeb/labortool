@@ -22,7 +22,7 @@ export class CallInventoryServices {
     }
 
     public GetSingleComponent= (id: number): Observable<Response> => {
-        return this.http.get(this.URL + '/inventory' + id);
+        return this.http.get(this.URL + '/inventory/' + id);
     }
 
     public PostComponent= (item: InventoryClass): Observable<Response> => {
@@ -35,7 +35,7 @@ export class CallInventoryServices {
     }
 
     public DeleteComponent= (id: number): Observable<Response> => {
-        return this.http.delete(this.URL + '/inventory' + id);
+        return this.http.delete(this.URL + '/inventory/' + id);
     }
 
 }

@@ -10,16 +10,68 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var data_service_1 = require('../../data/data.service');
+var calls_service_1 = require('../calls/calls.service');
 var ViewComponent = (function () {
-    function ViewComponent(route, router) {
+    function ViewComponent(route, router, data, calls) {
         this.route = route;
         this.router = router;
+        this.data = data;
+        this.calls = calls;
+        this.ServerComponent = {
+            Id: 0,
+            Name: "N/D",
+            ManufacturerName: "N/D",
+            ManufacturerWebSite: "N/D",
+            PartNumber: 0,
+            DistributorName: "N/D",
+            DistributorWebSite: "N/D",
+            DistributorCode: "N/D",
+            Price: 0.00,
+            Code: "N/D",
+            LocationPosition: "N/D",
+            LocationContainer: "N/D",
+            LocationSubContainer: "N/D",
+            Datasheet: "N/D",
+            FootprintName: "N/D",
+            FootprintLink: "N/D",
+            CategoryName: "N/D",
+            CategoryNote: "N/D",
+            Note: "N/D"
+        };
     }
+    ViewComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.sub = this.route.params.subscribe(function (params) {
+            var id = +params['id']; // (+) converts string 'id' to a number
+            _this.getSingleComponent(id);
+        });
+    };
+    ViewComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
+    };
+    ViewComponent.prototype.getSingleComponent = function (id) {
+        var _this = this;
+        this.calls.GetSingleComponent(id).subscribe(function (data) {
+            _this.ServerComponent = data.json();
+        }, function (error) { return console.log(error); }, function () { return console.log('getSingleComponent complete!'); });
+    };
+    ViewComponent.prototype.deleteComponent = function (comp) {
+        this.calls.DeleteComponent(comp.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteComponent complete!'); });
+    }; // fine deleteComponent
+    ViewComponent.prototype.goToInventory = function () {
+        this.router.navigate(['/inventory']);
+    };
+    ViewComponent.prototype.goToEdit = function (comp) {
+        this.router.navigate(['/inventory/edit', comp.Id]);
+    };
     ViewComponent = __decorate([
         core_1.Component({
-            templateUrl: './app/inventory/view/view.component.html'
+            templateUrl: './app/inventory/view/view.component.html',
+            styleUrls: ['./app/inventory/view/view.component.css'],
+            providers: [calls_service_1.CallInventoryServices]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallInventoryServices])
     ], ViewComponent);
     return ViewComponent;
 }());

@@ -20,7 +20,7 @@ var CallInventoryServices = (function () {
             return _this.http.get(_this.URL + '/inventory');
         };
         this.GetSingleComponent = function (id) {
-            return _this.http.get(_this.URL + '/inventory' + id);
+            return _this.http.get(_this.URL + '/inventory/' + id);
         };
         this.PostComponent = function (item) {
             var toAdd = JSON.stringify({ Item: item });
@@ -30,7 +30,7 @@ var CallInventoryServices = (function () {
             return _this.http.put(_this.URL + '/inventory', JSON.stringify(item), { headers: _this.headers });
         };
         this.DeleteComponent = function (id) {
-            return _this.http.delete(_this.URL + '/inventory' + id);
+            return _this.http.delete(_this.URL + '/inventory/' + id);
         };
         this.URL = host.serverURL;
         this.headers = new http_1.Headers();

@@ -55,7 +55,15 @@ export class InventoryComponent implements OnInit {
         );
     } // fine getAllComponent
 
-    onSelect() {
+    goToAdd() {
         this.router.navigate(['/inventory/add']);
+    }
+
+    goToEdit() {
+        this.router.navigate(['/inventory/edit']);
+    }
+
+    goToView(comp: InventoryClass) {
+        this.router.navigate(['/inventory/view', comp.Id]);
     }
 }
