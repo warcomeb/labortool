@@ -1,0 +1,31 @@
+<br>
+<h1 class="text-xs-center">Manufacturer informations!</h1>
+<br>
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
+    <div class="col-xs-10">
+        <input *ngIf="ServerManufacturer?.Id == 0" class="form-control" type="text" [value]="ClientManufacturer?.Name" id="example-text-input">
+        <input *ngIf="ServerManufacturer?.Id > 0" class="form-control" type="text" [value]="ServerManufacturer?.Name" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">WebSite</label>
+    <div class="col-xs-10">
+        <input *ngIf="ServerManufacturer?.Id == 0" class="form-control" type="text" [value]="ClientManufacturer?.ManufacturerWebSite" id="example-text-input">
+        <input *ngIf="ServerManufacturer?.Id > 0" class="form-control" type="text" [value]="ServerManufacturer?.ManufacturerWebSite" id="example-text-input">
+    </div>
+</div>
+
+<br>
+<div *ngIf="ServerManufacturer?.Id == 0">
+    <button type="button" class="btn btn-primary" (click)="goToManufacturer()">Back</button>
+    <button type="submit" class="btn btn-success pull-xs-right" (click)="postManufacturer(); goToManufacturer()">Add</button>
+</div>
+<div *ngIf="ServerManufacturer?.Id > 0">
+    <button type="button" class="btn btn-primary" (click)="goToView(ServerManufacturer)">Back</button>
+    <button type="submit" class="btn btn-success pull-xs-right" (click)="putManufacturer(ServerManufacturer); goToView(ServerManufacturer)">Save</button>
+</div>
+<br>
+<br>
+<br>
