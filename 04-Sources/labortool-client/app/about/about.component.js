@@ -9,16 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var AboutComponent = (function () {
-    function AboutComponent() {
+    function AboutComponent(route, router) {
+        this.route = route;
+        this.router = router;
     }
     AboutComponent = __decorate([
         core_1.Component({
-            selector: 'my-about',
-            templateUrl: 'app/about/about.component.html',
-            styleUrls: ['app/about/about.component.css']
+            templateUrl: './app/about/about.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
     ], AboutComponent);
     return AboutComponent;
 }());

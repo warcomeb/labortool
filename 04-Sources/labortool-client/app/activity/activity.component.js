@@ -10,36 +10,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var calls_service_1 = require('../services/calls.service');
-var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
-var search_component_1 = require('../search/activity/search.component');
-var add_button_component_1 = require('../button/activity/add.button.component');
-var memory_data_service_1 = require('../services/memory.data.service');
+var calls_service_1 = require('./calls/calls.service');
+var data_service_1 = require('../data/data.service');
+var search_component_1 = require('./search/search.component');
 var ActivityComponent = (function () {
-    function ActivityComponent(router, _callsService, _memoryDataService) {
+    function ActivityComponent(route, router, calls, data) {
+        this.route = route;
         this.router = router;
-        this._callsService = _callsService;
-        this._memoryDataService = _memoryDataService;
+        this.calls = calls;
+        this.data = data;
+        this.ID = 0;
+        this.ServerActivitys = [
+            { Id: 0, Name: "N/D", Description: "N/D", WorkCode: "N/D", Deadline: new Date(2016, 0, 0), Priority: 0, Status: 0, Type: 0, Employee: 0, Editable: 0, Notes: "N/D" }
+        ];
+        this.ClientActivity = {
+            Id: 0,
+            Name: "N/D",
+            Description: "N/D",
+            WorkCode: "N/D",
+            Deadline: new Date(2016, 0, 0),
+            Priority: 0,
+            Status: 0,
+            Type: 0,
+            Employee: 0,
+            Editable: 0,
+            Notes: "N/D"
+        };
+        this.ID = data.getID();
     }
     ActivityComponent.prototype.ngOnInit = function () {
         this.getActivitys();
     };
     ActivityComponent.prototype.getActivitys = function () {
         var _this = this;
-        //this.serverActivitys = this._memoryService.MyActivity;
-        this._callsService.GetAllActivity().subscribe(function (activity) {
-            _this.serverActivitys = activity.json();
+        this.calls.GetAllActivity().subscribe(function (data) {
+            _this.ServerActivitys = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getActivitys complete!'); });
+    };
+    ActivityComponent.prototype.onSelect = function () {
+        this.router.navigate(['/activity/add']);
     };
     ActivityComponent = __decorate([
         core_1.Component({
-            selector: 'my-activity',
-            templateUrl: 'app/activity/activity.component.html',
-            styleUrls: ['app/activity/activity.component.css'],
-            providers: [calls_service_1.CallsService],
-            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchActiComponent, add_button_component_1.AddActiBtnComponent]
+            templateUrl: './app/activity/activity.component.html',
+            providers: [calls_service_1.CallActivityServices],
+            directives: [search_component_1.SearchActivityComponent]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, calls_service_1.CallsService, memory_data_service_1.MemoryDataService])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, calls_service_1.CallActivityServices, data_service_1.DataService])
     ], ActivityComponent);
     return ActivityComponent;
 }());

@@ -1,11 +1,17 @@
-    import {bootstrap} from '@angular/platform-browser-dynamic';
-    
-    import {HTTP_PROVIDERS, Http, URLSearchParams} from '@angular/http';
-    import {HostComponent} from './configs/host.component';
+// main entry point
+import { bootstrap }                              from '@angular/platform-browser-dynamic';
 
-    import {AppComponent} from './app.component';
-    import {appRouterProviders} from './app.routes';
-    import {MemoryDataService} from './services/memory.data.service';
+import {HTTP_PROVIDERS, Http, URLSearchParams}    from '@angular/http';
 
-    bootstrap(AppComponent, [appRouterProviders, MemoryDataService, HTTP_PROVIDERS, HostComponent])
-    .catch(err => console.error(err));
+import { AppComponent }                           from './app.component';
+import { disableDeprecatedForms, provideForms }   from '@angular/forms';
+
+import { appRouterProviders }                     from './app.routes';
+
+bootstrap(AppComponent, [
+  appRouterProviders,
+  HTTP_PROVIDERS,
+  disableDeprecatedForms(),
+  provideForms()
+])
+.catch(err => console.error(err));

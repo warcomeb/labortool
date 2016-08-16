@@ -1,11 +1,12 @@
-import {Component} from '@angular/core'
+import { Component }                from '@angular/core';
+import { Router, ActivatedRoute }   from '@angular/router';
 
 @Component({
-    selector: 'my-about',
-    templateUrl: 'app/about/about.component.html',
-    styleUrls: ['app/about/about.component.css']
+    templateUrl: './app/about/about.component.html'
 })
 
 export class AboutComponent {
-    
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router) { }
 }

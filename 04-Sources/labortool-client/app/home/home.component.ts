@@ -1,11 +1,12 @@
-import {Component} from '@angular/core'
+import { Component }                from '@angular/core';
+import { Router, ActivatedRoute }   from '@angular/router';
 
 @Component({
-    selector: 'my-home',
-    templateUrl: 'app/home/home.component.html',
-    styleUrls: ['app/home/home.component.css'],
+    templateUrl: './app/home/home.component.html'
 })
 
 export class HomeComponent {
-    
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router) { }
 }

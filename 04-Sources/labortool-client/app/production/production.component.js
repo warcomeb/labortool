@@ -10,20 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
-var search_component_1 = require('../search/production/search.component');
-var add_button_component_1 = require('../button/production/add.button.component');
 var ProductionComponent = (function () {
-    function ProductionComponent() {
+    function ProductionComponent(route, router) {
+        this.route = route;
+        this.router = router;
     }
     ProductionComponent = __decorate([
         core_1.Component({
-            selector: 'my-production',
-            templateUrl: 'app/production/production.component.html',
-            styleUrls: ['app/production/production.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchProdComponent, add_button_component_1.AddProdBtnComponent]
+            templateUrl: './app/production/production.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
     ], ProductionComponent);
     return ProductionComponent;
 }());

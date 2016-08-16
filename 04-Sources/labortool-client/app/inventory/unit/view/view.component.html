@@ -1,0 +1,32 @@
+<br>
+<h1 class="text-xs-center">Unit informations!</h1>
+<br>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerUnit?.Name" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Short Name</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerUnit?.ShortName" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Note</label>
+    <div class="col-xs-10">
+        <textarea class="form-control" rows="3" [disabled]="true" [value]="ServerUnit?.Note" id="example-text-input"></textarea>
+    </div>
+</div>
+
+<br>
+<div>
+    <button type="button" class="btn btn-primary" (click)="goToUnit()">Back</button>
+</div>
+<br>
+<br>
+<br>

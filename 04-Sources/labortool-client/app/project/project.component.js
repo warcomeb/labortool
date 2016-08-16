@@ -10,20 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var breadcrumbs_component_1 = require('../breadcrumbs/breadcrumbs.component');
-var search_component_1 = require('../search/project/search.component');
-var add_button_component_1 = require('../button/project/add.button.component');
 var ProjectComponent = (function () {
-    function ProjectComponent() {
+    function ProjectComponent(route, router) {
+        this.route = route;
+        this.router = router;
     }
     ProjectComponent = __decorate([
         core_1.Component({
-            selector: 'component-project',
-            templateUrl: 'app/project/project.component.html',
-            styleUrls: ['app/project/project.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES, breadcrumbs_component_1.BreadcrumbsComponent, search_component_1.SearchProjComponent, add_button_component_1.AddProjBtnComponent]
+            templateUrl: './app/project/project.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router])
     ], ProjectComponent);
     return ProjectComponent;
 }());

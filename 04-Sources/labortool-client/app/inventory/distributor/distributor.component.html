@@ -1,0 +1,20 @@
+<search-distributor></search-distributor>
+<br>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Name</th>
+                <th>WebSite</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let distributor of ServerDistributors" (click)="goToView(distributor)">
+                <td>{{distributor?.Name}}</td>
+                <td><a href="{{distributor?.WebSite}}">Link</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<button type="button" class="btn btn-primary pull-xs-right" (click)="goToAdd()">Add +</button>

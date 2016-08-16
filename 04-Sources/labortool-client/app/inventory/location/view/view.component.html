@@ -1,0 +1,34 @@
+<br>
+<h1 class="text-xs-center">Location informations!</h1>
+<br>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Position</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerLocation?.Position" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Container</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerLocation?.Container" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Sub Container</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerLocation?.SubContainer" id="example-text-input">
+    </div>
+</div>
+
+<br>
+<div>
+    <button type="button" class="btn btn-primary" (click)="goToLocation()">Back</button>
+    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerLocation)">Edit</button>
+    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteLocation(ServerLocation)">Delete</button>
+</div>
+<br>
+<br>
+<br>
