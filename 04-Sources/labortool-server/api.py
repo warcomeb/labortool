@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import fields, marshal
 from flask import Flask, jsonify, request, make_response, current_app
 from functools import update_wrapper
+<<<<<<< HEAD
 
 api = Flask(__name__)
 
@@ -47,6 +48,13 @@ def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_t
         return update_wrapper(wrapped_function, f)
     return decorator
 #### End of network configuration ####
+=======
+from flask_cors import CORS, cross_origin
+
+api = Flask(__name__)
+CORS(api)
+
+>>>>>>> beta
 
 #### Begin DB connection and configuration ####
 config = ConfigParser.ConfigParser()  
@@ -100,7 +108,10 @@ class Footprint(mysql.Model):
 #### END of Map Model ####
 
 @api.route('/inventory/manufacturer', methods=['POST'])
+<<<<<<< HEAD
 @crossdomain(origin='*')
+=======
+>>>>>>> beta
 def createManufacturer():
     name = request.get_json()["Name"]
     webSite = request.get_json()["WebSite"]
@@ -118,7 +129,10 @@ def createManufacturer():
     return jsonify(True)
 
 @api.route('/inventory/manufacturer', methods=['GET'])
+<<<<<<< HEAD
 @crossdomain(origin='*')
+=======
+>>>>>>> beta
 def getManufacturers():  
     data = Manufacturer.query.order_by(Manufacturer.Id.desc()).all()
 
@@ -128,15 +142,22 @@ def getManufacturers():
     return jsonify(marshal(data, mfields))
 
 @api.route('/inventory/manufacturer/<int:ID>', methods=['GET'])
+<<<<<<< HEAD
 @crossdomain(origin='*')
+=======
+>>>>>>> beta
 def getManufacturer(ID):  
     data = Manufacturer.query.get(ID)
     mfields = { 'Id': fields.Raw, 'Name': fields.Raw, 'WebSite': fields.Raw }
 
     return jsonify(marshal(data, mfields))
 
+<<<<<<< HEAD
 @api.route('/inventory/manufacturer/<int:ID>', methods=['PUT', 'OPTIONS'])
 @crossdomain(origin='*') 
+=======
+@api.route('/inventory/manufacturer/<int:ID>', methods=['PUT'])
+>>>>>>> beta
 def updateManufacturer(ID):
     name = request.get_json()["Name"]
     webSite = request.get_json()["WebSite"]
@@ -153,8 +174,12 @@ def updateManufacturer(ID):
 
     return jsonify(True)
 
+<<<<<<< HEAD
 @api.route('/inventory/manufacturer/<int:ID>', methods=['DELETE', 'OPTIONS'])
 @crossdomain(origin='*')
+=======
+@api.route('/inventory/manufacturer/<int:ID>', methods=['DELETE'])
+>>>>>>> beta
 def deleteManufacturer(ID):
     curr_session = mysql.session
 
