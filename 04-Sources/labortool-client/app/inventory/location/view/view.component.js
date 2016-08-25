@@ -43,6 +43,7 @@ var ViewComponent = (function () {
     };
     ViewComponent.prototype.deleteLocation = function (location) {
         this.calls.DeleteLocation(location.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteLocation complete!'); });
+        this.goToLocation();
     };
     ViewComponent.prototype.goToLocation = function () {
         this.router.navigate(['/inventory/location']);

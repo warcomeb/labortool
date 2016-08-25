@@ -31,12 +31,9 @@ var DistributorComponent = (function () {
         this.calls.GetAllDistributor().subscribe(function (data) {
             _this.ServerDistributors = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllDistributor complete!'); });
-    }; // fine getAllComponent
+    };
     DistributorComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/distributor/add']);
-    };
-    DistributorComponent.prototype.goToEdit = function () {
-        this.router.navigate(['/inventory/distributor/edit']);
     };
     DistributorComponent.prototype.goToView = function (distributor) {
         this.router.navigate(['/inventory/distributor/view', distributor.Id]);

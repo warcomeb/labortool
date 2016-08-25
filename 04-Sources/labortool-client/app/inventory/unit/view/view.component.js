@@ -44,9 +44,6 @@ var ViewComponent = (function () {
     ViewComponent.prototype.goToUnit = function () {
         this.router.navigate(['/inventory/unit']);
     };
-    ViewComponent.prototype.goToEdit = function (unit) {
-        this.router.navigate(['/inventory/unit/edit', unit.Id]);
-    };
     ViewComponent = __decorate([
         core_1.Component({
             templateUrl: './app/inventory/unit/view/view.component.html',

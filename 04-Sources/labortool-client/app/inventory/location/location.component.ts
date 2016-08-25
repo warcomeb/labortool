@@ -1,12 +1,12 @@
 import { Component, OnInit }            from '@angular/core';
 import { Router, ActivatedRoute }       from '@angular/router';
 
-import { SearchLocationComponent }   from './search/search.component';
+import { SearchLocationComponent }      from './search/search.component';
 
-import { CallLocationServices }      from './calls/calls.service';
+import { CallLocationServices }         from './calls/calls.service';
 import { DataService }                  from '../../data/data.service';
 
-import { LocationClass }             from './class/location.class';
+import { LocationClass }                from './class/location.class';
 
 @Component({
     templateUrl: './app/inventory/location/location.component.html',
@@ -39,14 +39,10 @@ export class LocationComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllLocation complete!')
         );
-    } // fine getAllComponent
+    }
 
     goToAdd() {
         this.router.navigate(['/inventory/location/add']);
-    }
-
-    goToEdit() {
-        this.router.navigate(['/inventory/location/edit']);
     }
 
     goToView(location: LocationClass) {

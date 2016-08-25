@@ -18,7 +18,6 @@ export class UnitComponent implements OnInit {
     private ServerUnits: UnitClass[] = [
         { Id: 0, Name: "N/D", ShortName: "N/D", Note: "N/D" }
     ];
-    private ClientUnit: UnitClass;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,7 +38,7 @@ export class UnitComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllUnit complete!')
         );
-    } // fine getAllComponent
+    }
 
     goToView(unit: UnitClass) {
         this.router.navigate(['/inventory/unit/view', unit.Id]);

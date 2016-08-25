@@ -54,6 +54,8 @@ export class ViewComponent implements OnInit, OnDestroy {
             error => console.log(error),
             () => console.log('deleteLocation complete!')
         );
+
+        this.goToLocation();
     }
 
     private goToLocation() {

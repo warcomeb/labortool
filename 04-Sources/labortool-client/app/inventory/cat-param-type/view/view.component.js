@@ -12,12 +12,16 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var data_service_1 = require('../../../data/data.service');
 var calls_service_1 = require('../calls/calls.service');
+var calls_service_2 = require('../../unit/calls/calls.service');
+var calls_service_3 = require('../../category/calls/calls.service');
 var ViewComponent = (function () {
-    function ViewComponent(route, router, data, calls) {
+    function ViewComponent(route, router, data, cptCalls, unitCalls, categoryCalls) {
         this.route = route;
         this.router = router;
         this.data = data;
-        this.calls = calls;
+        this.cptCalls = cptCalls;
+        this.unitCalls = unitCalls;
+        this.categoryCalls = categoryCalls;
         this.ServerCatParamType = {
             Id: 0,
             Name: "N/D",
@@ -26,6 +30,17 @@ var ViewComponent = (function () {
             Order: "N/D",
             Note: "N/D"
         };
+        this.ServerUnit = {
+            Id: 0,
+            Name: '',
+            ShortName: '',
+            Note: ''
+        };
+        this.ServerCategory = {
+            Id: 0,
+            Name: '',
+            Note: ''
+        };
     }
     ViewComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -33,26 +48,40 @@ var ViewComponent = (function () {
             var id = +params['id']; // (+) converts string 'id' to a number
             _this.getSingleCatParamType(id);
         });
+        this.getSingleUnit(this.ServerCatParamType.UnitId);
+        this.getSingleCategory(this.ServerCatParamType.CategoryId);
     };
     ViewComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
     };
     ViewComponent.prototype.getSingleCatParamType = function (id) {
         var _this = this;
-        this.calls.GetSingleCatParamType(id).subscribe(function (data) {
+        this.cptCalls.GetSingleCatParamType(id).subscribe(function (data) {
             _this.ServerCatParamType = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleCatParamType complete!'); });
     };
+    ViewComponent.prototype.getSingleUnit = function (id) {
+        var _this = this;
+        this.unitCalls.GetSingleUnit(id).subscribe(function (data) {
+            _this.ServerUnit = data.json();
+        }, function (error) { return console.log(error); }, function () { return console.log('getSingleUnit complete!'); });
+    };
+    ViewComponent.prototype.getSingleCategory = function (id) {
+        var _this = this;
+        this.categoryCalls.GetSingleCategory(id).subscribe(function (data) {
+            _this.ServerCategory = data.json();
+        }, function (error) { return console.log(error); }, function () { return console.log('getSingleCategory complete!'); });
+    };
     ViewComponent.prototype.goToCatParamType = function () {
-        this.router.navigate(['/inventory/cat-param-type']);
+        this.router.navigate(['/inventory/category/parameter/type']);
     };
     ViewComponent = __decorate([
         core_1.Component({
             templateUrl: './app/inventory/cat-param-type/view/view.component.html',
             styleUrls: ['./app/inventory/cat-param-type/view/view.component.css'],
-            providers: [calls_service_1.CallCatParamTypeServices]
+            providers: [calls_service_1.CallCatParamTypeServices, calls_service_2.CallUnitServices, calls_service_3.CallCategoryServices]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallCatParamTypeServices])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallCatParamTypeServices, calls_service_2.CallUnitServices, calls_service_3.CallCategoryServices])
     ], ViewComponent);
     return ViewComponent;
 }());

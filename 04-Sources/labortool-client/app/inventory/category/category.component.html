@@ -5,13 +5,11 @@
         <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
-                <th>WebSite</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let category of ServerCategorys" (click)="goToView(category)">
                 <td>{{category?.Name}}</td>
-                <td>{{category?.Note}}</td>
             </tr>
         </tbody>
     </table>

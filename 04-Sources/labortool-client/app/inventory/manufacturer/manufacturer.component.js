@@ -31,12 +31,9 @@ var ManufacturerComponent = (function () {
         this.calls.GetAllManufacturer().subscribe(function (data) {
             _this.ServerManufacturers = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllManufacturer complete!'); });
-    }; // fine getAllComponent
+    };
     ManufacturerComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/manufacturer/add']);
-    };
-    ManufacturerComponent.prototype.goToEdit = function () {
-        this.router.navigate(['/inventory/manufacturer/edit']);
     };
     ManufacturerComponent.prototype.goToView = function (comp) {
         this.router.navigate(['/inventory/manufacturer/view', comp.Id]);

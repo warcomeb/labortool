@@ -39,17 +39,13 @@ export class ManufacturerComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllManufacturer complete!')
         );
-    } // fine getAllComponent
+    }
 
-    goToAdd() {
+    private goToAdd() {
         this.router.navigate(['/inventory/manufacturer/add']);
     }
 
-    goToEdit() {
-        this.router.navigate(['/inventory/manufacturer/edit']);
-    }
-
-    goToView(comp: ManufacturerClass) {
+    private goToView(comp: ManufacturerClass) {
         this.router.navigate(['/inventory/manufacturer/view', comp.Id]);
     }
 }

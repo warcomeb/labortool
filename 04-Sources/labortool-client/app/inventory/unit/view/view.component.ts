@@ -52,8 +52,4 @@ export class ViewComponent implements OnInit, OnDestroy {
     private goToUnit() {
         this.router.navigate(['/inventory/unit']);
     }
-
-    private goToEdit(unit: UnitClass) {
-        this.router.navigate(['/inventory/unit/edit', unit.Id]);
-    }
 }

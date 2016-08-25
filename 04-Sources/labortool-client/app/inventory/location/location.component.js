@@ -31,12 +31,9 @@ var LocationComponent = (function () {
         this.calls.GetAllLocation().subscribe(function (data) {
             _this.ServerLocations = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllLocation complete!'); });
-    }; // fine getAllComponent
+    };
     LocationComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/location/add']);
-    };
-    LocationComponent.prototype.goToEdit = function () {
-        this.router.navigate(['/inventory/location/edit']);
     };
     LocationComponent.prototype.goToView = function (location) {
         this.router.navigate(['/inventory/location/view', location.Id]);

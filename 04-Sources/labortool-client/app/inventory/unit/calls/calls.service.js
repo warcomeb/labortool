@@ -22,16 +22,6 @@ var CallUnitServices = (function () {
         this.GetSingleUnit = function (id) {
             return _this.http.get(_this.URL + '/inventory/unit/' + id);
         };
-        this.PostUnit = function (item) {
-            var toAdd = JSON.stringify({ Item: item });
-            return _this.http.post(_this.URL + '/inventory/unit', toAdd, { headers: _this.headers });
-        };
-        this.PutUnit = function (item) {
-            return _this.http.put(_this.URL + '/inventory/unit', JSON.stringify(item), { headers: _this.headers });
-        };
-        this.DeleteUnit = function (id) {
-            return _this.http.delete(_this.URL + '/inventory/unit/' + id);
-        };
         this.URL = host.serverURL;
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');

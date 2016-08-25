@@ -18,17 +18,20 @@ var CallInventoryServices = (function () {
         this.http = http;
         this.host = host;
         this.GetAllManufacturer = function () {
-            return _this.http.get(_this.URL + '/inventory/manufacturer');
+            return _this.http.get(_this.URL + '/inventory/manufacturer')
+                .catch(_this.handleError);
         };
         this.GetSingleManufacturer = function (id) {
-            return _this.http.get(_this.URL + '/inventory/manufacturer/' + id);
+            return _this.http.get(_this.URL + '/inventory/manufacturer/' + id)
+                .catch(_this.handleError);
         };
-        this.PostManufacturer = function (item) {
-            var toAdd = JSON.stringify({ Item: item });
-            return _this.http.post(_this.URL + '/inventory/manufacturer', toAdd, { headers: _this.headers });
+        this.PostManufacturer = function (body) {
+            return _this.http.post(_this.URL + '/inventory/manufacturer', JSON.stringify(body), _this.options)
+                .catch(_this.handleError);
         };
-        this.PutManufacturer = function (item) {
-            return _this.http.put(_this.URL + '/inventory/manufacturer', JSON.stringify(item), { headers: _this.headers });
+        this.PutManufacturer = function (id, body) {
+            return _this.http.put(_this.URL + '/inventory/manufacturer/' + id, JSON.stringify(body), _this.options)
+                .catch(_this.handleError);
         };
         this.DeleteManufacturer = function (id) {
             return _this.http.delete(_this.URL + '/inventory/manufacturer/' + id)
@@ -38,6 +41,7 @@ var CallInventoryServices = (function () {
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
+        this.options = new http_1.RequestOptions({ headers: this.headers });
     }
     CallInventoryServices.prototype.handleError = function (error) {
         console.error(error);

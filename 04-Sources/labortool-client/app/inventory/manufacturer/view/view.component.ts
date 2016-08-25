@@ -53,6 +53,8 @@ export class ViewComponent implements OnInit, OnDestroy {
             error => console.log(error),
             () => console.log('deleteManufacturer complete!')
         );
+        
+        this.goToManufacturer();
     }
 
     private goToManufacturer() {

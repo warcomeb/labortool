@@ -1,11 +1,25 @@
 <br>
-<h1 class="text-xs-center">CatParamType Parameter Type informations!</h1>
+<h1 class="text-xs-center">Category Parameter Type informations</h1>
 <br>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
     <div class="col-xs-10">
         <input class="form-control" type="text" [disabled]="true" [value]="ServerCatParamType?.Name" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Category Id</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerCatParamType?.CategoryId" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Unit Id</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerCatParamType?.UnitId" id="example-text-input">
     </div>
 </div>
 
@@ -22,8 +36,10 @@
         <textarea class="form-control" rows="3" [disabled]="true" [value]="ServerCatParamType?.Note" id="example-text-input"></textarea>
     </div>
 </div>
-
 <hr>
+<br>
+<h1 class="text-xs-center">Category informations</h1>
+<br>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
@@ -32,8 +48,36 @@
     </div>
 </div>
 
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Note</label>
+    <div class="col-xs-10">
+        <textarea class="form-control" rows="3" [disabled]="true" [value]="ServerCategory?.Note" id="example-text-input"></textarea>
+    </div>
+</div>
 <hr>
+<br>
+<h1 class="text-xs-center">Unit informations</h1>
+<br>
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerUnit?.Name" id="example-text-input">
+    </div>
+</div>
 
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Short Name</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerUnit?.Name" id="example-text-input">
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Note</label>
+    <div class="col-xs-10">
+        <textarea class="form-control" rows="3" [disabled]="true" [value]="ServerUnit?.Note" id="example-text-input"></textarea>
+    </div>
+</div>
 <br>
 <div>
     <button type="button" class="btn btn-primary" (click)="goToCatParamType()">Back</button>

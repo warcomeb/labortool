@@ -42,6 +42,7 @@ var ViewComponent = (function () {
     };
     ViewComponent.prototype.deleteManufacturer = function (manufacturer) {
         this.calls.DeleteManufacturer(manufacturer.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteManufacturer complete!'); });
+        this.goToManufacturer();
     };
     ViewComponent.prototype.goToManufacturer = function () {
         this.router.navigate(['/inventory/manufacturer']);

@@ -6,14 +6,12 @@
             <tr>
                 <th>Name</th>
                 <th>Short Name</th>
-                <th>WebSite</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let unit of ServerUnits" (click)="goToView(unit)">
                 <td>{{unit?.Name}}</td>
                 <td>{{unit?.ShortName}}</td>
-                <td>{{unit?.Note}}</td>
             </tr>
         </tbody>
     </table>

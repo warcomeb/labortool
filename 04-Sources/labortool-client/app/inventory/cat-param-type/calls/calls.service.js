@@ -17,20 +17,10 @@ var CallCatParamTypeServices = (function () {
         this.http = http;
         this.host = host;
         this.GetAllCatParamType = function () {
-            return _this.http.get(_this.URL + '/inventory/catparamtype');
+            return _this.http.get(_this.URL + '/inventory/cat-param-type');
         };
         this.GetSingleCatParamType = function (id) {
-            return _this.http.get(_this.URL + '/inventory/catparamtype/' + id);
-        };
-        this.PostCatParamType = function (item) {
-            var toAdd = JSON.stringify({ Item: item });
-            return _this.http.post(_this.URL + '/inventory/catparamtype', toAdd, { headers: _this.headers });
-        };
-        this.PutCatParamType = function (item) {
-            return _this.http.put(_this.URL + '/inventory/catparamtype', JSON.stringify(item), { headers: _this.headers });
-        };
-        this.DeleteCatParamType = function (id) {
-            return _this.http.delete(_this.URL + '/inventory/catparamtype/' + id);
+            return _this.http.get(_this.URL + '/inventory/cat-param-type/' + id);
         };
         this.URL = host.serverURL;
         this.headers = new http_1.Headers();

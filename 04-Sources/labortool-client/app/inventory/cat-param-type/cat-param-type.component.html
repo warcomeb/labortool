@@ -5,16 +5,19 @@
         <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
-                <th>WebSite</th>
+                <th>Category Id</th>
+                <th>Unit Id</th>
+                <th>Order</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let category of ServerCategorys" (click)="goToView(category)">
-                <td>{{category?.Name}}</td>
-                <td>{{category?.Note}}</td>
+            <tr *ngFor="let catparamtype of ServerCatParamTypes" (click)="goToView(catparamtype)">
+                <td>{{catparamtype?.Name}}</td>
+                <td>{{catparamtype?.CategoryId}}</td>
+                <td>{{catparamtype?.UnitId}}</td>
+                <td>{{catparamtype?.Order}}</td>
             </tr>
         </tbody>
     </table>
 </div>
 <br>
-<button type="button" class="btn btn-primary pull-xs-right" (click)="goToAdd()">Add +</button>

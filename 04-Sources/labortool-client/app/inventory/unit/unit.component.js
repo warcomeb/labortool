@@ -31,7 +31,7 @@ var UnitComponent = (function () {
         this.calls.GetAllUnit().subscribe(function (data) {
             _this.ServerUnits = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllUnit complete!'); });
-    }; // fine getAllComponent
+    };
     UnitComponent.prototype.goToView = function (unit) {
         this.router.navigate(['/inventory/unit/view', unit.Id]);
     };

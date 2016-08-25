@@ -53,6 +53,8 @@ export class ViewComponent implements OnInit, OnDestroy {
             error => console.log(error),
             () => console.log('deleteDistributor complete!')
         );
+
+        this.goToDistributor();
     }
 
     private goToDistributor() {

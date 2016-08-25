@@ -18,7 +18,6 @@ export class CatParamTypeComponent implements OnInit {
     private ServerCatParamTypes: CatParamTypeClass[] = [
         { Id: 0, Name: "N/D", CategoryId: 0, UnitId: 0, Order: "N/D", Note: "N/D" }
     ];
-    private ClientCatParamType: CatParamTypeClass;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,9 +38,9 @@ export class CatParamTypeComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllCatParamType complete!')
         );
-    } // fine getAllComponent
+    }
 
     goToView(catParamType: CatParamTypeClass) {
-        this.router.navigate(['/inventory/cat-param-type/view', catParamType.Id]);
+        this.router.navigate(['/inventory/category/parameter/type/view', catParamType.Id]);
     }
 }

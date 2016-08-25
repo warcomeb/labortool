@@ -18,24 +18,10 @@ export class CallCatParamTypeServices {
     }
 
     public GetAllCatParamType = (): Observable<Response> => {
-        return this.http.get(this.URL + '/inventory/catparamtype');
+        return this.http.get(this.URL + '/inventory/cat-param-type');
     }
 
     public GetSingleCatParamType = (id: number): Observable<Response> => {
-        return this.http.get(this.URL + '/inventory/catparamtype/' + id);
+        return this.http.get(this.URL + '/inventory/cat-param-type/' + id);
     }
-
-    public PostCatParamType = (item: CatParamTypeClass): Observable<Response> => {
-        var toAdd = JSON.stringify({Item: item});
-        return this.http.post(this.URL + '/inventory/catparamtype', toAdd, { headers: this.headers });
-    }
-
-    public PutCatParamType = (item: CatParamTypeClass): Observable<Response> => {
-        return this.http.put(this.URL + '/inventory/catparamtype', JSON.stringify(item), { headers: this.headers });
-    }
-
-    public DeleteCatParamType = (id: number): Observable<Response> => {
-        return this.http.delete(this.URL + '/inventory/catparamtype/' + id);
-    }
-
 }

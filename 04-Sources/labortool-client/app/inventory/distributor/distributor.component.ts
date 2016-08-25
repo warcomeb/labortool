@@ -18,7 +18,6 @@ export class DistributorComponent implements OnInit {
     private ServerDistributors: DistributorClass[] = [
         { Id: 0, Name: "N/D", WebSite: "N/D" }
     ];
-    private ClientDistributor: DistributorClass;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,14 +38,10 @@ export class DistributorComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllDistributor complete!')
         );
-    } // fine getAllComponent
+    }
 
     goToAdd() {
         this.router.navigate(['/inventory/distributor/add']);
-    }
-
-    goToEdit() {
-        this.router.navigate(['/inventory/distributor/edit']);
     }
 
     goToView(distributor: DistributorClass) {
