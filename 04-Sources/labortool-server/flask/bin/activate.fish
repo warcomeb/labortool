@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/dani/Documents/Loccioni/labortool-server_v0.1-beta/flask"
+set -gx VIRTUAL_ENV "/Users/dani/Documents/Projects/Loccioni/LabOrTool/server/flask"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

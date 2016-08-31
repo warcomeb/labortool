@@ -7,7 +7,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/Users/dani/Documents/Loccioni/labortool-server_v0.1-beta/flask"
+setenv VIRTUAL_ENV "/Users/dani/Documents/Projects/Loccioni/LabOrTool/server/flask"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"
