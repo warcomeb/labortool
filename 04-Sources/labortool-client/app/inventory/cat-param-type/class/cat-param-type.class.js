@@ -1,8 +1,20 @@
 "use strict";
-var CatParamTypeClass = (function () {
-    function CatParamTypeClass() {
+var JoinCatParamTypeClass = (function () {
+    function JoinCatParamTypeClass() {
     }
-    return CatParamTypeClass;
+    return JoinCatParamTypeClass;
 }());
-exports.CatParamTypeClass = CatParamTypeClass;
+exports.JoinCatParamTypeClass = JoinCatParamTypeClass;
+var CategoryParamTypeClass = (function () {
+    function CategoryParamTypeClass() {
+    }
+    return CategoryParamTypeClass;
+}());
+exports.CategoryParamTypeClass = CategoryParamTypeClass;
+var JoinUnitClass = (function () {
+    function JoinUnitClass() {
+    }
+    return JoinUnitClass;
+}());
+exports.JoinUnitClass = JoinUnitClass;
 //# sourceMappingURL=cat-param-type.class.js.map

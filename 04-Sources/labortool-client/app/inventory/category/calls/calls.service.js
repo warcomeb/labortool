@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var Rx_1 = require('rxjs/Rx');
 var connection_service_1 = require('../../../connection/connection.service');
 var CallCategoryServices = (function () {
     function CallCategoryServices(http, host) {
@@ -17,26 +18,38 @@ var CallCategoryServices = (function () {
         this.http = http;
         this.host = host;
         this.GetAllCategory = function () {
-            return _this.http.get(_this.URL + '/inventory/category');
+            return _this.http.get(_this.URL + '/inventory/category')
+                .catch(_this.handleError);
         };
         this.GetSingleCategory = function (id) {
-            return _this.http.get(_this.URL + '/inventory/category/' + id);
+            return _this.http.get(_this.URL + '/inventory/category/' + id)
+                .catch(_this.handleError);
         };
-        this.PostCategory = function (item) {
-            var toAdd = JSON.stringify({ Item: item });
-            return _this.http.post(_this.URL + '/inventory/category', toAdd, { headers: _this.headers });
+        this.PostCategory = function (body) {
+            return _this.http.post(_this.URL + '/inventory/category', JSON.stringify(body), _this.options)
+                .catch(_this.handleError);
         };
-        this.PutCategory = function (item) {
-            return _this.http.put(_this.URL + '/inventory/category', JSON.stringify(item), { headers: _this.headers });
+        this.PutCategory = function (id, body) {
+            return _this.http.put(_this.URL + '/inventory/category/' + id, JSON.stringify(body), _this.options)
+                .catch(_this.handleError);
         };
         this.DeleteCategory = function (id) {
-            return _this.http.delete(_this.URL + '/inventory/category/' + id);
+            return _this.http.delete(_this.URL + '/inventory/category/' + id)
+                .catch(_this.handleError);
+        };
+        this.JoinCategoryParamType = function (id) {
+            return _this.http.get(_this.URL + '/inventory/category/join/category-param-type/' + id);
         };
         this.URL = host.serverURL;
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
+        this.options = new http_1.RequestOptions({ headers: this.headers });
     }
+    CallCategoryServices.prototype.handleError = function (error) {
+        console.error(error);
+        return Rx_1.Observable.throw(error.json().error || 'Server error');
+    };
     CallCategoryServices = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, connection_service_1.ConnectionService])

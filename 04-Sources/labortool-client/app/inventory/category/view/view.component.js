@@ -18,16 +18,16 @@ var ViewComponent = (function () {
         this.router = router;
         this.data = data;
         this.calls = calls;
-        this.ServerCategory = {
-            Id: 0,
-            Name: "N/D",
-            Note: "N/D"
+        this.ServerData = {
+            CategoryId: 0,
+            CategoryName: 'N/D',
+            CategoryNote: 'N/D'
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            var id = +params['id']; // (+) converts string 'id' to a number
+            var id = +params['id'];
             _this.getSingleCategory(id);
         });
     };
@@ -37,17 +37,22 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleCategory = function (id) {
         var _this = this;
         this.calls.GetSingleCategory(id).subscribe(function (data) {
-            _this.ServerCategory = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleCategory complete!'); });
     };
-    ViewComponent.prototype.deleteCategory = function (category) {
-        this.calls.DeleteCategory(category.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteCategory complete!'); });
+    ViewComponent.prototype.deleteCategory = function (_category) {
+        var _this = this;
+        this.calls.DeleteCategory(_category.CategoryId).subscribe(undefined, function (error) { return console.log(error); }, function () {
+            console.log('deleteCategory complete!');
+            _this.goToCategory();
+        });
+        //setTimeout(() => { this.goToCategory(); }, 1000); 
     };
     ViewComponent.prototype.goToCategory = function () {
         this.router.navigate(['/inventory/category']);
     };
     ViewComponent.prototype.goToEdit = function (category) {
-        this.router.navigate(['/inventory/category/edit', category.Id]);
+        this.router.navigate(['/inventory/category/edit', category.CategoryId]);
     };
     ViewComponent = __decorate([
         core_1.Component({

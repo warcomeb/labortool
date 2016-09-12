@@ -14,11 +14,11 @@ import { LocationClass }           from '../class/location.class';
 
 export class ViewComponent implements OnInit, OnDestroy {
     private sub: any;
-    private ServerLocation: LocationClass = {
-        Id: 0,
-        Position: "N/D",
-        Container: "N/D",
-        SubContainer: "N/D"
+    private ServerData: LocationClass = {
+        LocationId: 0,
+        LocationPosition: "N/D",
+        LocationContainer: "N/D",
+        LocationSubContainer: "N/D"
     };
 
     constructor(
@@ -42,7 +42,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private getSingleLocation(id: number) {
         this.calls.GetSingleLocation(id).subscribe(
             (data) => {
-                this.ServerLocation = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getSingleLocation complete!')
@@ -50,12 +50,13 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private deleteLocation(location: LocationClass) {
-        this.calls.DeleteLocation(location.Id).subscribe(
+        this.calls.DeleteLocation(location.LocationId).subscribe(
+            undefined,
             error => console.log(error),
-            () => console.log('deleteLocation complete!')
-        );
-
-        this.goToLocation();
+            () => { 
+                console.log('deleteLocation complete!');
+                this.goToLocation();
+            });
     }
 
     private goToLocation() {
@@ -63,6 +64,6 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private goToEdit(location: LocationClass) {
-        this.router.navigate(['/inventory/location/edit', location.Id]);
+        this.router.navigate(['/inventory/location/edit', location.LocationId]);
     }
 }

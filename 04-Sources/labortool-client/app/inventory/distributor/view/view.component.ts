@@ -14,10 +14,10 @@ import { DistributorClass }           from '../class/distributor.class';
 
 export class ViewComponent implements OnInit, OnDestroy {
     private sub: any;
-    private ServerDistributor: DistributorClass = {
-        Id: 0,
-        Name: "N/D",
-        WebSite: "N/D"
+    private ServerData: DistributorClass = {
+        DistributorId: 0,
+        DistributorName: "N/D",
+        DistributorWebSite: "N/D"
     };
 
     constructor(
@@ -41,7 +41,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private getSingleDistributor(id: number) {
         this.calls.GetSingleDistributor(id).subscribe(
             (data) => {
-                this.ServerDistributor = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getSingleDistributor complete!')
@@ -49,12 +49,13 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private deleteDistributor(Distributor: DistributorClass) {
-        this.calls.DeleteDistributor(Distributor.Id).subscribe(
+        this.calls.DeleteDistributor(Distributor.DistributorId).subscribe(
+            undefined,
             error => console.log(error),
-            () => console.log('deleteDistributor complete!')
+            () => { console.log('deleteDistributor complete!');
+                this.goToDistributor();
+            }
         );
-
-        this.goToDistributor();
     }
 
     private goToDistributor() {
@@ -62,6 +63,6 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private goToEdit(distributor: DistributorClass) {
-        this.router.navigate(['/inventory/distributor/edit', distributor.Id]);
+        this.router.navigate(['/inventory/distributor/edit', distributor.DistributorId]);
     }
 }

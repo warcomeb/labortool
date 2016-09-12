@@ -18,10 +18,10 @@ var ViewComponent = (function () {
         this.router = router;
         this.data = data;
         this.calls = calls;
-        this.ServerDistributor = {
-            Id: 0,
-            Name: "N/D",
-            WebSite: "N/D"
+        this.ServerData = {
+            DistributorId: 0,
+            DistributorName: "N/D",
+            DistributorWebSite: "N/D"
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
@@ -37,18 +37,21 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleDistributor = function (id) {
         var _this = this;
         this.calls.GetSingleDistributor(id).subscribe(function (data) {
-            _this.ServerDistributor = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleDistributor complete!'); });
     };
     ViewComponent.prototype.deleteDistributor = function (Distributor) {
-        this.calls.DeleteDistributor(Distributor.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteDistributor complete!'); });
-        this.goToDistributor();
+        var _this = this;
+        this.calls.DeleteDistributor(Distributor.DistributorId).subscribe(undefined, function (error) { return console.log(error); }, function () {
+            console.log('deleteDistributor complete!');
+            _this.goToDistributor();
+        });
     };
     ViewComponent.prototype.goToDistributor = function () {
         this.router.navigate(['/inventory/distributor']);
     };
     ViewComponent.prototype.goToEdit = function (distributor) {
-        this.router.navigate(['/inventory/distributor/edit', distributor.Id]);
+        this.router.navigate(['/inventory/distributor/edit', distributor.DistributorId]);
     };
     ViewComponent = __decorate([
         core_1.Component({

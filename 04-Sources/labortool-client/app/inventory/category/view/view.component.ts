@@ -14,10 +14,10 @@ import { CategoryClass }           from '../class/category.class';
 
 export class ViewComponent implements OnInit, OnDestroy {
     private sub: any;
-    private ServerCategory: CategoryClass = {
-        Id: 0,
-        Name: "N/D",
-        Note: "N/D"
+    private ServerData: CategoryClass = {
+        CategoryId: 0,
+        CategoryName: 'N/D',
+        CategoryNote: 'N/D'
     };
 
     constructor(
@@ -29,7 +29,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            let id = +params['id']; // (+) converts string 'id' to a number
+            let id = +params['id'];
             this.getSingleCategory(id);
         });
     }
@@ -41,18 +41,22 @@ export class ViewComponent implements OnInit, OnDestroy {
     private getSingleCategory(id: number) {
         this.calls.GetSingleCategory(id).subscribe(
             (data) => {
-                this.ServerCategory = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getSingleCategory complete!')
         );
     }
 
-    private deleteCategory(category: CategoryClass) {
-        this.calls.DeleteCategory(category.Id).subscribe(
+    private deleteCategory(_category: CategoryClass) {
+        this.calls.DeleteCategory(_category.CategoryId).subscribe(
+            undefined,
             error => console.log(error),
-            () => console.log('deleteCategory complete!')
+            () => { console.log('deleteCategory complete!');
+                    this.goToCategory();
+            }
         );
+        //setTimeout(() => { this.goToCategory(); }, 1000); 
     }
 
     private goToCategory() {
@@ -60,6 +64,6 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private goToEdit(category: CategoryClass) {
-        this.router.navigate(['/inventory/category/edit', category.Id]);
+        this.router.navigate(['/inventory/category/edit', category.CategoryId]);
     }
 }

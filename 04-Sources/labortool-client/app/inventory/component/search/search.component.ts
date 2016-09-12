@@ -5,6 +5,6 @@ import {Component} from '@angular/core';
     templateUrl: './app/inventory/component/search/search.component.html'
 })
 
-export class SearchComponentComponent {
+export class SearchComponent {
 
 }

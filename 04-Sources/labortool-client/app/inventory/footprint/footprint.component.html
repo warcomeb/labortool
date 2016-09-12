@@ -9,9 +9,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let footprint of ServerFootprints" (click)="goToView(footprint)">
-                <td>{{footprint?.Name}}</td>
-                <td><a href="{{footprint?.WebSite}}">Link</a></td>
+            <tr *ngFor="let footprint of ServerFootprints">
+                <td (click)="goToView(footprint)">{{footprint?.FootprintName}}</td>
+                <td><a href="{{footprint?.FootprintLink}}">Link</a></td>
             </tr>
         </tbody>
     </table>

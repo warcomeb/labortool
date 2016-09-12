@@ -9,9 +9,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let distributor of ServerDistributors" (click)="goToView(distributor)">
-                <td>{{distributor?.Name}}</td>
-                <td><a href="{{distributor?.WebSite}}">Link</a></td>
+            <tr *ngFor="let distributor of ServerData">
+                <td (click)="goToView(distributor)">{{distributor?.DistributorName}}</td>
+                <td><a href="{{distributor?.DistributorWebSite}}">Link</a></td>
             </tr>
         </tbody>
     </table>

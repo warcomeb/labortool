@@ -12,34 +12,34 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var data_service_1 = require('../../../data/data.service');
 var calls_service_1 = require('../calls/calls.service');
-var calls_service_2 = require('../../unit/calls/calls.service');
-var calls_service_3 = require('../../category/calls/calls.service');
+var calls_service_2 = require('../../category/calls/calls.service');
+var calls_service_3 = require('../../unit/calls/calls.service');
 var ViewComponent = (function () {
-    function ViewComponent(route, router, data, cptCalls, unitCalls, categoryCalls) {
+    function ViewComponent(route, router, data, cptCalls, unitCalls, cateCalls) {
         this.route = route;
         this.router = router;
         this.data = data;
         this.cptCalls = cptCalls;
         this.unitCalls = unitCalls;
-        this.categoryCalls = categoryCalls;
-        this.ServerCatParamType = {
-            Id: 0,
-            Name: "N/D",
-            CategoryId: 0,
-            UnitId: 0,
-            Order: "N/D",
-            Note: "N/D"
-        };
-        this.ServerUnit = {
-            Id: 0,
-            Name: '',
-            ShortName: '',
-            Note: ''
+        this.cateCalls = cateCalls;
+        this.ServerCategoryParamType = {
+            CategoryParamTypeId: 0,
+            CategoryParamTypeName: 'N/D',
+            CategoryParamTypeCategory: 0,
+            CategoryParamTypeUnit: 0,
+            CategoryParamTypeOrder: 'N/D',
+            CategoryParamTypeNote: 'N/D'
         };
         this.ServerCategory = {
-            Id: 0,
-            Name: '',
-            Note: ''
+            CategoryId: 0,
+            CategoryName: 'N/D',
+            CategoryNote: 'N/D'
+        };
+        this.ServerUnit = {
+            UnitId: 0,
+            UnitName: 'N/D',
+            UnitShortName: 'N/D',
+            UnitNote: 'N/D'
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
@@ -48,8 +48,6 @@ var ViewComponent = (function () {
             var id = +params['id']; // (+) converts string 'id' to a number
             _this.getSingleCatParamType(id);
         });
-        this.getSingleUnit(this.ServerCatParamType.UnitId);
-        this.getSingleCategory(this.ServerCatParamType.CategoryId);
     };
     ViewComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
@@ -57,8 +55,16 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleCatParamType = function (id) {
         var _this = this;
         this.cptCalls.GetSingleCatParamType(id).subscribe(function (data) {
-            _this.ServerCatParamType = data.json();
+            _this.ServerCategoryParamType = data.json();
+            _this.getSingleCategory(_this.ServerCategoryParamType.CategoryParamTypeCategory);
+            _this.getSingleUnit(_this.ServerCategoryParamType.CategoryParamTypeUnit);
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleCatParamType complete!'); });
+    };
+    ViewComponent.prototype.getSingleCategory = function (id) {
+        var _this = this;
+        this.cateCalls.GetSingleCategory(id).subscribe(function (data) {
+            _this.ServerCategory = data.json();
+        }, function (error) { return console.log(error); }, function () { return console.log('getSingleCategory complete!'); });
     };
     ViewComponent.prototype.getSingleUnit = function (id) {
         var _this = this;
@@ -66,22 +72,16 @@ var ViewComponent = (function () {
             _this.ServerUnit = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleUnit complete!'); });
     };
-    ViewComponent.prototype.getSingleCategory = function (id) {
-        var _this = this;
-        this.categoryCalls.GetSingleCategory(id).subscribe(function (data) {
-            _this.ServerCategory = data.json();
-        }, function (error) { return console.log(error); }, function () { return console.log('getSingleCategory complete!'); });
-    };
     ViewComponent.prototype.goToCatParamType = function () {
-        this.router.navigate(['/inventory/category/parameter/type']);
+        this.router.navigate(['/inventory/category_parameter_type']);
     };
     ViewComponent = __decorate([
         core_1.Component({
             templateUrl: './app/inventory/cat-param-type/view/view.component.html',
             styleUrls: ['./app/inventory/cat-param-type/view/view.component.css'],
-            providers: [calls_service_1.CallCatParamTypeServices, calls_service_2.CallUnitServices, calls_service_3.CallCategoryServices]
+            providers: [calls_service_1.CallCatParamTypeServices, calls_service_2.CallCategoryServices, calls_service_3.CallUnitServices]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallCatParamTypeServices, calls_service_2.CallUnitServices, calls_service_3.CallCategoryServices])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallCatParamTypeServices, calls_service_3.CallUnitServices, calls_service_2.CallCategoryServices])
     ], ViewComponent);
     return ViewComponent;
 }());

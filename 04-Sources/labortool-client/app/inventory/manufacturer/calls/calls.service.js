@@ -12,8 +12,8 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Rx_1 = require('rxjs/Rx');
 var connection_service_1 = require('../../../connection/connection.service');
-var CallInventoryServices = (function () {
-    function CallInventoryServices(http, host) {
+var CallManufacturerServices = (function () {
+    function CallManufacturerServices(http, host) {
         var _this = this;
         this.http = http;
         this.host = host;
@@ -43,15 +43,15 @@ var CallInventoryServices = (function () {
         this.headers.append('Accept', 'application/json');
         this.options = new http_1.RequestOptions({ headers: this.headers });
     }
-    CallInventoryServices.prototype.handleError = function (error) {
+    CallManufacturerServices.prototype.handleError = function (error) {
         console.error(error);
         return Rx_1.Observable.throw(error.json().error || 'Server error');
     };
-    CallInventoryServices = __decorate([
+    CallManufacturerServices = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, connection_service_1.ConnectionService])
-    ], CallInventoryServices);
-    return CallInventoryServices;
+    ], CallManufacturerServices);
+    return CallManufacturerServices;
 }());
-exports.CallInventoryServices = CallInventoryServices;
+exports.CallManufacturerServices = CallManufacturerServices;
 //# sourceMappingURL=calls.service.js.map

@@ -14,11 +14,11 @@ import { UnitClass }           from '../class/unit.class';
 
 export class ViewComponent implements OnInit, OnDestroy {
     private sub: any;
-    private ServerUnit: UnitClass = {
-        Id: 0,
-        Name: "N/D",
-        ShortName: "N/D",
-        Note: "N/D"
+    private ServerData: UnitClass = {
+        UnitId: 0,
+        UnitName: 'N/D',
+        UnitShortName: 'N/D',
+        UnitNote: 'N/D'
     };
 
     constructor(
@@ -30,7 +30,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            let id = +params['id']; // (+) converts string 'id' to a number
+            let id = +params['id'];
             this.getSingleUnit(id);
         });
     }
@@ -42,7 +42,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private getSingleUnit(id: number) {
         this.calls.GetSingleUnit(id).subscribe(
             (data) => {
-                this.ServerUnit = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getSingleUnit complete!')

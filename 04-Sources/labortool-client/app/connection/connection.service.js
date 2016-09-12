@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var ConnectionService = (function () {
     function ConnectionService() {
-        //public serverURL = "http://127.0.0.1:5000";
-        this.serverURL = "http://172.17.82.53:33";
+        //public serverURL = "http://172.17.82.53:33";
+        //public serverURL = 'http://172.17.80.10:33';
+        this.serverURL = 'http://192.168.1.37:33';
     }
     ConnectionService = __decorate([
         core_1.Injectable(), 

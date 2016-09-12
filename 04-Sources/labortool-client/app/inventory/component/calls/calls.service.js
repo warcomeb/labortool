@@ -11,37 +11,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var connection_service_1 = require('../../../connection/connection.service');
-var CallInventoryServices = (function () {
-    function CallInventoryServices(http, host) {
+var CallComponentServices = (function () {
+    function CallComponentServices(http, host) {
         var _this = this;
         this.http = http;
         this.host = host;
+        /* Component */
         this.GetAllComponent = function () {
-            return _this.http.get(_this.URL + '/inventory');
+            return _this.http.get(_this.URL + '/inventory/component');
         };
         this.GetSingleComponent = function (id) {
-            return _this.http.get(_this.URL + '/inventory/' + id);
+            return _this.http.get(_this.URL + '/inventory/component/' + id);
         };
         this.PostComponent = function (item) {
             var toAdd = JSON.stringify({ Item: item });
-            return _this.http.post(_this.URL + '/inventory', toAdd, { headers: _this.headers });
+            return _this.http.post(_this.URL + '/inventory/component', toAdd, { headers: _this.headers });
         };
         this.PutComponent = function (item) {
-            return _this.http.put(_this.URL + '/inventory', JSON.stringify(item), { headers: _this.headers });
+            return _this.http.put(_this.URL + '/inventory/component', JSON.stringify(item), { headers: _this.headers });
         };
         this.DeleteComponent = function (id) {
-            return _this.http.delete(_this.URL + '/inventory/' + id);
+            return _this.http.delete(_this.URL + '/inventory/component' + id);
         };
         this.URL = host.serverURL;
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
     }
-    CallInventoryServices = __decorate([
+    CallComponentServices = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, connection_service_1.ConnectionService])
-    ], CallInventoryServices);
-    return CallInventoryServices;
+    ], CallComponentServices);
+    return CallComponentServices;
 }());
-exports.CallInventoryServices = CallInventoryServices;
+exports.CallComponentServices = CallComponentServices;
 //# sourceMappingURL=calls.service.js.map

@@ -16,9 +16,8 @@ import { FootprintClass }             from './class/footprint.class';
 
 export class FootprintComponent implements OnInit {
     private ServerFootprints: FootprintClass[] = [
-        { Id: 0, Name: "N/D", WebSite: "N/D" }
+        { FootprintId: 0, FootprintName: 'N/D', FootprintLink: 'N/D' }
     ];
-    private ClientFootprint: FootprintClass;
 
     constructor(
         private route: ActivatedRoute,
@@ -39,17 +38,13 @@ export class FootprintComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllFootprint complete!')
         );
-    } // fine getAllComponent
+    }
 
     goToAdd() {
         this.router.navigate(['/inventory/footprint/add']);
     }
 
-    goToEdit() {
-        this.router.navigate(['/inventory/footprint/edit']);
-    }
-
     goToView(footprint: FootprintClass) {
-        this.router.navigate(['/inventory/footprint/view', footprint.Id]);
+        this.router.navigate(['/inventory/footprint/view', footprint.FootprintId]);
     }
 }

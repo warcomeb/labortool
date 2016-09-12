@@ -10,10 +10,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let location of ServerLocations" (click)="goToView(location)">
-                <td>{{location?.Position}}</td>
-                <td>{{location?.Container}}</td>
-                <td>{{location?.SubContainer}}</td>
+            <tr *ngFor="let location of ServerData" (click)="goToView(location)">
+                <td>{{location?.LocationPosition}}</td>
+                <td>{{location?.LocationContainer}}</td>
+                <td>{{location?.LocationSubContainer}}</td>
             </tr>
         </tbody>
     </table>

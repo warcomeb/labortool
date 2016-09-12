@@ -1,5 +1,5 @@
 export class DistributorClass {
-    Id: number;
-    Name: string;
-    WebSite: string;
+    DistributorId: number;
+    DistributorName: string;
+    DistributorWebSite: string;
 }

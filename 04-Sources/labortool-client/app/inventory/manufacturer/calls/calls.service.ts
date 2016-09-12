@@ -5,7 +5,7 @@ import { ConnectionService } from '../../../connection/connection.service';
 import { ManufacturerClass } from '../class/manufacturer.class';
 
 @Injectable()
-export class CallInventoryServices {
+export class CallManufacturerServices {
     private URL: string;
     private headers: Headers;
     private options: RequestOptions;
@@ -49,5 +49,4 @@ export class CallInventoryServices {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
-
 }

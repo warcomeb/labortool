@@ -6,6 +6,12 @@
     color: #428bca;
 }
 
+.navbar-border:hover {
+    border-bottom-color: #428bca;
+    border-bottom-width: 2px; 
+    border-bottom-style: solid;
+    color: rgb(0, 0, 0)!important;
+}
 
 .margin-top {
     margin-top: 20px;

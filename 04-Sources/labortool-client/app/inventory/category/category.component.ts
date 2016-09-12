@@ -16,7 +16,7 @@ import { CategoryClass }             from './class/category.class';
 
 export class CategoryComponent implements OnInit {
     private ServerCategorys: CategoryClass[] = [
-        { Id: 0, Name: "N/D", Note: "N/D" }
+        { CategoryId: 0, CategoryName: 'N/D', CategoryNote: 'N/D' }
     ];
     private ClientCategory: CategoryClass;
 
@@ -39,17 +39,13 @@ export class CategoryComponent implements OnInit {
             error => console.log(error),
             () => console.log('getAllCategory complete!')
         );
-    } // fine getAllComponent
+    }
 
     goToAdd() {
         this.router.navigate(['/inventory/category/add']);
     }
 
-    goToEdit() {
-        this.router.navigate(['/inventory/category/edit']);
-    }
-
     goToView(category: CategoryClass) {
-        this.router.navigate(['/inventory/category/view', category.Id]);
+        this.router.navigate(['/inventory/category/view', category.CategoryId]);
     }
 }

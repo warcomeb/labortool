@@ -1,6 +1,6 @@
 export class LocationClass {
-    Id: number;
-    Position: string;
-    Container: string;
-    SubContainer: string;
+    LocationId: number;
+    LocationPosition: string;
+    LocationContainer: string;
+    LocationSubContainer: string;
 }

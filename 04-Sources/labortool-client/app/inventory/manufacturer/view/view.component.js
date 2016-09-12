@@ -18,16 +18,16 @@ var ViewComponent = (function () {
         this.router = router;
         this.data = data;
         this.calls = calls;
-        this.ServerManufacturer = {
-            Id: 0,
-            Name: "N/D",
-            WebSite: "N/D"
+        this.ServerData = {
+            ManufacturerId: 0,
+            ManufacturerName: 'N/D',
+            ManufacturerWebSite: 'N/D'
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            var id = +params['id']; // (+) converts string 'id' to a number
+            var id = +params['id'];
             _this.getSingleManufacturer(id);
         });
     };
@@ -37,26 +37,30 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleManufacturer = function (id) {
         var _this = this;
         this.calls.GetSingleManufacturer(id).subscribe(function (data) {
-            _this.ServerManufacturer = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleManufacturer complete!'); });
     };
-    ViewComponent.prototype.deleteManufacturer = function (manufacturer) {
-        this.calls.DeleteManufacturer(manufacturer.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteManufacturer complete!'); });
-        this.goToManufacturer();
+    ViewComponent.prototype.deleteManufacturer = function (_manufacturer) {
+        var _this = this;
+        this.calls.DeleteManufacturer(_manufacturer.ManufacturerId).subscribe(undefined, function (error) { return console.log(error); }, function () {
+            console.log('deleteManufacturer complete!');
+            _this.goToManufacturer();
+        });
+        //setTimeout(() => { this.goToManufacturer(); }, 1000); 
     };
     ViewComponent.prototype.goToManufacturer = function () {
         this.router.navigate(['/inventory/manufacturer']);
     };
     ViewComponent.prototype.goToEdit = function (manufacturer) {
-        this.router.navigate(['/inventory/manufacturer/edit', manufacturer.Id]);
+        this.router.navigate(['/inventory/manufacturer/edit', manufacturer.ManufacturerId]);
     };
     ViewComponent = __decorate([
         core_1.Component({
             templateUrl: './app/inventory/manufacturer/view/view.component.html',
             styleUrls: ['./app/inventory/manufacturer/view/view.component.css'],
-            providers: [calls_service_1.CallInventoryServices]
+            providers: [calls_service_1.CallManufacturerServices]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallInventoryServices])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, data_service_1.DataService, calls_service_1.CallManufacturerServices])
     ], ViewComponent);
     return ViewComponent;
 }());

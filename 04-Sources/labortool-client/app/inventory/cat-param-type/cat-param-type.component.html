@@ -1,21 +1,21 @@
-<search-category></search-category>
+<search-cat-param-type></search-cat-param-type>
 <br>
 <div class="table-responsive">
     <table class="table table-hover">
         <thead class="thead-inverse">
             <tr>
                 <th>Name</th>
-                <th>Category Id</th>
-                <th>Unit Id</th>
+                <th>Category</th>
+                <th>Unit</th>
                 <th>Order</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let catparamtype of ServerCatParamTypes" (click)="goToView(catparamtype)">
-                <td>{{catparamtype?.Name}}</td>
-                <td>{{catparamtype?.CategoryId}}</td>
-                <td>{{catparamtype?.UnitId}}</td>
-                <td>{{catparamtype?.Order}}</td>
+            <tr *ngFor="let catparamtype of ServerCategoryParamTypers" (click)="goToView(catparamtype)">
+                <td>{{catparamtype?.CategoryParamTypeName}}</td>
+                <td>{{catparamtype?.CategoryName}}</td>
+                <td>{{catparamtype?.UnitName}}</td>
+                <td>{{catparamtype?.CategoryParamTypeOrder}}</td>
             </tr>
         </tbody>
     </table>

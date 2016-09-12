@@ -5,22 +5,22 @@
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
     <div class="col-xs-10">
-        <input class="form-control" type="text" [disabled]="true" [value]="ServerDistributor?.Name" id="example-text-input">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerData?.DistributorName" id="example-text-input">
     </div>
 </div>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">WebSite</label>
     <div class="col-xs-10">
-        <input class="form-control" type="text" [disabled]="true" [value]="ServerDistributor?.WebSite" id="example-text-input">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerData?.DistributorWebSite" id="example-text-input">
     </div>
 </div>
 
 <br>
 <div>
     <button type="button" class="btn btn-primary" (click)="goToDistributor()">Back</button>
-    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerDistributor)">Edit</button>
-    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteDistributor(ServerDistributor)">Delete</button>
+    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerData)">Edit</button>
+    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteDistributor(ServerData)">Delete</button>
 </div>
 <br>
 <br>

@@ -1,43 +1,45 @@
-import { Component, OnInit, OnDestroy }        from '@angular/core';
-import { Router, ActivatedRoute }   from '@angular/router';
-
-import { DataService }              from '../../../data/data.service';
-import { CallCatParamTypeServices }    from '../calls/calls.service';
-import { CallUnitServices } from '../../unit/calls/calls.service';
+import { Component,
+         OnInit, 
+         OnDestroy }                  from '@angular/core';
+import { Router,
+         ActivatedRoute }             from '@angular/router';
+import { DataService }                from '../../../data/data.service';
+import { CallCatParamTypeServices }   from '../calls/calls.service';
 import { CallCategoryServices } from '../../category/calls/calls.service';
+import { CallUnitServices }           from '../../unit/calls/calls.service';
 
-import { CatParamTypeClass }           from '../class/cat-param-type.class';
-import { UnitClass }           from '../../unit/class/unit.class';
-import { CategoryClass }           from '../../category/class/category.class';
+import { CategoryParamTypeClass }          from '../class/cat-param-type.class';
+import { CategoryClass }        from '../../category/class/category.class';
+import { UnitClass }                  from '../../unit/class/unit.class';
 
 
 @Component({
     templateUrl: './app/inventory/cat-param-type/view/view.component.html',
     styleUrls: ['./app/inventory/cat-param-type/view/view.component.css'],
-    providers: [CallCatParamTypeServices, CallUnitServices, CallCategoryServices]
+    providers: [CallCatParamTypeServices, CallCategoryServices, CallUnitServices]
 })
 
 export class ViewComponent implements OnInit, OnDestroy {
     private sub: any;
-    private ServerCatParamType: CatParamTypeClass = {
-        Id: 0,
-        Name: "N/D",
-        CategoryId: 0,
-        UnitId: 0,
-        Order: "N/D",
-        Note: "N/D"
-    };
-    private ServerUnit: UnitClass = {
-        Id: 0,
-        Name: '',
-        ShortName: '',
-        Note: ''
+    private ServerCategoryParamType: CategoryParamTypeClass = {
+        CategoryParamTypeId: 0,
+        CategoryParamTypeName: 'N/D',
+        CategoryParamTypeCategory: 0,
+        CategoryParamTypeUnit: 0,
+        CategoryParamTypeOrder: 'N/D',
+        CategoryParamTypeNote: 'N/D'
     };
     private ServerCategory: CategoryClass = {
-        Id: 0,
-        Name: '',
-        Note: ''
+        CategoryId: 0,
+        CategoryName: 'N/D',
+        CategoryNote: 'N/D'
     };
+    private ServerUnit: UnitClass = {
+        UnitId: 0,
+        UnitName: 'N/D',
+        UnitShortName: 'N/D',
+        UnitNote: 'N/D'
+    }
 
     constructor(
         private route: ActivatedRoute,
@@ -45,7 +47,7 @@ export class ViewComponent implements OnInit, OnDestroy {
         private data: DataService,
         private cptCalls: CallCatParamTypeServices,
         private unitCalls: CallUnitServices,
-        private categoryCalls: CallCategoryServices) {
+        private cateCalls: CallCategoryServices) {
     }
 
     ngOnInit() {
@@ -53,8 +55,6 @@ export class ViewComponent implements OnInit, OnDestroy {
             let id = +params['id']; // (+) converts string 'id' to a number
             this.getSingleCatParamType(id);
         });
-        this.getSingleUnit(this.ServerCatParamType.UnitId);
-        this.getSingleCategory(this.ServerCatParamType.CategoryId);
     }
 
     ngOnDestroy() {
@@ -64,10 +64,22 @@ export class ViewComponent implements OnInit, OnDestroy {
     private getSingleCatParamType(id: number) {
         this.cptCalls.GetSingleCatParamType(id).subscribe(
             (data) => {
-                this.ServerCatParamType = data.json();
+                this.ServerCategoryParamType = data.json();
+                this.getSingleCategory(this.ServerCategoryParamType.CategoryParamTypeCategory);
+                this.getSingleUnit(this.ServerCategoryParamType.CategoryParamTypeUnit);
             },
             error => console.log(error),
             () => console.log('getSingleCatParamType complete!')
+        );
+    }
+
+    private getSingleCategory(id: number) {
+        this.cateCalls.GetSingleCategory(id).subscribe(
+            (data) => {
+                this.ServerCategory = data.json();
+            },
+            error => console.log(error),
+            () => console.log('getSingleCategory complete!')
         );
     }
 
@@ -77,21 +89,11 @@ export class ViewComponent implements OnInit, OnDestroy {
                 this.ServerUnit = data.json();
             },
             error => console.log(error),
-            () => console.log('getSingleUnit complete!')
-        );
-    }
-
-    private getSingleCategory(id: number) {
-        this.categoryCalls.GetSingleCategory(id).subscribe(
-            (data) => {
-                this.ServerCategory = data.json();
-            },
-            error => console.log(error),
-            () => console.log('getSingleCategory complete!')
+                () => console.log('getSingleUnit complete!')
         );
     }
 
     private goToCatParamType() {
-        this.router.navigate(['/inventory/category/parameter/type']);
+        this.router.navigate(['/inventory/category_parameter_type']);
     }
 }

@@ -1,26 +1,32 @@
 <br>
-<h1 class="text-xs-center">Category informations!</h1>
+<h1 class="text-xs-center">Category informations</h1>
 <br>
+<div class="form-group row">
+    <label for="example-text-input" class="col-xs-2 col-form-label">Id</label>
+    <div class="col-xs-10">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerData?.CategoryId" id="example-text-input">
+    </div>
+</div>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
     <div class="col-xs-10">
-        <input class="form-control" type="text" [disabled]="true" [value]="ServerCategory?.Name" id="example-text-input">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerData?.CategoryName" id="example-text-input">
     </div>
 </div>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">Note</label>
     <div class="col-xs-10">
-        <textarea class="form-control" rows="3" [disabled]="true" [value]="ServerCategory?.Note" id="example-text-input"></textarea>
+        <textarea class="form-control" rows="3" [disabled]="true" [value]="ServerData?.CategoryNote" id="example-text-input"></textarea>
     </div>
 </div>
 
 <br>
 <div>
     <button type="button" class="btn btn-primary" (click)="goToCategory()">Back</button>
-    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerCategory)">Edit</button>
-    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteCategory(ServerCategory)">Delete</button>
+    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerData)">Edit</button>
+    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteCategory(ServerData)">Delete</button>
 </div>
 <br>
 <br>

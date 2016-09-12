@@ -1,5 +1,11 @@
 export class CategoryClass {
-    Id: number;
-    Name: string;
-    Note: string;
+    CategoryId: number;
+    CategoryName: string;
+    CategoryNote: string;
+}
+
+export class JoinCategoryParamTypeClass {
+    CategoryParamTypeId: number;
+    CategoryParamTypeName: string;
+    CategoryParamTypeUnit: number;
 }

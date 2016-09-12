@@ -14,10 +14,10 @@ import { FootprintClass }           from '../class/footprint.class';
 
 export class ViewComponent implements OnInit, OnDestroy {
     private sub: any;
-    private ServerFootprint: FootprintClass = {
-        Id: 0,
-        Name: "N/D",
-        WebSite: "N/D"
+    private ServerData: FootprintClass = {
+        FootprintId: 0,
+        FootprintName: 'N/D',
+        FootprintLink: 'N/D'
     };
 
     constructor(
@@ -41,7 +41,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private getSingleFootprint(id: number) {
         this.calls.GetSingleFootprint(id).subscribe(
             (data) => {
-                this.ServerFootprint = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getSingleFootprint complete!')
@@ -49,10 +49,13 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private deleteFootprint(footprint: FootprintClass) {
-        this.calls.DeleteFootprint(footprint.Id).subscribe(
+        this.calls.DeleteFootprint(footprint.FootprintId).subscribe(
+            undefined,
             error => console.log(error),
-            () => console.log('deleteFootprint complete!')
-        );
+            () => { 
+                console.log('deleteFootprint complete!');
+                this.goToFootprint();
+            });
     }
 
     private goToFootprint() {
@@ -60,6 +63,6 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
 
     private goToEdit(footprint: FootprintClass) {
-        this.router.navigate(['/inventory/footprint/edit', footprint.Id]);
+        this.router.navigate(['/inventory/footprint/edit', footprint.FootprintId]);
     }
 }

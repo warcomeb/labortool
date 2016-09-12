@@ -1,6 +1,6 @@
 export class UnitClass {
-    Id: number;
-    Name: string;
-    ShortName: string;
-    Note: string;
+    UnitId: number;
+    UnitName: string;
+    UnitShortName: string;
+    UnitNote: string;
 }

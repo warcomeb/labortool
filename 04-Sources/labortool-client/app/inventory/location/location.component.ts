@@ -15,10 +15,10 @@ import { LocationClass }                from './class/location.class';
 })
 
 export class LocationComponent implements OnInit {
-    private ServerLocations: LocationClass[] = [
-        { Id: 0, Position: "N/D", Container: "N/D", SubContainer: "N/D" }
+    private ServerData: LocationClass[] = [
+        { LocationId: 0, LocationPosition: 'N/D', LocationContainer: 'N/D', LocationSubContainer: 'N/D' }
     ];
-    private ClientLocation: LocationClass;
+    private ClientData: LocationClass;
 
     constructor(
         private route: ActivatedRoute,
@@ -34,7 +34,7 @@ export class LocationComponent implements OnInit {
     private getAllLocation(): void {
         this.calls.GetAllLocation().subscribe(
             (data) => {
-                this.ServerLocations = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getAllLocation complete!')
@@ -46,6 +46,6 @@ export class LocationComponent implements OnInit {
     }
 
     goToView(location: LocationClass) {
-        this.router.navigate(['/inventory/location/view', location.Id]);
+        this.router.navigate(['/inventory/location/view', location.LocationId]);
     }
 }

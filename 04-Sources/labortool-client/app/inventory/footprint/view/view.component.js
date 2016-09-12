@@ -18,10 +18,10 @@ var ViewComponent = (function () {
         this.router = router;
         this.data = data;
         this.calls = calls;
-        this.ServerFootprint = {
-            Id: 0,
-            Name: "N/D",
-            WebSite: "N/D"
+        this.ServerData = {
+            FootprintId: 0,
+            FootprintName: 'N/D',
+            FootprintLink: 'N/D'
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
@@ -37,17 +37,21 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleFootprint = function (id) {
         var _this = this;
         this.calls.GetSingleFootprint(id).subscribe(function (data) {
-            _this.ServerFootprint = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleFootprint complete!'); });
     };
     ViewComponent.prototype.deleteFootprint = function (footprint) {
-        this.calls.DeleteFootprint(footprint.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteFootprint complete!'); });
+        var _this = this;
+        this.calls.DeleteFootprint(footprint.FootprintId).subscribe(undefined, function (error) { return console.log(error); }, function () {
+            console.log('deleteFootprint complete!');
+            _this.goToFootprint();
+        });
     };
     ViewComponent.prototype.goToFootprint = function () {
         this.router.navigate(['/inventory/footprint']);
     };
     ViewComponent.prototype.goToEdit = function (footprint) {
-        this.router.navigate(['/inventory/footprint/edit', footprint.Id]);
+        this.router.navigate(['/inventory/footprint/edit', footprint.FootprintId]);
     };
     ViewComponent = __decorate([
         core_1.Component({

@@ -20,7 +20,7 @@ var CategoryComponent = (function () {
         this.calls = calls;
         this.data = data;
         this.ServerCategorys = [
-            { Id: 0, Name: "N/D", Note: "N/D" }
+            { CategoryId: 0, CategoryName: 'N/D', CategoryNote: 'N/D' }
         ];
     }
     CategoryComponent.prototype.ngOnInit = function () {
@@ -31,15 +31,12 @@ var CategoryComponent = (function () {
         this.calls.GetAllCategory().subscribe(function (data) {
             _this.ServerCategorys = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllCategory complete!'); });
-    }; // fine getAllComponent
+    };
     CategoryComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/category/add']);
     };
-    CategoryComponent.prototype.goToEdit = function () {
-        this.router.navigate(['/inventory/category/edit']);
-    };
     CategoryComponent.prototype.goToView = function (category) {
-        this.router.navigate(['/inventory/category/view', category.Id]);
+        this.router.navigate(['/inventory/category/view', category.CategoryId]);
     };
     CategoryComponent = __decorate([
         core_1.Component({

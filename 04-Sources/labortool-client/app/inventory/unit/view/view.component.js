@@ -18,17 +18,17 @@ var ViewComponent = (function () {
         this.router = router;
         this.data = data;
         this.calls = calls;
-        this.ServerUnit = {
-            Id: 0,
-            Name: "N/D",
-            ShortName: "N/D",
-            Note: "N/D"
+        this.ServerData = {
+            UnitId: 0,
+            UnitName: 'N/D',
+            UnitShortName: 'N/D',
+            UnitNote: 'N/D'
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.route.params.subscribe(function (params) {
-            var id = +params['id']; // (+) converts string 'id' to a number
+            var id = +params['id'];
             _this.getSingleUnit(id);
         });
     };
@@ -38,7 +38,7 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleUnit = function (id) {
         var _this = this;
         this.calls.GetSingleUnit(id).subscribe(function (data) {
-            _this.ServerUnit = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleUnit complete!'); });
     };
     ViewComponent.prototype.goToUnit = function () {

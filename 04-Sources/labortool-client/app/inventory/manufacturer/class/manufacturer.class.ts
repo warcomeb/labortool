@@ -1,5 +1,5 @@
 export class ManufacturerClass {
-    Id: number;
-    Name: string;
-    WebSite: string;
+    ManufacturerId: number;
+    ManufacturerName: string;
+    ManufacturerWebSite: string;
 }

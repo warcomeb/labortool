@@ -1,21 +1,40 @@
-export class InventoryClass {
-    Id: number;
-    Name: string;
+export class ComponentClass {
+    ComponentId: number;
+    ComponentName: string;
+    ComponentManufacturer: number;
+    ComponentPartNumber: string;
+    ComponentDistributor: number;
+    ComponentDistributorCode: string;
+    ComponentPrice: number;
+    ComponentCode: string;
+    ComponentLocation: number;
+    ComponentDatasheet: string;
+    ComponentFootprint: number;
+    ComponentCategory: number;
+    ComponentNote: string;
+}
+
+export class JoinComponentClass {
+    ComponentId: number;
+    ComponentName: string;
+    ManufacturerId: number;
     ManufacturerName: string;
     ManufacturerWebSite: string;
-    PartNumber: number;
+    ComponentPartNumber: string;
+    DistributorId: number;
     DistributorName: string;
     DistributorWebSite: string;
-    DistributorCode: string;
-    Price: number;
-    Code: string;
+    ComponentDistributorCode: string;
+    ComponentPrice: number;
+    ComponentCode: string;
+    LocationId: number;
     LocationPosition: string;
     LocationContainer: string;
     LocationSubContainer: string;
-    Datasheet: string;
+    ComponentDatasheet: string;
+    FootprintId: number;
     FootprintName: string;
     FootprintLink: string;
+    CategoryId: number;
     CategoryName: string;
-    CategoryNote: string;
-    Note: string;
 }

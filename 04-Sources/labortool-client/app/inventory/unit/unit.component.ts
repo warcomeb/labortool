@@ -16,7 +16,7 @@ import { UnitClass }             from './class/unit.class';
 
 export class UnitComponent implements OnInit {
     private ServerUnits: UnitClass[] = [
-        { Id: 0, Name: "N/D", ShortName: "N/D", Note: "N/D" }
+        { UnitId: 0, UnitName: 'N/D', UnitShortName: 'N/D', UnitNote: 'N/D' }
     ];
 
     constructor(
@@ -41,6 +41,6 @@ export class UnitComponent implements OnInit {
     }
 
     goToView(unit: UnitClass) {
-        this.router.navigate(['/inventory/unit/view', unit.Id]);
+        this.router.navigate(['/inventory/unit/view', unit.UnitId]);
     }
 }

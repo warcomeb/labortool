@@ -10,8 +10,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let unit of ServerUnits" (click)="goToView(unit)">
-                <td>{{unit?.Name}}</td>
-                <td>{{unit?.ShortName}}</td>
+                <td>{{unit?.UnitName}}</td>
+                <td>{{unit?.UnitShortName}}</td>
             </tr>
         </tbody>
     </table>

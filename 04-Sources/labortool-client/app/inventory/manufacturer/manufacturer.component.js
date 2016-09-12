@@ -20,7 +20,7 @@ var ManufacturerComponent = (function () {
         this.calls = calls;
         this.data = data;
         this.ServerManufacturers = [
-            { Id: 0, Name: "N/D", WebSite: "N/D" }
+            { ManufacturerId: 0, ManufacturerName: 'N/D', ManufacturerWebSite: 'N/D' }
         ];
     }
     ManufacturerComponent.prototype.ngOnInit = function () {
@@ -36,15 +36,15 @@ var ManufacturerComponent = (function () {
         this.router.navigate(['/inventory/manufacturer/add']);
     };
     ManufacturerComponent.prototype.goToView = function (comp) {
-        this.router.navigate(['/inventory/manufacturer/view', comp.Id]);
+        this.router.navigate(['/inventory/manufacturer/view', comp.ManufacturerId]);
     };
     ManufacturerComponent = __decorate([
         core_1.Component({
             templateUrl: './app/inventory/manufacturer/manufacturer.component.html',
-            providers: [calls_service_1.CallInventoryServices],
+            providers: [calls_service_1.CallManufacturerServices],
             directives: [search_component_1.SearchManufacturerComponent]
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, calls_service_1.CallInventoryServices, data_service_1.DataService])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, calls_service_1.CallManufacturerServices, data_service_1.DataService])
     ], ManufacturerComponent);
     return ManufacturerComponent;
 }());

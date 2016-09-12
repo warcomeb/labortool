@@ -1,5 +1,6 @@
 import { RouterConfig }          from '@angular/router';
 
+import { componentRoutes } from './component/component.routes'
 import { manufacturerRoutes }    from './manufacturer/manufacturer.routes';
 import { distributorRoutes }     from './distributor/distributor.routes';
 import { locationRoutes }        from './location/location.routes';
@@ -9,6 +10,7 @@ import { catparamtypeRoutes } from './cat-param-type/cat-param-type.routes';
 import { unitRoutes } from './unit/unit.routes'
 
 export const inventoryRoutes: RouterConfig = [
+  ...componentRoutes,
   ...manufacturerRoutes,
   ...distributorRoutes,
   ...locationRoutes,

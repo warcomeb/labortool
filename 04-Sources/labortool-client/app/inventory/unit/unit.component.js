@@ -20,7 +20,7 @@ var UnitComponent = (function () {
         this.calls = calls;
         this.data = data;
         this.ServerUnits = [
-            { Id: 0, Name: "N/D", ShortName: "N/D", Note: "N/D" }
+            { UnitId: 0, UnitName: 'N/D', UnitShortName: 'N/D', UnitNote: 'N/D' }
         ];
     }
     UnitComponent.prototype.ngOnInit = function () {
@@ -33,7 +33,7 @@ var UnitComponent = (function () {
         }, function (error) { return console.log(error); }, function () { return console.log('getAllUnit complete!'); });
     };
     UnitComponent.prototype.goToView = function (unit) {
-        this.router.navigate(['/inventory/unit/view', unit.Id]);
+        this.router.navigate(['/inventory/unit/view', unit.UnitId]);
     };
     UnitComponent = __decorate([
         core_1.Component({

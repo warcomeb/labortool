@@ -15,8 +15,8 @@ import { DistributorClass }             from './class/distributor.class';
 })
 
 export class DistributorComponent implements OnInit {
-    private ServerDistributors: DistributorClass[] = [
-        { Id: 0, Name: "N/D", WebSite: "N/D" }
+    private ServerData: DistributorClass[] = [
+        { DistributorId: 0, DistributorName: 'N/D', DistributorWebSite: 'N/D' }
     ];
 
     constructor(
@@ -33,7 +33,7 @@ export class DistributorComponent implements OnInit {
     private getAllDistributor(): void {
         this.calls.GetAllDistributor().subscribe(
             (data) => {
-                this.ServerDistributors = data.json();
+                this.ServerData = data.json();
             },
             error => console.log(error),
             () => console.log('getAllDistributor complete!')
@@ -45,6 +45,6 @@ export class DistributorComponent implements OnInit {
     }
 
     goToView(distributor: DistributorClass) {
-        this.router.navigate(['/inventory/distributor/view', distributor.Id]);
+        this.router.navigate(['/inventory/distributor/view', distributor.DistributorId]);
     }
 }

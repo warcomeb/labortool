@@ -18,11 +18,11 @@ var ViewComponent = (function () {
         this.router = router;
         this.data = data;
         this.calls = calls;
-        this.ServerLocation = {
-            Id: 0,
-            Position: "N/D",
-            Container: "N/D",
-            SubContainer: "N/D"
+        this.ServerData = {
+            LocationId: 0,
+            LocationPosition: "N/D",
+            LocationContainer: "N/D",
+            LocationSubContainer: "N/D"
         };
     }
     ViewComponent.prototype.ngOnInit = function () {
@@ -38,18 +38,21 @@ var ViewComponent = (function () {
     ViewComponent.prototype.getSingleLocation = function (id) {
         var _this = this;
         this.calls.GetSingleLocation(id).subscribe(function (data) {
-            _this.ServerLocation = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getSingleLocation complete!'); });
     };
     ViewComponent.prototype.deleteLocation = function (location) {
-        this.calls.DeleteLocation(location.Id).subscribe(function (error) { return console.log(error); }, function () { return console.log('deleteLocation complete!'); });
-        this.goToLocation();
+        var _this = this;
+        this.calls.DeleteLocation(location.LocationId).subscribe(undefined, function (error) { return console.log(error); }, function () {
+            console.log('deleteLocation complete!');
+            _this.goToLocation();
+        });
     };
     ViewComponent.prototype.goToLocation = function () {
         this.router.navigate(['/inventory/location']);
     };
     ViewComponent.prototype.goToEdit = function (location) {
-        this.router.navigate(['/inventory/location/edit', location.Id]);
+        this.router.navigate(['/inventory/location/edit', location.LocationId]);
     };
     ViewComponent = __decorate([
         core_1.Component({

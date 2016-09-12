@@ -26,6 +26,7 @@ var CallUnitServices = (function () {
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
+        this.options = new http_1.RequestOptions({ headers: this.headers });
     }
     CallUnitServices = __decorate([
         core_1.Injectable(), 

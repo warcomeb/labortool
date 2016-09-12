@@ -1,26 +1,26 @@
 <br>
-<h1 class="text-xs-center">Manufacturer informations!</h1>
+<h1 class="text-xs-center">Manufacturer informations</h1>
 <br>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
     <div class="col-xs-10">
-        <input class="form-control" type="text" [disabled]="true" [value]="ServerManufacturer?.Name" id="example-text-input">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerData?.ManufacturerName" id="example-text-input">
     </div>
 </div>
 
 <div class="form-group row">
     <label for="example-text-input" class="col-xs-2 col-form-label">WebSite</label>
     <div class="col-xs-10">
-        <input class="form-control" type="text" [disabled]="true" [value]="ServerManufacturer?.WebSite" id="example-text-input">
+        <input class="form-control" type="text" [disabled]="true" [value]="ServerData?.ManufacturerWebSite" id="example-text-input">
     </div>
 </div>
 
 <br>
 <div>
     <button type="button" class="btn btn-primary" (click)="goToManufacturer()">Back</button>
-    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerManufacturer)">Edit</button>
-    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteManufacturer(ServerManufacturer)">Delete</button>
+    <button type="button" class="btn btn-success pull-xs-right" (click)="goToEdit(ServerData)">Edit</button>
+    <button type="button" class="btn btn-danger pull-xs-right margin-right" (click)="deleteManufacturer(ServerData)">Delete</button>
 </div>
 <br>
 <br>

@@ -6,7 +6,7 @@ import { SearchCatParamTypeComponent }   from './search/search.component';
 import { CallCatParamTypeServices }      from './calls/calls.service';
 import { DataService }                  from '../../data/data.service';
 
-import { CatParamTypeClass }             from './class/cat-param-type.class';
+import { JoinCatParamTypeClass }             from './class/cat-param-type.class';
 
 @Component({
     templateUrl: './app/inventory/cat-param-type/cat-param-type.component.html',
@@ -15,8 +15,8 @@ import { CatParamTypeClass }             from './class/cat-param-type.class';
 })
 
 export class CatParamTypeComponent implements OnInit {
-    private ServerCatParamTypes: CatParamTypeClass[] = [
-        { Id: 0, Name: "N/D", CategoryId: 0, UnitId: 0, Order: "N/D", Note: "N/D" }
+    private ServerCategoryParamTypers: JoinCatParamTypeClass[] = [
+        { CategoryParamTypeId: 0, CategoryParamTypeName: 'N/D', CategoryId: 0, CategoryName: 'N/D', UnitId:0, UnitName: 'N/D', CategoryParamTypeOrder: 'N/D' }
     ];
 
     constructor(
@@ -33,14 +33,14 @@ export class CatParamTypeComponent implements OnInit {
     private getAllCatParamType(): void {
         this.calls.GetAllCatParamType().subscribe(
             (data) => {
-                this.ServerCatParamTypes = data.json();
+                this.ServerCategoryParamTypers = data.json();
             },
             error => console.log(error),
             () => console.log('getAllCatParamType complete!')
         );
     }
 
-    goToView(catParamType: CatParamTypeClass) {
-        this.router.navigate(['/inventory/category/parameter/type/view', catParamType.Id]);
+    goToView(catParamType: JoinCatParamTypeClass) {
+        this.router.navigate(['/inventory/category_parameter_type/view', catParamType.CategoryParamTypeId]);
     }
 }

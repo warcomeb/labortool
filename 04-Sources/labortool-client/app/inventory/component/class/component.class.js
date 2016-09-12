@@ -1,8 +1,14 @@
 "use strict";
-var InventoryClass = (function () {
-    function InventoryClass() {
+var ComponentClass = (function () {
+    function ComponentClass() {
     }
-    return InventoryClass;
+    return ComponentClass;
 }());
-exports.InventoryClass = InventoryClass;
+exports.ComponentClass = ComponentClass;
+var JoinComponentClass = (function () {
+    function JoinComponentClass() {
+    }
+    return JoinComponentClass;
+}());
+exports.JoinComponentClass = JoinComponentClass;
 //# sourceMappingURL=component.class.js.map

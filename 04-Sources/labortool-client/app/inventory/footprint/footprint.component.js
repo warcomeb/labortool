@@ -20,7 +20,7 @@ var FootprintComponent = (function () {
         this.calls = calls;
         this.data = data;
         this.ServerFootprints = [
-            { Id: 0, Name: "N/D", WebSite: "N/D" }
+            { FootprintId: 0, FootprintName: 'N/D', FootprintLink: 'N/D' }
         ];
     }
     FootprintComponent.prototype.ngOnInit = function () {
@@ -31,15 +31,12 @@ var FootprintComponent = (function () {
         this.calls.GetAllFootprint().subscribe(function (data) {
             _this.ServerFootprints = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllFootprint complete!'); });
-    }; // fine getAllComponent
+    };
     FootprintComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/footprint/add']);
     };
-    FootprintComponent.prototype.goToEdit = function () {
-        this.router.navigate(['/inventory/footprint/edit']);
-    };
     FootprintComponent.prototype.goToView = function (footprint) {
-        this.router.navigate(['/inventory/footprint/view', footprint.Id]);
+        this.router.navigate(['/inventory/footprint/view', footprint.FootprintId]);
     };
     FootprintComponent = __decorate([
         core_1.Component({

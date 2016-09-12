@@ -19,8 +19,8 @@ var LocationComponent = (function () {
         this.router = router;
         this.calls = calls;
         this.data = data;
-        this.ServerLocations = [
-            { Id: 0, Position: "N/D", Container: "N/D", SubContainer: "N/D" }
+        this.ServerData = [
+            { LocationId: 0, LocationPosition: 'N/D', LocationContainer: 'N/D', LocationSubContainer: 'N/D' }
         ];
     }
     LocationComponent.prototype.ngOnInit = function () {
@@ -29,14 +29,14 @@ var LocationComponent = (function () {
     LocationComponent.prototype.getAllLocation = function () {
         var _this = this;
         this.calls.GetAllLocation().subscribe(function (data) {
-            _this.ServerLocations = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllLocation complete!'); });
     };
     LocationComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/location/add']);
     };
     LocationComponent.prototype.goToView = function (location) {
-        this.router.navigate(['/inventory/location/view', location.Id]);
+        this.router.navigate(['/inventory/location/view', location.LocationId]);
     };
     LocationComponent = __decorate([
         core_1.Component({

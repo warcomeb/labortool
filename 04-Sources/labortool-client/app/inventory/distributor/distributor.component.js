@@ -19,8 +19,8 @@ var DistributorComponent = (function () {
         this.router = router;
         this.calls = calls;
         this.data = data;
-        this.ServerDistributors = [
-            { Id: 0, Name: "N/D", WebSite: "N/D" }
+        this.ServerData = [
+            { DistributorId: 0, DistributorName: 'N/D', DistributorWebSite: 'N/D' }
         ];
     }
     DistributorComponent.prototype.ngOnInit = function () {
@@ -29,14 +29,14 @@ var DistributorComponent = (function () {
     DistributorComponent.prototype.getAllDistributor = function () {
         var _this = this;
         this.calls.GetAllDistributor().subscribe(function (data) {
-            _this.ServerDistributors = data.json();
+            _this.ServerData = data.json();
         }, function (error) { return console.log(error); }, function () { return console.log('getAllDistributor complete!'); });
     };
     DistributorComponent.prototype.goToAdd = function () {
         this.router.navigate(['/inventory/distributor/add']);
     };
     DistributorComponent.prototype.goToView = function (distributor) {
-        this.router.navigate(['/inventory/distributor/view', distributor.Id]);
+        this.router.navigate(['/inventory/distributor/view', distributor.DistributorId]);
     };
     DistributorComponent = __decorate([
         core_1.Component({

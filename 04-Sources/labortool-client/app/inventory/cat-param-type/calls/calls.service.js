@@ -22,10 +22,14 @@ var CallCatParamTypeServices = (function () {
         this.GetSingleCatParamType = function (id) {
             return _this.http.get(_this.URL + '/inventory/cat-param-type/' + id);
         };
+        this.JoinUnit = function (id) {
+            return _this.http.get(_this.URL + '/inventory/cat-param-type/join/unit/' + id);
+        };
         this.URL = host.serverURL;
         this.headers = new http_1.Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
+        this.options = new http_1.RequestOptions({ headers: this.headers });
     }
     CallCatParamTypeServices = __decorate([
         core_1.Injectable(), 
