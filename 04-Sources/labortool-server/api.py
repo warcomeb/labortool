@@ -7,6 +7,7 @@ from functools import update_wrapper
 from flask_cors import CORS, cross_origin
 from sqlalchemy import Table, Column, Integer, ForeignKey, Float, Enum
 from sqlalchemy.orm import relationship
+from flask_marshmallow import Marshmallow
 
 api = Flask(__name__)
 CORS(api)
@@ -18,6 +19,7 @@ api.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://' + config.get('DB', 'u
 api.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 mysql = SQLAlchemy(api)
 #### End of DB connection and configuration ####
+ma = Marshmallow(api)
 
 ##### Map models #####
 # Manufacturer model
@@ -56,16 +58,6 @@ class Category(mysql.Model):
     CategoryName = mysql.Column(mysql.String(45), nullable=False)
     CategoryNote = mysql.Column(mysql.String(45), nullable=True)
 
-# CategoryParamType model
-class CategoryParamType(mysql.Model):
-    __tablename__ = 'category-param-type'
-    CategoryParamTypeId = mysql.Column(mysql.Integer, primary_key=True, nullable=False)
-    CategoryParamTypeName = mysql.Column(mysql.String(45), nullable=False)
-    CategoryParamTypeCategory = mysql.Column(mysql.Integer, mysql.ForeignKey('category.CategoryId'), nullable=False)
-    CategoryParamTypeUnit = mysql.Column(mysql.Integer, mysql.ForeignKey('unit.UnitId'), nullable=False)
-    CategoryParamTypeOrder = mysql.Column(mysql.String(45), nullable=False)
-    CategoryParamTypeNote = mysql.Column(mysql.String(45), nullable=True)
-
 # Unit model
 class Unit(mysql.Model):
     __tablename__ = 'unit'
@@ -74,9 +66,21 @@ class Unit(mysql.Model):
     UnitShortName = mysql.Column(mysql.String(5), nullable=False)
     UnitNote = mysql.Column(mysql.String(45), nullable=True)
 
+# CategoryParamType model
+class CategoryParamType(mysql.Model):
+    __tablename__ = 'categoryparamtype'
+    CategoryParamTypeId = mysql.Column(mysql.Integer, primary_key=True, nullable=False)
+    CategoryParamTypeName = mysql.Column(mysql.String(45), nullable=False)
+    CategoryParamTypeCategory = mysql.Column(mysql.Integer, mysql.ForeignKey('category.CategoryId'), nullable=False)
+    _category = mysql.relationship("Category")
+    CategoryParamTypeUnit = mysql.Column(mysql.Integer, mysql.ForeignKey('unit.UnitId'), nullable=False)
+    _unit = mysql.relationship("Category")
+    CategoryParamTypeOrder = mysql.Column(mysql.String(45), nullable=False)
+    CategoryParamTypeNote = mysql.Column(mysql.String(45), nullable=True)
+        
 # ComponentParam model
 class ComponentParam(mysql.Model):
-    __tablename__ = 'component-param'
+    __tablename__ = 'componentparam'
     ComponentParamId = mysql.Column(mysql.Integer, primary_key=True, nullable=False)
     ComponentParamComponent = mysql.Column(mysql.Integer, mysql.ForeignKey('component.ComponentId'), nullable=False)
     ComponentParamCategoryParamType = mysql.Column(mysql.Integer, mysql.ForeignKey('categoryparamtype.CategoryParamTypeId'), nullable=False)
@@ -101,8 +105,27 @@ class Component(mysql.Model):
     ComponentFootprint = mysql.Column(mysql.Integer, mysql.ForeignKey('footprint.FoorprintId'), nullable=False)
     ComponentCategory = mysql.Column(mysql.Integer, mysql.ForeignKey('category.CategoryId'), nullable=False)
     ComponentNote = mysql.Column(mysql.String(45), nullable=True)
-
 #### END of Map Model ####
+
+#### Begin of Schems ####
+# CategoryParamType schema
+class JoinCategoryParamTypeSchema(ma.ModelSchema):
+    class Meta:
+        fields = ('CategoryParamTypeId', 'CategoryParamTypeName', 'CategoryParamTypeUnit')
+
+class JoinUnitSchema(ma.ModelSchema):
+    class Meta:
+        fields = ('UnitId', 'UnitShortName')
+
+class JoinComponentSchema(ma.ModelSchema):
+    class Meta:
+        fields = ('ComponentId', 'ComponentName', 'ManufacturerId', 'ManufacturerName', \
+                  'ManufacturerWebSite', 'ComponentPartNumber', 'DistributorId', 'DistributorName', \
+                  'DistributorWebSite', 'ComponentDistributorCode', 'ComponentPrice', 'ComponentCode', \
+                  'LocationId', 'LocationPosition', 'LocationContainer', 'LocationSubContainer', \
+                  'ComponentDatasheet', 'FootprintId', 'FootprintName', 'FootprintLink', \
+                  'CategoryId', 'CategoryName')
+#### End of Schems ####
 
 #### Begin Manufacturer CRUD ####
 @api.route('/inventory/manufacturer', methods=['POST'])
@@ -327,9 +350,9 @@ def getFootprint(ID):
 @api.route('/inventory/footprint/<int:ID>', methods=['PUT'])
 def updateFootprint(ID):
     name = request.get_json()["FootprintName"]
-    Link = request.get_json()["FootprintLink"]
-    curr_session = mysql.session
+    link = request.get_json()["FootprintLink"]
 
+    curr_session = mysql.session
     try:
         footprint = Footprint.query.get(ID)
         footprint.FootprintName = name
@@ -394,7 +417,7 @@ def updateCategory(ID):
     try:
         category = Category.query.get(ID)
         category.CategoryName = name
-        category.CategoryWebSite = note
+        category.CategoryNote = note
         curr_session.commit()
     except:
         curr_session.rollback()
@@ -410,26 +433,35 @@ def deleteCategory(ID):
     curr_session.commit()
 
     return jsonify(True)
+
+@api.route('/inventory/category/join/category-param-type/<int:ID>', methods = ['GET'])
+def joinCategoryParamTypeSchema(ID):  
+    types = mysql.engine.execute("select * from categoryparamtype \
+                                  join category on category.CategoryId = categoryparamtype.CategoryParamTypeCategory AND category.CategoryId = %d" % ID)
+    category_schema = JoinCategoryParamTypeSchema(many=True)
+    result = category_schema.dump(types)
+
+    return jsonify(result.data)
 #### End Category CRUD ####
 
 #### Begin CategoryParamType R ####
 @api.route('/inventory/cat-param-type', methods=['GET'])
-def getCatParamTypes():  
-    data = CategoryParamType.query.order_by(CategoryParamType.CategoryParamTypeId.desc()).all()
+def getCatParamTypes():
+    types = mysql.engine.execute("select * from categoryparamtype join category on category.CategoryId = categoryparamtype.CategoryParamTypeCategory join unit on unit.UnitId = categoryparamtype.CategoryParamTypeUnit")
+    categoryparamtype_schema = JoinCategoryParamTypeSchema(many=True)
+    result = categoryparamtype_schema.dump(types)
 
-    for catparamtype in data:
-        mfields = { 'CategoryParamTypeId': fields.Raw, 'CategoryParamTypeName': fields.Raw, 'CategoryParamTypeCategory': fields.Raw, \
-                    'CategoryParamTypeUnit': fields.Raw, 'CategoryParamTypeOrder': fields.Raw, 'CategoryParamTypeNote': fields.Raw }
-        
-    return jsonify(marshal(data, mfields))
+    return jsonify(result.data)
 
 @api.route('/inventory/cat-param-type/<int:ID>', methods = ['GET'])
 def getCatParamType(ID):  
-    data = CatParamType.query.get(ID)
-    mfields = { 'CategoryParamTypeId': fields.Raw, 'CategoryParamTypeName': fields.Raw, 'CategoryParamTypeCategory': fields.Raw, \
-                'CategoryParamTypeUnit': fields.Raw, 'CategoryParamTypeOrder': fields.Raw, 'CategoryParamTypeNote': fields.Raw }
+    data = CategoryParamType.query.get(ID)
+    mfields = { 'CategoryParamTypeId': fields.Raw, 'CategoryParamTypeName': fields.Raw, 'CategoryParamTypeCategory': fields.Raw, 'CategoryParamTypeUnit': fields.Raw,
+                'CategoryParamTypeOrder': fields.Raw, 'CategoryParamTypeNote': fields.Raw }
 
     return jsonify(marshal(data, mfields))
+
+
 #### End CategoryParamType R ####
 
 #### Begin Unit R ####
@@ -448,6 +480,15 @@ def getUnit(ID):
     mfields = { 'UnitId': fields.Raw, 'UnitName': fields.Raw, 'UnitShortName': fields.Raw, 'UnitNote': fields.Raw }
 
     return jsonify(marshal(data, mfields))
+
+@api.route('/inventory/category-param-type/join/unit/<int:ID>', methods = ['GET'])
+def joinUnitSchema(ID):  
+    types = mysql.engine.execute("select * from unit \
+                                  join categoryparamtype on categoryparamtype.CategoryParamTypeUnit = unit.UnitId AND categoryparamtype.CategoryParamTypeId = %d" % ID)
+    unit_schema = JoinUnitSchema(many=True)
+    result = unit_schema.dump(types)
+
+    return jsonify(result.data)
 #### End Unit R ####
 
 #### Begin ComponentParam CRUD ####
@@ -555,16 +596,16 @@ def createComponent():
 
 @api.route('/inventory/component', methods = ['GET'])
 def getComponents():  
-    #data = Component.query.join(Manufacturer).all()
-    data = Component.query.order_by(Component.ComponentId.desc()).all()
+    components = mysql.engine.execute("select * from component \
+                                  join manufacturer on manufacturer.ManufacturerId = component.ComponentManufacturer \
+                                  join distributor on distributor.DistributorId = component.ComponentDistributor \
+                                  join location on location.LocationId = component.ComponentLocation \
+                                  join footprint on footprint.FootprintId = component.ComponentFootprint \
+                                  join category on category.CategoryId = component.ComponentCategory;")
+    component_schema = JoinComponentSchema(many=True)
+    result = component_schema.dump(components)
 
-    for component in data:
-       mfields = { 'ComponentId': fields.Raw, 'ComponentName': fields.Raw, 'ComponentManufacturer': fields.Raw, 'ComponentPartNumber': fields.Raw, \
-                   'ComponentDistributor': fields.Raw, 'ComponentDistributorCode': fields.Raw, 'ComponentPrice': fields.Raw, 'ComponentCode': fields.Raw, \
-                   'ComponentLocation': fields.Raw, 'ComponentDatasheet': fields.Raw, 'ComponentFootprint': fields.Raw, 'ComponentCategory': fields.Raw, \
-                   'ComponentNote': fields.Raw }
-        
-    return jsonify(marshal(data, mfields))
+    return jsonify(result.data)
 
 @api.route('/inventory/component/<int:ID>', methods = ['GET'])
 def getComponent(ID):  
