@@ -1,10 +1,11 @@
 <?php
 
 require_once 'library/page.interface.php';
+require_once 'prjdefine.php';
 
 class ProjectPage implements Page
 {
-    public function printHeader($prjName, $prjVersion, $pageTitle)
+    public function printHeader($baseUrl, $pageTitle)
     {
         include('views/header.phtml');
     }
@@ -19,7 +20,7 @@ class ProjectPage implements Page
         
     }
     
-    public function printFooter($prjName, $prjVersion, $prjAuthor, $baseUrl)
+    public function printFooter($baseUrl)
     {
         include('views/footer.phtml');
     }

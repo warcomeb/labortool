@@ -17,7 +17,7 @@ $page = new ProjectPage();
 
 if ($nav->isRoutable())
 {
-    $page->printHeader($config['app']['name'],$config['app']['version'],"");
+    $page->printHeader($config['app']['urlbase'],"");
     /* Print breadcrumbs */
     $breadcrumbs = $nav->getBreadcrumbs();
     $parameters = $nav->getParameters();
@@ -25,11 +25,11 @@ if ($nav->isRoutable())
     
 //     Page::printBreadcrumbs($site,$breadcrumbs);
 //     include($nav->getRoute());
-    $page->printFooter($config['app']['name'],$config['app']['version'],$config['app']['authors']);
+    $page->printFooter($config['app']['urlbase']);
 }
 else
 {
-    $page->printHeader($config['app']['name'],$config['app']['version'],"Page Not Found");
+    $page->printHeader($config['app']['urlbase'],"Page Not Found");
     echo "Page not found!";
-    $page->printFooter($config['app']['name'],$config['app']['version'],$config['app']['authors']);
+    $page->printFooter($config['app']['urlbase']);
 }
