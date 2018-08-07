@@ -17,10 +17,11 @@ class Navigation
         'parameters' => array(),
     );
 
-    protected $_breadcrumbs = array();
-
     /** Addess of view file */
     protected $_address;
+    
+    /** String that contain current navigation level */
+    protected $_navLevel;
 
     public function __construct()
     {
@@ -35,6 +36,7 @@ class Navigation
         /* Default page */
         if (count($this->_uriElements) && $this->_uriElements === '')
         {
+            $this->_request['module'] = 'home';
             $this->_request['controller'] = 'home';
             return;
         }
@@ -47,6 +49,7 @@ class Navigation
         else
         {
             $this->_request['module'] = 'home';
+            $this->_request['controller'] = 'home';
             return;
         }
         
@@ -88,23 +91,23 @@ class Navigation
 
         if (!empty($this->_request['module']))
         {
-            $address .= $this->_request['module'] . '/';
-            $this->_breadcrumbs[0] = $this->_request['module'];
+            $address .= $this->_request['module'];
+            $this->_navLevel = $this->_request['module'];
         }
         
         if (!empty($this->_request['controller']))
         {
-            $address .= $this->_request['controller'] . '/';
-            $this->_breadcrumbs[1] = $this->_request['controller'];
+            $address .= '/' . $this->_request['controller'];
+            $this->_navLevel .= '_' . $this->_request['controller'];
         }
 
         if (!empty($this->_request['action']))
         {
-            $address .= $this->_request['action'] . '.phtml';
-            $this->_breadcrumbs[2] = $this->_request['action'];
+            $address .= '/' . $this->_request['action'];
+            $this->_navLevel .= '_' . $this->_request['action'];
         }
 
-        $this->_address = $address;
+        $this->_address = $address . '.phtml';
     }
 
     public function isRoutable()
@@ -116,10 +119,10 @@ class Navigation
     {
         return $this->_address;
     }
-
-    public function getBreadcrumbs()
+    
+    public function getNavigationLevel()
     {
-        return $this->_breadcrumbs;
+        return $this->_navLevel;
     }
 
     public function getParameters()

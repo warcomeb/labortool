@@ -4,87 +4,33 @@
 
     <div id="wrapper">
         <ul class="sidebar navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $baseUrl."/home";?>">
-                    <i class="fas fa-tachometer-alt nav-logo"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+<?php 
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="anagrafiche" aria-haspopup="true" aria-expanded="false" role="button">
-                    <i class="fas fa-microchip nav-logo"></i>
-                    <span>Anagrafiche</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="anagrafiche">
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/records/article";?>">Articoli</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/records/customer-supplier";?>">Clienti/Fornitori</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/records/manufacturer";?>">Produttori</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/records/employee";?>">Collaboratori</a>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="gestione" aria-haspopup="true" aria-expanded="false" role="button">
-                    <i class="far fa-calendar-alt nav-logo"></i>
-                    <span>Gestione</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="gestione">
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/management/project";?>">Progetti</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/management/board";?>">Schede Elettroniche</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/management/activity";?>">Attività</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/management/production";?>">Produzioni</a>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="magazzino" aria-haspopup="true" aria-expanded="false" role="button">
-                    <i class="fas fa-warehouse nav-logo"></i>
-                    <span>Magazzino</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="magazzino">
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/warehouse/status";?>">Status</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/management/movements";?>">Carico/Scarico</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/management/inventory";?>">Inventario</a>
-                </div>
-            </li>
-
-        	    <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="vendite" aria-haspopup="true" aria-expanded="false" role="button">
-                    <i class="far fa-money-bill-alt nav-logo"></i>
-                    <span>Vendite</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="vendite">
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/sales/offer";?>">Offerte</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/sales/order";?>">Ordini</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/sales/transport-document";?>">DDT</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/sales/invoice";?>">Fatture</a>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="acquisti" aria-haspopup="true" aria-expanded="false" role="button">
-                    <i class="fas fa-cart-arrow-down nav-logo"></i>
-                    <span>Acquisti</span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="acquisti">
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/purchases/order";?>">Ordini</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/purchases/transport-document";?>">DDT</a>
-                    <a class="dropdown-item" href="<?php echo $baseUrl."/purchases/invoice";?>">Fatture</a>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $baseUrl."/report";?>">
-                    <i class="fas fa-chart-line nav-logo"></i>
-                    <span>Report</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $baseUrl."/about";?>">
-                    <i class="far fa-question-circle nav-logo"></i>
-                    <span>About</span>
-                </a>
-            </li> 
+    for ($i = 0; $i < count($this->_sidebar); $i++)
+    {
+        $active = ($this->_sidebar[$i]['active']) ? 'active' : '';
+        
+        if (count($this->_sidebar[$i]['sub']) > 0)
+        {
+            echo "<li class=\"nav-item dropdown\">\n";
+            echo "<a class=\"nav-link {$active} dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\" id=\"{$this->_sidebar[$i]['id']}\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">\n";
+            echo "<i class=\"{$this->_sidebar[$i]['logo']} nav-logo\"></i>\n";
+            echo "<span>{$this->_sidebar[$i]['name']}</span>\n</a>\n";
+            
+            echo "<div class=\"dropdown-menu\" aria-labelledby=\"{$this->_sidebar[$i]['id']}\">\n";
+            for ($y = 0; $y < count($this->_sidebar[$i]['sub']); $y++)
+            {
+                echo "<a class=\"dropdown-item\" href=\"{$baseUrl}/{$this->_sidebar[$i]['sub'][$y]['url']}\">{$this->_sidebar[$i]['sub'][$y]['name']}</a>\n";
+            }
+            echo "</div>\n</li>\n";
+        }
+        else
+        {
+            echo "<li class=\"nav-item\">\n";
+            echo "<a class=\"nav-link {$active}\" href=\"{$baseUrl}/{$this->_sidebar[$i]['url']}\" title=\"{$this->_sidebar[$i]['title']}\">\n";
+            echo "<i class=\"{$this->_sidebar[$i]['logo']} nav-logo\"></i>\n";
+            echo "<span>{$this->_sidebar[$i]['name']}</span>\n</a>\n</li>\n";
+        }
+    }
+?>   
         </ul>

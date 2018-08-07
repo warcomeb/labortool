@@ -1,0 +1,23 @@
+<div id="content-wrapper">
+<div class="container-fluid">
+
+<ol class="breadcrumb">
+<?php 
+
+for ($i = 0; $i < count($this->_breadcrumbs); $i++)
+{
+    // Last elements
+    if (($i + 1) == count($this->_breadcrumbs))
+    {
+        echo "<li class=\"breadcrumb-item active\">{$this->_breadcrumbs[$i]['name']}</li>\n";
+    }
+    else
+    {
+        echo "<li class=\"breadcrumb-item\">\n";
+        echo "\t<a href=\"{$this->_baseUrl}/{$this->_breadcrumbs[$i]['url']}\">{$this->_breadcrumbs[$i]['name']}</a>\n";
+        echo "</li>\n";
+    }
+}
+
+?>
+</ol>
