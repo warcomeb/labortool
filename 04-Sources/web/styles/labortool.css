@@ -1,0 +1,264 @@
+/******************************************************************************
+ * LabOrTool 
+ * Copyright (C) 2018 Marco Giammarini <http://www.warcomeb.it>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * Author:
+ *  Marco Giammarini <m.giammarini@warcomeb.it>
+ *
+ * This work is inspired to:
+ * Start Bootstrap - SB Admin v5.0.1 
+ * https://startbootstrap.com/template-overviews/sb-admin
+ * Copyright 2013-2018 Start Bootstrap
+ ******************************************************************************/
+
+/******************************************************************************
+ * GENERAL
+ ******************************************************************************/
+
+html 
+{
+    position: relative;
+    min-height: 100%;
+}
+
+body 
+{
+    height: 100%;
+}
+
+#wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+#wrapper #content-wrapper 
+{
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 80px;
+}
+
+/******************************************************************************
+ * NAVBAR
+ ******************************************************************************/
+
+.bg-dark
+{
+    background-color: #990033 !important;
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-toggle::after 
+{
+  width: 1rem;
+  text-align: center;
+  float: right;
+  vertical-align: 0;
+  border: 0;
+  font-weight: 900;
+  content: '\f105';
+  font-family: 'Font Awesome 5 Free';
+}
+
+.navbar-nav .nav-item.dropdown.show .dropdown-toggle::after 
+{
+    content: '\f107';
+}
+
+.navbar-nav .nav-item.dropdown.no-arrow .dropdown-toggle::after 
+{
+    display: none;
+}
+
+.navbar-nav .nav-item .nav-link:focus 
+{
+    outline: none;
+}
+
+/******************************************************************************
+ * SIDEBAR
+ ******************************************************************************/
+
+.sidebar 
+{
+    width: 90px !important;
+    background-color: #F8F9FA !important;
+    min-height: calc(100vh - 56px);
+}
+
+.sidebar .nav-item:last-child 
+{
+    margin-bottom: 1rem;
+}
+
+.sidebar .nav-item .nav-link 
+{
+    text-align: center;
+    padding: 0.5rem 1rem;
+    width: 90px;
+}
+
+.sidebar .nav-item .nav-link span 
+{
+    font-size: 0.65rem;
+    display: block;
+}
+
+.sidebar .nav-item .nav-link 
+{
+    color: #000000;
+}
+
+.sidebar .nav-item .nav-link .nav-logo
+{
+    color: #999999;
+}
+
+.sidebar .nav-item .nav-link:active, 
+.sidebar .nav-item .nav-link:focus, 
+.sidebar .nav-item .nav-link:hover, 
+.sidebar .nav-item .nav-link:active .nav-logo, 
+.sidebar .nav-item .nav-link:focus .nav-logo, 
+.sidebar .nav-item .nav-link:hover .nav-logo,
+.sidebar .nav-item .nav-link.active:active .nav-logo, 
+.sidebar .nav-item .nav-link.active:focus .nav-logo, 
+.sidebar .nav-item .nav-link.active:hover .nav-logo
+{
+    color: #000000;
+}
+
+
+/* Change color for active menu */
+.sidebar .nav-item .nav-link.active .nav-logo, 
+.sidebar .nav-item .nav-link.active .nav-logo, 
+.sidebar .nav-item .nav-link.active .nav-logo,
+.sidebar .nav-link.active 
+{
+    color: #007BFF;
+}
+
+.sidebar .nav-item .dropdown-menu 
+{
+    position: absolute !important;
+    -webkit-transform: none !important;
+    transform: none !important;
+    left: calc(90px + 0.5rem) !important;
+    margin: 0;
+}
+
+.sidebar .nav-item .dropdown-menu.dropup 
+{
+    bottom: 0;
+    top: auto !important;
+}
+
+.sidebar .nav-item.dropdown .dropdown-toggle::after 
+{
+    display: none;
+}
+
+/*
+.sidebar.toggled {
+  width: 0 !important;
+  overflow: hidden;
+} */
+
+@media (min-width: 768px) 
+{
+    .sidebar 
+    {
+        padding-top: .5rem;
+        width: 225px !important;
+    }
+  
+    .sidebar .nav-item .nav-link 
+    {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.5rem 1rem;
+        width: 225px;
+    }
+ 
+    .sidebar .nav-item .nav-link span 
+    {
+        font-size: 1rem;
+        display: inline;
+    }
+
+    .sidebar .nav-item .dropdown-menu 
+    {
+        position: static !important;
+        margin: 0 1rem;
+        top: 0;
+    }
+    
+    .sidebar .nav-item.dropdown .dropdown-toggle::after 
+    {
+        display: block;
+    }
+    
+    .sidebar.toggled 
+    {
+        overflow: visible;
+        width: 90px !important;
+    }
+    
+    .sidebar.toggled .nav-item:last-child 
+    {
+        margin-bottom: 1rem;
+    }
+    
+    .sidebar.toggled .nav-item .nav-link 
+    {
+        text-align: center;
+        padding: 0.75rem 1rem;
+        width: 90px;
+    }
+
+    .sidebar.toggled .nav-item .nav-link span 
+    {
+        font-size: 0.65rem;
+        display: block;
+    }
+
+    .sidebar.toggled .nav-item .dropdown-menu 
+    {
+        position: absolute !important;
+        -webkit-transform: none !important;
+        transform: none !important;
+        left: calc(90px + 0.5rem) !important;
+        margin: 0;
+    }
+
+    .sidebar.toggled .nav-item .dropdown-menu.dropup 
+    {
+        bottom: 0;
+        top: auto !important;
+    }
+
+    .sidebar.toggled .nav-item.dropdown .dropdown-toggle::after 
+    {
+        display: none;
+    }
+}
+
