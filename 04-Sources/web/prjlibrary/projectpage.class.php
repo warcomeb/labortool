@@ -61,6 +61,45 @@ class ProjectPage implements Page
         ),
         
         array (
+            'name'   => 'Gestione',
+            'id'     => 'management',
+            'url'    => 'management',
+            'title'  => 'Gestione e Pianificazione',
+            'active' => FALSE,
+            'logo'   => 'far fa-calendar-alt',
+            'sub'    => array(
+                array (
+                    'name'   => 'Progetti',
+                    'id'     => 'project',
+                    'url'    => 'management/project',
+                    'title'  => 'Gestione Progetti',
+                    'active' => FALSE,
+                ),
+                array (
+                    'name'   => 'Schede Elettroniche',
+                    'id'     => 'board',
+                    'url'    => 'management/board',
+                    'title'  => 'Gestione Schede Elettroniche',
+                    'active' => FALSE,
+                ),
+                array (
+                    'name'   => 'Attività',
+                    'id'     => 'activity',
+                    'url'    => 'management/activity',
+                    'title'  => 'Gestione Attività',
+                    'active' => FALSE,
+                ),
+                array (
+                    'name'   => 'Produzioni',
+                    'id'     => 'production',
+                    'url'    => 'management/production',
+                    'title'  => 'Gestione Produzioni',
+                    'active' => FALSE,
+                ),
+            ),
+        ),
+        
+        array (
             'name'   => 'Magazzino',
             'id'     => 'warehouse',
             'url'    => 'warehouse',
