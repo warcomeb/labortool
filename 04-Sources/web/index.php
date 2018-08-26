@@ -2,6 +2,7 @@
 
 require_once 'library/database.class.php';
 require_once 'library/navigation.class.php';
+require_once 'library/myutility.class.php';
 
 /* Specific print function for this project */
 require_once 'prjlibrary/projectpage.class.php';
@@ -9,7 +10,11 @@ require_once 'prjlibrary/projectpage.class.php';
 /* Config file */
 $config = parse_ini_file(__DIR__ . '/config/config.ini',true);
 
-//$db = Database::getInstance($config['database']);
+// Database object
+$db = Database::getInstance($config['database']);
+
+// Save base url address
+$baseUrl = $config['app']['urlbase'];
 
 $nav = new Navigation();
 // Page object
@@ -17,22 +22,19 @@ $page = new ProjectPage();
 
 if ($nav->isRoutable())
 {
-    $page->printHeader($config['app']['urlbase'],"");
-
-// FIXME
-//     $parameters = $nav->getParameters();
-//     $resourceId = $nav->getResourceId();
+    $page->printHeader($baseUrl,"");
 
     // Get current request
     $navLevel = $nav->getNavigationLevel();
-    
     // Print sidebar and breadcrumbs
     $page->computeNavigationElements($navLevel);
     $page->printNavigation();
     $page->printBreadcrumbs();
 
-    // Print request page
+    // Print requested page
     include($nav->getRoute());
+    
+    // Print footer
     $page->printFooter($config['app']['urlbase']);
 }
 else

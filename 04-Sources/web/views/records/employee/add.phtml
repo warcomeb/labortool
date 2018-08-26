@@ -1,0 +1,121 @@
+<!-- Page Heading -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Collaboratori</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a class="btn btn-sm btn-outline-primary" href="<?php echo $baseUrl;?>/records/employee/list" role="button"><i class="fas fa-arrow-left"></i>&nbsp;Back</a>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-user"></i>
+        Inserimento Collaboratore
+    </div>
+    <div class="card-body">
+        <form id="add-user" data-parsley-validate="">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="inputCode">Code</label>
+                    <input type="text" class="form-control" id="inputCode" placeholder="-" disabled>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputName">Nome</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="" data-parsley-minlength="3" autocomplete="off" required>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputSurname">Cognome</label>
+                    <input type="text" class="form-control" id="inputSurname" placeholder="" data-parsley-minlength="3" autocomplete="off" required>
+                </div>
+            </div>
+            <div class="form-row">
+                 <div class="form-group col-md-6">
+          	         <label for="inputEmail">Email</label>
+                     <input type="email" class="form-control" id="inputEmail" placeholder="" data-parsley-type="email" autocomplete="off" required>
+            		</div>
+                <div class="form-group col-md-6">
+                    <label for="inputPhone">Telefono</label>
+                    <input type="text" class="form-control" id="inputPhone" placeholder="" data-parsley-phone="" autocomplete="off" required>
+            		</div>
+            </div>
+            <div class="form-row">
+                <!-- The username is choose by the software -->
+                <!-- 
+                <div class="form-group col-md-6">
+                    <label for="inputUsername">Username</label>
+                    <input type="text" class="form-control" id="inputUsername" placeholder="-" disabled>
+                </div> -->
+                <div class="form-group col-md-6">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="" data-parsley-password="" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword2">Ripeti Password</label>
+                    <input type="password" class="form-control" id="inputPassword2" placeholder="" data-parsley-equalto="#inputPassword" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputAddress">Indirizzo</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="" data-parsley-minlength="5" required>
+            		</div>
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Città</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="" data-parsley-minlength="3" required>
+            		</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputDistrict">Provincia (Sigla)</label>
+                    <input type="text" class="form-control" id="inputDistrict" placeholder="" data-parsley-provincia="" required>
+            		</div>
+                <div class="form-group col-md-4">
+                    <label for="inputZip">CAP</label>
+                    <input type="text" class="form-control" id="inputZip" placeholder="" data-parsley-zip-code="" required>
+            		</div>
+                <div class="form-group col-md-4">
+                    <label for="inputCountry">Paese</label>
+                    <?php MyUtility::printCountrySelectForm("form-control", "inputCountry", "IT"); ?> 
+            		</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+            	        <label for="inputNIN">Codice Fiscale</label>
+                    <input type="text" class="form-control" id="inputNIN" placeholder="" data-parsley-nin="" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputBirthday">Data di Nascita</label>
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">                        	
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" id="inputBirthday" data-parsley-birthday="" data-parsley-errors-container="#parsley-datetimepicker-error" required/>
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                    <div id="parsley-datetimepicker-error"></div>
+            		</div>
+            	</div>
+            <div class="form-group">
+                <label for="inputNote">Note</label>
+                <textarea class="form-control" id="inputNote" rows="3" placeholder="Note">
+                </textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" id="add-user-save">Save</button>
+                <button class="btn btn-primary" type="reset" id="add-user-reset">Reset</button>
+            </div>
+
+            <div class="alert alert-success d-none" role="alert" id="add-user-success">
+                <i class="fas fa-check"></i>&nbsp;New user added with success!
+            </div>
+            
+            <div class="alert alert-danger d-none" role="alert" id="add-user-error">
+			&nbsp;
+            </div>
+            
+            <div class="alert alert-primary d-none" role="alert" id="add-user-loading">
+                <i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...
+            </div>
+        </form>
+    </div>
+</div>

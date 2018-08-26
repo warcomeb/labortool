@@ -1,0 +1,121 @@
+<!-- Page Heading -->
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Collaboratori</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a class="btn btn-sm btn-outline-primary" href="<?php echo $baseUrl;?>/records/employee/list" role="button"><i class="fas fa-arrow-left"></i>&nbsp;Back</a>
+        </div>
+    </div>
+</div>
+
+<?php
+
+$isError = FALSE;
+
+if ($nav->getResourceId() == 0)
+{
+    // TODO: print error
+}
+else 
+{
+    // Get the user list
+    $query = "SELECT * FROM User WHERE Id={$nav->getResourceId()}";
+    $result = $db->query($query);
+    if ($result)
+    {
+        $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+        if ((count($rows) == 0) || (count($rows) > 1))
+        {
+            $isError = TRUE;
+        }
+    }
+    else 
+    {
+        $isError = TRUE;
+    }
+}
+
+if ($isError == FALSE)
+{
+?>
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-user"></i>
+        Visualizza Collaboratore
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="inputCode">Code</label>
+                    <input type="text" class="form-control" id="inputCode" placeholder="<?php echo $rows[0]['Code']; ?>" disabled>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputName">Nome</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="<?php echo $rows[0]['Name']; ?>" disabled>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputSurname">Cognome</label>
+                    <input type="text" class="form-control" id="inputSurname" placeholder="<?php echo $rows[0]['Surname']; ?>" disabled>
+                </div>
+            </div>
+            <div class="form-row">
+                 <div class="form-group col-md-6">
+          	         <label for="inputEmail">Email</label>
+                     <input type="email" class="form-control" id="inputEmail" placeholder="<?php echo $rows[0]['Email']; ?>" disabled>
+            		</div>
+                <div class="form-group col-md-6">
+                    <label for="inputPhone">Telefono</label>
+                    <input type="text" class="form-control" id="inputPhone" placeholder="<?php echo $rows[0]['Phone']; ?>" disabled>
+            		</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputUsername">Username</label>
+                    <input type="text" class="form-control" id="inputUsername" placeholder="<?php echo $rows[0]['Username']; ?>" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="-" disabled>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputAddress">Indirizzo</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="<?php echo $rows[0]['Address']; ?>" disabled>
+            		</div>
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Città</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="<?php echo $rows[0]['City']; ?>" disabled>
+            		</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputDistrict">Provincia</label>
+                    <input type="text" class="form-control" id="inputDistrict" placeholder="<?php echo $rows[0]['District']; ?>" disabled>
+            		</div>
+                <div class="form-group col-md-4">
+                    <label for="inputZip">CAP</label>
+                    <input type="text" class="form-control" id="inputZip" placeholder="<?php echo $rows[0]['ZipCode']; ?>" disabled>
+            		</div>
+                <div class="form-group col-md-4">
+                    <label for="inputCountry">Paese</label>
+                    <input type="text" class="form-control" id="inputCountry" placeholder="<?php echo $rows[0]['Country']; ?>" disabled>
+            		</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+            	        <label for="inputNIN">Codice Fiscale</label>
+                    <input type="text" class="form-control" id="inputNIN" placeholder="<?php echo $rows[0]['NIN']; ?>" disabled>
+                </div>
+                <div class="form-group col-md-6">
+            	        <label for="inputBirthday">Data di Nascita</label>
+                    <input type="text" class="form-control" id="inputBirthday" placeholder="<?php echo $rows[0]['Birthday']; ?>" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<?php
+}
+?>
