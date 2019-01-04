@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
-
 // Session starting...
 session_start();
 
@@ -48,7 +47,7 @@ list($status, $user) = Login::isLogged($db);
 if($status == MyError::_login_UserLogged)
 {
     $nav = new Navigation();
-    
+
     // Page object
     $page = new ProjectPage();
 
@@ -56,17 +55,17 @@ if($status == MyError::_login_UserLogged)
     {
         // Print header
         $page->printHeader($baseUrl,"");
-    
+
         // Get current request
         $navLevel = $nav->getNavigationLevel();
         // Print sidebar and breadcrumbs
         $page->computeNavigationElements($navLevel);
         $page->printNavigation();
         $page->printBreadcrumbs();
-    
+
         // Print requested page
         include($nav->getRoute());
-        
+
         // Print footer
         $page->printFooter($config['app']['urlbase']);
     }
@@ -79,7 +78,7 @@ if($status == MyError::_login_UserLogged)
     }
 }
 else
-{    
+{
     // Print login page
     include('views/login.phtml');
 }

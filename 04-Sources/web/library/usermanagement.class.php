@@ -33,23 +33,22 @@ class UserManagement
         // Convert accent chars
         $name = MyUtility::convertAccentCharacters($name);
         $surname = MyUtility::convertAccentCharacters($surname);
-        
+
         // explode and lowercase name
         $nameParts = array_filter(preg_split("/[ ,.-]+/", strtolower($name)));
         // Take only the first part of the name
         $nameParts = array_slice($nameParts, 0, 1);
         // explode and lowercase surname
         $surnameParts = array_filter(preg_split("/[ ,.-]+/", strtolower($surname)));
-        
+
         // Compose the username
         $username = ($nameParts[0] . ".");
         foreach ($surnameParts as $surnamePart)
         {
             $username .= $surnamePart;
         }
-        
-        // Check if is unique, otherwise add number
 
+        // Check if is unique, otherwise add number
         $query = "SELECT * FROM " . $dbTable . " WHERE Username LIKE '%" . $username . "%'";
         $result = $db->query($query);
         if ($result)
@@ -66,8 +65,8 @@ class UserManagement
             }
         }
         else 
-        {        
-            return "";    
+        {
+            return "";
         }
     }
 }

@@ -59,7 +59,7 @@ if (empty($username))
 // FIXME: timestamp is usefull?
 // FIXME: add profile image?
 // FIXME: Log, is usefull?
-$query = "INSERT INTO User 
+$query = "INSERT INTO " . PRJ_DB_TABLE_USER . " 
           (Id, Code, Username, Password, Name, Surname, Email, Phone, Address, City, District, ZipCode, Country, NIN, Birthday, Note) 
           VALUES (NULL, 'U000000000',
           '{$username}',

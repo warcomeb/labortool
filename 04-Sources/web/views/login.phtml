@@ -11,10 +11,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        
+
         <!-- Bootstrap core CSS -->
         <link href="<?php echo $baseUrl;?>/scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
-        
+
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="<?php echo $baseUrl;?>/styles/labortool.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl;?>/styles/fontawesome-free/css/all.min.css">
@@ -25,20 +25,26 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="body-login">
-        <form class="form-signin">
+    <body class="body-login text-center">
+        <form class="form-signin" id="login-user" data-parsley-validate="" method="post">
             <!-- <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">  -->
             <h1 class="h3 mb-3 font-weight-normal">LogIn</h1>
 
-            <label for="inputEmail" class="sr-only">Username</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" id="inputUsername" class="form-control" placeholder="Username" required data-parsley-minlength="3" autofocus>
 
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" data-parsley-password="" required>
+
+            <input type="hidden" name="inputKey" value="<?php echo $_SESSION['Key'];error_log("Login".$_SESSION['Key'] ); ?>" id="inputKey" />
+
+            <div class="alert alert-primary" role="alert" id="login-message">
+                <i class="fas fa-sign-in-alt"></i>&nbsp;Inseririsci Username e Password
+            </div>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
-            <p class="mt-5 mb-3 text-muted"><?php echo PRJ_NAME." ".PRJ_VERSION . "<br />&copy; " . PRJ_YEAR . " " .PRJ_COPYRIGHT; ?></p>
+            <p class="mt-4 mb-3 text-muted"><?php echo PRJ_NAME." ".PRJ_VERSION . "<br />&copy; " . PRJ_YEAR . " " .PRJ_COPYRIGHT; ?></p>
         </form>
 
         <script src="<?php echo $baseUrl;?>/scripts/jquery/jquery-3.3.1.min.js"></script>
@@ -52,7 +58,8 @@
         <script type="text/javascript" src="<?php echo $baseUrl;?>/scripts/crypto-js/sha256.min.js"></script>
 
         <!-- Custom javascript file -->
-        <script type="text/javascript" src="<?php echo $baseUrl;?>/scripts/labortool.js"></script>
+        <script type="text/javascript" src="<?php echo $baseUrl;?>/scripts/labortool-validator.js"></script>
+        <script type="text/javascript" src="<?php echo $baseUrl;?>/scripts/labortool-login.js"></script>
 
     </body>
 </html>

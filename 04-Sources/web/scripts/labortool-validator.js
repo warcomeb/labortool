@@ -24,17 +24,8 @@
  *  Marco Giammarini <m.giammarini@warcomeb.it>
  */
 
-$(document).ready(function() 
-{
-	// Data table setup
-    $('#user-list-table').DataTable();
-
-    // Datetime picker enable
-    moment.locale('it');
-    $('#datetimepicker1').datetimepicker({
-    	    format: 'DD/MM/YYYY',
-    });
-
+//$(document).ready(function() 
+//{
 	// New rule validator
 	window.Parsley
 	  .addValidator('provincia', {
@@ -113,95 +104,4 @@ $(document).ready(function()
 	          it: 'La data di nascita deve essere antecedente ad oggi'
 	      }
 	  });
-
-    $('#add-user').parsley().on('form:success', function() 
-    	{
-    	    // TODO: do somethings?
-    })
-    .on('form:error', function() 
-    	{
-	    // TODO: do somethings?
-    })
-    .on('form:submit', function() 
-    {
-	    var formData = {
-	        'name'              : $('#inputName').val(),
-	        'surname'           : $('#inputSurname').val(),
-	        'password'          : CryptoJS.SHA256($('#inputPassword').val()).toString(CryptoJS.enc.Hex),
-	        'email'             : $('#inputEmail').val(),
-	        'phone'             : $('#inputPhone').val(),
-	        'address'           : $('#inputAddress').val(),
-	        'city'              : $('#inputCity').val(),
-	        'district'          : $('#inputDistrict').val(),
-	        'zip'               : $('#inputZip').val(),
-	        'country'           : $('#inputCountry').val(),
-	        'nin'               : $('#inputNIN').val(),
-	        'birthday'          : $('#inputBirthday').val(),
-	        'note'              : $('#inputNote').val(),
-	    };
-    
-	    // Disable buttons
-        $('#add-user-save').attr("disabled","disabled");
-        $('#add-user-reset').attr("disabled","disabled");
-        // Show loading gift
-	    $('#add-user-loading').removeClass('d-none').delay(800);
-	    
-        $.ajax({
-            type        : 'POST',
-            url         : '/prjform/adduser.form.php',
-            data        : formData, 
-            dataType    : 'json',
-            encode      : true
-        })
-        .done(function(data)
-        {
-            // Just for debug
-            //console.log(data);
-
-            // NO ERRORS
-            if (0 === data['status'])
-            {
-        	        // Show success message
-                $('#add-user-loading').addClass('d-none');
-                $('#add-user-error').addClass('d-none');
-                $('#add-user-success').removeClass('d-none').delay(2000);
-
-                // Redirect to view page...
-                $(location).attr('href', '/records/employee/view/' + data['id']);
-            }
-            else if (1 === data['status'])
-            {
-        	    	    // Write text into error div message
-        	    	    $('#add-user-error').html('<i class="fas fa-times"></i>');
-        	    	    $('#add-user-error').append(' ' + data['status']);
-
-        	        // Show error message
-                $('#add-user-loading').addClass('d-none');
-                $('#add-user-success').addClass('d-none');
-                $('#add-user-error').removeClass('d-none').delay(2000);
-
-                // Enable buttons
-                $('#add-user-save').removeAttr("disabled");
-                $('#add-user-reset').removeAttr("disabled");
-            }
-        })
-        .fail(function(jqXHR, textStatus)
-        	{
-    	        // Write text into error div message
-    	        $('#add-user-error').html('<i class="fas fa-times"></i>');
-    	        $('#add-user-error').append(' ' + textStatus);
-
-            // Show error message
-            $('#add-user-loading').addClass('d-none');
-            $('#add-user-success').addClass('d-none');
-            $('#add-user-error').removeClass('d-none').delay(2000);
-
-            // Enable buttons
-            $('#add-user-save').removeAttr("disabled");
-            $('#add-user-reset').removeAttr("disabled");
-        	});
-
-        // Don't submit form
-        return false;
-    });
-});
+//});

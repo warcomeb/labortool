@@ -6,4 +6,8 @@ define("PRJ_COPYRIGHT"     , "Marco Giammarini");
 define("PRJ_YEAR"          , "2014-2018");
 
 // Database Table's name
-define("PRJ_DB_TABLE_USER" , "User");
+define("PRJ_DB_TABLE_USER"    , "User");
+define("PRJ_DB_TABLE_SESSION" , "UserSession");
+
+// Login define
+define("LOGIN_EXPIRE_SESSION" , 3600);
