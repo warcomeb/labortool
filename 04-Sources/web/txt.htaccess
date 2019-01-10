@@ -1,4 +1,8 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 [QSA,NC,L]
+RewriteRule ^/?([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)/([0-9]+)/?$ index.php/$1/$2/$3/$4 [L]
+RewriteRule ^/?([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z]+)/?$ index.php/$1/$2/$3 [L]
+RewriteRule ^/?([a-zA-Z]+)/([a-zA-Z]+)/?$ index.php/$1/$2 [L]
+RewriteRule ^/?([a-zA-Z]+)/?$ index.php/$1 [L]
+RewriteRule ^/?$ index.php/home/home [L]

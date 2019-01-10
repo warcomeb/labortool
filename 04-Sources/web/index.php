@@ -33,14 +33,11 @@ require_once 'prjlibrary/projectpage.class.php';
 
 // Config file
 $config = parse_ini_file(__DIR__ . '/config/config.ini',true);
-
+//print_r($config);
 // Create database object
 $db = Database::getInstance($config['database']);
 
-// Save base url address
-$baseUrl = $config['app']['urlbase'];
-
-// Check if user is loggeg
+// Check if user is logged
 list($status, $user) = Login::isLogged($db);
 
 // When the user is logged, serve the request
@@ -49,12 +46,12 @@ if($status == MyError::_login_UserLogged)
     $nav = new Navigation();
 
     // Page object
-    $page = new ProjectPage();
+    $page = new ProjectPage($config['app']['urlbase']);
 
     if ($nav->isRoutable())
     {
         // Print header
-        $page->printHeader($baseUrl,"");
+        $page->printHeader("");
 
         // Get current request
         $navLevel = $nav->getNavigationLevel();
@@ -67,18 +64,21 @@ if($status == MyError::_login_UserLogged)
         include($nav->getRoute());
 
         // Print footer
-        $page->printFooter($config['app']['urlbase']);
+        $page->printFooter();
     }
     else
     {
-        $page->printHeader($config['app']['urlbase'],"Page Not Found");
-        $page->printNavigation($config['app']['urlbase'],"");
+        $page->printHeader("Page Not Found");
+        $page->printNavigation();
         include('views/404.phtml');
-        $page->printFooter($config['app']['urlbase']);
+        $page->printFooter();
     }
 }
 else
 {
+    $baseUrl = $config['app']['urlbase'];
+
+    Login::addKey();
     // Print login page
     include('views/login.phtml');
 }

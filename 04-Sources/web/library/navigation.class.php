@@ -1,7 +1,7 @@
 <?php
-/******************************************************************************
+/*
  * LabOrTool
- * Copyright (C) 2018 Marco Giammarini
+ * Copyright (C) 2018-2019 Marco Giammarini
  *
  * Author(s):
  *  Marco Giammarini <m.giammarini@warcomeb.it>
@@ -18,7 +18,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>
- ******************************************************************************/
+ */
 
 class Navigation
 {
@@ -42,7 +42,7 @@ class Navigation
 
     public function __construct()
     {
-        $this->_uriElements = explode('/', $_SERVER['PATH_INFO']);
+        $this->_uriElements = explode('/', $_SERVER['REQUEST_URI']);
 
         $this->_parse();
         $this->_route();
@@ -88,7 +88,8 @@ class Navigation
         }
         else
         {
-            $this->_request['action'] = 'list';
+            if (strcmp($this->_request['controller'],'home') !== 0)
+                $this->_request['action'] = 'list';
             return;
         }
 

@@ -215,7 +215,7 @@ class Login
                 // Check if the session was expired
                 self::cleanExpiredSessions($db);
                 $sessionId = self::getSessionId();
-                
+
                 // If session id is not present, return for session expired
                 if(is_null($sessionId))
                 {
@@ -329,8 +329,6 @@ class Login
         if (!isset($_SESSION['UserId']))
         {
             $_SESSION['Key'] =  hash('sha256',mt_rand());
-            error_log($_SESSION['Key']);
-//             $_SESSION['Key'] =  hash('sha256','Ciao');
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
-/******************************************************************************
+/*
  * LabOrTool
- * Copyright (C) 2018 Marco Giammarini
+ * Copyright (C) 2018-2019 Marco Giammarini
  *
  * Author(s):
  *  Marco Giammarini <m.giammarini@warcomeb.it>
@@ -18,12 +18,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>
- ******************************************************************************/
+ */
 
 interface Page
 {
-    public function printHeader($baseUrl, $pageTitle);
+    public function printHeader($pageTitle);
     public function printBreadcrumbs();
     public function printNavigation();
-    public function printFooter($baseUrl);
+    public function printFooter();
 }

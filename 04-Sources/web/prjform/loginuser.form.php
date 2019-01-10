@@ -1,7 +1,7 @@
 <?php 
 /*
  * LabOrTool
- * Copyright (C) 2018 Marco Giammarini
+ * Copyright (C) 2018-2019 Marco Giammarini
  *
  * Author(s):
  *  Marco Giammarini <m.giammarini@warcomeb.it>
@@ -35,8 +35,7 @@ $config = parse_ini_file(realpath(dirname(__FILE__).'/../config/config.ini'),tru
 // Database object
 $db = Database::getInstance($config['database']);
 
-// Check if user is loggeg
-error_log("form".$_SESSION['Key'] );
+// Check if user is logged
 list($status, $user) = Login::isLogged($db);
 
 // When the user is not logged, try the login
@@ -51,7 +50,6 @@ if ($status == MyError::_login_UserNotLogged)
     else 
     {
         // Try log-in phase with ajax request data
-        error_log("Form2".$_SESSION['Key'] );
         list($status, $user) = Login::doLogin($db, $_POST['username'], $_POST['password']);
         
         // Check the result

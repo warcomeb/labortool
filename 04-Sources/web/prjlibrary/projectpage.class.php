@@ -6,9 +6,9 @@ require_once 'prjdefine.php';
 class ProjectPage implements Page
 {
     protected $_baseUrl;
-    
+
     protected $_breadcrumbs = array ();
-    
+
     protected $_sidebar = array
     (
         array (
@@ -20,7 +20,7 @@ class ProjectPage implements Page
             'logo'   => 'fas fa-tachometer-alt',
             'sub'    => array(),
         ),
-        
+
         array (
             'name'   => 'Anagrafica',
             'id'     => 'records',
@@ -59,7 +59,7 @@ class ProjectPage implements Page
                 ),
             ),
         ),
-        
+
         array (
             'name'   => 'Gestione',
             'id'     => 'management',
@@ -98,7 +98,7 @@ class ProjectPage implements Page
                 ),
             ),
         ),
-        
+
         array (
             'name'   => 'Magazzino',
             'id'     => 'warehouse',
@@ -131,7 +131,7 @@ class ProjectPage implements Page
 
             ),
         ),
-        
+
         array (
             'name'   => 'Vendite',
             'id'     => 'sales',
@@ -170,7 +170,7 @@ class ProjectPage implements Page
                 ),
             ),
         ),
-        
+
         array (
             'name'   => 'Acquisti',
             'id'     => 'purchases',
@@ -202,7 +202,7 @@ class ProjectPage implements Page
                 ),
             ),
         ),
-        
+
         array (
             'name'   => 'Report',
             'id'     => 'report',
@@ -212,7 +212,7 @@ class ProjectPage implements Page
             'logo'   => 'fas fa-chart-line',
             'sub'    => array(),
         ),
-        
+
         array (
             'name'   => 'About',
             'id'     => 'about',
@@ -223,38 +223,42 @@ class ProjectPage implements Page
             'sub'    => array(),
         ),
     );
-    
+
     public function __construct($baseUrl) 
     {
         $this->_baseUrl = $baseUrl;
     }
 
-    public function printHeader($baseUrl, $pageTitle)
+    public function printHeader($pageTitle)
     {
+        $baseUrl = $this->_baseUrl;
         include('views/header.phtml');
     }
-    
+
     public function printBreadcrumbs()
     {
+        $baseUrl = $this->_baseUrl;
         include('views/breadcrumbs.phtml');
     }
-    
+
     public function printNavigation()
     {
+        $baseUrl = $this->_baseUrl;
         include('views/navbar.phtml');
     }
-    
-    public function printFooter($baseUrl)
+
+    public function printFooter()
     {
+        $baseUrl = $this->_baseUrl;
         include('views/footer.phtml');
     }
-    
+
     public function computeNavigationElements($navLevel)
     {
         // Check breadcrumbs and sidebar
         // Parse the current navigation level
         $levels = explode('_',$navLevel);
-        
+
         if ($levels[0] === 'home')
         {
             // Save only the name

@@ -39,9 +39,10 @@ $(document).ready(function()
     {
         var password = CryptoJS.SHA256($('#inputPassword').val()).toString(CryptoJS.enc.Hex);
         var mycrypto = password + $('#inputKey').val();
-	    var formData = {
-		        'username'          : $('#inputUsername').val(),
-		        'password'          : CryptoJS.SHA256(mycrypto).toString(CryptoJS.enc.Hex),
+        var formData = 
+        {
+            'username' : $('#inputUsername').val(),
+            'password' : CryptoJS.SHA256(mycrypto).toString(CryptoJS.enc.Hex),
 		};
 	    
         $.ajax({
@@ -53,11 +54,29 @@ $(document).ready(function()
         })
         .done(function(data)
         {
-        	    console.log("login ok!");
+            console.log("INFO: Ajax command success!");
+            console.log("INFO: Status " + data[0]);
+
+            if (_LOGIN__USER_LOGGED_IN === data[0])
+            {
+                // Write text into error div message
+                $('#login-message').html('<i class="fas fa-check"></i>');
+                $('#login-message').append(' LogIn completato!');
+
+                $('#login-message').addClass('alert-success');
+                $('#login-message').removeClass('alert-primary').delay(2000);
+
+                // Redirect to view page...
+                $(location).attr('href', '/home/home');
+            }
+            else
+            {
+
+            }
         })
         .fail(function(jqXHR, textStatus)
         {
-        	    console.log("login ko!");
+            console.log("INFO: login fail!");
         });
 	    
         // Don't submit form
