@@ -7,6 +7,8 @@ class ProjectPage implements Page
 {
     protected $_baseUrl;
 
+    protected $_loggedUser;
+
     protected $_breadcrumbs = array ();
 
     protected $_sidebar = array
@@ -224,9 +226,13 @@ class ProjectPage implements Page
         ),
     );
 
-    public function __construct($baseUrl) 
+    /**
+     *
+     */
+    public function __construct($baseUrl, $user) 
     {
         $this->_baseUrl = $baseUrl;
+        $this->_loggedUser = $user;
     }
 
     public function printHeader($pageTitle)
@@ -244,6 +250,7 @@ class ProjectPage implements Page
     public function printNavigation()
     {
         $baseUrl = $this->_baseUrl;
+        $user = $this->_loggedUser;
         include('views/navbar.phtml');
     }
 

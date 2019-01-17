@@ -67,7 +67,7 @@ class Login
         else
         {
             // Delete into database the current session
-            $query = "DELETE FROM ". PRJ_DB_TABLE_SESSION . " WHERE Id + ". $_SESSION['UserId'] ."'";
+            $query = "DELETE FROM ". PRJ_DB_TABLE_SESSION . " WHERE Id='". $_SESSION['UserId'] ."'";
             $db->exec($query);
             
             // Destroy current session

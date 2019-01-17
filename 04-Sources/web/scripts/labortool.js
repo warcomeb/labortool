@@ -1,6 +1,6 @@
 /*
  * LabOrTool 
- * Copyright (C) 2018 Marco Giammarini <http://www.warcomeb.it>
+ * Copyright (C) 2018-2019 Marco Giammarini <http://www.warcomeb.it>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,9 @@
 
 $(document).ready(function() 
 {
-	// Data table setup
+    $('#labortool-logout').on("click",userLogout);
+
+    // Data table setup
     $('#user-list-table').DataTable();
 
     // Datetime picker enable
@@ -125,4 +127,27 @@ $(document).ready(function()
         // Don't submit form
         return false;
     });
+
+    /*
+     * User logout function
+     */
+    function userLogout ()
+    {
+        console.log("INFO: LogOut request...");
+
+        $.ajax({
+            type        : 'POST',
+            url         : '/prjform/logoutuser.form.php',
+            data        : null, 
+            dataType    : 'json',
+            encode      : true
+        })
+        .done(function(data)
+        {
+            console.log("INFO: LogOut done!");
+
+            // Redirect to login page...
+            $(location).attr('href', '/home/home');
+        });
+    }
 });

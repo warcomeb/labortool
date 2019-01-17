@@ -46,7 +46,7 @@ if($status == MyError::_login_UserLogged)
     $nav = new Navigation();
 
     // Page object
-    $page = new ProjectPage($config['app']['urlbase']);
+    $page = new ProjectPage($config['app']['urlbase'],$user);
 
     if ($nav->isRoutable())
     {

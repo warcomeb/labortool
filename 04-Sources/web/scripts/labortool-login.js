@@ -43,7 +43,15 @@ $(document).ready(function()
         {
             'username' : $('#inputUsername').val(),
             'password' : CryptoJS.SHA256(mycrypto).toString(CryptoJS.enc.Hex),
-		};
+        };
+        
+        $('#labortool-login').attr("disabled","disabled");
+        // Restore primary color, and delete danger and success class.
+        $('#login-message').addClass('alert-primary');
+        $('#login-message').removeClass('alert-success');
+        $('#login-message').removeClass('alert-danger');
+        $('#login-message').html('<i class="fas fa-spinner fa-spin"></i>');
+        $('#login-message').append(' LogIn in corso...').delay(800);
 	    
         $.ajax({
             type        : 'POST',
@@ -55,7 +63,9 @@ $(document).ready(function()
         .done(function(data)
         {
             console.log("INFO: Ajax command success!");
-            console.log("INFO: Status " + data[0]);
+            console.log("INFO: Status  " + data[0]);
+            console.log("INFO: User    " + data[1]);
+            console.log("INFO: Message " + data[2]);
 
             if (_LOGIN__USER_LOGGED_IN === data[0])
             {
@@ -66,12 +76,19 @@ $(document).ready(function()
                 $('#login-message').addClass('alert-success');
                 $('#login-message').removeClass('alert-primary').delay(2000);
 
-                // Redirect to view page...
+                // Redirect to home page...
                 $(location).attr('href', '/home/home');
             }
             else
             {
+                // Write text into error div message
+                $('#login-message').html('<i class="fas fa-check"></i>');
+                $('#login-message').append(' ' + data[2]);
 
+                $('#login-message').addClass('alert-danger');
+                $('#login-message').removeClass('alert-primary').delay(2000);
+
+                $('#labortool-login').removeAttr("disabled");
             }
         })
         .fail(function(jqXHR, textStatus)
