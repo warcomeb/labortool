@@ -39,9 +39,9 @@ class ProjectPage implements Page
                     'active' => FALSE,
                 ),
                 array (
-                    'name'   => 'Clienti/Fornitori',
-                    'id'     => 'customer-supplier',
-                    'url'    => 'records/customer-supplier',
+                    'name'   => 'Clienti &amp; Fornitori',
+                    'id'     => 'customersupplier',
+                    'url'    => 'records/customersupplier',
                     'title'  => 'Anagrafica Clienti e Fornitori',
                     'active' => FALSE,
                 ),
