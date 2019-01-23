@@ -29,25 +29,25 @@
                 <div class="form-group col-md-6">
                     <label for="inputAddress">Indirizzo</label>
                     <input type="text" class="form-control" id="inputAddress" placeholder="" data-parsley-minlength="5" required>
-            		</div>
+                </div>
                 <div class="form-group col-md-6">
                     <label for="inputCity">Città</label>
                     <input type="text" class="form-control" id="inputCity" placeholder="" data-parsley-minlength="3" required>
-            		</div>
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="inputDistrict">Provincia (Sigla)</label>
                     <input type="text" class="form-control" id="inputDistrict" placeholder="" data-parsley-provincia="" required>
-            		</div>
+                </div>
                 <div class="form-group col-md-4">
                     <label for="inputZip">CAP</label>
                     <input type="text" class="form-control" id="inputZip" placeholder="" data-parsley-zip-code="" required>
-            		</div>
+                </div>
                 <div class="form-group col-md-4">
                     <label for="inputCountry">Paese</label>
                     <?php MyUtility::printCountrySelectForm("form-control", "inputCountry", "IT"); ?> 
-            		</div>
+                </div>
             </div>
             <div class="form-row">
                  <div class="form-group col-md-6">
@@ -76,12 +76,51 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputNIN">Codice Fiscale</label>
-                    <input type="text" class="form-control" id="inputNIN" placeholder="" data-parsley-nin="" required>
+                    <input type="text" class="form-control" id="inputNIN" placeholder="" data-parsley-ninsupplier="" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputIBAN">IBAN</label>
-                <input type="text" class="form-control" id="inputIBAN" placeholder="" data-parsley-length="[15, 30]">
+                <input type="text" class="form-control" id="inputIBAN" placeholder="" data-parsley-iban="">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="btn-group-toggle"  data-toggle="buttons">
+                        <label class="btn btn-primary form-check-label">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputCustomerCheck"> 
+                            <span>Cliente</span>
+                        </label>
+                        <label class="btn btn-primary form-check-label">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputSupplierCheck">
+                            <span>Fornitore</span>
+                        </label>
+                        <label class="btn btn-primary form-check-label">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputPrivateCheck">
+                            <span>Privato</span>
+                        </label>
+                    </div>
+            <!--
+                <div class="form-group col-md-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="inputCustomerCheck">
+                        <label class="custom-control-label" for="inputCustomerCheck">Cliente</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="inputSupplierCheck">
+                        <label class="custom-control-label" for="inputSupplierCheck">Fornitore</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="inputPrivateCheck">
+                        <label class="custom-control-label" for="inputPrivateCheck">Privato</label>
+                    </div>
+                </div>-->
+                </div>
+                <div class="form-group col-md-6">&nbsp;
+                </div>
             </div>
             <div class="form-group">
                 <label for="inputNote">Note</label>
