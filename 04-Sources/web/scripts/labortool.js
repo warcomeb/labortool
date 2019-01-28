@@ -169,8 +169,43 @@ $(document).ready(function()
                 'supplier'          : $("#inputSupplierCheck").is(":checked") ? 1 : 0,
                 'private'           : $("#inputPrivateCheck").is(":checked") ? 1 : 0,
             };
-           
-           
+
+            // Disable buttons
+            $('#add-customer-save').attr("disabled","disabled");
+            $('#add-customer-reset').attr("disabled","disabled");
+            // Show loading gift
+            $('#add-customer-loading').removeClass('d-none').delay(800);
+
+            $.ajax({
+                type        : 'POST',
+                url         : '/prjform/addcustomer.form.php',
+                data        : formData, 
+                dataType    : 'json',
+                encode      : true
+            })
+            .done(function(data)
+            {
+                console.log("INFO: add customer ajax done!");
+                // TODO
+            })
+            .fail(function(jqXHR, textStatus)
+            {
+                console.log("INFO: add customer ajax fail!");
+
+                // Write text into error div message
+                $('#add-customer-error').html('<i class="fas fa-times"></i>');
+                $('#add-customer-error').append(' ' + textStatus);
+
+                // Show error message
+                $('#add-customer-loading').addClass('d-none');
+                $('#add-customer-success').addClass('d-none');
+                $('#add-customer-error').removeClass('d-none').delay(1000);
+
+                // Enable buttons
+                $('#add-customer-save').removeAttr("disabled");
+                $('#add-customer-reset').removeAttr("disabled");
+            });
+
             // Don't submit form
             return false;
         });
