@@ -28,10 +28,14 @@ $(document).ready(function()
 {
     $('#labortool-logout').on("click",userLogout);
 
-    // Data table setup
+    // List of data table setup
     if ($('#user-list-table').length)
     {
         $('#user-list-table').DataTable();
+    }
+    if ($('#customer-list-table').length)
+    {
+        $('#customer-list-table').DataTable();
     }
 
     // Datetime picker enable
@@ -186,7 +190,34 @@ $(document).ready(function()
             .done(function(data)
             {
                 console.log("INFO: add customer ajax done!");
-                // TODO
+
+                // NO ERRORS
+                if (0 === data['status'])
+                {
+                    // Show success message
+                    $('#add-user-loading').addClass('d-none');
+                    $('#add-user-error').addClass('d-none');
+                    $('#add-user-success').removeClass('d-none').delay(1000);
+
+                    // Redirect to view page...
+                    $(location).attr('href', '/records/customersupplier/view/' + data['id']);
+                }
+                else if (1 === data['status'])
+                {
+                    // Write text into error div message
+                    $('#add-user-error').html('<i class="fas fa-times"></i>');
+                    $('#add-user-error').append(' ' + data['status']);
+
+                    // Show error message
+                    $('#add-user-loading').addClass('d-none');
+                    $('#add-user-success').addClass('d-none');
+                    $('#add-user-error').removeClass('d-none').delay(1000);
+
+                    // Enable buttons
+                    $('#add-user-save').removeAttr("disabled");
+                    $('#add-user-reset').removeAttr("disabled");
+                }
+
             })
             .fail(function(jqXHR, textStatus)
             {
@@ -194,7 +225,7 @@ $(document).ready(function()
 
                 // Write text into error div message
                 $('#add-customer-error').html('<i class="fas fa-times"></i>');
-                $('#add-customer-error').append(' ' + textStatus);
+                $('#add-customer-error').append(' ERR[001] Ajax request fail!');
 
                 // Show error message
                 $('#add-customer-loading').addClass('d-none');

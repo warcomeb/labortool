@@ -86,6 +86,10 @@ class MyError
      *
      */
     const _login_EmptyData = 112;
+
+    const _CustomerSupplier_NewAdded        = 200;
+    const _CustomerSupplier_ErrorCreateCode = 201;
+    const _CustomerSupplier_ErrorAddingNew  = 202;
     
     /**
      * This function return a error message for each error code.
@@ -99,6 +103,10 @@ class MyError
         {
         case self::_login_EmptyData:
             return "ERR[".self::_login_EmptyData."] Username e/o password vuoti.";
+        case self::_CustomerSupplier_ErrorCreateCode:
+            return "ERR[".self::_CustomerSupplier_ErrorCreateCode."] Can't create customer/supplier code.";
+        case self::_CustomerSupplier_ErrorAddingNew:
+            return "ERR[".self::_CustomerSupplier_ErrorAddingNew."] Can't add new customer/supplier.";
         default:
             return "ERR[0000] Errore non codificato!";
         }

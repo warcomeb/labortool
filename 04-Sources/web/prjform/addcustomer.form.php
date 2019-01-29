@@ -94,13 +94,14 @@ if ($status == MyError::_login_UserLogged)
         else
         {
             $data['status'] = 1;
-            $data['error'] = "ERROR: Can't create user code!";
+            $data['error'] = MyError::getErrorMessage(MyError::_CustomerSupplier_ErrorCreateCode);
+            // FIXME: remove the new element?
         }
     }
     else
     {
         $data['status'] = 1;
-        $data['error'] = "ERROR: Can't add new user!";
+        $data['error'] = MyError::getErrorMessage(MyError::_CustomerSupplier_ErrorAddingNew);
     }
 }
 else
