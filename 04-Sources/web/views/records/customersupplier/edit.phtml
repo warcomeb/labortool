@@ -41,110 +41,119 @@ if ($isError == FALSE)
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-user"></i>
-        Visualizza Cliente/Fornitore
+        Modifica Cliente/Fornitore
     </div>
     <div class="card-body">
-        <form>
-        <div class="form-row">
+        <form id="edit-customer" data-parsley-validate="">
+            <div class="form-row">
                 <div class="form-group col-md-2">
                     <label for="inputCode">Code</label>
                     <input type="text" class="form-control" id="inputCode" placeholder="<?php echo $rows[0]['Code']; ?>" disabled>
                 </div>
                 <div class="form-group col-md-10">
                     <label for="inputName">Nome Azienda</label>
-                    <input type="text" class="form-control" id="inputName" placeholder="<?php echo $rows[0]['Name']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputName" value="<?php echo $rows[0]['Name']; ?>" data-parsley-minlength="3" autocomplete="off" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputAddress">Indirizzo</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="<?php echo $rows[0]['Address']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputAddress" value="<?php echo $rows[0]['Address']; ?>" data-parsley-minlength="5" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputCity">Città</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="<?php echo $rows[0]['City']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputCity" value="<?php echo $rows[0]['City']; ?>" data-parsley-minlength="3" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="inputDistrict">Provincia (Sigla)</label>
-                    <input type="text" class="form-control" id="inputDistrict" placeholder="<?php echo $rows[0]['District']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputDistrict" value="<?php echo $rows[0]['District']; ?>" data-parsley-provincia="" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputZip">CAP</label>
-                    <input type="text" class="form-control" id="inputZip" placeholder="<?php echo $rows[0]['ZipCode']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputZip" value="<?php echo $rows[0]['ZipCode']; ?>" data-parsley-zip-code="" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputCountry">Paese</label>
-                    <input type="text" class="form-control" id="inputCountry" placeholder="<?php echo $rows[0]['Country']; ?>" disabled> 
+                    <?php MyUtility::printCountrySelectForm("form-control", "inputCountry", $rows[0]['Country']); ?> 
                 </div>
             </div>
             <div class="form-row">
                  <div class="form-group col-md-6">
           	         <label for="inputEmail">Email</label>
-                     <input type="email" class="form-control" id="inputEmail" placeholder="<?php echo $rows[0]['Email']; ?>" disabled>
+                     <input type="email" class="form-control" id="inputEmail" value="<?php echo $rows[0]['Email']; ?>" data-parsley-type="email" autocomplete="off" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputWebsite">Website</label>
-                    <input type="text" class="form-control" id="inputWebsite" placeholder="<?php echo $rows[0]['Website']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputWebsite" value="<?php echo $rows[0]['Website']; ?>" data-parsley-type="url" autocomplete="off" required>
                 </div>
             </div>
             <div class="form-row">
             <div class="form-group col-md-6">
                     <label for="inputPhone">Telefono</label>
-                    <input type="text" class="form-control" id="inputPhone" placeholder="<?php echo $rows[0]['Phone']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputPhone" value="<?php echo $rows[0]['Phone']; ?>" data-parsley-phone="" autocomplete="off" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputFax">Fax</label>
-                    <input type="text" class="form-control" id="inputFax" placeholder="<?php echo $rows[0]['Fax']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputFax" value="<?php echo $rows[0]['Fax']; ?>" data-parsley-phone="" autocomplete="off">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputVAT">P. IVA</label>
-                    <input type="text" class="form-control" id="inputVAT" placeholder="<?php echo $rows[0]['VATID']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputVAT" value="<?php echo $rows[0]['VATID']; ?>" data-parsley-vat="" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputNIN">Codice Fiscale</label>
-                    <input type="text" class="form-control" id="inputNIN" placeholder="<?php echo $rows[0]['NIN']; ?>" disabled>
+                    <input type="text" class="form-control" id="inputNIN" value="<?php echo $rows[0]['NIN']; ?>" data-parsley-ninsupplier="" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputIBAN">IBAN</label>
-                <input type="text" class="form-control" id="inputIBAN" placeholder="<?php echo $rows[0]['IBAN']; ?>" disabled>
+                <input type="text" class="form-control" id="inputIBAN" value="<?php echo $rows[0]['IBAN']; ?>" data-parsley-iban="">
             </div>
             <div class="form-row">
-                <div class="form-group col-md-1">
-                    <label for="inputStatus">Status</label>
+                <div class="form-group col-md-6">
                     <div class="btn-group-toggle"  data-toggle="buttons">
-                        <label class="btn form-check-label <?php if ($rows[0]['Active'] == 1) {echo "btn-primary active";} else {echo "btn-default";} ?> ">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputStatus" disabled> 
-                            <span>Attivo</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group col-md-11">
-                    <label for="inputCustomerCheck">Opzioni</label>
-                    <div class="btn-group-toggle"  data-toggle="buttons">
-                        <label class="btn form-check-label <?php if ($rows[0]['Customer'] == 1) {echo "btn-primary active";} else {echo "btn-secondary";} ?> ">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputCustomerCheck" disabled> 
+                        <label class="btn btn-primary form-check-label">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputCustomerCheck"> 
                             <span>Cliente</span>
                         </label>
-                        <label class="btn form-check-label <?php if ($rows[0]['Supplier'] == 1)  {echo "btn-primary active";} else {echo "btn-secondary";} ?> ">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputSupplierCheck" disabled>
+                        <label class="btn btn-primary form-check-label">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputSupplierCheck">
                             <span>Fornitore</span>
                         </label>
-                        <label class="btn form-check-label <?php if ($rows[0]['Private'] == 1)  {echo "btn-primary active";} else {echo "btn-secondary";} ?> ">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputPrivateCheck" disabled>
+                        <label class="btn btn-primary form-check-label">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputPrivateCheck">
                             <span>Privato</span>
                         </label>
                     </div>
                 </div>
+                <div class="form-group col-md-6">&nbsp;
+                </div>
             </div>
             <div class="form-group">
                 <label for="inputNote">Note</label>
-                <textarea class="form-control" id="inputNote" rows="3" placeholder="<?php echo $rows[0]['Note']; ?>" disabled>
+                <textarea class="form-control" id="inputNote" rows="3" placeholder="Note">
+                <?php echo $rows[0]['Note']; ?>
                 </textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" id="add-customer-save">Save</button>
+                <button class="btn btn-primary" type="reset" id="add-customer-reset">Reset</button>
+            </div>
+
+            <div class="alert alert-success d-none" role="alert" id="add-customer-success">
+                <i class="fas fa-check"></i>&nbsp;New customer/supplier added with success!
+            </div>
+            
+            <div class="alert alert-danger d-none" role="alert" id="add-customer-error">
+			&nbsp;
+            </div>
+            
+            <div class="alert alert-primary d-none" role="alert" id="add-customer-loading">
+                <i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...
             </div>
         </form>
     </div>
