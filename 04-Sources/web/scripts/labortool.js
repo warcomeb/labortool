@@ -144,12 +144,16 @@ $(document).ready(function()
     {
         console.log("INFO: #add-customer exist!");
 
+        $('#inputCustomerCheck').on("change",{type : "customer"},supplierTypeSelect);
+        $('#inputSupplierCheck').on("change",{type : "supplier"},supplierTypeSelect);
+        $('#inputPrivateCheck').on("change",{type : "private"},supplierTypeSelect);
+
         $('#add-customer').parsley().on('form:success', function() 
         {
-                // TODO: do somethings?
+            // TODO: do somethings?
         })
         .on('form:error', function() 
-            {
+        {
             // TODO: do somethings?
         })
         .on('form:submit', function() 
@@ -263,5 +267,32 @@ $(document).ready(function()
             // Redirect to login page...
             $(location).attr('href', '/home/home');
         });
+    }
+
+    /**
+     * Check and manage customer value based on customer type.
+     */
+    function supplierTypeSelect (event)
+    {
+        console.log("INFO: Supplier/Customer choice -> " + event.data.type);
+
+        if ((event.data.type === "customer") || (event.data.type === "supplier"))
+        {
+            $('#inputPrivateCheck').prop('checked', false);
+            $('#inputPrivateCheck').parent().removeClass("active");
+            // Enable VATID
+            $('#inputVAT').removeAttr("disabled");
+            $('#inputVAT').attr("required","required");
+        }
+        else
+        {
+            $('#inputCustomerCheck').prop('checked', false);
+            $('#inputSupplierCheck').prop('checked', false);
+            $('#inputCustomerCheck').parent().removeClass("active");
+            $('#inputSupplierCheck').parent().removeClass("active");
+            // Disable VATID input field
+            $('#inputVAT').removeAttr("required");
+            $('#inputVAT').attr("disabled","disabled");
+        }
     }
 });
