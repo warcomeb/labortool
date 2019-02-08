@@ -39,7 +39,7 @@ if ($result)
             echo "\t\t\t\t<td>{$row['Code']}</td>\n";
             // Print company name with user or company icon.
             echo "\t\t\t\t<td>";
-            if (1 === $row['Private'])
+            if (1 == $row['Private'])
                 echo "<span class=\"btn btn-primary btn-sm\"><i class=\"fas fa-user\"></i></span>";
             else
                 echo "<span class=\"btn btn-primary btn-sm\"><i class=\"fas fa-building\"></i></span>";
@@ -48,10 +48,10 @@ if ($result)
             echo "\t\t\t\t<td>{$row['Address']}, {$row['ZipCode']} {$row['City']} ({$row['District']}), {$row['Country']}</td>\n";
             echo "\t\t\t\t<td>";
             // Print VATID/NIN
-            if (1 === $row['Private'])
-                echo $row['VATID'];
-            else
+            if (1 == $row['Private'])
                 echo $row['NIN'];
+            else
+                echo $row['VATID'];
             echo "</td>\n";
             echo "\t\t\t\t<td>";
             echo "<div class=\"btn-group\" role=\"group\" aria-label=\"Commands\">";
