@@ -40,7 +40,7 @@ if ($isError == FALSE)
 ?>
 <div class="card mb-3">
     <div class="card-header">
-        <i class="fas fa-user"></i>
+        <i class="fas fa-building"></i>
         Modifica Cliente/Fornitore
     </div>
     <div class="card-body">
@@ -114,23 +114,31 @@ if ($isError == FALSE)
                 <input type="text" class="form-control" id="inputIBAN" value="<?php echo $rows[0]['IBAN']; ?>" data-parsley-iban="">
             </div>
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-1">
+                    <label for="inputStatus">Status</label>
                     <div class="btn-group-toggle"  data-toggle="buttons">
-                        <label class="btn btn-primary form-check-label">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputCustomerCheck"> 
-                            <span>Cliente</span>
-                        </label>
-                        <label class="btn btn-primary form-check-label">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputSupplierCheck">
-                            <span>Fornitore</span>
-                        </label>
-                        <label class="btn btn-primary form-check-label">
-                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputPrivateCheck">
-                            <span>Privato</span>
+                        <label class="btn form-check-label btn-primary <?php if ($rows[0]['Active'] == 1) {echo "active";} ?> ">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputStatus" <?php if ($rows[0]['Active'] == 1) {echo " checked=\"checked\"";} ?>> 
+                            <span>Attivo</span>
                         </label>
                     </div>
                 </div>
-                <div class="form-group col-md-6">&nbsp;
+                <div class="form-group col-md-11">
+                    <label for="inputCustomerCheck">Opzioni</label>
+                    <div class="btn-group-toggle"  data-toggle="buttons">
+                        <label class="btn form-check-label btn-primary <?php if ($rows[0]['Customer'] == 1) {echo "active";} ?>">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputCustomerCheck" <?php if ($rows[0]['Customer'] == 1) {echo " checked=\"checked\"";} ?>> 
+                            <span>Cliente</span>
+                        </label>
+                        <label class="btn form-check-label btn-primary <?php if ($rows[0]['Supplier'] == 1) {echo "active";} ?>">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputSupplierCheck" <?php if ($rows[0]['Supplier'] == 1) {echo " checked=\"checked\"";} ?>>
+                            <span>Fornitore</span>
+                        </label>
+                        <label class="btn form-check-label btn-primary <?php if ($rows[0]['Private'] == 1) {echo "active";} ?>">
+                            <input class="form-check-input" type="checkbox" autocomplete="off" id="inputPrivateCheck" <?php if ($rows[0]['Private'] == 1) {echo " checked=\"checked\"";} ?>>
+                            <span>Privato</span>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -140,19 +148,19 @@ if ($isError == FALSE)
                 </textarea>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit" id="add-customer-save">Save</button>
-                <button class="btn btn-primary" type="reset" id="add-customer-reset">Reset</button>
+                <button class="btn btn-primary" type="submit" id="edit-customer-save">Save</button>
+                <button class="btn btn-primary" type="reset" id="edit-customer-reset">Reset</button>
             </div>
 
-            <div class="alert alert-success d-none" role="alert" id="add-customer-success">
-                <i class="fas fa-check"></i>&nbsp;New customer/supplier added with success!
+            <div class="alert alert-success d-none" role="alert" id="edit-customer-success">
+                <i class="fas fa-check"></i>&nbsp;Customer/Supplier edited with success!
             </div>
             
-            <div class="alert alert-danger d-none" role="alert" id="add-customer-error">
+            <div class="alert alert-danger d-none" role="alert" id="edit-customer-error">
 			&nbsp;
             </div>
             
-            <div class="alert alert-primary d-none" role="alert" id="add-customer-loading">
+            <div class="alert alert-primary d-none" role="alert" id="edit-customer-loading">
                 <i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...
             </div>
         </form>

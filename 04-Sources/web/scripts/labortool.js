@@ -246,6 +246,15 @@ $(document).ready(function()
         });
     }
 
+    if ($('#edit-customer').length)
+    {
+        console.log("INFO: #edit-customer exist!");
+
+        $('#inputCustomerCheck').on("change",{type : "customer"},supplierTypeSelect);
+        $('#inputSupplierCheck').on("change",{type : "supplier"},supplierTypeSelect);
+        $('#inputPrivateCheck').on("change",{type : "private"},supplierTypeSelect);
+    }
+
     /*
      * User logout function
      */
@@ -293,6 +302,7 @@ $(document).ready(function()
             // Disable VATID input field
             $('#inputVAT').removeAttr("required");
             $('#inputVAT').attr("disabled","disabled");
+            $('#inputVAT').val("");
         }
     }
 });
