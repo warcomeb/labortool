@@ -253,6 +253,105 @@ $(document).ready(function()
         $('#inputCustomerCheck').on("change",{type : "customer"},supplierTypeSelect);
         $('#inputSupplierCheck').on("change",{type : "supplier"},supplierTypeSelect);
         $('#inputPrivateCheck').on("change",{type : "private"},supplierTypeSelect);
+
+        $('#add-customer').parsley().on('form:success', function() 
+        {
+            // TODO: do somethings?
+        })
+        .on('form:error', function() 
+        {
+            // TODO: do somethings?
+        })
+        .on('form:submit', function() 
+        {
+            var formData = {
+                'id'                : $('#inputId').val(),
+                'name'              : $('#inputName').val(),
+                'address'           : $('#inputAddress').val(),
+                'city'              : $('#inputCity').val(),
+                'district'          : $('#inputDistrict').val(),
+                'zip'               : $('#inputZip').val(),
+                'country'           : $('#inputCountry').val(),
+                'website'           : $('#inputWebsite').val(),
+                'email'             : $('#inputEmail').val(),
+                'phone'             : $('#inputPhone').val(),
+                'fax'               : $('#inputFax').val(),
+                'vat'               : $('#inputVAT').val(),
+                'nin'               : $('#inputNIN').val(),
+                'iban'              : $('#inputIBAN').val(),
+                'note'              : $('#inputNote').val(),
+                'customer'          : $("#inputCustomerCheck").is(":checked") ? 1 : 0,
+                'supplier'          : $("#inputSupplierCheck").is(":checked") ? 1 : 0,
+                'private'           : $("#inputPrivateCheck").is(":checked") ? 1 : 0,
+                'active'            : $("#inputStatus").is(":checked") ? 1 : 0,
+            };
+
+            // Disable buttons
+            $('#edit-customer-save').attr("disabled","disabled");
+            $('#edit-customer-reset').attr("disabled","disabled");
+            // Show loading gift
+            $('#edit-customer-loading').removeClass('d-none').delay(800);
+
+            $.ajax({
+                type        : 'POST',
+                url         : '/prjform/editcustomer.form.php',
+                data        : formData, 
+                dataType    : 'json',
+                encode      : true
+            })
+            .done(function(data)
+            {
+                console.log("INFO: edit customer ajax done!");
+
+                // NO ERRORS
+                if (0 === data['status'])
+                {
+                    // Show success message
+                    $('#edit-customer-loading').addClass('d-none');
+                    $('#edit-customer-error').addClass('d-none');
+                    $('#edit-customer-success').removeClass('d-none').delay(1000);
+
+                    // Redirect to view page...
+                    $(location).attr('href', '/records/customersupplier/view/' + data['id']);
+                }
+                else if (1 === data['status'])
+                {
+                    // Write text into error div message
+                    $('#edit-customer-error').html('<i class="fas fa-times"></i>');
+                    $('#edit-customer-error').append(' ' + data['status']);
+
+                    // Show error message
+                    $('#edit-customer-loading').addClass('d-none');
+                    $('#edit-customer-success').addClass('d-none');
+                    $('#edit-customer-error').removeClass('d-none').delay(1000);
+
+                    // Enable buttons
+                    $('#edit-customer-save').removeAttr("disabled");
+                    $('#edit-customer-reset').removeAttr("disabled");
+                }
+
+            })
+            .fail(function(jqXHR, textStatus)
+            {
+                console.log("INFO: edit customer ajax fail!");
+
+                // Write text into error div message
+                $('#edit-customer-error').html('<i class="fas fa-times"></i>');
+                $('#edit-customer-error').append(' ERR[001] Ajax request fail!');
+
+                // Show error message
+                $('#edit-customer-loading').addClass('d-none');
+                $('#edit-customer-success').addClass('d-none');
+                $('#edit-customer-error').removeClass('d-none').delay(1000);
+
+                // Enable buttons
+                $('#edit-customer-save').removeAttr("disabled");
+                $('#edit-customer-reset').removeAttr("disabled");
+            });
+
+            // Don't submit form
+            return false;
+        });
     }
 
     /*

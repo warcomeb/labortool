@@ -90,6 +90,7 @@ class MyError
     const _CustomerSupplier_NewAdded        = 200;
     const _CustomerSupplier_ErrorCreateCode = 201;
     const _CustomerSupplier_ErrorAddingNew  = 202;
+    const _CustomerSupplier_ErrorEdit       = 203;
     
     /**
      * This function return a error message for each error code.
@@ -107,6 +108,8 @@ class MyError
             return "ERR[".self::_CustomerSupplier_ErrorCreateCode."] Can't create customer/supplier code.";
         case self::_CustomerSupplier_ErrorAddingNew:
             return "ERR[".self::_CustomerSupplier_ErrorAddingNew."] Can't add new customer/supplier.";
+        case self::_CustomerSupplier_ErrorEdit:
+            return "ERR[".self::_CustomerSupplier_ErrorEdit."] Can't edit customer/supplier.";
         default:
             return "ERR[0000] Errore non codificato!";
         }
