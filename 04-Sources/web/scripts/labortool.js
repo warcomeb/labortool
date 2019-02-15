@@ -161,6 +161,7 @@ $(document).ready(function()
             .on('form:submit', function() 
             {
                 var formData = {
+                    'id'                : $('#customersupplier-form-id').val(),
                     'name'              : $('#customersupplier-form-name').val(),
                     'address'           : $('#customersupplier-form-address').val(),
                     'city'              : $('#customersupplier-form-city').val(),
