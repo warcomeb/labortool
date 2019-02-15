@@ -1,0 +1,190 @@
+<?php
+    $displayType = ($type == "view") ? "disabled" : "";
+?>
+<form id="customersupplier-form" data-parsley-validate="">
+    <input type="hidden" id="customersupplier-form-id" value="<?php echo (isset($rows[0]['Id'])) ? $rows[0]['Id'] : "0"; ?>" />
+    <input type="hidden" id="customersupplier-form-type" value="<?php echo $type ?>" />
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="customersupplier-form-code">Code</label>
+            <input type="text" class="form-control" id="customersupplier-form-code" placeholder="" value="<?php echo (isset($rows[0]['Code'])) ? $rows[0]['Code'] : "-"; ?>" disabled>
+        </div>
+        <div class="form-group col-md-10">
+            <label for="customersupplier-form-name">Nome Azienda</label>
+            <input type="text" class="form-control" id="customersupplier-form-name" placeholder="" data-parsley-minlength="3" autocomplete="off" required value="<?php echo (isset($rows[0]['Name'])) ? $rows[0]['Name'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="customersupplier-form-address">Indirizzo</label>
+            <input type="text" class="form-control" id="customersupplier-form-address" placeholder="" data-parsley-minlength="5" required value="<?php echo (isset($rows[0]['Address'])) ? $rows[0]['Address'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="customersupplier-form-city">Città</label>
+            <input type="text" class="form-control" id="customersupplier-form-city" placeholder="" data-parsley-minlength="3" required value="<?php echo (isset($rows[0]['City'])) ? $rows[0]['City'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="customersupplier-form-district">Provincia (Sigla)</label>
+            <input type="text" class="form-control" id="customersupplier-form-district" placeholder="" data-parsley-provincia="" required  value="<?php echo (isset($rows[0]['District'])) ? $rows[0]['District'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="customersupplier-form-zip">CAP</label>
+            <input type="text" class="form-control" id="customersupplier-form-zip" placeholder="" data-parsley-zip-code="" required value="<?php echo (isset($rows[0]['ZipCode'])) ? $rows[0]['ZipCode'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="customersupplier-form-country">Paese</label>
+            <?php 
+                if ($type === "view")
+                    echo "<input type=\"text\" class=\"form-control\" id=\"customersupplier-form-country\" placeholder=\"{$rows[0]['Country']}\" disabled>";
+                else
+                    MyUtility::printCountrySelectForm("form-control", "customersupplier-form-country", "IT"); 
+            ?> 
+        </div>
+    </div>
+    <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="customersupplier-form-email">Email</label>
+                <input type="email" class="form-control" id="customersupplier-form-email" placeholder="" data-parsley-type="email" autocomplete="off" required value="<?php echo (isset($rows[0]['Email'])) ? $rows[0]['Email'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="customersupplier-form-website">Website</label>
+            <input type="text" class="form-control" id="customersupplier-form-website" placeholder="http://" data-parsley-type="url" autocomplete="off" required value="<?php echo (isset($rows[0]['Website'])) ? $rows[0]['Website'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+            <label for="customersupplier-form-phone">Telefono</label>
+            <input type="text" class="form-control" id="customersupplier-form-phone" placeholder="" data-parsley-phone="" autocomplete="off" required  value="<?php echo (isset($rows[0]['Phone'])) ? $rows[0]['Phone'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="customersupplier-form-fax">Fax</label>
+            <input type="text" class="form-control" id="customersupplier-form-fax" placeholder="" data-parsley-phone="" autocomplete="off"  value="<?php echo (isset($rows[0]['Fax'])) ? $rows[0]['Fax'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="customersupplier-form-vat">P. IVA</label>
+            <input type="text" class="form-control" id="customersupplier-form-vat" placeholder="" data-parsley-vat="" required  value="<?php echo (isset($rows[0]['VATID'])) ? $rows[0]['VATID'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="customersupplier-form-nin">Codice Fiscale</label>
+            <input type="text" class="form-control" id="customersupplier-form-nin" placeholder="" data-parsley-ninsupplier="" required  value="<?php echo (isset($rows[0]['NIN'])) ? $rows[0]['NIN'] : ""; ?>" <?php echo $displayType; ?>>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="customersupplier-form-iban">IBAN</label>
+        <input type="text" class="form-control" id="customersupplier-form-iban" placeholder="" data-parsley-iban=""  value="<?php echo (isset($rows[0]['IBAN'])) ? $rows[0]['IBAN'] : ""; ?>" <?php echo $displayType; ?>>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <label for="customersupplier-form-status">Status</label>
+            <div class="btn-group-toggle"  data-toggle="buttons">
+<?php
+if ($type == "view")
+{
+    echo "<label class=\"btn form-check-label " . (($rows[0]['Active'] == 1) ? "btn-primary active" : "btn-secondary") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-status\" disabled>\n\t" .
+         "<span>Attivo</span>\n" .
+         "</label>\n"; 
+}
+else if ($type == "add")
+{
+    echo "<label class=\"btn form-check-label btn-primary active\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-status\" disabled>\n\t" .
+         "<span>Attivo</span>\n" .
+         "</label>\n";
+}
+else // Edit
+{
+    echo "<label class=\"btn form-check-label btn-primary " . (($rows[0]['Active'] == 1) ? "active" : "") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-status\" " . (($rows[0]['Active'] == 1) ? "checked=\"checked\"" : "") . ">\n\t" .
+         "<span>Attivo</span>\n" .
+         "</label>\n";
+}
+?>
+            </div>
+        </div>
+        <div class="form-group col-md-11">
+            <label for="customersupplier-form-customer">Opzioni</label>
+            <div class="btn-group-toggle" data-toggle="buttons">
+<?php
+if ($type == "view")
+{
+    echo "<label class=\"btn form-check-label " . (($rows[0]['Customer'] == 1) ? "btn-primary active" : "btn-secondary") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-customer\" disabled>\n\t" .
+         "<span>Cliente</span>\n" .
+         "</label>\n" .
+         "<label class=\"btn form-check-label " . (($rows[0]['Supplier'] == 1) ? "btn-primary active" : "btn-secondary") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-supplier\" disabled>\n\t" .
+         "<span>Fornitore</span>\n" .
+         "</label>\n" . 
+         "<label class=\"btn form-check-label " . (($rows[0]['Private'] == 1) ? "btn-primary active" : "btn-secondary") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-private\" disabled>\n\t" .
+         "<span>Privato</span>\n" .
+         "</label>\n";
+}
+else if ($type == "add")
+{
+    echo "<label class=\"btn form-check-label btn-primary\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-customer\">\n\t" .
+         "<span>Cliente</span>\n" .
+         "</label>\n" .
+         "<label class=\"btn form-check-label btn-primary\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-supplier\">\n\t" .
+         "<span>Fornitore</span>\n" .
+         "</label>\n" . 
+         "<label class=\"btn form-check-label btn-primary\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-private\">\n\t" .
+         "<span>Privato</span>\n" .
+         "</label>\n";
+}
+else // Edit
+{
+    echo "<label class=\"btn form-check-label btn-primary " . (($rows[0]['Customer'] == 1) ? "active" : "") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-customer\" " . (($rows[0]['Customer'] == 1) ? "checked=\"checked\"" : "") . ">\n\t" .
+         "<span>Cliente</span>\n" .
+         "</label>\n" .
+         "<label class=\"btn form-check-label btn-primary " . (($rows[0]['Supplier'] == 1) ? "active" : "") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-supplier\" " . (($rows[0]['Supplier'] == 1) ? "checked=\"checked\"" : "") . ">\n\t" .
+         "<span>Fornitore</span>\n" .
+         "</label>\n" . 
+         "<label class=\"btn form-check-label btn-primary " . (($rows[0]['Private'] == 1) ? "active" : "") . "\">\n\t".
+         "<input class=\"form-check-input\" type=\"checkbox\" autocomplete=\"off\" id=\"customersupplier-form-private\" " . (($rows[0]['Private'] == 1) ? "checked=\"checked\"" : "") . " >\n\t" .
+         "<span>Privato</span>\n" .
+         "</label>\n";
+}
+?>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="customersupplier-form-note">Note</label>
+        <textarea class="form-control" id="customersupplier-form-note" rows="3" placeholder="Note"  value="<?php echo (isset($rows[0]['Note'])) ? $rows[0]['Note'] : ""; ?>" <?php echo $displayType; ?>>
+        </textarea>
+    </div>
+<?php 
+if ($type != "view")
+{
+?>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="customersupplier-form-save">Save</button>
+        <button class="btn btn-primary" type="reset" id="customersupplier-form-reset">Reset</button>
+    </div>
+
+    <div class="alert alert-success d-none" role="alert" id="customersupplier-form-success">
+    &nbsp;
+    </div>
+    
+    <div class="alert alert-danger d-none" role="alert" id="customersupplier-form-error">
+    &nbsp;
+    </div>
+    
+    <div class="alert alert-primary d-none" role="alert" id="customersupplier-form-loading">
+        <i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...
+    </div>
+<?php
+}
+?>
+</form>

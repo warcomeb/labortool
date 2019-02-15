@@ -140,218 +140,124 @@ $(document).ready(function()
         });
     }
 
-    if ($('#add-customer').length)
+    if ($('#customersupplier-form').length)
     {
-        console.log("INFO: #add-customer exist!");
+        console.log("INFO: #customersupplier-form exist!");
 
-        $('#inputCustomerCheck').on("change",{type : "customer"},supplierTypeSelect);
-        $('#inputSupplierCheck').on("change",{type : "supplier"},supplierTypeSelect);
-        $('#inputPrivateCheck').on("change",{type : "private"},supplierTypeSelect);
+        $('#customersupplier-form-customer').on("change",{type : "customer"},supplierTypeSelect);
+        $('#customersupplier-form-supplier').on("change",{type : "supplier"},supplierTypeSelect);
+        $('#customersupplier-form-private').on("change",{type : "private"},supplierTypeSelect);
 
-        $('#add-customer').parsley().on('form:success', function() 
+        if ("view" !== $('#customersupplier-form-type').val())
         {
-            // TODO: do somethings?
-        })
-        .on('form:error', function() 
-        {
-            // TODO: do somethings?
-        })
-        .on('form:submit', function() 
-        {
-            var formData = {
-                'name'              : $('#inputName').val(),
-                'address'           : $('#inputAddress').val(),
-                'city'              : $('#inputCity').val(),
-                'district'          : $('#inputDistrict').val(),
-                'zip'               : $('#inputZip').val(),
-                'country'           : $('#inputCountry').val(),
-                'website'           : $('#inputWebsite').val(),
-                'email'             : $('#inputEmail').val(),
-                'phone'             : $('#inputPhone').val(),
-                'fax'               : $('#inputFax').val(),
-                'vat'               : $('#inputVAT').val(),
-                'nin'               : $('#inputNIN').val(),
-                'iban'              : $('#inputIBAN').val(),
-                'note'              : $('#inputNote').val(),
-                'customer'          : $("#inputCustomerCheck").is(":checked") ? 1 : 0,
-                'supplier'          : $("#inputSupplierCheck").is(":checked") ? 1 : 0,
-                'private'           : $("#inputPrivateCheck").is(":checked") ? 1 : 0,
-            };
-
-            // Disable buttons
-            $('#add-customer-save').attr("disabled","disabled");
-            $('#add-customer-reset').attr("disabled","disabled");
-            // Show loading gift
-            $('#add-customer-loading').removeClass('d-none').delay(800);
-
-            $.ajax({
-                type        : 'POST',
-                url         : '/prjform/addcustomer.form.php',
-                data        : formData, 
-                dataType    : 'json',
-                encode      : true
-            })
-            .done(function(data)
+            $('#customersupplier-form').parsley().on('form:success', function() 
             {
-                console.log("INFO: add customer ajax done!");
+                // TODO: do somethings?
+            })
+            .on('form:error', function() 
+            {
+                // TODO: do somethings?
+            })
+            .on('form:submit', function() 
+            {
+                var formData = {
+                    'name'              : $('#customersupplier-form-name').val(),
+                    'address'           : $('#customersupplier-form-address').val(),
+                    'city'              : $('#customersupplier-form-city').val(),
+                    'district'          : $('#customersupplier-form-district').val(),
+                    'zip'               : $('#customersupplier-form-zip').val(),
+                    'country'           : $('#customersupplier-form-country').val(),
+                    'website'           : $('#customersupplier-form-website').val(),
+                    'email'             : $('#customersupplier-form-email').val(),
+                    'phone'             : $('#customersupplier-form-phone').val(),
+                    'fax'               : $('#customersupplier-form-fax').val(),
+                    'vat'               : $('#customersupplier-form-vat').val(),
+                    'nin'               : $('#customersupplier-form-nin').val(),
+                    'iban'              : $('#customersupplier-form-iban').val(),
+                    'note'              : $('#customersupplier-form-note').val(),
+                    'customer'          : $("#customersupplier-form-customer").is(":checked") ? 1 : 0,
+                    'supplier'          : $("#customersupplier-form-supplier").is(":checked") ? 1 : 0,
+                    'private'           : $("#customersupplier-form-private").is(":checked") ? 1 : 0,
+                    'active'            : $("#customersupplier-form-status").is(":checked") ? 1 : 0,
+                };
 
-                // NO ERRORS
-                if (0 === data['status'])
-                {
-                    // Show success message
-                    $('#add-user-loading').addClass('d-none');
-                    $('#add-user-error').addClass('d-none');
-                    $('#add-user-success').removeClass('d-none').delay(1000);
+                // Disable buttons
+                $('#customersupplier-form-save').attr("disabled","disabled");
+                $('#customersupplier-form-reset').attr("disabled","disabled");
+                // Show loading gift
+                $('#customersupplier-form-loading').removeClass('d-none').delay(800);
 
-                    // Redirect to view page...
-                    $(location).attr('href', '/records/customersupplier/view/' + data['id']);
-                }
-                else if (1 === data['status'])
+                $.ajax({
+                    type        : 'POST',
+                    url         : '/prjform/' + $('#customersupplier-form-type').val() + 'customer.form.php',
+                    data        : formData, 
+                    dataType    : 'json',
+                    encode      : true
+                })
+                .done(function(data)
                 {
+                    console.log("INFO: #customersupplier-form ajax done!");
+
+                    // NO ERRORS
+                    if (0 === data['status'])
+                    {
+                        // Show success message
+                        $('#customersupplier-form-loading').addClass('d-none');
+                        $('#customersupplier-form-error').addClass('d-none');
+
+                        // TODO: write success message
+                        $('#customersupplier-form-success').html('<i class="fas fa-check"></i>');
+                        if ("edit" === $('#customersupplier-form-type').val())
+                        {
+                            $('#customersupplier-form-success').append(' Modifica effettuata con successo!');
+                        }
+                        else if ("add" === $('#customersupplier-form-type').val())
+                        {
+                            $('#customersupplier-form-success').append(' Salvataggio effettuato con successo!');
+                        }
+                        $('#customersupplier-form-success').removeClass('d-none').delay(1000);
+
+                        // Redirect to view page...
+                        $(location).attr('href', '/records/customersupplier/view/' + data['id']);
+                    }
+                    else if (1 === data['status'])
+                    {
+                        // Write text into error div message
+                        $('#customersupplier-form-error').html('<i class="fas fa-times"></i>');
+                        $('#customersupplier-form-error').append(' ' + data['status']);
+
+                        // Show error message
+                        $('#customersupplier-form-loading').addClass('d-none');
+                        $('#customersupplier-form-success').addClass('d-none');
+                        $('#customersupplier-form-error').removeClass('d-none').delay(1000);
+
+                        // Enable buttons
+                        $('#customersupplier-form-save').removeAttr("disabled");
+                        $('#customersupplier-form-reset').removeAttr("disabled");
+                    }
+                })
+                .fail(function(jqXHR, textStatus)
+                {
+                    console.log("INFO: #customersupplier-form ajax fail!");
+
                     // Write text into error div message
-                    $('#add-user-error').html('<i class="fas fa-times"></i>');
-                    $('#add-user-error').append(' ' + data['status']);
+                    $('#customersupplier-form-error').html('<i class="fas fa-times"></i>');
+                    $('#customersupplier-form-error').append(' ERR[001] Ajax request fail!');
 
                     // Show error message
-                    $('#add-user-loading').addClass('d-none');
-                    $('#add-user-success').addClass('d-none');
-                    $('#add-user-error').removeClass('d-none').delay(1000);
+                    $('#customersupplier-form-loading').addClass('d-none');
+                    $('#customersupplier-form-success').addClass('d-none');
+                    $('#customersupplier-form-error').removeClass('d-none').delay(1000);
 
                     // Enable buttons
-                    $('#add-user-save').removeAttr("disabled");
-                    $('#add-user-reset').removeAttr("disabled");
-                }
+                    $('#customersupplier-form-save').removeAttr("disabled");
+                    $('#customersupplier-form-reset').removeAttr("disabled");
+                });
 
-            })
-            .fail(function(jqXHR, textStatus)
-            {
-                console.log("INFO: add customer ajax fail!");
-
-                // Write text into error div message
-                $('#add-customer-error').html('<i class="fas fa-times"></i>');
-                $('#add-customer-error').append(' ERR[001] Ajax request fail!');
-
-                // Show error message
-                $('#add-customer-loading').addClass('d-none');
-                $('#add-customer-success').addClass('d-none');
-                $('#add-customer-error').removeClass('d-none').delay(1000);
-
-                // Enable buttons
-                $('#add-customer-save').removeAttr("disabled");
-                $('#add-customer-reset').removeAttr("disabled");
+                // Don't submit form
+                return false;
             });
-
-            // Don't submit form
-            return false;
-        });
-    }
-
-    if ($('#edit-customer').length)
-    {
-        console.log("INFO: #edit-customer exist!");
-
-        $('#inputCustomerCheck').on("change",{type : "customer"},supplierTypeSelect);
-        $('#inputSupplierCheck').on("change",{type : "supplier"},supplierTypeSelect);
-        $('#inputPrivateCheck').on("change",{type : "private"},supplierTypeSelect);
-
-        $('#add-customer').parsley().on('form:success', function() 
-        {
-            // TODO: do somethings?
-        })
-        .on('form:error', function() 
-        {
-            // TODO: do somethings?
-        })
-        .on('form:submit', function() 
-        {
-            var formData = {
-                'id'                : $('#inputId').val(),
-                'name'              : $('#inputName').val(),
-                'address'           : $('#inputAddress').val(),
-                'city'              : $('#inputCity').val(),
-                'district'          : $('#inputDistrict').val(),
-                'zip'               : $('#inputZip').val(),
-                'country'           : $('#inputCountry').val(),
-                'website'           : $('#inputWebsite').val(),
-                'email'             : $('#inputEmail').val(),
-                'phone'             : $('#inputPhone').val(),
-                'fax'               : $('#inputFax').val(),
-                'vat'               : $('#inputVAT').val(),
-                'nin'               : $('#inputNIN').val(),
-                'iban'              : $('#inputIBAN').val(),
-                'note'              : $('#inputNote').val(),
-                'customer'          : $("#inputCustomerCheck").is(":checked") ? 1 : 0,
-                'supplier'          : $("#inputSupplierCheck").is(":checked") ? 1 : 0,
-                'private'           : $("#inputPrivateCheck").is(":checked") ? 1 : 0,
-                'active'            : $("#inputStatus").is(":checked") ? 1 : 0,
-            };
-
-            // Disable buttons
-            $('#edit-customer-save').attr("disabled","disabled");
-            $('#edit-customer-reset').attr("disabled","disabled");
-            // Show loading gift
-            $('#edit-customer-loading').removeClass('d-none').delay(800);
-
-            $.ajax({
-                type        : 'POST',
-                url         : '/prjform/editcustomer.form.php',
-                data        : formData, 
-                dataType    : 'json',
-                encode      : true
-            })
-            .done(function(data)
-            {
-                console.log("INFO: edit customer ajax done!");
-
-                // NO ERRORS
-                if (0 === data['status'])
-                {
-                    // Show success message
-                    $('#edit-customer-loading').addClass('d-none');
-                    $('#edit-customer-error').addClass('d-none');
-                    $('#edit-customer-success').removeClass('d-none').delay(1000);
-
-                    // Redirect to view page...
-                    $(location).attr('href', '/records/customersupplier/view/' + data['id']);
-                }
-                else if (1 === data['status'])
-                {
-                    // Write text into error div message
-                    $('#edit-customer-error').html('<i class="fas fa-times"></i>');
-                    $('#edit-customer-error').append(' ' + data['status']);
-
-                    // Show error message
-                    $('#edit-customer-loading').addClass('d-none');
-                    $('#edit-customer-success').addClass('d-none');
-                    $('#edit-customer-error').removeClass('d-none').delay(1000);
-
-                    // Enable buttons
-                    $('#edit-customer-save').removeAttr("disabled");
-                    $('#edit-customer-reset').removeAttr("disabled");
-                }
-
-            })
-            .fail(function(jqXHR, textStatus)
-            {
-                console.log("INFO: edit customer ajax fail!");
-
-                // Write text into error div message
-                $('#edit-customer-error').html('<i class="fas fa-times"></i>');
-                $('#edit-customer-error').append(' ERR[001] Ajax request fail!');
-
-                // Show error message
-                $('#edit-customer-loading').addClass('d-none');
-                $('#edit-customer-success').addClass('d-none');
-                $('#edit-customer-error').removeClass('d-none').delay(1000);
-
-                // Enable buttons
-                $('#edit-customer-save').removeAttr("disabled");
-                $('#edit-customer-reset').removeAttr("disabled");
-            });
-
-            // Don't submit form
-            return false;
-        });
+        }
     }
 
     /*
@@ -386,22 +292,22 @@ $(document).ready(function()
 
         if ((event.data.type === "customer") || (event.data.type === "supplier"))
         {
-            $('#inputPrivateCheck').prop('checked', false);
-            $('#inputPrivateCheck').parent().removeClass("active");
+            $('#customersupplier-form-private').prop('checked', false);
+            $('#customersupplier-form-private').parent().removeClass("active");
             // Enable VATID
-            $('#inputVAT').removeAttr("disabled");
-            $('#inputVAT').attr("required","required");
+            $('#customersupplier-form-vat').removeAttr("disabled");
+            $('#customersupplier-form-vat').attr("required","required");
         }
         else
         {
-            $('#inputCustomerCheck').prop('checked', false);
-            $('#inputSupplierCheck').prop('checked', false);
-            $('#inputCustomerCheck').parent().removeClass("active");
-            $('#inputSupplierCheck').parent().removeClass("active");
+            $('#customersupplier-form-customer').prop('checked', false);
+            $('#customersupplier-form-supplier').prop('checked', false);
+            $('#customersupplier-form-customer').parent().removeClass("active");
+            $('#customersupplier-form-supplier').parent().removeClass("active");
             // Disable VATID input field
-            $('#inputVAT').removeAttr("required");
-            $('#inputVAT').attr("disabled","disabled");
-            $('#inputVAT').val("");
+            $('#customersupplier-form-vat').removeAttr("required");
+            $('#customersupplier-form-vat').attr("disabled","disabled");
+            $('#customersupplier-form-vat').val("");
         }
     }
 });
